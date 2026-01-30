@@ -26,10 +26,10 @@ export default function HomePage() {
     <section className="flex flex-col gap-8">
       <div className="space-y-3">
         <h2 className="text-3xl font-semibold text-slate-900">
-          ¿Qué skill quieres aprender?
+          Busca una skill y compara cursos.
         </h2>
         <p className="text-slate-600">
-          Busca una skill para ver cursos recomendados y compararlos rápidamente.
+          Encuentra cursos y compáralos lado a lado para elegir el mejor para ti.
         </p>
       </div>
 
@@ -37,6 +37,9 @@ export default function HomePage() {
         placeholder="Ej: Prompt Engineering"
         onSearch={handleSearch}
       />
+      <p className="text-sm text-slate-500">
+        Selecciona 2 cursos para compararlos lado a lado.
+      </p>
 
       <div className="flex flex-wrap gap-2">
         {suggestions.map((skill) => (

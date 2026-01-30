@@ -67,7 +67,7 @@ export default function SkillPage() {
         </p>
         <h2 className="text-3xl font-semibold text-slate-900">{skillTitle}</h2>
         <p className="mt-2 text-slate-600">
-          Filtra y compara cursos para esta skill.
+          Filtra cursos y selecciona 2 para compararlos lado a lado.
         </p>
       </div>
 
@@ -75,7 +75,8 @@ export default function SkillPage() {
 
       {filteredCourses.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600">
-          No encontramos cursos con esos filtros. Prueba otra combinación.
+          No encontramos cursos con esos filtros. Prueba ajustar la búsqueda o
+          los filtros.
         </div>
       ) : (
         <div className="grid gap-6 lg:grid-cols-2">
