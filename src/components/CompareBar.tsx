@@ -13,10 +13,10 @@ export const CompareBar = () => {
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-4 sm:flex-row">
         <div>
           <p className="text-sm font-semibold text-slate-900">
-            Comparar ({selectedIds.length})
+            Comparar ({selectedIds.length}/2)
           </p>
           <p className="text-xs text-slate-500">
-            Selecciona exactamente 2 cursos para comparar.
+            Selecciona 2 cursos para habilitar la comparación.
           </p>
         </div>
         <div className="flex items-center gap-3">
