@@ -53,7 +53,7 @@ export default function CompareClient() {
     if (course.priceModel === "free") {
       return "Gratis";
     }
-    if (!course.priceAmount || !course.currency) {
+    if (course.priceAmount == null || course.currency == null) {
       if (course.priceModel === "subscription") {
         return "Suscripción (precio no disponible)";
       }
@@ -64,7 +64,12 @@ export default function CompareClient() {
     }
     const formattedAmount = `${course.currency === "EUR" ? "€" : course.currency}${course.priceAmount}`;
     if (course.priceModel === "subscription") {
-      const intervalLabel = course.priceInterval === "year" ? "año" : "mes";
+      const intervalLabel =
+        course.priceInterval === "year"
+          ? "año"
+          : course.priceInterval === "month"
+            ? "mes"
+            : "periodo";
       return `${formattedAmount}/${intervalLabel}`;
     }
     return formattedAmount;
@@ -110,8 +115,14 @@ export default function CompareClient() {
     },
     {
       label: "Puntos clave",
-      left: leftCourse.syllabusBullets.slice(0, 3).join(" · "),
-      right: rightCourse.syllabusBullets.slice(0, 3).join(" · "),
+      left:
+        leftCourse.syllabusBullets?.length
+          ? leftCourse.syllabusBullets.slice(0, 3).join(" · ")
+          : "No disponible",
+      right:
+        rightCourse.syllabusBullets?.length
+          ? rightCourse.syllabusBullets.slice(0, 3).join(" · ")
+          : "No disponible",
       className: "text-sm text-slate-600"
     }
   ];
