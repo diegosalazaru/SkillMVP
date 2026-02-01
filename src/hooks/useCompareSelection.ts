@@ -15,7 +15,23 @@ const readSelection = () => {
   }
   try {
     const parsed = JSON.parse(stored);
-    return Array.isArray(parsed) ? parsed : [];
+    if (!Array.isArray(parsed)) {
+      return [];
+    }
+    const seen = new Set<string>();
+    const sanitized: string[] = [];
+    parsed.forEach((item) => {
+      if (typeof item !== "string") {
+        return;
+      }
+      const trimmed = item.trim();
+      if (!trimmed || seen.has(trimmed)) {
+        return;
+      }
+      seen.add(trimmed);
+      sanitized.push(trimmed);
+    });
+    return sanitized.slice(0, MAX_COMPARE);
   } catch {
     return [];
   }
