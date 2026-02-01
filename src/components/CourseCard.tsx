@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Course } from "@/types/course";
-import { useCompareSelection } from "@/hooks/useCompareSelection";
+import { useCompareSelection } from "@/contexts/CompareSelectionContext";
 
 type CourseCardProps = {
   course: Course;

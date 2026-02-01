@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCompareSelection } from "@/hooks/useCompareSelection";
+import { useCompareSelection } from "@/contexts/CompareSelectionContext";
 
 export const CompareBar = () => {
   const router = useRouter();

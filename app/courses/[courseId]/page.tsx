@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import { courses } from "@/data/courses";
-import { useCompareSelection } from "@/hooks/useCompareSelection";
+import { useCompareSelection } from "@/contexts/CompareSelectionContext";
 
 export default function CourseDetailPage() {
   const params = useParams();
