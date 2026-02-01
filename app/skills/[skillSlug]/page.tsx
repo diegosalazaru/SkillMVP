@@ -14,7 +14,7 @@ const LAST_SKILL_KEY = "skills-compare-last-skill";
 type FiltersState = {
   platform: string;
   level: string;
-  priceType: string;
+  priceModel: string;
 };
 
 export default function SkillPage() {
@@ -25,7 +25,7 @@ export default function SkillPage() {
   const [filters, setFilters] = useState<FiltersState>({
     platform: "All",
     level: "All",
-    priceType: "All"
+    priceModel: "All"
   });
 
   const availableSkillSlugs = useMemo(() => {
@@ -51,13 +51,19 @@ export default function SkillPage() {
   }, []);
 
   const priceOptions = useMemo(() => {
-    const options = ["All"];
-    const priceTypes = new Set(courses.map((course) => course.priceType));
-    if (priceTypes.has("free")) {
-      options.push("Free");
+    const models = new Set(courses.map((course) => course.priceModel));
+    const options = [{ value: "All", label: "Todos" }];
+    if (models.has("free")) {
+      options.push({ value: "free", label: "Gratis" });
     }
-    if (priceTypes.has("paid")) {
-      options.push("Paid");
+    if (models.has("paid_once")) {
+      options.push({ value: "paid_once", label: "Pago único" });
+    }
+    if (models.has("subscription")) {
+      options.push({ value: "subscription", label: "Suscripción" });
+    }
+    if (models.has("unknown")) {
+      options.push({ value: "unknown", label: "Desconocido" });
     }
     return options;
   }, []);
@@ -89,14 +95,12 @@ export default function SkillPage() {
           : course.level.toLowerCase() === filters.level.toLowerCase()
       )
       .filter((course) => {
-        if (filters.priceType === "All") {
+        if (filters.priceModel === "All") {
           return true;
         }
-        return filters.priceType === "Free"
-          ? course.priceType === "free"
-          : course.priceType === "paid";
+        return course.priceModel === filters.priceModel;
       });
-  }, [filters.level, filters.platform, filters.priceType, skillSlug]);
+  }, [filters.level, filters.platform, filters.priceModel, skillSlug]);
 
   return (
     <section className="flex flex-col gap-8 pb-24">
@@ -130,7 +134,7 @@ export default function SkillPage() {
           </p>
           <Link
             href="/"
-            className="mt-4 inline-flex rounded-lg bg-slate-900 px-5 py-2 text-sm font-semibold text-white"
+            className="mt-4 inline-flex rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-500"
           >
             Volver al Home
           </Link>

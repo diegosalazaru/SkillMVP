@@ -28,7 +28,9 @@ export const CourseCard = ({ course }: CourseCardProps) => {
           </span>
         ) : null}
       </div>
-      <p className="text-sm text-slate-600">{course.shortDescription}</p>
+      <p className="text-sm text-slate-600">
+        {course.shortDescription ?? "Descripción no disponible."}
+      </p>
       <div className="grid gap-2 text-sm text-slate-600">
         <div className="flex items-center justify-between">
           <span>Duración</span>

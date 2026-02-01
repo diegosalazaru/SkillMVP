@@ -3,7 +3,7 @@
 type FiltersState = {
   platform: string;
   level: string;
-  priceType: string;
+  priceModel: string;
 };
 
 type FiltersProps = {
@@ -12,13 +12,19 @@ type FiltersProps = {
   options?: {
     platforms: string[];
     levels: string[];
-    prices: string[];
+    prices: { value: string; label: string }[];
   };
 };
 
 const platforms = ["All", "Coursera", "Udemy", "Microsoft Learn", "edX"];
 const levels = ["All", "Beginner", "Intermediate", "Advanced"];
-const prices = ["All", "Free", "Paid"];
+const prices = [
+  { value: "All", label: "Todos" },
+  { value: "free", label: "Gratis" },
+  { value: "paid_once", label: "Pago único" },
+  { value: "subscription", label: "Suscripción" },
+  { value: "unknown", label: "Desconocido" }
+];
 
 export const Filters = ({ value, onChange, options }: FiltersProps) => {
   const platformOptions = options?.platforms ?? platforms;
@@ -60,15 +66,15 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
       <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
         Precio
         <select
-          value={value.priceType}
+          value={value.priceModel}
           onChange={(event) =>
-            onChange({ ...value, priceType: event.target.value })
+            onChange({ ...value, priceModel: event.target.value })
           }
           className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700"
         >
           {priceOptions.map((price) => (
-            <option key={price} value={price}>
-              {price}
+            <option key={price.value} value={price.value}>
+              {price.label}
             </option>
           ))}
         </select>

@@ -12,10 +12,12 @@ export const CourseSchema = z.object({
   priceModel: z.enum(["free", "paid_once", "subscription", "unknown"]),
   priceAmount: z.number().nullable(),
   currency: z.string().nullable(),
+  priceInterval: z.enum(["month", "year"]).nullable(),
   rating: z.number().nullable(),
   reviewCount: z.number().nullable(),
   certificate: z.boolean().nullable(),
   lastUpdatedAt: z.string().datetime().nullable(),
+  shortDescription: z.string().nullable(),
   source: z.enum(["manual", "edx", "coursera", "other"]),
 });
 

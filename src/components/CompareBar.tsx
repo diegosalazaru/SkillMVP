@@ -43,7 +43,7 @@ export const CompareBar = () => {
               router.push(`/compare?ids=${selectedIds[0]},${selectedIds[1]}`);
             }}
             className={`rounded-xl px-5 py-2 text-sm font-semibold text-white transition ${
-              enabled ? "bg-slate-900 hover:bg-slate-800" : "bg-slate-300"
+              enabled ? "bg-blue-600 hover:bg-blue-500" : "bg-slate-300"
             }`}
           >
             Comparar ahora
