@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 import { courses } from "@/data/courses";
@@ -12,7 +11,10 @@ export default function CompareClient() {
   const searchParams = useSearchParams();
   const idsParam = searchParams.get("ids") ?? "";
 
-  const ids = useMemo(() => idsParam.split(",").filter(Boolean), [idsParam]);
+  const ids = useMemo(
+    () => idsParam.split(",").filter(Boolean).slice(0, 2),
+    [idsParam]
+  );
   const [leftId, rightId] = ids;
   const leftCourse = courses.find((course) => course.id === leftId);
   const rightCourse = courses.find((course) => course.id === rightId);
@@ -31,14 +33,15 @@ export default function CompareClient() {
           Selecciona 2 cursos para comparar
         </h2>
         <p className="text-slate-600">
-          Vuelve al listado y selecciona exactamente dos cursos.
+          Vuelve al listado y selecciona exactamente dos cursos para continuar.
         </p>
-        <Link
-          href="/"
+        <button
+          type="button"
+          onClick={handleChangeCourses}
           className="rounded-lg bg-slate-900 px-5 py-2 text-sm font-semibold text-white"
         >
-          Ir al Home
-        </Link>
+          Volver a elegir cursos
+        </button>
       </section>
     );
   }
