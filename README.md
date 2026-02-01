@@ -21,6 +21,18 @@ pnpm validate:data
 
 Si el archivo aún no existe, el script mostrará un warning sin fallar.
 
+## 📥 Ingesta inicial de edX
+
+Para generar `data/normalized/courses.json` desde el catálogo público de edX:
+
+```bash
+pnpm ingest:edx
+```
+
+El script consulta el API de edX (por defecto con `EDX_QUERY=ai`) y normaliza los cursos a nuestro schema.
+Limitaciones actuales: no todos los campos están disponibles en el API y algunos valores quedan en `null`.
+Puedes ajustar `EDX_QUERY` y `EDX_PAGE_SIZE` vía variables de entorno para controlar el subconjunto de resultados.
+
 ## 📁 Estructura del proyecto
 
 ```
