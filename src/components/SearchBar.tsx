@@ -22,7 +22,7 @@ export const SearchBar = ({ placeholder, onSearch }: SearchBarProps) => {
       <button
         type="button"
         onClick={() => onSearch(value)}
-        className="rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+        className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
       >
         Buscar
       </button>
