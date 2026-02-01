@@ -3,19 +3,34 @@
 type FiltersState = {
   platform: string;
   level: string;
-  priceType: string;
+  priceModel: string;
 };
 
 type FiltersProps = {
   value: FiltersState;
   onChange: (next: FiltersState) => void;
+  options?: {
+    platforms: string[];
+    levels: string[];
+    prices: { value: string; label: string }[];
+  };
 };
 
 const platforms = ["All", "Coursera", "Udemy", "Microsoft Learn", "edX"];
 const levels = ["All", "Beginner", "Intermediate", "Advanced"];
-const prices = ["All", "Free", "Paid"];
+const prices = [
+  { value: "All", label: "Todos" },
+  { value: "free", label: "Gratis" },
+  { value: "paid_once", label: "Pago único" },
+  { value: "subscription", label: "Suscripción" },
+  { value: "unknown", label: "Desconocido" }
+];
 
-export const Filters = ({ value, onChange }: FiltersProps) => {
+export const Filters = ({ value, onChange, options }: FiltersProps) => {
+  const platformOptions = options?.platforms ?? platforms;
+  const levelOptions = options?.levels ?? levels;
+  const priceOptions = options?.prices ?? prices;
+
   return (
     <div className="grid gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:grid-cols-3">
       <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
@@ -27,7 +42,7 @@ export const Filters = ({ value, onChange }: FiltersProps) => {
           }
           className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700"
         >
-          {platforms.map((platform) => (
+          {platformOptions.map((platform) => (
             <option key={platform} value={platform}>
               {platform}
             </option>
@@ -41,7 +56,7 @@ export const Filters = ({ value, onChange }: FiltersProps) => {
           onChange={(event) => onChange({ ...value, level: event.target.value })}
           className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700"
         >
-          {levels.map((level) => (
+          {levelOptions.map((level) => (
             <option key={level} value={level}>
               {level}
             </option>
@@ -51,15 +66,15 @@ export const Filters = ({ value, onChange }: FiltersProps) => {
       <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
         Precio
         <select
-          value={value.priceType}
+          value={value.priceModel}
           onChange={(event) =>
-            onChange({ ...value, priceType: event.target.value })
+            onChange({ ...value, priceModel: event.target.value })
           }
           className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700"
         >
-          {prices.map((price) => (
-            <option key={price} value={price}>
-              {price}
+          {priceOptions.map((price) => (
+            <option key={price.value} value={price.value}>
+              {price.label}
             </option>
           ))}
         </select>
