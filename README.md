@@ -11,6 +11,16 @@ npm run dev
 
 La app corre en `http://localhost:3000`.
 
+## 🔎 Validación de datos normalizados
+
+Para validar el archivo `data/normalized/courses.json` contra el schema de cursos:
+
+```bash
+pnpm validate:data
+```
+
+Si el archivo aún no existe, el script mostrará un warning sin fallar.
+
 ## 📁 Estructura del proyecto
 
 ```
