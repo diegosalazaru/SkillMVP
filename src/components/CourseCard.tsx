@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Course } from "@/types/course";
-import { useCompareSelection } from "@/hooks/useCompareSelection";
+import { useCompareSelection } from "@/contexts/CompareSelectionContext";
 
 type CourseCardProps = {
   course: Course;
@@ -11,7 +11,7 @@ type CourseCardProps = {
 export const CourseCard = ({ course }: CourseCardProps) => {
   const { toggle, isSelected, selectedIds } = useCompareSelection();
   const selected = isSelected(course.id);
-  const disabled = !selected && selectedIds.length >= 2;
+  const atLimit = selectedIds.length >= 2;
 
   return (
     <div className="flex h-full flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -50,16 +50,15 @@ export const CourseCard = ({ course }: CourseCardProps) => {
           <input
             type="checkbox"
             checked={selected}
-            disabled={disabled}
             onChange={() => toggle(course.id)}
             className="h-4 w-4 rounded border-slate-300 text-slate-900"
           />
           Agregar a comparación
         </label>
       </div>
-      {disabled ? (
+      {atLimit && !selected ? (
         <p className="text-xs text-amber-600">
-          Solo puedes comparar 2 cursos a la vez.
+          Límite alcanzado: quita un curso para agregar otro.
         </p>
       ) : null}
     </div>
