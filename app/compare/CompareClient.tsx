@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 import { courses } from "@/data/courses";
@@ -12,7 +11,10 @@ export default function CompareClient() {
   const searchParams = useSearchParams();
   const idsParam = searchParams.get("ids") ?? "";
 
-  const ids = useMemo(() => idsParam.split(",").filter(Boolean), [idsParam]);
+  const ids = useMemo(
+    () => idsParam.split(",").filter(Boolean).slice(0, 2),
+    [idsParam]
+  );
   const [leftId, rightId] = ids;
   const leftCourse = courses.find((course) => course.id === leftId);
   const rightCourse = courses.find((course) => course.id === rightId);
@@ -31,21 +33,73 @@ export default function CompareClient() {
           Selecciona 2 cursos para comparar
         </h2>
         <p className="text-slate-600">
-          Vuelve al listado y selecciona exactamente dos cursos.
+          Vuelve al listado y selecciona exactamente dos cursos para continuar.
         </p>
-        <Link
-          href="/"
-          className="rounded-lg bg-slate-900 px-5 py-2 text-sm font-semibold text-white"
+        <button
+          type="button"
+          onClick={handleChangeCourses}
+          className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-500"
         >
-          Ir al Home
-        </Link>
+          Volver a elegir cursos
+        </button>
       </section>
     );
   }
 
+  const formatPrice = (course: typeof leftCourse) => {
+    if (!course) {
+      return "Precio no disponible";
+    }
+    if (course.priceModel === "free") {
+      return "Gratis";
+    }
+    if (course.priceAmount == null || course.currency == null) {
+      if (course.priceModel === "subscription") {
+        return "Suscripción (precio no disponible)";
+      }
+      if (course.priceModel === "paid_once") {
+        return "Pago único (precio no disponible)";
+      }
+      return "Precio no disponible";
+    }
+    const formattedAmount = `${course.currency === "EUR" ? "€" : course.currency}${course.priceAmount}`;
+    if (course.priceModel === "subscription") {
+      const intervalLabel =
+        course.priceInterval === "year"
+          ? "año"
+          : course.priceInterval === "month"
+            ? "mes"
+            : "periodo";
+      return `${formattedAmount}/${intervalLabel}`;
+    }
+    return formattedAmount;
+  };
+
+  const truncateText = (value: string, maxLength: number) => {
+    if (value.length <= maxLength) {
+      return value;
+    }
+    return `${value.slice(0, maxLength).trim()}…`;
+  };
+
+  const formatDescription = (course: typeof leftCourse) => {
+    const description = course?.shortDescription ?? "Descripción no disponible.";
+    return truncateText(description, 140);
+  };
+
   const rows = [
+    {
+      label: "Precio",
+      left: formatPrice(leftCourse),
+      right: formatPrice(rightCourse)
+    },
+    {
+      label: "Descripción",
+      left: formatDescription(leftCourse),
+      right: formatDescription(rightCourse),
+      className: "text-sm text-slate-600"
+    },
     { label: "Plataforma", left: leftCourse.platform, right: rightCourse.platform },
-    { label: "Precio", left: leftCourse.priceText, right: rightCourse.priceText },
     { label: "Duración", left: leftCourse.durationText, right: rightCourse.durationText },
     { label: "Nivel", left: leftCourse.level, right: rightCourse.level },
     {
@@ -61,8 +115,15 @@ export default function CompareClient() {
     },
     {
       label: "Puntos clave",
-      left: leftCourse.syllabusBullets.slice(0, 3).join(" · "),
-      right: rightCourse.syllabusBullets.slice(0, 3).join(" · ")
+      left:
+        leftCourse.syllabusBullets?.length
+          ? leftCourse.syllabusBullets.slice(0, 3).join(" · ")
+          : "No disponible",
+      right:
+        rightCourse.syllabusBullets?.length
+          ? rightCourse.syllabusBullets.slice(0, 3).join(" · ")
+          : "No disponible",
+      className: "text-sm text-slate-600"
     }
   ];
 
@@ -90,8 +151,8 @@ export default function CompareClient() {
               className="grid grid-cols-3 gap-4 px-6 py-4 text-sm text-slate-600"
             >
               <span className="font-semibold text-slate-700">{row.label}</span>
-              <span>{row.left}</span>
-              <span>{row.right}</span>
+              <span className={row.className}>{row.left}</span>
+              <span className={row.className}>{row.right}</span>
             </div>
           ))}
         </div>
@@ -100,7 +161,7 @@ export default function CompareClient() {
       <button
         type="button"
         onClick={handleChangeCourses}
-        className="w-fit rounded-lg border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
+        className="w-fit rounded-lg border border-blue-200 px-5 py-2 text-sm font-semibold text-blue-700 hover:border-blue-300"
       >
         Cambiar cursos
       </button>
