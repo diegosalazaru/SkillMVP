@@ -190,7 +190,7 @@ const run = async () => {
     // Allow CI to pass when edX blocks catalog access (404), but keep hard failure locally.
     if (response.status === 404 && process.env.CI === "true") {
       console.warn(
-        "[ingest:edx] edX catalog blocked in CI (404). Skipping ingest in CI."
+        "[ingest-edx] edX catalog blocked in CI, skipping ingestion."
       );
       process.exit(0);
     }
