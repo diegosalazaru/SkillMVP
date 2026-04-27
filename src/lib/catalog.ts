@@ -1,6 +1,6 @@
 import normalizedCourses from "../../data/normalized/courses.json";
 import { courses as fallbackCourses } from "@/data/courses";
-import { Course, CourseSchema } from "@/lib/schema/course";
+import { CourseSchema, type Course } from "../lib/schema/course";
 import { slugify } from "@/utils/slugify";
 
 const formatDuration = (durationHours: number | null) => {
