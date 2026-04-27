@@ -15,6 +15,7 @@ type EdxCourse = Record<string, unknown>;
 const API_URL = "https://www.edx.org/api/v1/catalog/search";
 const query = process.env.EDX_QUERY ?? "ai";
 const pageSize = Number(process.env.EDX_PAGE_SIZE ?? 20);
+const isCI = process.env.CI === "true";
 
 const pickArray = (data: EdxSearchResponse) =>
   (Array.isArray(data.objects) && data.objects) ||
@@ -179,8 +180,14 @@ const run = async () => {
   });
 
   const response = await fetch(`${API_URL}?${params.toString()}`);
+  // edX blocks CI runners, so we skip ingestion in CI but fail in local environments.
   if (!response.ok) {
-    throw new Error(`[ingest:edx] Failed to fetch edX catalog: ${response.status}`);
+    if (isCI && response.status === 404) {
+      console.warn("[ingest-edx] edX blocked in CI (404). Skipping ingestion.");
+      process.exit(0);
+    }
+
+    throw new Error(`Failed to fetch edX catalog: ${response.status}`);
   }
 
   const data = (await response.json()) as EdxSearchResponse;
