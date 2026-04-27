@@ -18,7 +18,7 @@ export const CourseSchema = z.object({
   certificate: z.boolean().nullable(),
   lastUpdatedAt: z.string().datetime().nullable(),
   shortDescription: z.string().nullable(),
-  source: z.enum(["manual", "edx", "coursera", "other"]),
+  source: z.enum(["manual", "edx", "coursera", "coursera-curated", "other"]),
 });
 
 export type Course = z.infer<typeof CourseSchema>;
