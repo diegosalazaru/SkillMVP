@@ -163,6 +163,12 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
           <p>
             No encontramos esta skill. Estas opciones si tienen cursos disponibles.
           </p>
+          <Link
+            href="/"
+            className="mt-4 inline-flex rounded-lg border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:border-blue-300"
+          >
+            Ver alternativas
+          </Link>
           <div className="mt-5 flex flex-wrap justify-center gap-2">
             {alternatives.map((skill) => (
               <Link
