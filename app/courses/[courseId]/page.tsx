@@ -41,10 +41,25 @@ export default function CourseDetailPage() {
 
   const selected = isSelected(course.id);
   const atLimit = selectedIds.length >= 2 && !selected;
+  const keyFacts = [
+    { label: "Plataforma", value: course.platform },
+    { label: "Nivel", value: course.level },
+    { label: "Duracion", value: course.durationText },
+    { label: "Precio", value: course.priceText },
+    { label: "Idioma", value: course.language },
+    {
+      label: "Certificado",
+      value: course.certificate ? "Incluido" : "No verificado"
+    },
+    course.rating ? { label: "Rating", value: course.rating.toFixed(1) } : null
+  ].filter((fact): fact is { label: string; value: string } => fact !== null);
+  const hasObjectives = objectives.length > 0;
+  const hasPrerequisites = course.prerequisitesBullets.length > 0;
+  const hasSyllabus = course.syllabusBullets.length > 0;
 
   return (
     <section className="flex flex-col gap-8">
-      <div className="space-y-3">
+      <div className="space-y-5">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">
           Curso
         </p>
@@ -95,7 +110,23 @@ export default function CourseDetailPage() {
         ) : null}
       </div>
 
+      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h3 className="text-lg font-semibold text-slate-900">Datos clave</h3>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {keyFacts.map((fact) => (
+            <div key={fact.label} className="rounded-lg bg-slate-50 px-4 py-3">
+              <span className="block text-xs font-medium text-slate-500">
+                {fact.label}
+              </span>
+              <span className="font-semibold text-slate-800">{fact.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {(hasObjectives || hasPrerequisites || hasSyllabus) ? (
       <div className="grid gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-2">
+        {hasObjectives ? (
         <div>
           <h3 className="text-lg font-semibold text-slate-900">Objetivos</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
@@ -104,6 +135,8 @@ export default function CourseDetailPage() {
             ))}
           </ul>
         </div>
+        ) : null}
+        {hasPrerequisites ? (
         <div>
           <h3 className="text-lg font-semibold text-slate-900">Requisitos</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
@@ -112,6 +145,8 @@ export default function CourseDetailPage() {
             ))}
           </ul>
         </div>
+        ) : null}
+        {hasSyllabus ? (
         <div>
           <h3 className="text-lg font-semibold text-slate-900">Temario resumido</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
@@ -120,6 +155,7 @@ export default function CourseDetailPage() {
             ))}
           </ul>
         </div>
+        ) : null}
         <div>
           <h3 className="text-lg font-semibold text-slate-900">Detalles</h3>
           <div className="mt-3 space-y-2 text-sm text-slate-600">
@@ -149,6 +185,7 @@ export default function CourseDetailPage() {
           </div>
         </div>
       </div>
+      ) : null}
 
       <Link
         href="/"
