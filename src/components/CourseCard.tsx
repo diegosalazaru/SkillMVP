@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Course } from "@/types/course";
 import { useCompareSelection } from "@/contexts/CompareSelectionContext";
 import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
+import { EXTERNAL_LINK_DISCLOSURE } from "@/lib/disclosure";
 
 type CourseCardProps = {
   course: Course;
@@ -87,6 +88,7 @@ export const CourseCard = ({ course }: CourseCardProps) => {
           Agregar a comparacion
         </label>
       </div>
+      <p className="text-xs text-slate-500">{EXTERNAL_LINK_DISCLOSURE}</p>
       {atLimit && !selected ? (
         <p className="text-xs text-amber-600">
           Limite alcanzado: quita un curso para agregar otro.

@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { courses } from "@/lib/catalog-adapter";
 import { useCompareSelection } from "@/contexts/CompareSelectionContext";
 import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
+import { EXTERNAL_LINK_DISCLOSURE } from "@/lib/disclosure";
 
 type CourseDetailClientProps = {
   courseId: string;
@@ -99,6 +100,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
             {selected ? "Seleccionado para comparar" : "Agregar a comparación"}
           </button>
         </div>
+        <p className="text-xs text-slate-500">{EXTERNAL_LINK_DISCLOSURE}</p>
         {atLimit ? (
           <p className="text-xs text-amber-600">
             Ya tienes 2 cursos seleccionados. Quita uno para continuar.
