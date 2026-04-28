@@ -18,7 +18,7 @@ export const CompareBar = () => {
             Comparar ({visibleCount}/2)
           </p>
           <p className="text-xs text-slate-500">
-            Selecciona 2 cursos para comparar (por ahora).
+            Selecciona 2 cursos para comparar.
           </p>
           {notice ? (
             <p className="mt-2 text-xs font-semibold text-amber-600">{notice}</p>

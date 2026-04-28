@@ -48,19 +48,19 @@ export default function CompareClient() {
 
   const formatPrice = (course: typeof leftCourse) => {
     if (!course) {
-      return "Precio no disponible";
+      return "Precio pendiente de validar";
     }
     if (course.priceModel === "free") {
       return "Gratis";
     }
     if (course.priceAmount == null || course.currency == null) {
       if (course.priceModel === "subscription") {
-        return "Suscripción (precio no disponible)";
+        return "Desde suscripción";
       }
       if (course.priceModel === "paid_once") {
-        return "Pago único (precio no disponible)";
+        return "Pago único";
       }
-      return "Precio no disponible";
+      return "Precio pendiente de validar";
     }
     const formattedAmount = `${course.currency === "EUR" ? "€" : course.currency}${course.priceAmount}`;
     if (course.priceModel === "subscription") {
@@ -83,7 +83,7 @@ export default function CompareClient() {
   };
 
   const formatDescription = (course: typeof leftCourse) => {
-    const description = course?.shortDescription ?? "Descripción no disponible.";
+    const description = course?.shortDescription ?? "Descripcion pendiente de validar.";
     return truncateText(description, 140);
   };
 
@@ -104,8 +104,8 @@ export default function CompareClient() {
     { label: "Nivel", left: leftCourse.level, right: rightCourse.level },
     {
       label: "Rating",
-      left: leftCourse.rating ? leftCourse.rating.toFixed(1) : "Sin rating",
-      right: rightCourse.rating ? rightCourse.rating.toFixed(1) : "Sin rating"
+      left: leftCourse.rating ? leftCourse.rating.toFixed(1) : "Rating no verificado",
+      right: rightCourse.rating ? rightCourse.rating.toFixed(1) : "Rating no verificado"
     },
     { label: "Idioma", left: leftCourse.language, right: rightCourse.language },
     {
@@ -118,11 +118,11 @@ export default function CompareClient() {
       left:
         leftCourse.syllabusBullets?.length
           ? leftCourse.syllabusBullets.slice(0, 3).join(" · ")
-          : "No disponible",
+          : "Pendiente de validar",
       right:
         rightCourse.syllabusBullets?.length
           ? rightCourse.syllabusBullets.slice(0, 3).join(" · ")
-          : "No disponible",
+          : "Pendiente de validar",
       className: "text-sm text-slate-600"
     }
   ];

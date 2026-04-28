@@ -29,7 +29,7 @@ export const CourseCard = ({ course }: CourseCardProps) => {
         ) : null}
       </div>
       <p className="text-sm text-slate-600">
-        {course.shortDescription ?? "Descripción no disponible."}
+        {course.shortDescription ?? "Descripcion pendiente de validar."}
       </p>
       <div className="grid gap-2 text-sm text-slate-600">
         <div className="flex items-center justify-between">
@@ -55,12 +55,12 @@ export const CourseCard = ({ course }: CourseCardProps) => {
             onChange={() => toggle(course.id)}
             className="h-4 w-4 rounded border-slate-300 text-slate-900"
           />
-          Agregar a comparación
+          Agregar a comparacion
         </label>
       </div>
       {atLimit && !selected ? (
         <p className="text-xs text-amber-600">
-          Límite alcanzado: quita un curso para agregar otro.
+          Limite alcanzado: quita un curso para agregar otro.
         </p>
       ) : null}
     </div>

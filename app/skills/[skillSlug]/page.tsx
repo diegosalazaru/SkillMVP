@@ -134,7 +134,7 @@ export default function SkillPage() {
           {skillExists ? skillTitle : "Skill no encontrada"}
         </h2>
         <p className="mt-2 text-slate-600">
-          Filtra cursos y selecciona 2 para compararlos lado a lado (por ahora).
+          Filtra cursos y selecciona 2 para compararlos lado a lado.
         </p>
       </div>
 
@@ -158,7 +158,7 @@ export default function SkillPage() {
             href="/"
             className="mt-4 inline-flex rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-500"
           >
-            Volver al Home
+            Volver al inicio
           </Link>
         </div>
       ) : filteredCourses.length === 0 ? (
