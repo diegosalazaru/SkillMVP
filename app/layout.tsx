@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import "./globals.css";
 import { Providers } from "./providers";
 
@@ -18,12 +19,12 @@ export default function RootLayout({
         <Providers>
           <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-6">
             <header className="flex items-center justify-between border-b border-slate-200 py-6">
-              <div>
+              <Link href="/" className="block hover:text-slate-700">
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
                   Skills Compare
                 </p>
                 <h1 className="text-xl font-semibold">Encuentra el curso ideal</h1>
-              </div>
+              </Link>
               <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
                 MVP
               </span>
