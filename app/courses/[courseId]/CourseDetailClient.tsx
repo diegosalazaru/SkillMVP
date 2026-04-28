@@ -67,6 +67,14 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
           {course.shortDescription ?? "Descripción no disponible."}
         </p>
         <div className="flex flex-wrap gap-2 text-sm text-slate-600">
+          {course.skillTags[0] ? (
+            <Link
+              href={`/skills/${course.skillTags[0]}`}
+              className="rounded-full bg-blue-50 px-3 py-1 font-medium text-blue-700 hover:bg-blue-100"
+            >
+              Ver skill
+            </Link>
+          ) : null}
           <span className="rounded-full bg-slate-100 px-3 py-1">
             {course.platform}
           </span>
@@ -181,7 +189,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
         </div>
 
       <Link
-        href="/"
+        href={course.skillTags[0] ? `/skills/${course.skillTags[0]}` : "/"}
         className="text-sm font-semibold text-slate-600 hover:text-slate-900"
       >
         ← Volver al Home
