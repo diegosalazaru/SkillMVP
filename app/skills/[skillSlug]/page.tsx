@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import { CourseCard } from "@/components/CourseCard";
 import { Filters } from "@/components/Filters";
 import { CompareBar } from "@/components/CompareBar";
-import { courses } from "@/data/courses";
+import { courses } from "@/lib/catalog-adapter";
 import { slugify, titleFromSlug } from "@/utils/slugify";
 
 const LAST_SKILL_KEY = "skills-compare-last-skill";

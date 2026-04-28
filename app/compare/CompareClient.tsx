@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
-import { courses } from "@/data/courses";
+import { courses } from "@/lib/catalog-adapter";
 
 const LAST_SKILL_KEY = "skills-compare-last-skill";
 
