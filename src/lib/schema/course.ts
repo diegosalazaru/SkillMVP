@@ -18,6 +18,8 @@ export const CourseSchema = z.object({
   certificate: z.boolean().nullable(),
   lastUpdatedAt: z.string().datetime().nullable(),
   shortDescription: z.string().nullable(),
+  syllabusBullets: z.array(z.string()).default([]),
+  prerequisitesBullets: z.array(z.string()).default([]),
   source: z.enum(["manual", "edx", "coursera", "coursera-curated", "other"]),
 });
 
