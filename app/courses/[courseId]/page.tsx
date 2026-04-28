@@ -33,7 +33,7 @@ export default function CourseDetailPage() {
           href="/"
           className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-500"
         >
-          Ir al Home
+          Ir al inicio
         </Link>
       </section>
     );
@@ -65,7 +65,7 @@ export default function CourseDetailPage() {
         </p>
         <h2 className="text-3xl font-semibold text-slate-900">{course.title}</h2>
         <p className="text-slate-600">
-          {course.shortDescription ?? "Descripción no disponible."}
+          {course.shortDescription ?? "Descripcion pendiente de validar."}
         </p>
         <div className="flex flex-wrap gap-2 text-sm text-slate-600">
           <span className="rounded-full bg-slate-100 px-3 py-1">
@@ -191,7 +191,7 @@ export default function CourseDetailPage() {
         href="/"
         className="text-sm font-semibold text-slate-600 hover:text-slate-900"
       >
-        ← Volver al Home
+        ← Volver al inicio
       </Link>
     </section>
   );

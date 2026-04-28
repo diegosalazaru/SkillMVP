@@ -82,12 +82,12 @@ export const CourseCard = ({ course }: CourseCardProps) => {
             onChange={() => toggle(course.id)}
             className="h-4 w-4 rounded border-slate-300 text-slate-900"
           />
-          Agregar a comparación
+          Agregar a comparacion
         </label>
       </div>
       {atLimit && !selected ? (
         <p className="text-xs text-amber-600">
-          Límite alcanzado: quita un curso para agregar otro.
+          Limite alcanzado: quita un curso para agregar otro.
         </p>
       ) : null}
     </div>
