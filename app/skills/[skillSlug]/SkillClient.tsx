@@ -97,15 +97,27 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
   }, [skillSlug]);
 
   const skillTitle = titleFromSlug(skillSlug ?? "");
+  const skillCourses = useMemo(() => {
+    if (!skillSlug || !skillExists) {
+      return [];
+    }
+    return courses.filter((course) =>
+      course.skillTags.some((tag) => slugify(tag) === skillSlug)
+    );
+  }, [skillExists, skillSlug]);
   const skillIntro = skillExists
     ? getSkillIntro({
         slug: skillSlug ?? "",
         title: skillTitle,
-        courseCount: courses.filter((course) =>
-          course.skillTags.some((tag) => slugify(tag) === skillSlug)
-        ).length
+        courseCount: skillCourses.length
       })
     : null;
+  const availablePlatforms = Array.from(
+    new Set(skillCourses.map((course) => course.platform))
+  ).join(", ");
+  const availableLevels = Array.from(
+    new Set(skillCourses.map((course) => course.level))
+  ).join(", ");
 
   const filteredCourses = useMemo(() => {
     if (!skillSlug || !skillExists) {
@@ -146,7 +158,29 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
           {skillIntro ??
             "No tenemos cursos para esta skill todavia. Puedes revisar alternativas reales del catalogo."}
         </p>
+        {skillExists ? (
+          <p className="mt-2 text-sm text-slate-500">
+            Catalogo actual: {skillCourses.length} cursos
+            {availablePlatforms ? ` en ${availablePlatforms}` : ""}
+            {availableLevels ? `, niveles ${availableLevels}` : ""}.
+          </p>
+        ) : null}
       </div>
+
+      {skillExists ? (
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 className="text-lg font-semibold text-slate-900">Que comparar</h3>
+          <ul className="mt-3 grid gap-2 text-sm text-slate-600 sm:grid-cols-2 lg:grid-cols-5">
+            {["Precio", "Duracion", "Nivel", "Certificado", "Plataforma"].map(
+              (item) => (
+                <li key={item} className="rounded-lg bg-slate-50 px-3 py-2">
+                  {item}
+                </li>
+              )
+            )}
+          </ul>
+        </div>
+      ) : null}
 
       <Filters
         value={filters}
