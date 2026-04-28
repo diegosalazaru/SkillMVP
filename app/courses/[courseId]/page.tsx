@@ -66,15 +66,25 @@ export default function CourseDetailPage() {
             {course.priceText}
           </span>
         </div>
-        <button
-          type="button"
-          onClick={() => toggle(course.id)}
-          className={`w-fit rounded-lg px-5 py-2 text-sm font-semibold text-white transition ${
-            selected ? "bg-emerald-600 hover:bg-emerald-500" : "bg-blue-600 hover:bg-blue-500"
-          } ${atLimit ? "bg-slate-300" : ""}`}
-        >
-          {selected ? "Seleccionado para comparar" : "Agregar a comparación"}
-        </button>
+        <div className="flex flex-wrap items-center gap-3">
+          <a
+            href={course.externalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
+          >
+            Ver curso
+          </a>
+          <button
+            type="button"
+            onClick={() => toggle(course.id)}
+            className={`w-fit rounded-lg px-5 py-2 text-sm font-semibold text-white transition ${
+              selected ? "bg-emerald-600 hover:bg-emerald-500" : "bg-slate-700 hover:bg-slate-600"
+            } ${atLimit ? "bg-slate-300" : ""}`}
+          >
+            {selected ? "Seleccionado para comparar" : "Agregar a comparación"}
+          </button>
+        </div>
         {atLimit ? (
           <p className="text-xs text-amber-600">
             Ya tienes 2 cursos seleccionados. Quita uno para continuar.
@@ -131,7 +141,7 @@ export default function CourseDetailPage() {
                 href={course.externalUrl}
                 className="text-slate-900 underline"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 Ver curso
               </a>
