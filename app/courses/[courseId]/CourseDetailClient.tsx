@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { courses } from "@/lib/catalog-adapter";
 import { useCompareSelection } from "@/contexts/CompareSelectionContext";
-import { EXTERNAL_LINK_DISCLOSURE } from "@/lib/disclosure";
+import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
 
 type CourseDetailClientProps = {
   courseId: string;
@@ -44,6 +44,16 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
   const hasPrerequisites = course.prerequisitesBullets.length > 0;
   const hasSyllabus = course.syllabusBullets.length > 0;
   const hasLearningContent = hasObjectives || hasPrerequisites || hasSyllabus;
+  const evaluationFacts = [
+    { label: "Plataforma", value: course.platform },
+    { label: "Nivel", value: course.level },
+    { label: "Duracion", value: course.durationText },
+    { label: "Precio", value: course.priceText },
+    {
+      label: "Certificado",
+      value: course.certificate ? "Incluido" : "No verificado"
+    }
+  ];
 
   return (
     <section className="flex flex-col gap-8">
@@ -74,6 +84,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
             href={course.externalUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackOutboundCourseClick(course, "detail")}
             className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
           >
             Ver curso
@@ -132,7 +143,23 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
             </div>
           ) : null}
         </div>
-      ) : null}
+      ) : (
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h3 className="text-lg font-semibold text-slate-900">
+            Que puedes evaluar
+          </h3>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {evaluationFacts.map((fact) => (
+              <div key={fact.label} className="rounded-lg bg-slate-50 px-4 py-3">
+                <span className="block text-xs font-medium text-slate-500">
+                  {fact.label}
+                </span>
+                <span className="font-semibold text-slate-800">{fact.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <h3 className="text-lg font-semibold text-slate-900">Detalles</h3>

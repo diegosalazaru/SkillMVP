@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Course } from "@/types/course";
 import { useCompareSelection } from "@/contexts/CompareSelectionContext";
-import { EXTERNAL_LINK_DISCLOSURE } from "@/lib/disclosure";
+import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
 
 type CourseCardProps = {
   course: Course;
@@ -65,6 +65,7 @@ export const CourseCard = ({ course }: CourseCardProps) => {
             href={course.externalUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackOutboundCourseClick(course, "card")}
             className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
           >
             Ver curso

@@ -100,8 +100,8 @@ const mapCourse = (course: NormalizedCourse): Course | null => {
     language: course.language,
     certificate: course.certificate ?? false,
     shortDescription: course.shortDescription,
-    syllabusBullets: [],
-    prerequisitesBullets: [],
+    syllabusBullets: course.syllabusBullets,
+    prerequisitesBullets: course.prerequisitesBullets,
     externalUrl: course.url
   };
 };
