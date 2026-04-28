@@ -38,7 +38,7 @@ const mapLevel = (level: NormalizedCourse["level"]): Course["level"] => {
 
 const formatDurationText = (durationHours: number | null): string => {
   if (durationHours == null) {
-    return "Duración no disponible";
+    return "Duracion pendiente de validar";
   }
 
   return `${durationHours} horas`;
@@ -53,7 +53,7 @@ const formatPriceText = (course: NormalizedCourse): string => {
 
   if (course.priceModel === "subscription") {
     if (!amountKnown) {
-      return "Suscripción (precio no disponible)";
+      return "Desde suscripción";
     }
 
     const intervalLabel =
@@ -68,13 +68,13 @@ const formatPriceText = (course: NormalizedCourse): string => {
 
   if (course.priceModel === "paid_once") {
     if (!amountKnown) {
-      return "Pago único (precio no disponible)";
+      return "Pago único";
     }
 
     return `${course.currency}${course.priceAmount}`;
   }
 
-  return "Precio no disponible";
+  return "Precio pendiente de validar";
 };
 
 const mapCourse = (course: NormalizedCourse): Course | null => {

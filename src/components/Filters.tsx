@@ -44,7 +44,7 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
         >
           {platformOptions.map((platform) => (
             <option key={platform} value={platform}>
-              {platform}
+              {platform === "All" ? "Todas" : platform}
             </option>
           ))}
         </select>
@@ -58,7 +58,7 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
         >
           {levelOptions.map((level) => (
             <option key={level} value={level}>
-              {level}
+              {level === "All" ? "Todos" : level}
             </option>
           ))}
         </select>

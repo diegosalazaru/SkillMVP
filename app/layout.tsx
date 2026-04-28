@@ -5,7 +5,7 @@ import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "Skills Compare",
-  description: "Compara cursos y aprende nuevas skills de forma rápida"
+  description: "Compara cursos online y elige donde aprender"
 };
 
 export default function RootLayout({
@@ -31,7 +31,7 @@ export default function RootLayout({
             </header>
             <main className="flex-1 py-8">{children}</main>
             <footer className="border-t border-slate-200 py-6 text-sm text-slate-500">
-              MVP para validar Skills Compare. Sin afiliados ni datos externos.
+              MVP para validar Skills Compare con datos curados y enlaces a plataformas externas.
             </footer>
           </div>
         </Providers>
