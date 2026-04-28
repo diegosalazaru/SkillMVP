@@ -2,22 +2,18 @@
 
 import { useRouter } from "next/navigation";
 import { SearchBar } from "@/components/SearchBar";
-import { courses } from "@/lib/catalog-adapter";
-import { slugify, titleFromSlug } from "@/utils/slugify";
-
-const getCatalogSkills = () =>
-  Array.from(new Set(courses.flatMap((course) => course.skillTags))).sort();
+import { getSkillOptions, resolveSkillSlug } from "@/lib/skill-routing";
 
 export default function HomeClient() {
   const router = useRouter();
-  const suggestions = getCatalogSkills();
+  const suggestions = getSkillOptions();
 
   const handleSearch = (value: string) => {
-    const trimmed = value.trim();
-    if (!trimmed) {
+    const skillSlug = resolveSkillSlug(value);
+    if (!skillSlug) {
       return;
     }
-    router.push(`/skills/${slugify(trimmed)}`);
+    router.push(`/skills/${skillSlug}`);
   };
 
   return (
@@ -40,12 +36,12 @@ export default function HomeClient() {
       <div className="flex flex-wrap gap-2">
         {suggestions.map((skill) => (
           <button
-            key={skill}
+            key={skill.slug}
             type="button"
-            onClick={() => router.push(`/skills/${slugify(skill)}`)}
+            onClick={() => router.push(`/skills/${skill.slug}`)}
             className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:border-slate-300"
           >
-            {titleFromSlug(skill)}
+            {skill.title}
           </button>
         ))}
       </div>
