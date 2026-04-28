@@ -2,14 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { SearchBar } from "@/components/SearchBar";
-import { slugify } from "@/utils/slugify";
-
-const suggestions = [
-  "AI Fundamentals",
-  "Prompt Engineering",
-  "LLMs",
-  "Machine Learning"
-];
+import { slugify, titleFromSlug } from "@/utils/slugify";
+import { courses } from "@/lib/catalog-adapter";
 
 export default function HomePage() {
   const router = useRouter();
@@ -21,6 +15,10 @@ export default function HomePage() {
     }
     router.push(`/skills/${slugify(trimmed)}`);
   };
+
+  const suggestions = Array.from(
+    new Set(courses.flatMap((c) => c.skillTags))
+  );
 
   return (
     <section className="flex flex-col gap-8">
@@ -34,7 +32,7 @@ export default function HomePage() {
       </div>
 
       <SearchBar
-        placeholder="Ej: Prompt Engineering"
+        placeholder="Ej: AI"
         onSearch={handleSearch}
       />
       <p className="text-sm text-slate-500">
@@ -49,7 +47,7 @@ export default function HomePage() {
             onClick={() => router.push(`/skills/${slugify(skill)}`)}
             className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:border-slate-300"
           >
-            {skill}
+            {titleFromSlug(skill)}
           </button>
         ))}
       </div>
