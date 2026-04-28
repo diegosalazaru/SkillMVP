@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { courses } from "@/lib/catalog-adapter";
 import { useCompareSelection } from "@/contexts/CompareSelectionContext";
+import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
 
 type CourseDetailClientProps = {
   courseId: string;
@@ -73,6 +74,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
             href={course.externalUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackOutboundCourseClick(course, "detail")}
             className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
           >
             Ver curso
