@@ -41,10 +41,25 @@ export default function CourseDetailPage() {
 
   const selected = isSelected(course.id);
   const atLimit = selectedIds.length >= 2 && !selected;
+  const keyFacts = [
+    { label: "Plataforma", value: course.platform },
+    { label: "Nivel", value: course.level },
+    { label: "Duracion", value: course.durationText },
+    { label: "Precio", value: course.priceText },
+    { label: "Idioma", value: course.language },
+    {
+      label: "Certificado",
+      value: course.certificate ? "Incluido" : "No verificado"
+    },
+    course.rating ? { label: "Rating", value: course.rating.toFixed(1) } : null
+  ].filter((fact): fact is { label: string; value: string } => fact !== null);
+  const hasObjectives = objectives.length > 0;
+  const hasPrerequisites = course.prerequisitesBullets.length > 0;
+  const hasSyllabus = course.syllabusBullets.length > 0;
 
   return (
     <section className="flex flex-col gap-8">
-      <div className="space-y-3">
+      <div className="space-y-5">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">
           Curso
         </p>
@@ -66,15 +81,25 @@ export default function CourseDetailPage() {
             {course.priceText}
           </span>
         </div>
-        <button
-          type="button"
-          onClick={() => toggle(course.id)}
-          className={`w-fit rounded-lg px-5 py-2 text-sm font-semibold text-white transition ${
-            selected ? "bg-emerald-600 hover:bg-emerald-500" : "bg-blue-600 hover:bg-blue-500"
-          } ${atLimit ? "bg-slate-300" : ""}`}
-        >
-          {selected ? "Seleccionado para comparar" : "Agregar a comparacion"}
-        </button>
+        <div className="flex flex-wrap items-center gap-3">
+          <a
+            href={course.externalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
+          >
+            Ver curso
+          </a>
+          <button
+            type="button"
+            onClick={() => toggle(course.id)}
+            className={`w-fit rounded-lg px-5 py-2 text-sm font-semibold text-white transition ${
+              selected ? "bg-emerald-600 hover:bg-emerald-500" : "bg-slate-700 hover:bg-slate-600"
+            } ${atLimit ? "bg-slate-300" : ""}`}
+          >
+            {selected ? "Seleccionado para comparar" : "Agregar a comparación"}
+          </button>
+        </div>
         {atLimit ? (
           <p className="text-xs text-amber-600">
             Ya tienes 2 cursos seleccionados. Quita uno para continuar.
@@ -85,7 +110,23 @@ export default function CourseDetailPage() {
         ) : null}
       </div>
 
+      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h3 className="text-lg font-semibold text-slate-900">Datos clave</h3>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {keyFacts.map((fact) => (
+            <div key={fact.label} className="rounded-lg bg-slate-50 px-4 py-3">
+              <span className="block text-xs font-medium text-slate-500">
+                {fact.label}
+              </span>
+              <span className="font-semibold text-slate-800">{fact.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {(hasObjectives || hasPrerequisites || hasSyllabus) ? (
       <div className="grid gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-2">
+        {hasObjectives ? (
         <div>
           <h3 className="text-lg font-semibold text-slate-900">Objetivos</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
@@ -94,6 +135,8 @@ export default function CourseDetailPage() {
             ))}
           </ul>
         </div>
+        ) : null}
+        {hasPrerequisites ? (
         <div>
           <h3 className="text-lg font-semibold text-slate-900">Requisitos</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
@@ -102,6 +145,8 @@ export default function CourseDetailPage() {
             ))}
           </ul>
         </div>
+        ) : null}
+        {hasSyllabus ? (
         <div>
           <h3 className="text-lg font-semibold text-slate-900">Temario resumido</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
@@ -110,6 +155,7 @@ export default function CourseDetailPage() {
             ))}
           </ul>
         </div>
+        ) : null}
         <div>
           <h3 className="text-lg font-semibold text-slate-900">Detalles</h3>
           <div className="mt-3 space-y-2 text-sm text-slate-600">
@@ -131,7 +177,7 @@ export default function CourseDetailPage() {
                 href={course.externalUrl}
                 className="text-slate-900 underline"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 Ver curso
               </a>
@@ -139,6 +185,7 @@ export default function CourseDetailPage() {
           </div>
         </div>
       </div>
+      ) : null}
 
       <Link
         href="/"

@@ -48,29 +48,25 @@ export default function CompareClient() {
 
   const formatPrice = (course: typeof leftCourse) => {
     if (!course) {
-      return "Precio pendiente de validar";
+      return null;
     }
     if (course.priceModel === "free") {
       return "Gratis";
     }
     if (course.priceAmount == null || course.currency == null) {
       if (course.priceModel === "subscription") {
-        return "Desde suscripción";
+        return "Desde suscripcion";
       }
       if (course.priceModel === "paid_once") {
-        return "Pago único";
+        return "Pago unico";
       }
-      return "Precio pendiente de validar";
+      return null;
     }
-    const formattedAmount = `${course.currency === "EUR" ? "€" : course.currency}${course.priceAmount}`;
+    const formattedAmount = `${course.currency === "EUR" ? "EUR " : `${course.currency} `}${course.priceAmount}`;
     if (course.priceModel === "subscription") {
-      const intervalLabel =
-        course.priceInterval === "year"
-          ? "año"
-          : course.priceInterval === "month"
-            ? "mes"
-            : "periodo";
-      return `${formattedAmount}/${intervalLabel}`;
+      return course.priceInterval === "month"
+        ? `${formattedAmount}/mes`
+        : `Desde suscripcion`;
     }
     return formattedAmount;
   };
@@ -83,11 +79,21 @@ export default function CompareClient() {
   };
 
   const formatDescription = (course: typeof leftCourse) => {
-    const description = course?.shortDescription ?? "Descripcion pendiente de validar.";
+    const description = course?.shortDescription;
+    if (!description) {
+      return null;
+    }
     return truncateText(description, 140);
   };
 
-  const rows = [
+  const formatRating = (course: typeof leftCourse) => {
+    if (!course?.rating) {
+      return null;
+    }
+    return course.rating.toFixed(1);
+  };
+
+  const rawRows = [
     {
       label: "Precio",
       left: formatPrice(leftCourse),
@@ -104,8 +110,8 @@ export default function CompareClient() {
     { label: "Nivel", left: leftCourse.level, right: rightCourse.level },
     {
       label: "Rating",
-      left: leftCourse.rating ? leftCourse.rating.toFixed(1) : "Rating no verificado",
-      right: rightCourse.rating ? rightCourse.rating.toFixed(1) : "Rating no verificado"
+      left: formatRating(leftCourse),
+      right: formatRating(rightCourse)
     },
     { label: "Idioma", left: leftCourse.language, right: rightCourse.language },
     {
@@ -118,14 +124,15 @@ export default function CompareClient() {
       left:
         leftCourse.syllabusBullets?.length
           ? leftCourse.syllabusBullets.slice(0, 3).join(" · ")
-          : "Pendiente de validar",
+          : null,
       right:
         rightCourse.syllabusBullets?.length
           ? rightCourse.syllabusBullets.slice(0, 3).join(" · ")
-          : "Pendiente de validar",
+          : null,
       className: "text-sm text-slate-600"
     }
   ];
+  const rows = rawRows.filter((row) => row.left || row.right);
 
   return (
     <section className="flex flex-col gap-8">
@@ -141,18 +148,40 @@ export default function CompareClient() {
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         <div className="grid grid-cols-3 gap-4 border-b border-slate-200 bg-slate-50 px-6 py-4 text-sm font-semibold text-slate-700">
           <span>Detalle</span>
-          <span>{leftCourse.title}</span>
-          <span>{rightCourse.title}</span>
+          <span className="flex flex-col gap-3">
+            {leftCourse.title}
+            <a
+              href={leftCourse.externalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-fit rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
+            >
+              Ver curso
+            </a>
+          </span>
+          <span className="flex flex-col gap-3">
+            {rightCourse.title}
+            <a
+              href={rightCourse.externalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-fit rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
+            >
+              Ver curso
+            </a>
+          </span>
         </div>
         <div className="divide-y divide-slate-200">
           {rows.map((row) => (
             <div
               key={row.label}
-              className="grid grid-cols-3 gap-4 px-6 py-4 text-sm text-slate-600"
+              className={`grid grid-cols-3 gap-4 px-6 py-4 text-sm text-slate-600 ${
+                row.left !== row.right ? "bg-blue-50/50" : ""
+              }`}
             >
               <span className="font-semibold text-slate-700">{row.label}</span>
-              <span className={row.className}>{row.left}</span>
-              <span className={row.className}>{row.right}</span>
+              <span className={row.className}>{row.left ?? "Sin dato"}</span>
+              <span className={row.className}>{row.right ?? "Sin dato"}</span>
             </div>
           ))}
         </div>
