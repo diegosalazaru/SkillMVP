@@ -8,27 +8,13 @@ import { Filters } from "@/components/Filters";
 import { CompareBar } from "@/components/CompareBar";
 import { courses } from "@/lib/catalog-adapter";
 import { slugify, titleFromSlug } from "@/utils/slugify";
+import {
+  getSkillOptions,
+  getSkillSuggestions,
+  resolveSkillSlug
+} from "@/lib/skill-routing";
 
 const LAST_SKILL_KEY = "skills-compare-last-skill";
-
-const normalizeSkillSlug = (value: string) => {
-  const normalized = slugify(value);
-
-  const withoutPrefix = normalized.startsWith("skills")
-    ? normalized.replace(/^skills-?/, "")
-    : normalized;
-
-  const aliases: Record<string, string> = {
-    "machine": "ai",
-    "machine-learning": "ai",
-    "ai-fundamentals": "ai",
-    "prompt-engineering": "ai",
-    "llms": "ai",
-    "data-analytics": "data-analysis"
-  };
-
-  return aliases[withoutPrefix] ?? withoutPrefix;
-};
 
 type FiltersState = {
   platform: string;
@@ -42,7 +28,7 @@ export default function SkillPage() {
     ? params.skillSlug[0]
     : params.skillSlug;
 
-  const skillSlug = rawSkillSlug ? normalizeSkillSlug(rawSkillSlug) : undefined;
+  const skillSlug = rawSkillSlug ? resolveSkillSlug(rawSkillSlug) : null;
 
   const [filters, setFilters] = useState<FiltersState>({
     platform: "All",
@@ -51,14 +37,11 @@ export default function SkillPage() {
   });
 
   const availableSkillSlugs = useMemo(() => {
-    const slugs = new Set<string>();
-    courses.forEach((course) => {
-      course.skillTags.forEach((tag) => slugs.add(slugify(tag)));
-    });
-    return slugs;
+    return new Set(getSkillOptions().map((skill) => skill.slug));
   }, []);
 
   const skillExists = skillSlug ? availableSkillSlugs.has(skillSlug) : false;
+  const suggestions = useMemo(() => getSkillSuggestions(), []);
 
   const platformOptions = useMemo(() => {
     const platforms = Array.from(
@@ -151,15 +134,19 @@ export default function SkillPage() {
       {!skillExists ? (
         <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600">
           <p>
-            No encontramos esta skill. Revisa el enlace o vuelve a buscar desde
-            el inicio.
+            No encontramos esta skill. Prueba una de estas opciones del catalogo.
           </p>
-          <Link
-            href="/"
-            className="mt-4 inline-flex rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-500"
-          >
-            Volver al Home
-          </Link>
+          <div className="mt-5 flex flex-wrap justify-center gap-2">
+            {suggestions.map((skill) => (
+              <Link
+                key={skill.slug}
+                href={`/skills/${skill.slug}`}
+                className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:border-slate-300"
+              >
+                {skill.title}
+              </Link>
+            ))}
+          </div>
         </div>
       ) : filteredCourses.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600">
