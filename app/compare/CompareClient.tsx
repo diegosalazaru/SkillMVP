@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 import { courses } from "@/lib/catalog-adapter";
+import { EXTERNAL_LINK_DISCLOSURE } from "@/lib/disclosure";
 
 const LAST_SKILL_KEY = "skills-compare-last-skill";
 
@@ -186,6 +187,7 @@ export default function CompareClient() {
           ))}
         </div>
       </div>
+      <p className="text-xs text-slate-500">{EXTERNAL_LINK_DISCLOSURE}</p>
 
       <button
         type="button"
