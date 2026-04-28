@@ -141,8 +141,28 @@ export default function CompareClient() {
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         <div className="grid grid-cols-3 gap-4 border-b border-slate-200 bg-slate-50 px-6 py-4 text-sm font-semibold text-slate-700">
           <span>Detalle</span>
-          <span>{leftCourse.title}</span>
-          <span>{rightCourse.title}</span>
+          <span className="flex flex-col gap-3">
+            {leftCourse.title}
+            <a
+              href={leftCourse.externalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-fit rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
+            >
+              Ver curso
+            </a>
+          </span>
+          <span className="flex flex-col gap-3">
+            {rightCourse.title}
+            <a
+              href={rightCourse.externalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-fit rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
+            >
+              Ver curso
+            </a>
+          </span>
         </div>
         <div className="divide-y divide-slate-200">
           {rows.map((row) => (

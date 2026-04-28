@@ -41,13 +41,23 @@ export const CourseCard = ({ course }: CourseCardProps) => {
           <span className="font-medium text-slate-800">{course.priceText}</span>
         </div>
       </div>
-      <div className="mt-auto flex items-center justify-between gap-3">
-        <Link
-          href={`/courses/${course.id}`}
-          className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
-        >
-          Ver
-        </Link>
+      <div className="mt-auto flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <a
+            href={course.externalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
+          >
+            Ver curso
+          </a>
+          <Link
+            href={`/courses/${course.id}`}
+            className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
+          >
+            Detalles
+          </Link>
+        </div>
         <label className="flex items-center gap-2 text-sm text-slate-600">
           <input
             type="checkbox"
