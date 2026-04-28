@@ -11,6 +11,25 @@ import { slugify, titleFromSlug } from "@/utils/slugify";
 
 const LAST_SKILL_KEY = "skills-compare-last-skill";
 
+const normalizeSkillSlug = (value: string) => {
+  const normalized = slugify(value);
+
+  const withoutPrefix = normalized.startsWith("skills")
+    ? normalized.replace(/^skills-?/, "")
+    : normalized;
+
+  const aliases: Record<string, string> = {
+    "machine": "ai",
+    "machine-learning": "ai",
+    "ai-fundamentals": "ai",
+    "prompt-engineering": "ai",
+    "llms": "ai",
+    "data-analytics": "data-analysis"
+  };
+
+  return aliases[withoutPrefix] ?? withoutPrefix;
+};
+
 type FiltersState = {
   platform: string;
   level: string;
@@ -19,9 +38,12 @@ type FiltersState = {
 
 export default function SkillPage() {
   const params = useParams();
-  const skillSlug = Array.isArray(params.skillSlug)
+  const rawSkillSlug = Array.isArray(params.skillSlug)
     ? params.skillSlug[0]
     : params.skillSlug;
+
+  const skillSlug = rawSkillSlug ? normalizeSkillSlug(rawSkillSlug) : undefined;
+
   const [filters, setFilters] = useState<FiltersState>({
     platform: "All",
     level: "All",
