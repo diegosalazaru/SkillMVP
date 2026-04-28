@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
-import { courses } from "@/data/courses";
+import { courses } from "@/lib/catalog-adapter";
 import { useCompareSelection } from "@/contexts/CompareSelectionContext";
 
 export default function CourseDetailPage() {
