@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Course } from "@/types/course";
 import { useCompareSelection } from "@/contexts/CompareSelectionContext";
 import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
+import { EXTERNAL_LINK_DISCLOSURE } from "@/lib/disclosure";
 
 type CourseCardProps = {
   course: Course;

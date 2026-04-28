@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 import { courses } from "@/lib/catalog-adapter";
 import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
+import { EXTERNAL_LINK_DISCLOSURE } from "@/lib/disclosure";
 
 const LAST_SKILL_KEY = "skills-compare-last-skill";
 

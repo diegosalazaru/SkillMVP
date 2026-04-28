@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { courses } from "@/lib/catalog-adapter";
 import { useCompareSelection } from "@/contexts/CompareSelectionContext";
 import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
+import { EXTERNAL_LINK_DISCLOSURE } from "@/lib/disclosure";
 
 type CourseDetailClientProps = {
   courseId: string;
