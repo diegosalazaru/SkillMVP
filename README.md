@@ -1,84 +1,55 @@
-# Skills Compare (MVP)
+# Skills Compare
 
-MVP funcional para validar la web app **Skills Compare**. Permite buscar una skill, explorar cursos mock, ver detalles y comparar exactamente 2 cursos.
+Skills Compare is a Next.js MVP for comparing online courses by skill. It helps users search a skill, review available courses, compare two options, and open the original course platform.
 
-## 🚀 Cómo instalar y correr
-
-```bash
-npm install
-npm run dev
-```
-
-La app corre en `http://localhost:3000`.
-
-## 🔎 Validación de datos normalizados
-
-Para validar el archivo `data/normalized/courses.json` contra el schema de cursos:
+## Run Locally
 
 ```bash
-pnpm validate:data
+corepack pnpm install
+corepack pnpm dev
 ```
 
-Si el archivo aún no existe, el script mostrará un warning sin fallar.
+The app runs at `http://localhost:3000`.
 
-## 📥 Ingesta inicial de edX
-
-Para generar `data/normalized/courses.json` desde el catálogo público de edX:
+## Validate Data
 
 ```bash
-pnpm ingest:edx
+corepack pnpm validate:data
 ```
 
-El script consulta el API de edX (por defecto con `EDX_QUERY=ai`) y normaliza los cursos a nuestro schema.
-Limitaciones actuales: no todos los campos están disponibles en el API y algunos valores quedan en `null`.
-Puedes ajustar `EDX_QUERY` y `EDX_PAGE_SIZE` vía variables de entorno para controlar el subconjunto de resultados.
+This validates `data/normalized/courses.json` against the course schema in `src/lib/schema/course.ts`.
 
-## 📁 Estructura del proyecto
+## Build
 
-```
-next-env.d.ts
-next.config.js
-package.json
-postcss.config.js
-tailwind.config.js
-tsconfig.json
-.gitkeep
-app/
-  compare/page.tsx
-  courses/[courseId]/page.tsx
-  skills/[skillSlug]/page.tsx
-  globals.css
-  layout.tsx
-  page.tsx
-src/
-  components/
-    CompareBar.tsx
-    CourseCard.tsx
-    Filters.tsx
-    SearchBar.tsx
-  data/
-    courses.ts
-  hooks/
-    useCompareSelection.ts
-  types/
-    course.ts
-  utils/
-    slugify.ts
+```bash
+corepack pnpm build
 ```
 
-## ✅ Qué incluye el MVP
+Run this before merging UI, routing, metadata, or data changes.
 
-- Búsqueda de skills con sugerencias rápidas.
-- Listado de cursos con filtros client-side.
-- Detalle de curso con objetivos, requisitos y temario.
-- Comparativa de 2 cursos usando query string.
-- Datos mock locales (sin APIs externas).
+## Data Commands
 
-## ❗ Qué falta para producción
+```bash
+corepack pnpm ingest:edx
+corepack pnpm ingest:coursera
+corepack pnpm build:catalog
+```
 
-- Integración con APIs reales (Coursera/Udemy/edX/Microsoft Learn).
-- Sistema de afiliados y tracking de conversiones.
-- SEO avanzado (metadatos dinámicos, Open Graph, sitemap).
-- Analítica de producto (eventos, funnels, métricas).
-- Autenticación y perfiles (si fuese necesario).
-- Tests automatizados y CI/CD.
+Use ingestion commands only for explicit data work. Data validation must pass before merging catalog changes.
+
+## Current Product Limitations
+
+- Catalog size is small and curated.
+- Prices, ratings, and review counts are often unknown.
+- External course links are not affiliate-enabled yet.
+- Outbound click tracking is local-only when present; it does not send analytics externally.
+- Ranking and recommendations are not implemented.
+- Course data should remain `null`, `unknown`, or empty when not verified.
+
+## Next Data Priorities
+
+- Verify course syllabi and prerequisites from reliable sources.
+- Improve provider coverage beyond the initial curated catalog.
+- Add source freshness fields only when they can be validated.
+- Preserve unknown prices and ratings until they are verified.
+- Keep normalized data schema changes small and reviewed.
