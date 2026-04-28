@@ -48,29 +48,25 @@ export default function CompareClient() {
 
   const formatPrice = (course: typeof leftCourse) => {
     if (!course) {
-      return "Precio no disponible";
+      return null;
     }
     if (course.priceModel === "free") {
       return "Gratis";
     }
     if (course.priceAmount == null || course.currency == null) {
       if (course.priceModel === "subscription") {
-        return "Suscripción (precio no disponible)";
+        return "Desde suscripcion";
       }
       if (course.priceModel === "paid_once") {
-        return "Pago único (precio no disponible)";
+        return "Pago unico";
       }
-      return "Precio no disponible";
+      return null;
     }
-    const formattedAmount = `${course.currency === "EUR" ? "€" : course.currency}${course.priceAmount}`;
+    const formattedAmount = `${course.currency === "EUR" ? "EUR " : `${course.currency} `}${course.priceAmount}`;
     if (course.priceModel === "subscription") {
-      const intervalLabel =
-        course.priceInterval === "year"
-          ? "año"
-          : course.priceInterval === "month"
-            ? "mes"
-            : "periodo";
-      return `${formattedAmount}/${intervalLabel}`;
+      return course.priceInterval === "month"
+        ? `${formattedAmount}/mes`
+        : `Desde suscripcion`;
     }
     return formattedAmount;
   };
@@ -83,11 +79,21 @@ export default function CompareClient() {
   };
 
   const formatDescription = (course: typeof leftCourse) => {
-    const description = course?.shortDescription ?? "Descripción no disponible.";
+    const description = course?.shortDescription;
+    if (!description) {
+      return null;
+    }
     return truncateText(description, 140);
   };
 
-  const rows = [
+  const formatRating = (course: typeof leftCourse) => {
+    if (!course?.rating) {
+      return null;
+    }
+    return course.rating.toFixed(1);
+  };
+
+  const rawRows = [
     {
       label: "Precio",
       left: formatPrice(leftCourse),
@@ -104,8 +110,8 @@ export default function CompareClient() {
     { label: "Nivel", left: leftCourse.level, right: rightCourse.level },
     {
       label: "Rating",
-      left: leftCourse.rating ? leftCourse.rating.toFixed(1) : "Sin rating",
-      right: rightCourse.rating ? rightCourse.rating.toFixed(1) : "Sin rating"
+      left: formatRating(leftCourse),
+      right: formatRating(rightCourse)
     },
     { label: "Idioma", left: leftCourse.language, right: rightCourse.language },
     {
@@ -118,14 +124,15 @@ export default function CompareClient() {
       left:
         leftCourse.syllabusBullets?.length
           ? leftCourse.syllabusBullets.slice(0, 3).join(" · ")
-          : "No disponible",
+          : null,
       right:
         rightCourse.syllabusBullets?.length
           ? rightCourse.syllabusBullets.slice(0, 3).join(" · ")
-          : "No disponible",
+          : null,
       className: "text-sm text-slate-600"
     }
   ];
+  const rows = rawRows.filter((row) => row.left || row.right);
 
   return (
     <section className="flex flex-col gap-8">
@@ -168,11 +175,13 @@ export default function CompareClient() {
           {rows.map((row) => (
             <div
               key={row.label}
-              className="grid grid-cols-3 gap-4 px-6 py-4 text-sm text-slate-600"
+              className={`grid grid-cols-3 gap-4 px-6 py-4 text-sm text-slate-600 ${
+                row.left !== row.right ? "bg-blue-50/50" : ""
+              }`}
             >
               <span className="font-semibold text-slate-700">{row.label}</span>
-              <span className={row.className}>{row.left}</span>
-              <span className={row.className}>{row.right}</span>
+              <span className={row.className}>{row.left ?? "Sin dato"}</span>
+              <span className={row.className}>{row.right ?? "Sin dato"}</span>
             </div>
           ))}
         </div>
