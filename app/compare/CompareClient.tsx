@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 import { courses } from "@/lib/catalog-adapter";
+import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
 
 const LAST_SKILL_KEY = "skills-compare-last-skill";
 
@@ -154,6 +155,7 @@ export default function CompareClient() {
               href={leftCourse.externalUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackOutboundCourseClick(leftCourse, "compare")}
               className="w-fit rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
             >
               Ver curso
@@ -165,6 +167,7 @@ export default function CompareClient() {
               href={rightCourse.externalUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackOutboundCourseClick(rightCourse, "compare")}
               className="w-fit rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
             >
               Ver curso
