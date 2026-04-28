@@ -1,9 +1,14 @@
-"use client";
-
 export const dynamic = "force-dynamic";
 
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import CompareClient from "./CompareClient";
+
+export const metadata: Metadata = {
+  title: "Comparar cursos | Skills Compare",
+  description:
+    "Compara dos cursos online por precio, duracion, nivel, certificado y plataforma antes de elegir."
+};
 
 export default function ComparePage() {
   return (
