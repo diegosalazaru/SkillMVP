@@ -17,6 +17,15 @@
     "certificate": true,
     "lastUpdatedAt": null,
     "shortDescription": "Machine Learning by Stanford University on Coursera (beginner level).",
+    "syllabusBullets": [
+      "Conceptos base de machine learning",
+      "Modelos y evaluacion de resultados",
+      "Aplicacion practica de aprendizaje automatico"
+    ],
+    "prerequisitesBullets": [
+      "Orientado a nivel beginner",
+      "Interes en datos e inteligencia artificial"
+    ],
     "source": "coursera-curated"
   },
   {
@@ -37,6 +46,15 @@
     "certificate": true,
     "lastUpdatedAt": null,
     "shortDescription": "Google Data Analytics by Google on Coursera (beginner level).",
+    "syllabusBullets": [
+      "Fundamentos de analisis de datos",
+      "Preparacion y exploracion de datos",
+      "Comunicacion de hallazgos"
+    ],
+    "prerequisitesBullets": [
+      "Orientado a nivel beginner",
+      "Interes en trabajar con datos"
+    ],
     "source": "coursera-curated"
   },
   {
@@ -57,6 +75,15 @@
     "certificate": true,
     "lastUpdatedAt": null,
     "shortDescription": "Deep Learning Specialization by DeepLearning.AI on Coursera (intermediate level).",
+    "syllabusBullets": [
+      "Conceptos de deep learning",
+      "Redes neuronales y entrenamiento",
+      "Aplicaciones practicas de modelos profundos"
+    ],
+    "prerequisitesBullets": [
+      "Nivel intermediate",
+      "Base previa en machine learning recomendada"
+    ],
     "source": "coursera-curated"
   },
   {
@@ -77,6 +104,15 @@
     "certificate": true,
     "lastUpdatedAt": null,
     "shortDescription": "IBM Data Science by IBM on Coursera (beginner level).",
+    "syllabusBullets": [
+      "Fundamentos de data science",
+      "Trabajo practico con datos",
+      "Introduccion a herramientas de ciencia de datos"
+    ],
+    "prerequisitesBullets": [
+      "Orientado a nivel beginner",
+      "Interes en analisis y ciencia de datos"
+    ],
     "source": "coursera-curated"
   },
   {
@@ -97,6 +133,15 @@
     "certificate": true,
     "lastUpdatedAt": null,
     "shortDescription": "Meta Front-End Developer by Meta on Coursera (beginner level).",
+    "syllabusBullets": [
+      "Fundamentos de desarrollo front-end",
+      "Construccion de interfaces web",
+      "Practica orientada a proyectos"
+    ],
+    "prerequisitesBullets": [
+      "Orientado a nivel beginner",
+      "Interes en crear interfaces web"
+    ],
     "source": "coursera-curated"
   }
 ]
