@@ -12,6 +12,23 @@ export const CourseCard = ({ course }: CourseCardProps) => {
   const { toggle, isSelected, selectedIds } = useCompareSelection();
   const selected = isSelected(course.id);
   const atLimit = selectedIds.length >= 2;
+  const hasKnownDuration = !course.durationText
+    .toLowerCase()
+    .includes("no disponible");
+  const hasKnownPrice = !course.priceText
+    .toLowerCase()
+    .includes("no disponible");
+  const facts = [
+    { label: "Plataforma", value: course.platform },
+    { label: "Nivel", value: course.level },
+    hasKnownDuration ? { label: "Duracion", value: course.durationText } : null,
+    hasKnownPrice ? { label: "Precio", value: course.priceText } : null,
+    {
+      label: "Certificado",
+      value: course.certificate ? "Incluido" : "No verificado"
+    },
+    course.rating ? { label: "Rating", value: course.rating.toFixed(1) } : null
+  ].filter((fact): fact is { label: string; value: string } => fact !== null);
 
   return (
     <div className="flex h-full flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -28,26 +45,36 @@ export const CourseCard = ({ course }: CourseCardProps) => {
           </span>
         ) : null}
       </div>
-      <p className="text-sm text-slate-600">
-        {course.shortDescription ?? "Descripción no disponible."}
-      </p>
-      <div className="grid gap-2 text-sm text-slate-600">
-        <div className="flex items-center justify-between">
-          <span>Duración</span>
-          <span className="font-medium text-slate-800">{course.durationText}</span>
-        </div>
-        <div className="flex items-center justify-between">
-          <span>Precio</span>
-          <span className="font-medium text-slate-800">{course.priceText}</span>
-        </div>
+      {course.shortDescription ? (
+        <p className="text-sm text-slate-600">{course.shortDescription}</p>
+      ) : null}
+      <div className="grid gap-2 text-sm text-slate-600 sm:grid-cols-2">
+        {facts.map((fact) => (
+          <div key={fact.label} className="rounded-lg bg-slate-50 px-3 py-2">
+            <span className="block text-xs font-medium text-slate-500">
+              {fact.label}
+            </span>
+            <span className="font-semibold text-slate-800">{fact.value}</span>
+          </div>
+        ))}
       </div>
-      <div className="mt-auto flex items-center justify-between gap-3">
-        <Link
-          href={`/courses/${course.id}`}
-          className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
-        >
-          Ver
-        </Link>
+      <div className="mt-auto flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <a
+            href={course.externalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
+          >
+            Ver curso
+          </a>
+          <Link
+            href={`/courses/${course.id}`}
+            className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
+          >
+            Detalles
+          </Link>
+        </div>
         <label className="flex items-center gap-2 text-sm text-slate-600">
           <input
             type="checkbox"
