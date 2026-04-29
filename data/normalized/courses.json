@@ -16,7 +16,7 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "Machine Learning by Stanford University on Coursera (beginner level).",
+    "shortDescription": "Curso de Machine Learning de Stanford University en Coursera, orientado a nivel beginner.",
     "syllabusBullets": [
       "Conceptos base de machine learning",
       "Modelos y evaluacion de resultados",
@@ -45,7 +45,7 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "Google Data Analytics by Google on Coursera (beginner level).",
+    "shortDescription": "Programa de Google Data Analytics en Coursera, orientado a nivel beginner.",
     "syllabusBullets": [
       "Fundamentos de analisis de datos",
       "Preparacion y exploracion de datos",
@@ -74,7 +74,7 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "Deep Learning Specialization by DeepLearning.AI on Coursera (intermediate level).",
+    "shortDescription": "Especializacion de Deep Learning de DeepLearning.AI en Coursera, orientada a nivel intermediate.",
     "syllabusBullets": [
       "Conceptos de deep learning",
       "Redes neuronales y entrenamiento",
@@ -103,7 +103,7 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "IBM Data Science by IBM on Coursera (beginner level).",
+    "shortDescription": "Programa de IBM Data Science en Coursera, orientado a nivel beginner.",
     "syllabusBullets": [
       "Fundamentos de data science",
       "Trabajo practico con datos",
@@ -132,7 +132,7 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "Meta Front-End Developer by Meta on Coursera (beginner level).",
+    "shortDescription": "Programa Meta Front-End Developer en Coursera, orientado a nivel beginner.",
     "syllabusBullets": [
       "Fundamentos de desarrollo front-end",
       "Construccion de interfaces web",
