@@ -50,6 +50,9 @@ export const CourseCard = ({ course }: CourseCardProps) => {
       {course.shortDescription ? (
         <p className="text-sm text-slate-600">{course.shortDescription}</p>
       ) : null}
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
+        Datos para decidir
+      </p>
       <div className="grid gap-2 text-sm text-slate-600 sm:grid-cols-2">
         {facts.map((fact) => (
           <div key={fact.label} className="rounded-lg bg-slate-50 px-3 py-2">
