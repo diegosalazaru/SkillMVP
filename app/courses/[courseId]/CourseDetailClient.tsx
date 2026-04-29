@@ -33,7 +33,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
           href="/"
           className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-500"
         >
-          Ir al Home
+          Ir al inicio
         </Link>
       </section>
     );
@@ -192,7 +192,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
         href={course.skillTags[0] ? `/skills/${course.skillTags[0]}` : "/"}
         className="text-sm font-semibold text-slate-600 hover:text-slate-900"
       >
-        ← Volver al Home
+        Volver a cursos relacionados
       </Link>
     </section>
   );

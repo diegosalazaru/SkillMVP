@@ -76,7 +76,7 @@ export const CompareSelectionProvider = ({ children }: { children: React.ReactNo
         return current.filter((item) => item !== id);
       }
       if (current.length >= MAX_COMPARE) {
-        setNotice(`Solo puedes comparar ${MAX_COMPARE} cursos por ahora.`);
+        setNotice(`Solo puedes comparar ${MAX_COMPARE} cursos.`);
         return current;
       }
       setNotice(null);
