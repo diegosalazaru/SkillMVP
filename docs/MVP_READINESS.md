@@ -21,6 +21,11 @@
 - No sitemap or Open Graph layer exists yet.
 - Course freshness and source verification are limited.
 
+## Phase 1 Progress
+
+- ✅ Added a per-course source metadata file scaffold at `data/normalized/course-source-metadata.json`.
+- Current entries are intentionally marked `pending` until manual verification is completed.
+
 ## Current Limitations
 
 - Skills Compare should not claim a course is best without real ranking criteria.
