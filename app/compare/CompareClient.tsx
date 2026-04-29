@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 import { courses } from "@/lib/catalog-adapter";
@@ -166,7 +167,12 @@ export default function CompareClient() {
         <div className="grid grid-cols-3 gap-4 border-b border-slate-200 bg-slate-50 px-6 py-4 text-sm font-semibold text-slate-700">
           <span>Detalle</span>
           <span className="flex flex-col gap-3">
-            {leftCourse.title}
+            <Link
+              href={`/courses/${leftCourse.id}`}
+              className="text-slate-900 hover:underline"
+            >
+              {leftCourse.title}
+            </Link>
             <a
               href={leftCourse.externalUrl}
               target="_blank"
@@ -178,7 +184,12 @@ export default function CompareClient() {
             </a>
           </span>
           <span className="flex flex-col gap-3">
-            {rightCourse.title}
+            <Link
+              href={`/courses/${rightCourse.id}`}
+              className="text-slate-900 hover:underline"
+            >
+              {rightCourse.title}
+            </Link>
             <a
               href={rightCourse.externalUrl}
               target="_blank"
