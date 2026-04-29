@@ -9,6 +9,7 @@ type OutboundCourseClickEvent = {
   courseTitle: string;
   platform: Course["platform"];
   externalUrl: string;
+  trackingMode: "local_console_only";
   occurredAt: string;
 };
 
@@ -27,8 +28,9 @@ export const trackOutboundCourseClick = (
     courseTitle: course.title,
     platform: course.platform,
     externalUrl: course.externalUrl,
+    trackingMode: "local_console_only",
     occurredAt: new Date().toISOString()
   };
 
-  console.info("[tracking]", event);
+  console.info("[outbound-course-click]", event);
 };
