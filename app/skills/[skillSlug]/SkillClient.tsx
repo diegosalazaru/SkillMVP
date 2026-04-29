@@ -156,7 +156,7 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
         </h2>
         <p className="mt-2 text-slate-600">
           {skillIntro ??
-            "No tenemos cursos para esta skill todavia. Puedes revisar alternativas reales del catalogo."}
+            "No tenemos cursos validados para esta skill. Revisa alternativas disponibles en el catalogo."}
         </p>
         {skillExists ? (
           <p className="mt-2 text-sm text-slate-500">
@@ -169,7 +169,12 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
 
       {skillExists ? (
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 className="text-lg font-semibold text-slate-900">Que comparar</h3>
+          <h3 className="text-lg font-semibold text-slate-900">
+            Como comparar cursos
+          </h3>
+          <p className="mt-2 text-sm text-slate-600">
+            Usa estos criterios para decidir que curso encaja mejor con tu contexto.
+          </p>
           <ul className="mt-3 grid gap-2 text-sm text-slate-600 sm:grid-cols-2 lg:grid-cols-5">
             {["Precio", "Duracion", "Nivel", "Certificado", "Plataforma"].map(
               (item) => (
@@ -195,13 +200,13 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
       {!skillExists ? (
         <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600">
           <p>
-            No encontramos esta skill. Estas opciones si tienen cursos disponibles.
+            No encontramos cursos validados para esta skill. Puedes revisar alternativas reales del catalogo.
           </p>
           <Link
             href="/"
             className="mt-4 inline-flex rounded-lg border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:border-blue-300"
           >
-            Ver alternativas
+            Ver alternativas disponibles
           </Link>
           <div className="mt-5 flex flex-wrap justify-center gap-2">
             {alternatives.map((skill) => (
