@@ -5,9 +5,9 @@ import { Suspense } from "react";
 import CompareClient from "./CompareClient";
 
 export const metadata: Metadata = {
-  title: "Comparar cursos | Skills Compare",
+  title: "Compare two online courses | Skills Compare",
   description:
-    "Compara dos cursos online por precio, duracion, nivel, certificado y plataforma antes de elegir."
+    "Course comparison page to compare two online courses by price, duration, level, certificate and platform."
 };
 
 export default function ComparePage() {

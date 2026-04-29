@@ -22,7 +22,7 @@ export const generateMetadata = ({ params }: SkillPageProps): Metadata => {
   const courseCount = getCoursesForSkill(skill.slug).length;
 
   return {
-    title: `Cursos de ${skill.title} | Skills Compare`,
+    title: `Compare ${skill.title} courses online | Skills Compare`,
     description: `Compara ${courseCount} cursos de ${skill.title} por plataforma, precio, duracion y nivel antes de elegir.`
   };
 };
