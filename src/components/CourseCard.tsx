@@ -23,17 +23,17 @@ export const CourseCard = ({ course }: CourseCardProps) => {
   const facts = [
     { label: "Plataforma", value: course.platform },
     { label: "Nivel", value: course.level },
-    hasKnownDuration ? { label: "Duracion", value: course.durationText } : null,
+    hasKnownDuration ? { label: "Duración", value: course.durationText } : null,
     hasKnownPrice ? { label: "Precio", value: course.priceText } : null,
     {
       label: "Certificado",
       value: course.certificate ? "Incluido" : "No verificado"
     },
-    course.rating ? { label: "Rating", value: course.rating.toFixed(1) } : null
+    course.language ? { label: "Idioma", value: course.language } : null
   ].filter((fact): fact is { label: string; value: string } => fact !== null);
 
   return (
-    <div className="flex h-full flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="flex h-full flex-col gap-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex items-start justify-between gap-4">
         <div>
           <h3 className="text-lg font-semibold text-slate-900">{course.title}</h3>
@@ -48,20 +48,22 @@ export const CourseCard = ({ course }: CourseCardProps) => {
         ) : null}
       </div>
       {course.shortDescription ? (
-        <p className="text-sm text-slate-600">{course.shortDescription}</p>
+        <p className="text-sm leading-relaxed text-slate-600">{course.shortDescription}</p>
       ) : null}
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
-        Datos para decidir
-      </p>
-      <div className="grid gap-2 text-sm text-slate-600 sm:grid-cols-2">
-        {facts.map((fact) => (
-          <div key={fact.label} className="rounded-lg bg-slate-50 px-3 py-2">
-            <span className="block text-xs font-medium text-slate-500">
-              {fact.label}
-            </span>
-            <span className="font-semibold text-slate-800">{fact.value}</span>
-          </div>
-        ))}
+      <div className="space-y-2">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
+          Datos para decidir
+        </p>
+        <div className="grid gap-2 text-sm text-slate-600 sm:grid-cols-2">
+          {facts.map((fact) => (
+            <div key={fact.label} className="rounded-lg bg-slate-50 px-3 py-2">
+              <span className="block text-xs font-medium text-slate-500">
+                {fact.label}
+              </span>
+              <span className="font-semibold text-slate-800">{fact.value}</span>
+            </div>
+          ))}
+        </div>
       </div>
       <div className="mt-auto flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
@@ -72,7 +74,7 @@ export const CourseCard = ({ course }: CourseCardProps) => {
             onClick={() => trackOutboundCourseClick(course, "card")}
             className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
           >
-            Ver curso
+            Ver curso en {course.platform}
           </a>
           <Link
             href={`/courses/${course.id}`}
@@ -88,13 +90,14 @@ export const CourseCard = ({ course }: CourseCardProps) => {
             onChange={() => toggle(course.id)}
             className="h-4 w-4 rounded border-slate-300 text-slate-900"
           />
-          Agregar a comparacion
+          Agregar a comparación
         </label>
       </div>
+      <p className="text-xs text-slate-500">Se abrirá en una página externa.</p>
       <p className="text-xs text-slate-500">{EXTERNAL_LINK_DISCLOSURE}</p>
       {atLimit && !selected ? (
         <p className="text-xs text-amber-600">
-          Limite alcanzado: quita un curso para agregar otro.
+          Límite alcanzado: quita un curso para agregar otro.
         </p>
       ) : null}
     </div>

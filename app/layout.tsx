@@ -4,8 +4,8 @@ import "./globals.css";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
-  title: "Skills Compare",
-  description: "Compara cursos online y elige donde aprender"
+  title: "Compare online courses | Skills Compare",
+  description: "Course comparison tool to compare online courses by price, duration, level and certificate."
 };
 
 export default function RootLayout({
@@ -25,6 +25,10 @@ export default function RootLayout({
                 </p>
                 <h1 className="text-xl font-semibold">Encuentra el curso ideal</h1>
               </Link>
+              <nav className="flex items-center gap-4 text-sm font-medium text-slate-600">
+                <Link href="/compare" className="hover:text-slate-900">Comparar cursos</Link>
+                <Link href="/blog" className="hover:text-slate-900">Blog</Link>
+              </nav>
             </header>
             <main className="flex-1 py-8">{children}</main>
             <footer className="border-t border-slate-200 py-6 text-sm text-slate-500">

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import HomeClient from "./HomeClient";
 
 export const metadata: Metadata = {
-  title: "Skills Compare | Compara cursos online",
+  title: "Compare courses online | Skills Compare",
   description:
-    "Busca una skill, compara cursos online por precio, duración, nivel y certificado, y elige dónde aprender."
+    "Compare online courses by price, duration, level and certificate before deciding."
 };
 
 export default function HomePage() {

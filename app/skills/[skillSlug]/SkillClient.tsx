@@ -169,14 +169,19 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
           {skillIntro ??
             "No tenemos cursos validados para esta skill. Revisa alternativas disponibles en el catalogo."}
         </p>
-        {skillExists ? (
-          <p className="mt-2 text-sm text-slate-500">
-            Catalogo actual: {skillCourses.length} cursos
+        
+      </div>
+
+      {skillExists ? (
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 className="text-lg font-semibold text-slate-900">Sobre esta skill</h3>
+          <p className="mt-2 text-sm text-slate-600">
+            {skillCourses.length} cursos verificados
             {availablePlatforms ? ` en ${availablePlatforms}` : ""}
             {availableLevels ? `, niveles ${availableLevels}` : ""}.
           </p>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
 
       {skillExists ? (
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
