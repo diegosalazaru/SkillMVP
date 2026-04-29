@@ -6,6 +6,7 @@ import { useMemo } from "react";
 import { courses } from "@/lib/catalog-adapter";
 import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
 import { EXTERNAL_LINK_DISCLOSURE } from "@/lib/disclosure";
+import { AdPlaceholder } from "@/components/AdPlaceholder";
 
 const LAST_SKILL_KEY = "skills-compare-last-skill";
 
@@ -122,6 +123,8 @@ export default function CompareClient() {
           })}
         </div>
       </div>
+
+      <AdPlaceholder />
       <p className="text-xs text-slate-500">{EXTERNAL_LINK_DISCLOSURE}</p>
 
       <button type="button" onClick={handleChangeCourses} className="w-fit rounded-lg border border-blue-200 px-5 py-2 text-sm font-semibold text-blue-700 hover:border-blue-300">Cambiar cursos</button>

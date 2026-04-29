@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { blogPosts, getBlogPost } from "@/lib/blog";
+import { AdPlaceholder } from "@/components/AdPlaceholder";
 
 type BlogPostPageProps = {
   params: { slug: string };
@@ -35,7 +36,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         <h2 className="text-3xl font-semibold text-slate-900">{post.title}</h2>
         <p className="text-slate-600">{post.description}</p>
       </header>
-      {post.sections.map((section) => (
+      {post.sections.map((section, index) => (
         <section key={section.heading} className="space-y-3">
           <h3 className="text-xl font-semibold text-slate-800">{section.heading}</h3>
           <ul className="grid gap-2 text-slate-600">
@@ -43,6 +44,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               <li key={point} className="rounded-lg bg-slate-50 px-3 py-2">{point}</li>
             ))}
           </ul>
+          {index === 0 ? <AdPlaceholder /> : null}
         </section>
       ))}
     </article>

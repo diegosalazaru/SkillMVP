@@ -5,6 +5,7 @@ import Link from "next/link";
 import { CourseCard } from "@/components/CourseCard";
 import { Filters } from "@/components/Filters";
 import { CompareBar } from "@/components/CompareBar";
+import { AdPlaceholder } from "@/components/AdPlaceholder";
 import { courses } from "@/lib/catalog-adapter";
 import { getSkillAlternatives, getSkillIntro } from "@/lib/skill-catalog";
 import { slugify, titleFromSlug } from "@/utils/slugify";
@@ -244,9 +245,21 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
         </div>
       ) : (
         <div className="grid gap-6 lg:grid-cols-2">
-          {filteredCourses.map((course) => (
-            <CourseCard key={course.id} course={course} />
+          {filteredCourses.map((course, index) => (
+            <div key={course.id} className="contents">
+              <CourseCard course={course} />
+              {index === 1 ? (
+                <div className="lg:col-span-2">
+                  <AdPlaceholder />
+                </div>
+              ) : null}
+            </div>
           ))}
+          {filteredCourses.length < 2 ? (
+            <div className="lg:col-span-2">
+              <AdPlaceholder />
+            </div>
+          ) : null}
         </div>
       )}
 

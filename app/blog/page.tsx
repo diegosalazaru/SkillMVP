@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { blogPosts } from "@/lib/blog";
+import { AdPlaceholder } from "@/components/AdPlaceholder";
 
 export const metadata: Metadata = {
   title: "Blog | Comparar cursos online",
@@ -23,6 +24,7 @@ export default function BlogPage() {
           </article>
         ))}
       </div>
+      <AdPlaceholder className="max-w-2xl" />
     </section>
   );
 }
