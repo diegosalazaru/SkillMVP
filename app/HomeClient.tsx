@@ -20,18 +20,22 @@ export default function HomeClient() {
     <section className="flex flex-col gap-8">
       <div className="space-y-3">
         <h2 className="text-3xl font-semibold text-slate-900">
-          Compara cursos online antes de elegir.
+          Encuentra cursos online por skill.
         </h2>
         <p className="max-w-2xl text-slate-600">
-          Busca una skill del catalogo, revisa cursos reales lado a lado y abre
-          la plataforma original cuando encuentres una opcion que encaje contigo.
+          Busca lo que quieres aprender, explora opciones disponibles y compara
+          cuando tengas cursos candidatos.
         </p>
       </div>
 
       <SearchBar placeholder="Ej: ai, data analysis, frontend" onSearch={handleSearch} />
-      <p className="text-sm text-slate-500">
-        Selecciona 2 cursos para comparar precio, duracion, nivel y certificado.
-      </p>
+      <div className="grid gap-3 text-sm text-slate-600 sm:grid-cols-3">
+        {["Buscar skill", "Explorar cursos", "Comparar opciones"].map((step) => (
+          <div key={step} className="rounded-lg bg-white px-4 py-3 shadow-sm">
+            {step}
+          </div>
+        ))}
+      </div>
 
       <div className="flex flex-wrap gap-2">
         {suggestions.map((skill) => (
