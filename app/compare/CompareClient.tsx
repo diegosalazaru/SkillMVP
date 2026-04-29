@@ -32,10 +32,10 @@ export default function CompareClient() {
     return (
       <section className="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center">
         <h2 className="text-2xl font-semibold text-slate-900">
-          Selecciona 2 cursos para comparar
+          Selecciona cursos para comparar
         </h2>
         <p className="text-slate-600">
-          Vuelve al listado y selecciona exactamente dos cursos para continuar.
+          Vuelve al listado y selecciona cursos para comparar.
         </p>
         <button
           type="button"
@@ -53,22 +53,22 @@ export default function CompareClient() {
       return null;
     }
     if (course.priceModel === "free") {
-      return "Gratis";
+      return course.certificate ? "Gratis" : "Gratis (sin certificado)";
     }
     if (course.priceAmount == null || course.currency == null) {
       if (course.priceModel === "subscription") {
-        return "Desde suscripcion";
+        return course.certificate ? "Pago (certificado)" : "Precio no verificado";
       }
       if (course.priceModel === "paid_once") {
-        return "Pago unico";
+        return course.certificate ? "Pago (certificado)" : "Precio no verificado";
       }
-      return null;
+      return "Precio no verificado";
     }
     const formattedAmount = `${course.currency === "EUR" ? "EUR " : `${course.currency} `}${course.priceAmount}`;
     if (course.priceModel === "subscription") {
       return course.priceInterval === "month"
         ? `${formattedAmount}/mes`
-        : `Desde suscripcion`;
+        : "Precio no verificado";
     }
     return formattedAmount;
   };
@@ -135,6 +135,21 @@ export default function CompareClient() {
     }
   ];
   const rows = rawRows.filter((row) => row.left || row.right);
+  const getRowGroup = (label: string) => {
+    if (label === "Precio" || label === "Certificado") {
+      return "Coste";
+    }
+    if (label === "DuraciÃ³n") {
+      return "Esfuerzo";
+    }
+    if (label === "Nivel") {
+      return "Nivel";
+    }
+    if (label === "DescripciÃ³n" || label === "Puntos clave") {
+      return "Contenido";
+    }
+    return "Contexto";
+  };
 
   return (
     <section className="flex flex-col gap-8">
@@ -176,18 +191,35 @@ export default function CompareClient() {
           </span>
         </div>
         <div className="divide-y divide-slate-200">
-          {rows.map((row) => (
-            <div
-              key={row.label}
-              className={`grid grid-cols-3 gap-4 px-6 py-4 text-sm text-slate-600 ${
-                row.left !== row.right ? "bg-blue-50/50" : ""
-              }`}
-            >
-              <span className="font-semibold text-slate-700">{row.label}</span>
-              <span className={row.className}>{row.left ?? "Sin dato"}</span>
-              <span className={row.className}>{row.right ?? "Sin dato"}</span>
-            </div>
-          ))}
+          {rows.map((row, index) => {
+            const group = getRowGroup(row.label);
+            const previousGroup =
+              index > 0 ? getRowGroup(rows[index - 1].label) : null;
+            const differs = row.left !== row.right;
+
+            return (
+              <div key={row.label}>
+                {group !== previousGroup ? (
+                  <div className="bg-slate-100 px-6 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+                    {group}
+                  </div>
+                ) : null}
+                <div
+                  className={`grid grid-cols-3 gap-4 px-6 py-4 text-sm text-slate-600 ${
+                    differs ? "bg-blue-50/50" : "bg-white"
+                  }`}
+                >
+                  <span className="font-semibold text-slate-700">{row.label}</span>
+                  <span className={row.className}>
+                    {row.left ?? "Pendiente de validar"}
+                  </span>
+                  <span className={row.className}>
+                    {row.right ?? "Pendiente de validar"}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
       <p className="text-xs text-slate-500">{EXTERNAL_LINK_DISCLOSURE}</p>
