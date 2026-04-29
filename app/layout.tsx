@@ -25,13 +25,10 @@ export default function RootLayout({
                 </p>
                 <h1 className="text-xl font-semibold">Encuentra el curso ideal</h1>
               </Link>
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
-                MVP
-              </span>
             </header>
             <main className="flex-1 py-8">{children}</main>
             <footer className="border-t border-slate-200 py-6 text-sm text-slate-500">
-              MVP para validar Skills Compare con datos curados y enlaces a plataformas externas.
+              Datos curados y enlaces a plataformas externas.
             </footer>
           </div>
         </Providers>
