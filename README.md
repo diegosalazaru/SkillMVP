@@ -53,3 +53,7 @@ Use ingestion commands only for explicit data work. Data validation must pass be
 - Add source freshness fields only when they can be validated.
 - Preserve unknown prices and ratings until they are verified.
 - Keep normalized data schema changes small and reviewed.
+
+## Agent Workflow
+
+Agents working on this repository should follow [docs/AGENT_GUIDE.md](docs/AGENT_GUIDE.md).
