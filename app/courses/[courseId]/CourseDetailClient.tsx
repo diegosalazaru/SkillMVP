@@ -18,7 +18,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
   );
 
   const { toggle, isSelected, selectedIds, notice } = useCompareSelection();
-  const objectives = course ? course.syllabusBullets.slice(0, 3) : [];
+  const learningBullets = course ? course.syllabusBullets : [];
 
   if (!course) {
     return (
@@ -41,11 +41,10 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
 
   const selected = isSelected(course.id);
   const atLimit = selectedIds.length >= 2 && !selected;
-  const hasObjectives = objectives.length > 0;
+  const hasLearningBullets = learningBullets.length > 0;
   const hasPrerequisites = course.prerequisitesBullets.length > 0;
-  const hasSyllabus = course.syllabusBullets.length > 0;
-  const hasLearningContent = hasObjectives || hasPrerequisites || hasSyllabus;
-  const evaluationFacts = [
+  const hasLearningContent = hasLearningBullets || hasPrerequisites;
+  const keyFacts = [
     { label: "Plataforma", value: course.platform },
     { label: "Nivel", value: course.level },
     { label: "Duracion", value: course.durationText },
@@ -121,11 +120,11 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
 
       {hasLearningContent ? (
         <div className="grid gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-2">
-          {hasObjectives ? (
+          {hasLearningBullets ? (
             <div>
-          <h3 className="text-lg font-semibold text-slate-900">Objetivos</h3>
+          <h3 className="text-lg font-semibold text-slate-900">Que aprenderas</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
-            {objectives.map((item) => (
+            {learningBullets.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
@@ -141,16 +140,6 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
           </ul>
             </div>
           ) : null}
-          {hasSyllabus ? (
-            <div>
-          <h3 className="text-lg font-semibold text-slate-900">Temario resumido</h3>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
-            {course.syllabusBullets.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-            </div>
-          ) : null}
         </div>
       ) : (
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -158,7 +147,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
             Que puedes evaluar
           </h3>
           <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {evaluationFacts.map((fact) => (
+            {keyFacts.map((fact) => (
               <div key={fact.label} className="rounded-lg bg-slate-50 px-4 py-3">
                 <span className="block text-xs font-medium text-slate-500">
                   {fact.label}
@@ -171,7 +160,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
       )}
 
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h3 className="text-lg font-semibold text-slate-900">Detalles</h3>
+          <h3 className="text-lg font-semibold text-slate-900">Datos clave</h3>
           <div className="mt-3 space-y-2 text-sm text-slate-600">
             <p>
               <span className="font-semibold text-slate-800">Idioma:</span> {course.language}
