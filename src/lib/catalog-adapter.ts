@@ -46,35 +46,18 @@ const formatDurationText = (durationHours: number | null): string => {
 
 const formatPriceText = (course: NormalizedCourse): string => {
   if (course.priceModel === "free") {
-    return "Gratis";
+    return course.certificate ? "Gratis (certificado de pago)" : "Gratis";
   }
 
-  const amountKnown = course.priceAmount != null && course.currency != null;
-
   if (course.priceModel === "subscription") {
-    if (!amountKnown) {
-      return "Desde suscripción";
-    }
-
-    const intervalLabel =
-      course.priceInterval === "year"
-        ? "año"
-        : course.priceInterval === "month"
-          ? "mes"
-          : "periodo";
-
-    return `${course.currency}${course.priceAmount}/${intervalLabel}`;
+    return "Gratis con opción de pago";
   }
 
   if (course.priceModel === "paid_once") {
-    if (!amountKnown) {
-      return "Pago único";
-    }
-
-    return `${course.currency}${course.priceAmount}`;
+    return course.certificate ? "Pago (certificado incluido)" : "Pago";
   }
 
-  return "Precio pendiente de validar";
+  return "Precio no verificado";
 };
 
 const mapCourse = (course: NormalizedCourse): Course | null => {

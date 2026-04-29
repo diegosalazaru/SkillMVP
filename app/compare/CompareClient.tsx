@@ -53,25 +53,24 @@ export default function CompareClient() {
     if (!course) {
       return null;
     }
+
     if (course.priceModel === "free") {
-      return course.certificate ? "Gratis" : "Gratis (sin certificado)";
+      return course.certificate
+        ? "Gratis (certificado de pago)"
+        : "Gratis";
     }
-    if (course.priceAmount == null || course.currency == null) {
-      if (course.priceModel === "subscription") {
-        return course.certificate ? "Pago (certificado)" : "Precio no verificado";
-      }
-      if (course.priceModel === "paid_once") {
-        return course.certificate ? "Pago (certificado)" : "Precio no verificado";
-      }
-      return "Precio no verificado";
-    }
-    const formattedAmount = `${course.currency === "EUR" ? "EUR " : `${course.currency} `}${course.priceAmount}`;
+
     if (course.priceModel === "subscription") {
-      return course.priceInterval === "month"
-        ? `${formattedAmount}/mes`
-        : "Precio no verificado";
+      return "Gratis con opción de pago";
     }
-    return formattedAmount;
+
+    if (course.priceModel === "paid_once") {
+      return course.certificate
+        ? "Pago (certificado incluido)"
+        : "Pago";
+    }
+
+    return "Precio no verificado";
   };
 
   const truncateText = (value: string, maxLength: number) => {

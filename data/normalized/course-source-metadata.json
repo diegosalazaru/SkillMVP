@@ -1,0 +1,42 @@
+[
+  {
+    "courseId": "machine-learning-stanford-university",
+    "sourceUrl": "https://www.coursera.org/learn/machine-learning",
+    "verificationStatus": "pending",
+    "verifiedAt": null,
+    "verifiedBy": null,
+    "notes": "Source URL captured from normalized catalog. Manual verification still pending."
+  },
+  {
+    "courseId": "google-data-analytics-google",
+    "sourceUrl": "https://www.coursera.org/professional-certificates/google-data-analytics",
+    "verificationStatus": "pending",
+    "verifiedAt": null,
+    "verifiedBy": null,
+    "notes": "Source URL captured from normalized catalog. Manual verification still pending."
+  },
+  {
+    "courseId": "deep-learning-specialization-deeplearningai",
+    "sourceUrl": "https://www.coursera.org/specializations/deep-learning",
+    "verificationStatus": "pending",
+    "verifiedAt": null,
+    "verifiedBy": null,
+    "notes": "Source URL captured from normalized catalog. Manual verification still pending."
+  },
+  {
+    "courseId": "ibm-data-science-ibm",
+    "sourceUrl": "https://www.coursera.org/professional-certificates/ibm-data-science",
+    "verificationStatus": "pending",
+    "verifiedAt": null,
+    "verifiedBy": null,
+    "notes": "Source URL captured from normalized catalog. Manual verification still pending."
+  },
+  {
+    "courseId": "meta-front-end-developer-meta",
+    "sourceUrl": "https://www.coursera.org/professional-certificates/meta-front-end-developer",
+    "verificationStatus": "pending",
+    "verifiedAt": null,
+    "verifiedBy": null,
+    "notes": "Source URL captured from normalized catalog. Manual verification still pending."
+  }
+]
