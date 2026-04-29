@@ -35,15 +35,22 @@ const stripRoutePrefix = (value: string) =>
   value.replace(/^\/?skills\/?/, "").replace(/^skills-?/, "");
 
 export const getSkillOptions = (): SkillOption[] => {
-  const slugs = new Set<string>();
+  const counts = new Map<string, number>();
 
   courses.forEach((course) => {
-    course.skillTags.forEach((tag) => slugs.add(slugify(tag)));
+    course.skillTags.forEach((tag) => {
+      const slug = slugify(tag);
+      counts.set(slug, (counts.get(slug) ?? 0) + 1);
+    });
   });
 
-  return Array.from(slugs)
-    .sort()
-    .map((slug) => ({
+  return Array.from(counts.entries())
+    .sort(([leftSlug, leftCount], [rightSlug, rightCount]) =>
+      rightCount === leftCount
+        ? leftSlug.localeCompare(rightSlug)
+        : rightCount - leftCount
+    )
+    .map(([slug]) => ({
       slug,
       title: titleFromSlug(slug)
     }));

@@ -34,6 +34,7 @@ type FiltersState = {
   platform: string;
   level: string;
   priceModel: string;
+  language: string;
 };
 
 type SkillClientProps = {
@@ -46,7 +47,8 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
   const [filters, setFilters] = useState<FiltersState>({
     platform: "All",
     level: "All",
-    priceModel: "All"
+    priceModel: "All",
+    language: "All"
   });
 
   const availableSkillSlugs = useMemo(() => {
@@ -88,6 +90,10 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
       options.push({ value: "unknown", label: "Desconocido" });
     }
     return options;
+  }, []);
+  const languageOptions = useMemo(() => {
+    const languages = Array.from(new Set(courses.map((course) => course.language))).sort();
+    return ["All", ...languages];
   }, []);
 
   useEffect(() => {
@@ -142,8 +148,13 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
           return true;
         }
         return course.priceModel === filters.priceModel;
-      });
-  }, [filters.level, filters.platform, filters.priceModel, skillSlug]);
+      })
+      .filter((course) =>
+        filters.language === "All"
+          ? true
+          : course.language.toLowerCase() === filters.language.toLowerCase()
+      );
+  }, [filters.language, filters.level, filters.platform, filters.priceModel, skillSlug]);
 
   return (
     <section className="flex flex-col gap-8 pb-24">
@@ -193,7 +204,8 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
         options={{
           platforms: platformOptions,
           levels: levelOptions,
-          prices: priceOptions
+          prices: priceOptions,
+          languages: languageOptions
         }}
       />
 

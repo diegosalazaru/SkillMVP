@@ -4,6 +4,7 @@ type FiltersState = {
   platform: string;
   level: string;
   priceModel: string;
+  language: string;
 };
 
 type FiltersProps = {
@@ -13,6 +14,7 @@ type FiltersProps = {
     platforms: string[];
     levels: string[];
     prices: { value: string; label: string }[];
+    languages: string[];
   };
 };
 
@@ -25,14 +27,16 @@ const prices = [
   { value: "subscription", label: "Suscripción" },
   { value: "unknown", label: "Desconocido" }
 ];
+const languages = ["All"];
 
 export const Filters = ({ value, onChange, options }: FiltersProps) => {
   const platformOptions = options?.platforms ?? platforms;
   const levelOptions = options?.levels ?? levels;
   const priceOptions = options?.prices ?? prices;
+  const languageOptions = options?.languages ?? languages;
 
   return (
-    <div className="grid gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:grid-cols-3">
+    <div className="grid gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:grid-cols-4">
       <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
         Plataforma
         <select
@@ -75,6 +79,22 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
           {priceOptions.map((price) => (
             <option key={price.value} value={price.value}>
               {price.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
+        Idioma
+        <select
+          value={value.language}
+          onChange={(event) =>
+            onChange({ ...value, language: event.target.value })
+          }
+          className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700"
+        >
+          {languageOptions.map((language) => (
+            <option key={language} value={language}>
+              {language === "All" ? "Todos" : language}
             </option>
           ))}
         </select>
