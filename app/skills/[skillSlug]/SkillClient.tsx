@@ -42,6 +42,14 @@ type SkillClientProps = {
   skillSlug: string;
 };
 
+const formatList = (values: string[]) => {
+  if (values.length === 0) {
+    return "sin datos";
+  }
+
+  return values.join(", ");
+};
+
 export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProps) {
   const skillSlug = rawSkillSlug ? normalizeSkillSlug(rawSkillSlug) : undefined;
 
@@ -157,6 +165,20 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
       );
   }, [filters.language, filters.level, filters.platform, filters.priceModel, skillSlug]);
 
+  const filteredPlatforms = Array.from(
+    new Set(filteredCourses.map((course) => course.platform))
+  ).sort();
+  const filteredLevels = Array.from(
+    new Set(filteredCourses.map((course) => course.level))
+  ).sort();
+  const filteredPriceModels = Array.from(
+    new Set(filteredCourses.map((course) => course.priceText))
+  ).sort();
+  const filteredCertificateCount = filteredCourses.filter(
+    (course) => course.certificate
+  ).length;
+  const hasActiveFilters = Object.values(filters).some((value) => value !== "All");
+
   return (
     <section className="flex flex-col gap-8 pb-24">
       <div>
@@ -214,6 +236,51 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
           languages: languageOptions
         }}
       />
+
+      {skillExists ? (
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h3 className="text-lg font-semibold text-slate-900">
+                Resultados para decidir
+              </h3>
+              <p className="mt-1 text-sm text-slate-600">
+                {filteredCourses.length} de {skillCourses.length} cursos visibles
+                {hasActiveFilters ? " con los filtros actuales" : ""}.
+              </p>
+            </div>
+            <span className="w-fit rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+              {filteredCertificateCount} con certificado verificado
+            </span>
+          </div>
+          <div className="mt-4 grid gap-3 text-sm text-slate-600 md:grid-cols-3">
+            <div className="rounded-lg bg-slate-50 px-4 py-3">
+              <span className="block text-xs font-medium text-slate-500">
+                Plataformas visibles
+              </span>
+              <span className="font-semibold text-slate-800">
+                {formatList(filteredPlatforms)}
+              </span>
+            </div>
+            <div className="rounded-lg bg-slate-50 px-4 py-3">
+              <span className="block text-xs font-medium text-slate-500">
+                Niveles visibles
+              </span>
+              <span className="font-semibold text-slate-800">
+                {formatList(filteredLevels)}
+              </span>
+            </div>
+            <div className="rounded-lg bg-slate-50 px-4 py-3">
+              <span className="block text-xs font-medium text-slate-500">
+                Precio visible
+              </span>
+              <span className="font-semibold text-slate-800">
+                {formatList(filteredPriceModels)}
+              </span>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       {!skillExists ? (
         <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600">
