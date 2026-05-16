@@ -44,6 +44,13 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
   const hasLearningBullets = learningBullets.length > 0;
   const hasPrerequisites = course.prerequisitesBullets.length > 0;
   const hasLearningContent = hasLearningBullets || hasPrerequisites;
+  const pendingSignals = [
+    course.rating ? null : "Rating pendiente de validar",
+    course.priceAmount == null ? "Precio exacto pendiente de validar" : null,
+    course.durationText.toLowerCase().includes("pendiente")
+      ? "Duracion pendiente de validar"
+      : null
+  ].filter((item): item is string => item !== null);
   const keyFacts = [
     { label: "Plataforma", value: course.platform },
     { label: "Nivel", value: course.level },
@@ -116,6 +123,64 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
         {notice ? (
           <p className="text-xs font-semibold text-amber-600">{notice}</p>
         ) : null}
+      </div>
+
+      <div className="grid gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm lg:grid-cols-[1.2fr_0.8fr]">
+        <div>
+          <h3 className="text-lg font-semibold text-slate-900">
+            Antes de decidir
+          </h3>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <div className="rounded-lg bg-slate-50 px-4 py-3">
+              <span className="block text-xs font-medium text-slate-500">
+                Coste
+              </span>
+              <span className="font-semibold text-slate-800">
+                {course.priceText}
+              </span>
+            </div>
+            <div className="rounded-lg bg-slate-50 px-4 py-3">
+              <span className="block text-xs font-medium text-slate-500">
+                Tiempo estimado
+              </span>
+              <span className="font-semibold text-slate-800">
+                {course.durationText}
+              </span>
+            </div>
+            <div className="rounded-lg bg-slate-50 px-4 py-3">
+              <span className="block text-xs font-medium text-slate-500">
+                Nivel
+              </span>
+              <span className="font-semibold text-slate-800">{course.level}</span>
+            </div>
+            <div className="rounded-lg bg-slate-50 px-4 py-3">
+              <span className="block text-xs font-medium text-slate-500">
+                Certificado
+              </span>
+              <span className="font-semibold text-slate-800">
+                {course.certificate ? "Incluido" : "No verificado"}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 className="text-lg font-semibold text-slate-900">
+            Datos pendientes
+          </h3>
+          {pendingSignals.length > 0 ? (
+            <ul className="mt-4 space-y-2 text-sm text-slate-600">
+              {pendingSignals.map((signal) => (
+                <li key={signal} className="rounded-lg bg-amber-50 px-3 py-2 text-amber-800">
+                  {signal}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-4 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-800">
+              No hay datos clave pendientes en el catalogo actual.
+            </p>
+          )}
+        </div>
       </div>
 
       {hasLearningContent ? (
