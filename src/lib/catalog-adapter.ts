@@ -41,7 +41,7 @@ const formatDurationText = (durationHours: number | null): string => {
     return "Duration pending verification";
   }
 
-  return `${durationHours} horas`;
+  return `${durationHours} hours`;
 };
 
 const formatPriceText = (course: NormalizedCourse): string => {
@@ -50,14 +50,14 @@ const formatPriceText = (course: NormalizedCourse): string => {
   }
 
   if (course.priceModel === "subscription") {
-    return "Free with paid option";
+    return "Subscription — price unverified";
   }
 
   if (course.priceModel === "paid_once") {
-    return course.certificate ? "Pago (certificado incluido)" : "Pago";
+    return course.certificate ? "Paid (certificate included)" : "Paid";
   }
 
-  return "Precio no verificado";
+  return "Price not verified";
 };
 
 const mapCourse = (course: NormalizedCourse): Course | null => {
