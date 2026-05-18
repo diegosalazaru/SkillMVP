@@ -15,9 +15,9 @@ export async function generateMetadata({
 
   if (!course) {
     return {
-      title: "Curso no encontrado | Skills Compare",
+      title: "Course not found | Skills Compare",
       description:
-        "Revisa el catalogo de Skills Compare para encontrar cursos online disponibles."
+        "Check the Skills Compare catalog to find available online courses."
     };
   }
 
@@ -25,7 +25,7 @@ export async function generateMetadata({
     title: `${course.title} | Skills Compare`,
     description:
       course.shortDescription ??
-      `Compara detalles de ${course.title} en ${course.platform}: nivel, precio, duracion y certificado.`
+      `Compare details for ${course.title} on ${course.platform}: level, price, duration, and certificate.`
   };
 }
 

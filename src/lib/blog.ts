@@ -7,32 +7,33 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
-    slug: "como-elegir-entre-dos-cursos",
-    title: "Cómo elegir entre dos cursos",
-    description: "Guía práctica para comparar dos cursos sin suposiciones y decidir más rápido.",
+    slug: "how-to-choose-between-two-courses",
+    title: "How to choose between two courses",
+    description: "A practical guide to compare two courses without assumptions and decide faster.",
     sections: [
-      { heading: "1) Define tu criterio de decisión", points: ["Compara por precio total real.", "Compara por tiempo semanal y duración.", "Verifica si el certificado está incluido o es de pago."] },
-      { heading: "2) Revisa diferencias verificadas", points: ["Si el nivel es igual, enfócate en duración y certificado.", "Si la plataforma cambia, revisa idioma y formato.", "Evita decidir por opiniones sin datos comparables."] }
+      { heading: "1) Define your decision criteria", points: ["Compare total real price.", "Compare weekly time and total duration.", "Verify whether the certificate is included or paid."] },
+      { heading: "2) Review verified differences", points: ["If the level is the same, focus on duration and certificate.", "If the platform changes, check language and format.", "Avoid deciding based on opinions without comparable data."] }
     ]
   },
   {
-    slug: "que-comparar-antes-de-pagar-un-curso",
-    title: "Qué comparar antes de pagar un curso",
-    description: "Checklist concreta para pagar un curso con más claridad.",
+    slug: "what-to-compare-before-paying-for-a-course",
+    title: "What to compare before paying for a course",
+    description: "A concrete checklist to pay for a course with more clarity.",
     sections: [
-      { heading: "Antes de pagar", points: ["Modelo de precio: pago único, suscripción o certificado aparte.", "Duración estimada para completar el curso.", "Nivel declarado y si coincide con tu punto de partida."] },
-      { heading: "Evita errores comunes", points: ["No uses solo el rating para decidir.", "No asumas que certificado significa empleabilidad.", "No pagues sin comparar al menos dos opciones."] }
+      { heading: "Before you pay", points: ["Price model: one-time payment, subscription, or separate certificate.", "Estimated duration to complete the course.", "Declared level and whether it matches your starting point."] },
+      { heading: "Before enrolling", points: ["Review official syllabus and update date.", "Confirm access limits and cancellation terms.", "Check language and subtitles availability."] }
     ]
   },
   {
-    slug: "curso-gratis-vs-de-pago-que-cambia-realmente",
-    title: "Curso gratis vs de pago: qué cambia realmente",
-    description: "Comparación simple para entender cuándo un curso gratis o de pago encaja mejor.",
+    slug: "free-vs-paid-courses-what-really-changes",
+    title: "Free vs paid courses: what really changes",
+    description: "A simple comparison to understand when a free or paid course fits better.",
     sections: [
-      { heading: "Qué suele cambiar", points: ["Certificado: en muchos casos requiere pago.", "Soporte o acompañamiento: puede variar por plataforma.", "Compromiso: pagar puede influir en constancia, pero no en calidad por sí solo."] },
-      { heading: "Cómo decidir", points: ["Si necesitas validar aprendizaje, revisa certificado y coste total.", "Si quieres explorar una skill, empieza por opción gratis.", "Compara siempre duración, nivel e idioma antes de decidir."] }
+      { heading: "What usually changes", points: ["Certificate: in many cases it requires payment.", "Support or mentoring: this can vary by platform.", "Commitment: paying may improve consistency, but not quality by itself."] },
+      { heading: "How to decide", points: ["If you need proof of learning, check certificate and total cost.", "If you want to explore a skill, start with a free option.", "Always compare duration, level, and language before deciding."] }
     ]
   }
 ];
 
-export const getBlogPost = (slug: string) => blogPosts.find((post) => post.slug === slug);
+export const getBlogPost = (slug: string) =>
+  blogPosts.find((post) => post.slug === slug) ?? null;

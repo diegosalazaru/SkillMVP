@@ -24,7 +24,7 @@ export const SearchBar = ({ placeholder, onSearch }: SearchBarProps) => {
         onClick={() => onSearch(value)}
         className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
       >
-        Buscar
+        Search
       </button>
     </div>
   );

@@ -15,10 +15,10 @@ export const CompareBar = () => {
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-4 sm:flex-row">
         <div>
           <p className="text-sm font-semibold text-slate-900">
-            Comparar ({visibleCount}/2)
+            Compare ({visibleCount}/2)
           </p>
           <p className="text-xs text-slate-500">
-            Selecciona 2 cursos para comparar.
+            Select 2 courses to compare.
           </p>
           {notice ? (
             <p className="mt-2 text-xs font-semibold text-amber-600">{notice}</p>
@@ -30,14 +30,14 @@ export const CompareBar = () => {
             onClick={clear}
             className="text-xs font-semibold text-slate-500 hover:text-slate-700"
           >
-            Limpiar selección
+            Clear selection
           </button>
           <button
             type="button"
             disabled={!enabled}
             onClick={() => {
               if (!enabled) {
-                setSelectionNotice("Selecciona 2 cursos para comparar.");
+                setSelectionNotice("Select 2 courses to compare.");
                 return;
               }
               router.push(`/compare?ids=${selectedIds[0]},${selectedIds[1]}`);
@@ -46,7 +46,7 @@ export const CompareBar = () => {
               enabled ? "bg-blue-600 hover:bg-blue-500" : "bg-slate-300"
             }`}
           >
-            Comparar ahora
+            Compare ahora
           </button>
         </div>
       </div>

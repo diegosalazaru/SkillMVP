@@ -7,30 +7,30 @@ type PriceInput = Pick<
 
 export const formatCoursePrice = (course: PriceInput): string => {
   if (course.priceModel === "free") {
-    return "Gratis";
+    return "Free";
   }
 
   if (course.priceModel === "paid_once") {
     if (course.priceAmount != null && course.currency) {
-      return `Pago único — ${course.priceAmount} ${course.currency}`;
+      return `One-time payment — ${course.priceAmount} ${course.currency}`;
     }
 
-    return "Pago único — precio no verificado";
+    return "One-time payment — price unverified";
   }
 
   if (course.priceModel === "subscription") {
     if (course.priceAmount != null && course.currency) {
       if (course.priceInterval === "month") {
-        return `${course.priceAmount} ${course.currency} / mes`;
+        return `${course.priceAmount} ${course.currency} / month`;
       }
 
       if (course.priceInterval === "year") {
-        return `${course.priceAmount} ${course.currency} / año`;
+        return `${course.priceAmount} ${course.currency} / year`;
       }
     }
 
-    return "Suscripción — precio no verificado";
+    return "Subscription — price unverified";
   }
 
-  return "Precio no verificado";
+  return "Price not verified";
 };

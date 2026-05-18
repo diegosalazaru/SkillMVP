@@ -38,26 +38,26 @@ const mapLevel = (level: NormalizedCourse["level"]): Course["level"] => {
 
 const formatDurationText = (durationHours: number | null): string => {
   if (durationHours == null) {
-    return "Duracion pendiente de validar";
+    return "Duration pending verification";
   }
 
-  return `${durationHours} horas`;
+  return `${durationHours} hours`;
 };
 
 const formatPriceText = (course: NormalizedCourse): string => {
   if (course.priceModel === "free") {
-    return course.certificate ? "Gratis (certificado de pago)" : "Gratis";
+    return course.certificate ? "Free (paid certificate)" : "Free";
   }
 
   if (course.priceModel === "subscription") {
-    return "Gratis con opción de pago";
+    return "Subscription — price unverified";
   }
 
   if (course.priceModel === "paid_once") {
-    return course.certificate ? "Pago (certificado incluido)" : "Pago";
+    return course.certificate ? "Paid (certificate included)" : "Paid";
   }
 
-  return "Precio no verificado";
+  return "Price not verified";
 };
 
 const mapCourse = (course: NormalizedCourse): Course | null => {

@@ -7,7 +7,7 @@ type TemplateInput = {
 };
 
 const PAGE_LABELS: Record<SeoPageTypeConfig["key"], string> = {
-  "best-courses": "Best",
+  "best-courses": "Compare",
   learn: "Learn",
   certification: "Certification",
   "for-beginners": "Beginner"
@@ -19,7 +19,7 @@ export const generateMeta = ({ skillLabel, pageType, courseCount }: TemplateInpu
 });
 
 export const generateH1 = ({ skillLabel, pageType }: Omit<TemplateInput, "courseCount">) => {
-  if (pageType.key === "best-courses") return `Best ${skillLabel} Courses`;
+  if (pageType.key === "best-courses") return `Compare ${skillLabel} Courses`;
   if (pageType.key === "learn") return `Learn ${skillLabel}`;
   if (pageType.key === "certification") return `${skillLabel} Certification Courses`;
   return `${skillLabel} Courses for Beginners`;

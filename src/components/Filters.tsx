@@ -21,11 +21,11 @@ type FiltersProps = {
 const platforms = ["All", "Coursera", "Udemy", "Microsoft Learn", "edX"];
 const levels = ["All", "Beginner", "Intermediate", "Advanced"];
 const prices = [
-  { value: "All", label: "Todos" },
-  { value: "free", label: "Gratis" },
-  { value: "paid_once", label: "Pago único" },
-  { value: "subscription", label: "Suscripción" },
-  { value: "unknown", label: "Desconocido" }
+  { value: "All", label: "All" },
+  { value: "free", label: "Free" },
+  { value: "paid_once", label: "One-time payment" },
+  { value: "subscription", label: "Subscription" },
+  { value: "unknown", label: "Unknown" }
 ];
 const languages = ["All"];
 
@@ -62,7 +62,7 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
         >
           {levelOptions.map((level) => (
             <option key={level} value={level}>
-              {level === "All" ? "Todos" : level}
+              {level === "All" ? "All" : level}
             </option>
           ))}
         </select>
@@ -94,7 +94,7 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
         >
           {languageOptions.map((language) => (
             <option key={language} value={language}>
-              {language === "All" ? "Todos" : language}
+              {language === "All" ? "All" : language}
             </option>
           ))}
         </select>

@@ -24,16 +24,16 @@ export default function RootLayout({
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
                   Skills Compare
                 </p>
-                <h1 className="text-xl font-semibold">Encuentra el curso ideal</h1>
+                <h1 className="text-xl font-semibold">Find the right course</h1>
               </Link>
               <nav className="flex items-center gap-4 text-sm font-medium text-slate-600">
-                <Link href="/compare" className="hover:text-slate-900">Comparar cursos</Link>
+                <Link href="/compare" className="hover:text-slate-900">Compare courses</Link>
                 <Link href="/blog" className="hover:text-slate-900">Blog</Link>
               </nav>
             </header>
             <main className="flex-1 py-8">{children}</main>
             <footer className="border-t border-slate-200 py-6 text-sm text-slate-500">
-              Datos curados y enlaces a plataformas externas.
+              Curated data and links to external platforms.
             </footer>
           </div>
         </Providers>
