@@ -38,7 +38,7 @@ const mapLevel = (level: NormalizedCourse["level"]): Course["level"] => {
 
 const formatDurationText = (durationHours: number | null): string => {
   if (durationHours == null) {
-    return "Duracion pendiente de validar";
+    return "Duration pending verification";
   }
 
   return `${durationHours} horas`;
@@ -46,11 +46,11 @@ const formatDurationText = (durationHours: number | null): string => {
 
 const formatPriceText = (course: NormalizedCourse): string => {
   if (course.priceModel === "free") {
-    return course.certificate ? "Gratis (certificado de pago)" : "Gratis";
+    return course.certificate ? "Free (paid certificate)" : "Free";
   }
 
   if (course.priceModel === "subscription") {
-    return "Gratis con opción de pago";
+    return "Free with paid option";
   }
 
   if (course.priceModel === "paid_once") {

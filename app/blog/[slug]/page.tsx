@@ -12,9 +12,9 @@ export const generateStaticParams = () => blogPosts.map((post) => ({ slug: post.
 export const generateMetadata = ({ params }: BlogPostPageProps): Metadata => {
   const post = getBlogPost(params.slug);
   if (!post) {
-    return { title: "Artículo no encontrado | Blog", description: "Artículo no disponible." };
+    return { title: "Article not found | Blog", description: "Article unavailable." };
   }
-  return { title: `${post.title} | Comparar cursos`, description: post.description };
+  return { title: `${post.title} | Compare courses`, description: post.description };
 };
 
 export default function BlogPostPage({ params }: BlogPostPageProps) {
@@ -23,8 +23,8 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   if (!post) {
     return (
       <section className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600">
-        <p>Artículo no encontrado.</p>
-        <Link href="/blog" className="mt-4 inline-flex rounded-lg border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700">Volver al blog</Link>
+        <p>Article not found.</p>
+        <Link href="/blog" className="mt-4 inline-flex rounded-lg border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700">Back to blog</Link>
       </section>
     );
   }
@@ -32,7 +32,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <article className="mx-auto flex max-w-3xl flex-col gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
       <header className="space-y-2">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Guía práctica</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Practical guide</p>
         <h2 className="text-3xl font-semibold text-slate-900">{post.title}</h2>
         <p className="text-slate-600">{post.description}</p>
       </header>

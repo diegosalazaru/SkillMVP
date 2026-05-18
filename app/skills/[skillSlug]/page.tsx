@@ -13,9 +13,9 @@ export const generateMetadata = ({ params }: SkillPageProps): Metadata => {
 
   if (!skill) {
     return {
-      title: "Skill no encontrada | Skills Compare",
+      title: "Skill not found | Skills Compare",
       description:
-        "Revisa alternativas reales del catalogo de Skills Compare para comparar cursos online."
+        "Review real alternatives in the Skills Compare catalog to compare online courses."
     };
   }
 
@@ -23,7 +23,7 @@ export const generateMetadata = ({ params }: SkillPageProps): Metadata => {
 
   return {
     title: `Compare ${skill.title} courses online | Skills Compare`,
-    description: `Compara ${courseCount} cursos de ${skill.title} por plataforma, precio, duracion y nivel antes de elegir.`
+    description: `Compare ${courseCount} ${skill.title} courses by platform, price, duration, and level before choosing.`
   };
 };
 

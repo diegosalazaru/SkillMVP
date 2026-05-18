@@ -44,7 +44,7 @@ type SkillClientProps = {
 
 const formatList = (values: string[]) => {
   if (values.length === 0) {
-    return "sin datos";
+    return "unknown";
   }
 
   return values.join(", ");
@@ -85,18 +85,18 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
 
   const priceOptions = useMemo(() => {
     const models = new Set(courses.map((course) => course.priceModel));
-    const options = [{ value: "All", label: "Todos" }];
+    const options = [{ value: "All", label: "All" }];
     if (models.has("free")) {
-      options.push({ value: "free", label: "Gratis" });
+      options.push({ value: "free", label: "Free" });
     }
     if (models.has("paid_once")) {
-      options.push({ value: "paid_once", label: "Pago único" });
+      options.push({ value: "paid_once", label: "One-time payment" });
     }
     if (models.has("subscription")) {
-      options.push({ value: "subscription", label: "Suscripción" });
+      options.push({ value: "subscription", label: "Subscription" });
     }
     if (models.has("unknown")) {
-      options.push({ value: "unknown", label: "Desconocido" });
+      options.push({ value: "unknown", label: "Unknown" });
     }
     return options;
   }, []);
@@ -186,22 +186,22 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
           Skill
         </p>
         <h2 className="text-3xl font-semibold text-slate-900">
-          {skillExists ? skillTitle : "Skill no encontrada"}
+          {skillExists ? skillTitle : "Skill not found"}
         </h2>
         <p className="mt-2 text-slate-600">
           {skillIntro ??
-            "No tenemos cursos validados para esta skill. Revisa alternativas disponibles en el catalogo."}
+            "We do not have validated courses for this skill yet. Review available alternatives in the catalog."}
         </p>
         
       </div>
 
       {skillExists ? (
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 className="text-lg font-semibold text-slate-900">Sobre esta skill</h3>
+          <h3 className="text-lg font-semibold text-slate-900">About this skill</h3>
           <p className="mt-2 text-sm text-slate-600">
-            {skillCourses.length} cursos verificados
-            {availablePlatforms ? ` en ${availablePlatforms}` : ""}
-            {availableLevels ? `, niveles ${availableLevels}` : ""}.
+            {skillCourses.length} verified courses
+            {availablePlatforms ? ` on ${availablePlatforms}` : ""}
+            {availableLevels ? `, levels ${availableLevels}` : ""}.
           </p>
         </div>
       ) : null}
@@ -209,13 +209,13 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
       {skillExists ? (
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <h3 className="text-lg font-semibold text-slate-900">
-            Como comparar cursos
+            How to compare courses
           </h3>
           <p className="mt-2 text-sm text-slate-600">
-            Usa estos criterios para decidir que curso encaja mejor con tu contexto.
+            Use these criteria to decide which course fits your context best.
           </p>
           <ul className="mt-3 grid gap-2 text-sm text-slate-600 sm:grid-cols-2 lg:grid-cols-5">
-            {["Precio", "Duracion", "Nivel", "Certificado", "Plataforma"].map(
+            {["Price", "Duration", "Level", "Certificate", "Platform"].map(
               (item) => (
                 <li key={item} className="rounded-lg bg-slate-50 px-3 py-2">
                   {item}
@@ -242,21 +242,21 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
           <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <h3 className="text-lg font-semibold text-slate-900">
-                Resultados para decidir
+                Results to support your decision
               </h3>
               <p className="mt-1 text-sm text-slate-600">
-                {filteredCourses.length} de {skillCourses.length} cursos visibles
-                {hasActiveFilters ? " con los filtros actuales" : ""}.
+                {filteredCourses.length} of {skillCourses.length} courses visible
+                {hasActiveFilters ? " with current filters" : ""}.
               </p>
             </div>
             <span className="w-fit rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
-              {filteredCertificateCount} con certificado verificado
+              {filteredCertificateCount} with verified certificate
             </span>
           </div>
           <div className="mt-4 grid gap-3 text-sm text-slate-600 md:grid-cols-3">
             <div className="rounded-lg bg-slate-50 px-4 py-3">
               <span className="block text-xs font-medium text-slate-500">
-                Plataformas visibles
+                Visible platforms
               </span>
               <span className="font-semibold text-slate-800">
                 {formatList(filteredPlatforms)}
@@ -264,7 +264,7 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
             </div>
             <div className="rounded-lg bg-slate-50 px-4 py-3">
               <span className="block text-xs font-medium text-slate-500">
-                Niveles visibles
+                Visible levels
               </span>
               <span className="font-semibold text-slate-800">
                 {formatList(filteredLevels)}
@@ -272,7 +272,7 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
             </div>
             <div className="rounded-lg bg-slate-50 px-4 py-3">
               <span className="block text-xs font-medium text-slate-500">
-                Precio visible
+                Price visible
               </span>
               <span className="font-semibold text-slate-800">
                 {formatList(filteredPriceModels)}
@@ -285,13 +285,13 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
       {!skillExists ? (
         <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600">
           <p>
-            No encontramos cursos validados para esta skill. Puedes revisar alternativas reales del catalogo.
+            We could not find validated courses for this skill. You can review real alternatives in the catalog.
           </p>
           <Link
             href="/"
             className="mt-4 inline-flex rounded-lg border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:border-blue-300"
           >
-            Ver alternativas disponibles
+            View available alternatives
           </Link>
           <div className="mt-5 flex flex-wrap justify-center gap-2">
             {alternatives.map((skill) => (
@@ -307,8 +307,7 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
         </div>
       ) : filteredCourses.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600">
-          No encontramos cursos con esos filtros. Prueba ajustar la búsqueda o
-          limpiar filtros.
+          No courses match these filters. Try adjusting your search or clearing filters.
         </div>
       ) : (
         <div className="grid gap-6 lg:grid-cols-2">

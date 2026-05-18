@@ -23,7 +23,7 @@ export const CourseCard = ({ course }: CourseCardProps) => {
   const facts = [
     { label: "Plataforma", value: course.platform },
     { label: "Nivel", value: course.level },
-    hasKnownDuration ? { label: "Duración", value: course.durationText } : null,
+    hasKnownDuration ? { label: "Duration", value: course.durationText } : null,
     hasKnownPrice ? { label: "Precio", value: course.priceText } : null,
     {
       label: "Certificado",
@@ -74,7 +74,7 @@ export const CourseCard = ({ course }: CourseCardProps) => {
             onClick={() => trackOutboundCourseClick(course, "card")}
             className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
           >
-            Ver curso en {course.platform}
+            View course on {course.platform}
           </a>
           <Link
             href={`/courses/${course.id}`}
@@ -90,14 +90,14 @@ export const CourseCard = ({ course }: CourseCardProps) => {
             onChange={() => toggle(course.id)}
             className="h-4 w-4 rounded border-slate-300 text-slate-900"
           />
-          Agregar a comparación
+          Add to compare
         </label>
       </div>
-      <p className="text-xs text-slate-500">Se abrirá en una página externa.</p>
+      <p className="text-xs text-slate-500">Opens on an external page.</p>
       <p className="text-xs text-slate-500">{EXTERNAL_LINK_DISCLOSURE}</p>
       {atLimit && !selected ? (
         <p className="text-xs text-amber-600">
-          Límite alcanzado: quita un curso para agregar otro.
+          Limit reached: remove a course to add another.
         </p>
       ) : null}
     </div>

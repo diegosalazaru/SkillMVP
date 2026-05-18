@@ -24,10 +24,10 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
     return (
       <section className="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center">
         <h2 className="text-2xl font-semibold text-slate-900">
-          Curso no encontrado
+          Course not found
         </h2>
         <p className="text-slate-600">
-          Revisa el ID del curso o vuelve al inicio.
+          Check the course ID or return to home.
         </p>
         <Link
           href="/"
@@ -45,10 +45,10 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
   const hasPrerequisites = course.prerequisitesBullets.length > 0;
   const hasLearningContent = hasLearningBullets || hasPrerequisites;
   const pendingSignals = [
-    course.rating ? null : "Rating pendiente de validar",
-    course.priceAmount == null ? "Precio exacto pendiente de validar" : null,
+    course.rating ? null : "Rating pending verification",
+    course.priceAmount == null ? "Exact price pending verification" : null,
     course.durationText.toLowerCase().includes("pendiente")
-      ? "Duracion pendiente de validar"
+      ? "Duration pending verification"
       : null
   ].filter((item): item is string => item !== null);
   const keyFacts = [
@@ -70,7 +70,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
         </p>
         <h2 className="text-3xl font-semibold text-slate-900">{course.title}</h2>
         <p className="text-slate-600">
-          {course.shortDescription ?? "Descripción no disponible."}
+          {course.shortDescription ?? "Description unavailable."}
         </p>
         <div className="flex flex-wrap gap-2 text-sm text-slate-600">
           {course.skillTags[0] ? (
@@ -102,7 +102,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
             onClick={() => trackOutboundCourseClick(course, "detail")}
             className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
           >
-            Ver curso
+            View course
           </a>
           <button
             type="button"
@@ -111,13 +111,13 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
               selected ? "bg-emerald-600 hover:bg-emerald-500" : "bg-slate-700 hover:bg-slate-600"
             } ${atLimit ? "bg-slate-300" : ""}`}
           >
-            {selected ? "Seleccionado para comparar" : "Agregar a comparación"}
+            {selected ? "Selected for compare" : "Add to compare"}
           </button>
         </div>
         <p className="text-xs text-slate-500">{EXTERNAL_LINK_DISCLOSURE}</p>
         {atLimit ? (
           <p className="text-xs text-amber-600">
-            Ya tienes 2 cursos seleccionados. Quita uno para continuar.
+            You already selected 2 courses. Remove one to continue.
           </p>
         ) : null}
         {notice ? (
@@ -128,7 +128,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
       <div className="grid gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm lg:grid-cols-[1.2fr_0.8fr]">
         <div>
           <h3 className="text-lg font-semibold text-slate-900">
-            Antes de decidir
+            Before deciding
           </h3>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             <div className="rounded-lg bg-slate-50 px-4 py-3">
@@ -177,7 +177,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
             </ul>
           ) : (
             <p className="mt-4 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-800">
-              No hay datos clave pendientes en el catalogo actual.
+              There are no pending key data points in the current catalog.
             </p>
           )}
         </div>
@@ -232,7 +232,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
             </p>
             <p>
               <span className="font-semibold text-slate-800">Certificado:</span>{" "}
-              {course.certificate ? "Sí" : "No"}
+              {course.certificate ? "Yes" : "No"}
             </p>
             {course.rating ? (
               <p>
@@ -246,7 +246,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
         href={course.skillTags[0] ? `/skills/${course.skillTags[0]}` : "/"}
         className="text-sm font-semibold text-slate-600 hover:text-slate-900"
       >
-        Volver a cursos relacionados
+        Back to related courses
       </Link>
     </section>
   );

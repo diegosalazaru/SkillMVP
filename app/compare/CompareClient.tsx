@@ -35,17 +35,17 @@ export default function CompareClient() {
     return (
       <section className="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center">
         <h2 className="text-2xl font-semibold text-slate-900">
-          Selecciona cursos para comparar
+          Select courses to compare
         </h2>
         <p className="text-slate-600">
-          Vuelve al listado y selecciona cursos para comparar.
+          Return to the list and select courses to compare.
         </p>
         <button
           type="button"
           onClick={handleChangeCourses}
           className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-500"
         >
-          Volver a elegir cursos
+          Back to course selection
         </button>
       </section>
     );
@@ -64,7 +64,7 @@ export default function CompareClient() {
   const rawRows = [
     { label: "Precio", left: leftPrice, right: rightPrice },
     { label: "Plataforma", left: leftCourse.platform, right: rightCourse.platform },
-    { label: "Duración", left: leftCourse.durationText, right: rightCourse.durationText },
+    { label: "Duration", left: leftCourse.durationText, right: rightCourse.durationText },
     {
       label: "Nivel",
       left: formatLevel(leftCourse.level),
@@ -80,38 +80,38 @@ export default function CompareClient() {
 
   const summaryInsights = [
     leftCourse.level === rightCourse.level
-      ? `Ambos cursos tienen nivel ${formatLevel(leftCourse.level).toLowerCase()}.`
+      ? `Both courses are at ${formatLevel(leftCourse.level).toLowerCase()}.`
       : `Los niveles son distintos: ${formatLevel(leftCourse.level)} vs ${formatLevel(rightCourse.level)}.`,
     leftCourse.durationText === rightCourse.durationText
-      ? "Ambos cursos declaran la misma duración."
-      : `La duración declarada es distinta: ${leftCourse.durationText} vs ${rightCourse.durationText}.`,
+      ? "Both courses report the same duration."
+      : `Reported duration differs: ${leftCourse.durationText} vs ${rightCourse.durationText}.`,
     leftPrice === rightPrice
       ? `El precio mostrado coincide: ${leftPrice}.`
-      : `El precio o modelo de pago cambia: ${leftPrice} vs ${rightPrice}.`,
+      : `Price or payment model differs: ${leftPrice} vs ${rightPrice}.`,
     leftCourse.language === rightCourse.language
-      ? `Ambos cursos están en ${leftCourse.language}.`
+      ? `Both courses are in ${leftCourse.language}.`
       : `Los idiomas son distintos: ${leftCourse.language} vs ${rightCourse.language}.`,
     leftCourse.certificate === rightCourse.certificate
       ? leftCourse.certificate
-        ? "Ambos cursos incluyen certificado."
-        : "En ambos cursos el certificado queda pendiente de validar."
-      : "Solo uno de los cursos declara certificado incluido."
+        ? "Both courses include a certificate."
+        : "For both courses, certificate status is pending verification."
+      : "Only one course reports an included certificate."
   ];
 
   return (
     <section className="flex flex-col gap-8">
       <div className="flex flex-col gap-3">
         <h2 className="text-3xl font-semibold text-slate-900">
-          Comparativa de cursos
+          Course comparison
         </h2>
         <p className="text-slate-600">
-          Revisa diferencias verificadas para tomar una decisión más clara.
+          Review verified differences to make a clearer decision.
         </p>
       </div>
 
       <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <h3 className="text-lg font-semibold text-slate-900">
-          Resumen rápido
+          Quick summary
         </h3>
         <ul className="mt-3 grid gap-2 text-sm text-slate-600">
           {summaryInsights.map((insight) => (
@@ -144,10 +144,10 @@ export default function CompareClient() {
               onClick={() => trackOutboundCourseClick(leftCourse, "compare")}
               className="w-fit rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
             >
-              Ver curso en {leftCourse.platform}
+              View course on {leftCourse.platform}
             </a>
             <span className="text-xs font-normal text-slate-500">
-              Se abrirá en una página externa.
+              Opens on an external page.
             </span>
           </span>
           <span className="flex flex-col gap-3">
@@ -169,10 +169,10 @@ export default function CompareClient() {
               onClick={() => trackOutboundCourseClick(rightCourse, "compare")}
               className="w-fit rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
             >
-              Ver curso en {rightCourse.platform}
+              View course on {rightCourse.platform}
             </a>
             <span className="text-xs font-normal text-slate-500">
-              Se abrirá en una página externa.
+              Opens on an external page.
             </span>
           </span>
         </div>
@@ -203,7 +203,7 @@ export default function CompareClient() {
         onClick={handleChangeCourses}
         className="w-fit rounded-lg border border-blue-200 px-5 py-2 text-sm font-semibold text-blue-700 hover:border-blue-300"
       >
-        Cambiar cursos
+        Change courses
       </button>
     </section>
   );

@@ -39,4 +39,4 @@ export const getSkillAlternatives = (limit = 4): SkillSummary[] =>
   getSkillSummaries().slice(0, limit);
 
 export const getSkillIntro = (skill: SkillSummary) =>
-  `Compara ${skill.courseCount} cursos de ${skill.title} disponibles en el catalogo. Revisa plataforma, precio, duracion y nivel antes de abrir el curso en su plataforma original.`;
+  `Compare ${skill.courseCount} ${skill.title} courses available in the catalog. Review platform, price, duration, and level before opening the course on its original platform.`;

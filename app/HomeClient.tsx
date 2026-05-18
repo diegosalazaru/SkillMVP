@@ -20,10 +20,10 @@ export default function HomeClient() {
     <section className="flex flex-col gap-10">
       <div className="space-y-3">
         <h2 className="text-3xl font-semibold leading-tight text-slate-900">
-          Compara cursos online para decidir mejor.
+          Compare online courses and choose with confidence.
         </h2>
         <p className="max-w-2xl text-slate-600">
-          Encuentra una skill y revisa cursos reales por precio, duración, nivel y
+          Find a skill and review real courses by price, duration, level, and
           certificado para elegir con claridad.
         </p>
       </div>
