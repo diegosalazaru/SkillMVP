@@ -16,15 +16,15 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "Curso de Machine Learning de Stanford University en Coursera, orientado a nivel beginner.",
+    "shortDescription": "Machine learning course from Stanford University on Coursera, oriented to beginner-level learners.",
     "syllabusBullets": [
-      "Conceptos base de machine learning",
-      "Modelos y evaluacion de resultados",
-      "Aplicacion practica de aprendizaje automatico"
+      "Core machine learning concepts",
+      "Models and result evaluation",
+      "Practical application of machine learning"
     ],
     "prerequisitesBullets": [
-      "Orientado a nivel beginner",
-      "Interes en datos e inteligencia artificial"
+      "Beginner-level orientation",
+      "Interest in data and artificial intelligence"
     ],
     "source": "coursera-curated"
   },
@@ -45,15 +45,15 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "Programa de Google Data Analytics en Coursera, orientado a nivel beginner.",
+    "shortDescription": "Google Data Analytics program on Coursera, oriented to beginner-level learners.",
     "syllabusBullets": [
-      "Fundamentos de analisis de datos",
-      "Preparacion y exploracion de datos",
-      "Comunicacion de hallazgos"
+      "Data analysis fundamentals",
+      "Data preparation and exploration",
+      "Communicating findings"
     ],
     "prerequisitesBullets": [
-      "Orientado a nivel beginner",
-      "Interes en trabajar con datos"
+      "Beginner-level orientation",
+      "Interest in working with data"
     ],
     "source": "coursera-curated"
   },
@@ -74,15 +74,15 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "Especializacion de Deep Learning de DeepLearning.AI en Coursera, orientada a nivel intermediate.",
+    "shortDescription": "DeepLearning.AI deep learning specialization on Coursera, oriented to intermediate-level learners.",
     "syllabusBullets": [
-      "Conceptos de deep learning",
-      "Redes neuronales y entrenamiento",
-      "Aplicaciones practicas de modelos profundos"
+      "Deep learning concepts",
+      "Neural networks and training workflows",
+      "Practical applications of deep models"
     ],
     "prerequisitesBullets": [
-      "Nivel intermediate",
-      "Base previa en machine learning recomendada"
+      "Intermediate level",
+      "Prior machine learning foundation recommended"
     ],
     "source": "coursera-curated"
   },
@@ -103,15 +103,15 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "Programa de IBM Data Science en Coursera, orientado a nivel beginner.",
+    "shortDescription": "IBM Data Science program on Coursera, oriented to beginner-level learners.",
     "syllabusBullets": [
-      "Fundamentos de data science",
-      "Trabajo practico con datos",
-      "Introduccion a herramientas de ciencia de datos"
+      "Data science fundamentals",
+      "Practical work with data",
+      "Introduction to data science tools"
     ],
     "prerequisitesBullets": [
-      "Orientado a nivel beginner",
-      "Interes en analisis y ciencia de datos"
+      "Beginner-level orientation",
+      "Interest in analytics and data science"
     ],
     "source": "coursera-curated"
   },
@@ -132,15 +132,15 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "Programa Meta Front-End Developer en Coursera, orientado a nivel beginner.",
+    "shortDescription": "Meta Front-End Developer program on Coursera, oriented to beginner-level learners.",
     "syllabusBullets": [
-      "Fundamentos de desarrollo front-end",
-      "Construccion de interfaces web",
-      "Practica orientada a proyectos"
+      "Front-end development fundamentals",
+      "Building web interfaces",
+      "Project-oriented practice"
     ],
     "prerequisitesBullets": [
-      "Orientado a nivel beginner",
-      "Interes en crear interfaces web"
+      "Beginner-level orientation",
+      "Interest in creating web interfaces"
     ],
     "source": "coursera-curated"
   },
