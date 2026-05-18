@@ -51,46 +51,41 @@ export default function CompareClient() {
     );
   }
 
-  const formatLevel = (level: string) => {
-    if (level === "Beginner") return "Principiante";
-    if (level === "Intermediate") return "Intermedio";
-    if (level === "Advanced") return "Avanzado";
-    return level;
-  };
+  const formatLevel = (level: string) => level;
 
   const leftPrice = formatCoursePrice(leftCourse);
   const rightPrice = formatCoursePrice(rightCourse);
 
   const rawRows = [
-    { label: "Precio", left: leftPrice, right: rightPrice },
-    { label: "Plataforma", left: leftCourse.platform, right: rightCourse.platform },
+    { label: "Price", left: leftPrice, right: rightPrice },
+    { label: "Platform", left: leftCourse.platform, right: rightCourse.platform },
     { label: "Duration", left: leftCourse.durationText, right: rightCourse.durationText },
     {
-      label: "Nivel",
+      label: "Level",
       left: formatLevel(leftCourse.level),
       right: formatLevel(rightCourse.level)
     },
-    { label: "Idioma", left: leftCourse.language, right: rightCourse.language },
+    { label: "Language", left: leftCourse.language, right: rightCourse.language },
     {
-      label: "Certificado",
-      left: leftCourse.certificate ? "Incluido" : "No verificado",
-      right: rightCourse.certificate ? "Incluido" : "No verificado"
+      label: "Certificate",
+      left: leftCourse.certificate ? "Included" : "Not verified",
+      right: rightCourse.certificate ? "Included" : "Not verified"
     }
   ];
 
   const summaryInsights = [
     leftCourse.level === rightCourse.level
       ? `Both courses are at ${formatLevel(leftCourse.level).toLowerCase()}.`
-      : `Los niveles son distintos: ${formatLevel(leftCourse.level)} vs ${formatLevel(rightCourse.level)}.`,
+      : `Levels differ: ${formatLevel(leftCourse.level)} vs ${formatLevel(rightCourse.level)}.`,
     leftCourse.durationText === rightCourse.durationText
       ? "Both courses report the same duration."
       : `Reported duration differs: ${leftCourse.durationText} vs ${rightCourse.durationText}.`,
     leftPrice === rightPrice
-      ? `El precio mostrado coincide: ${leftPrice}.`
+      ? `Displayed price matches: ${leftPrice}.`
       : `Price or payment model differs: ${leftPrice} vs ${rightPrice}.`,
     leftCourse.language === rightCourse.language
       ? `Both courses are in ${leftCourse.language}.`
-      : `Los idiomas son distintos: ${leftCourse.language} vs ${rightCourse.language}.`,
+      : `Languages differ: ${leftCourse.language} vs ${rightCourse.language}.`,
     leftCourse.certificate === rightCourse.certificate
       ? leftCourse.certificate
         ? "Both courses include a certificate."
@@ -124,7 +119,7 @@ export default function CompareClient() {
 
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         <div className="grid grid-cols-3 gap-4 border-b border-slate-200 bg-slate-50 px-6 py-4 text-sm font-semibold text-slate-700">
-          <span>Detalle</span>
+          <span>Detail</span>
           <span className="flex flex-col gap-3">
             <Link
               href={`/courses/${leftCourse.id}`}
