@@ -10,7 +10,8 @@
     "validate:data": "tsx scripts/validate-data.ts",
     "ingest:edx": "tsx scripts/ingest-edx.ts",
     "ingest:coursera": "tsx scripts/ingest-coursera.ts",
-    "build:catalog": "tsx scripts/build-catalog.ts"
+    "build:catalog": "tsx scripts/build-catalog.ts",
+    "generate:seo": "tsx scripts/generate-seo-pages.ts"
   },
   "dependencies": {
     "next": "14.2.5",
