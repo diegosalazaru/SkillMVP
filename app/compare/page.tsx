@@ -15,7 +15,7 @@ export default function ComparePage() {
     <Suspense
       fallback={
         <section className="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center">
-          <h2 className="text-2xl font-semibold text-slate-900">Cargando…</h2>
+          <h2 className="text-2xl font-semibold text-slate-900">Loading…</h2>
           <p className="text-slate-600">Preparing comparison.</p>
         </section>
       }

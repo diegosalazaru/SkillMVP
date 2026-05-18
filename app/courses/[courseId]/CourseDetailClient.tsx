@@ -33,7 +33,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
           href="/"
           className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-500"
         >
-          Ir al inicio
+          Go to home
         </Link>
       </section>
     );
@@ -52,13 +52,13 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
       : null
   ].filter((item): item is string => item !== null);
   const keyFacts = [
-    { label: "Plataforma", value: course.platform },
-    { label: "Nivel", value: course.level },
-    { label: "Duracion", value: course.durationText },
-    { label: "Precio", value: course.priceText },
+    { label: "Platform", value: course.platform },
+    { label: "Level", value: course.level },
+    { label: "Duration", value: course.durationText },
+    { label: "Price", value: course.priceText },
     {
-      label: "Certificado",
-      value: course.certificate ? "Incluido" : "No verificado"
+      label: "Certificate",
+      value: course.certificate ? "Certificate available" : "Certificate not verified"
     }
   ];
 
@@ -66,7 +66,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
     <section className="flex flex-col gap-8">
       <div className="space-y-3">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">
-          Curso
+          Course
         </p>
         <h2 className="text-3xl font-semibold text-slate-900">{course.title}</h2>
         <p className="text-slate-600">
@@ -78,7 +78,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
               href={`/skills/${course.skillTags[0]}`}
               className="rounded-full bg-blue-50 px-3 py-1 font-medium text-blue-700 hover:bg-blue-100"
             >
-              Ver skill
+              View skill
             </Link>
           ) : null}
           <span className="rounded-full bg-slate-100 px-3 py-1">
@@ -102,7 +102,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
             onClick={() => trackOutboundCourseClick(course, "detail")}
             className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
           >
-            View course
+            Open provider page
           </a>
           <button
             type="button"
@@ -133,7 +133,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             <div className="rounded-lg bg-slate-50 px-4 py-3">
               <span className="block text-xs font-medium text-slate-500">
-                Coste
+                Price
               </span>
               <span className="font-semibold text-slate-800">
                 {course.priceText}
@@ -141,7 +141,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
             </div>
             <div className="rounded-lg bg-slate-50 px-4 py-3">
               <span className="block text-xs font-medium text-slate-500">
-                Tiempo estimado
+                Estimated duration
               </span>
               <span className="font-semibold text-slate-800">
                 {course.durationText}
@@ -149,23 +149,23 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
             </div>
             <div className="rounded-lg bg-slate-50 px-4 py-3">
               <span className="block text-xs font-medium text-slate-500">
-                Nivel
+                Level
               </span>
               <span className="font-semibold text-slate-800">{course.level}</span>
             </div>
             <div className="rounded-lg bg-slate-50 px-4 py-3">
               <span className="block text-xs font-medium text-slate-500">
-                Certificado
+                Certificate
               </span>
               <span className="font-semibold text-slate-800">
-                {course.certificate ? "Incluido" : "No verificado"}
+                {course.certificate ? "Certificate available" : "Certificate not verified"}
               </span>
             </div>
           </div>
         </div>
         <div>
           <h3 className="text-lg font-semibold text-slate-900">
-            Datos pendientes
+            Pending data
           </h3>
           {pendingSignals.length > 0 ? (
             <ul className="mt-4 space-y-2 text-sm text-slate-600">
@@ -187,7 +187,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
         <div className="grid gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-2">
           {hasLearningBullets ? (
             <div>
-          <h3 className="text-lg font-semibold text-slate-900">Que aprenderas</h3>
+          <h3 className="text-lg font-semibold text-slate-900">What you will learn</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
             {learningBullets.map((item) => (
               <li key={item}>{item}</li>
@@ -197,7 +197,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
           ) : null}
           {hasPrerequisites ? (
             <div>
-          <h3 className="text-lg font-semibold text-slate-900">Requisitos</h3>
+          <h3 className="text-lg font-semibold text-slate-900">Prerequisites</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
             {course.prerequisitesBullets.map((item) => (
               <li key={item}>{item}</li>
@@ -209,7 +209,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
       ) : (
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <h3 className="text-lg font-semibold text-slate-900">
-            Que puedes evaluar
+            What you can evaluate
           </h3>
           <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {keyFacts.map((fact) => (
@@ -225,13 +225,13 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
       )}
 
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h3 className="text-lg font-semibold text-slate-900">Datos clave</h3>
+          <h3 className="text-lg font-semibold text-slate-900">Key facts</h3>
           <div className="mt-3 space-y-2 text-sm text-slate-600">
             <p>
-              <span className="font-semibold text-slate-800">Idioma:</span> {course.language}
+              <span className="font-semibold text-slate-800">Language:</span> {course.language}
             </p>
             <p>
-              <span className="font-semibold text-slate-800">Certificado:</span>{" "}
+              <span className="font-semibold text-slate-800">Certificate:</span>{" "}
               {course.certificate ? "Yes" : "No"}
             </p>
             {course.rating ? (

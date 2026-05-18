@@ -5,9 +5,10 @@ import { useState } from "react";
 type SearchBarProps = {
   placeholder?: string;
   onSearch: (value: string) => void;
+  feedback?: string | null;
 };
 
-export const SearchBar = ({ placeholder, onSearch }: SearchBarProps) => {
+export const SearchBar = ({ placeholder, onSearch, feedback }: SearchBarProps) => {
   const [value, setValue] = useState("");
 
   return (
@@ -26,6 +27,7 @@ export const SearchBar = ({ placeholder, onSearch }: SearchBarProps) => {
       >
         Search
       </button>
+      {feedback ? <p className="text-sm text-amber-700">{feedback}</p> : null}
     </div>
   );
 };

@@ -1,19 +1,38 @@
 "use client";
 
+import Link from "next/link";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { SearchBar } from "@/components/SearchBar";
-import { getSkillOptions, resolveSkillSlug } from "@/lib/skill-routing";
+import { getSkillOptions, resolveSkillSlug, searchSkillOptions } from "@/lib/skill-routing";
 
 export default function HomeClient() {
   const router = useRouter();
-  const suggestions = getSkillOptions();
+  const suggestions = useMemo(() => getSkillOptions(), []);
+  const [searchFeedback, setSearchFeedback] = useState<string | null>(null);
 
   const handleSearch = (value: string) => {
-    const skillSlug = resolveSkillSlug(value);
-    if (!skillSlug) {
+    const trimmed = value.trim();
+
+    if (!trimmed) {
+      setSearchFeedback("Enter a skill to search the current catalog.");
       return;
     }
-    router.push(`/skills/${skillSlug}`);
+
+    const skillSlug = resolveSkillSlug(trimmed);
+    if (skillSlug) {
+      setSearchFeedback(null);
+      router.push(`/skills/${skillSlug}`);
+      return;
+    }
+
+    const topSuggestions = searchSkillOptions(trimmed, 3);
+    if (topSuggestions.length > 0) {
+      setSearchFeedback(`No exact match for "${trimmed}". Try: ${topSuggestions.map((skill) => skill.title).join(", ")}.`);
+      return;
+    }
+
+    setSearchFeedback("No matching skill found yet. Try one of the available skills below.");
   };
 
   return (
@@ -24,26 +43,31 @@ export default function HomeClient() {
         </h2>
         <p className="max-w-2xl text-slate-600">
           Find a skill and review real courses by price, duration, level, and
-          certificado para elegir con claridad.
+          certificate details before you choose.
         </p>
       </div>
 
-      <SearchBar placeholder="Ej: ai, data analysis, frontend" onSearch={handleSearch} />
+      <SearchBar
+        placeholder="Example: ai, data analysis, frontend"
+        onSearch={handleSearch}
+        feedback={searchFeedback}
+      />
 
       <div className="space-y-3">
         <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">
-          Skills disponibles
+          Available skills
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {suggestions.map((skill) => (
-            <button
+            <Link
               key={skill.slug}
-              type="button"
-              onClick={() => router.push(`/skills/${skill.slug}`)}
-              className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:border-slate-300"
+              href={`/skills/${skill.slug}`}
+              className="rounded-xl border border-slate-200 bg-white p-4 text-left shadow-sm hover:border-slate-300"
             >
-              {skill.title}
-            </button>
+              <p className="font-semibold text-slate-900">{skill.title}</p>
+              <p className="mt-1 text-sm text-slate-600">{skill.courseCount} courses available</p>
+              <p className="mt-1 text-xs text-slate-500">Compare course options</p>
+            </Link>
           ))}
         </div>
       </div>

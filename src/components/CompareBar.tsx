@@ -15,10 +15,10 @@ export const CompareBar = () => {
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-4 sm:flex-row">
         <div>
           <p className="text-sm font-semibold text-slate-900">
-            Compare ({visibleCount}/2)
+            {visibleCount} of 2 courses selected
           </p>
           <p className="text-xs text-slate-500">
-            Select 2 courses to compare.
+            {visibleCount === 1 ? "Select 1 more course to compare." : "Select 2 courses to compare."}
           </p>
           {notice ? (
             <p className="mt-2 text-xs font-semibold text-amber-600">{notice}</p>
@@ -46,7 +46,7 @@ export const CompareBar = () => {
               enabled ? "bg-blue-600 hover:bg-blue-500" : "bg-slate-300"
             }`}
           >
-            Compare ahora
+            Compare selected courses
           </button>
         </div>
       </div>

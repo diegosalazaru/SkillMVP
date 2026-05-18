@@ -29,6 +29,7 @@ const SKILL_ALIASES: Record<string, string> = {
 export type SkillOption = {
   slug: string;
   title: string;
+  courseCount: number;
 };
 
 const stripRoutePrefix = (value: string) =>
@@ -50,9 +51,10 @@ export const getSkillOptions = (): SkillOption[] => {
         ? leftSlug.localeCompare(rightSlug)
         : rightCount - leftCount
     )
-    .map(([slug]) => ({
+    .map(([slug, courseCount]) => ({
       slug,
-      title: titleFromSlug(slug)
+      title: titleFromSlug(slug),
+      courseCount
     }));
 };
 
@@ -71,3 +73,25 @@ export const resolveSkillSlug = (value: string): string | null => {
 
 export const getSkillSuggestions = (limit = 4): SkillOption[] =>
   getSkillOptions().slice(0, limit);
+
+
+export const searchSkillOptions = (query: string, limit = 5): SkillOption[] => {
+  const normalizedQuery = slugify(stripRoutePrefix(query));
+  if (!normalizedQuery) {
+    return [];
+  }
+
+  const options = getSkillOptions();
+  const exactSlug = options.find((option) => option.slug === normalizedQuery);
+  if (exactSlug) {
+    return [exactSlug];
+  }
+
+  return options
+    .filter((option) =>
+      option.title.toLowerCase().includes(query.toLowerCase().trim()) ||
+      option.slug.includes(query.toLowerCase().trim()) ||
+      option.slug.includes(normalizedQuery)
+    )
+    .slice(0, limit);
+};
