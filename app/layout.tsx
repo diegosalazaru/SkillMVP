@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 import { Providers } from "./providers";
+import { AnalyticsLoader } from "@/components/seo/AnalyticsLoader";
 
 export const metadata: Metadata = {
   title: "Compare online courses | Skills Compare",
@@ -36,6 +37,7 @@ export default function RootLayout({
             </footer>
           </div>
         </Providers>
+        <AnalyticsLoader />
       </body>
     </html>
   );
