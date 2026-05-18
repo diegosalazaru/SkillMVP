@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import HomeClient from "./HomeClient";
+import { SeoLinks } from "../src/components/seo/SeoLinks";
 
 export const metadata: Metadata = {
   title: "Compare courses online | Skills Compare",
@@ -8,5 +9,14 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  return <HomeClient />;
+  return (
+    <div className="space-y-10">
+      <HomeClient />
+
+      <section className="space-y-4">
+        <h2 className="text-2xl font-semibold text-slate-900">Explorar cursos por skill</h2>
+        <SeoLinks />
+      </section>
+    </div>
+  );
 }
