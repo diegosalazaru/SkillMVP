@@ -1,6 +1,8 @@
 export type SeoSkillConfig = {
   slug: string;
   label: string;
+  sourceSkillSlugs: string[];
+  sourceSkillAliases?: string[];
 };
 
 export type SeoPageTypeConfig = {

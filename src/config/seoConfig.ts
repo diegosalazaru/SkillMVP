@@ -1,11 +1,36 @@
 import { SeoPageTypeConfig, SeoSkillConfig } from "@/lib/seo/seoTypes";
 
 export const SEO_SKILLS: SeoSkillConfig[] = [
-  { slug: "artificial-intelligence", label: "Artificial Intelligence" },
-  { slug: "data-analytics", label: "Data Analytics" },
-  { slug: "cybersecurity", label: "Cybersecurity" },
-  { slug: "cloud-computing", label: "Cloud Computing" },
-  { slug: "project-management", label: "Project Management" }
+  {
+    slug: "artificial-intelligence",
+    label: "Artificial Intelligence",
+    sourceSkillSlugs: ["ai", "machine-learning", "llms", "prompt-engineering"],
+    sourceSkillAliases: ["artificial-intelligence", "artificial intelligence"]
+  },
+  {
+    slug: "data-analytics",
+    label: "Data Analytics",
+    sourceSkillSlugs: ["data-analysis", "analytics", "data-analytics"],
+    sourceSkillAliases: ["data analytics", "analisis-de-datos"]
+  },
+  {
+    slug: "cybersecurity",
+    label: "Cybersecurity",
+    sourceSkillSlugs: ["cybersecurity", "security"],
+    sourceSkillAliases: ["cyber security"]
+  },
+  {
+    slug: "cloud-computing",
+    label: "Cloud Computing",
+    sourceSkillSlugs: ["cloud-computing", "cloud"],
+    sourceSkillAliases: ["cloud computing"]
+  },
+  {
+    slug: "project-management",
+    label: "Project Management",
+    sourceSkillSlugs: ["project-management", "project-management-basics"],
+    sourceSkillAliases: ["project management"]
+  }
 ];
 
 export const SEO_PAGE_TYPES: SeoPageTypeConfig[] = [

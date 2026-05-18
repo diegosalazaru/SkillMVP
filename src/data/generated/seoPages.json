@@ -1,1 +1,230 @@
-[]
+[
+  {
+    "slug": "artificial-intelligence-certification",
+    "skillSlug": "artificial-intelligence",
+    "skillLabel": "Artificial Intelligence",
+    "pageType": "certification",
+    "intent": "credential-path",
+    "title": "Certification Artificial Intelligence Courses",
+    "metaDescription": "Explore 2 Artificial Intelligence course options for credential path and compare format, level, certificate availability, and pricing details.",
+    "h1": "Artificial Intelligence Certification Courses",
+    "intro": "This page lists 2 Artificial Intelligence course options from the current Skills Compare catalog for credential path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Artificial Intelligence course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Artificial Intelligence courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Artificial Intelligence course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "machine-learning-stanford-university",
+      "deep-learning-specialization-deeplearningai"
+    ]
+  },
+  {
+    "slug": "artificial-intelligence-for-beginners",
+    "skillSlug": "artificial-intelligence",
+    "skillLabel": "Artificial Intelligence",
+    "pageType": "for-beginners",
+    "intent": "beginner-path",
+    "title": "Beginner Artificial Intelligence Courses",
+    "metaDescription": "Explore 2 Artificial Intelligence course options for beginner path and compare format, level, certificate availability, and pricing details.",
+    "h1": "Artificial Intelligence Courses for Beginners",
+    "intro": "This page lists 2 Artificial Intelligence course options from the current Skills Compare catalog for beginner path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Artificial Intelligence course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Artificial Intelligence courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Artificial Intelligence course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "machine-learning-stanford-university",
+      "deep-learning-specialization-deeplearningai"
+    ]
+  },
+  {
+    "slug": "best-artificial-intelligence-courses",
+    "skillSlug": "artificial-intelligence",
+    "skillLabel": "Artificial Intelligence",
+    "pageType": "best-courses",
+    "intent": "course-discovery",
+    "title": "Best Artificial Intelligence Courses",
+    "metaDescription": "Explore 2 Artificial Intelligence course options for course discovery and compare format, level, certificate availability, and pricing details.",
+    "h1": "Best Artificial Intelligence Courses",
+    "intro": "This page lists 2 Artificial Intelligence course options from the current Skills Compare catalog for course discovery. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Artificial Intelligence course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Artificial Intelligence courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Artificial Intelligence course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "machine-learning-stanford-university",
+      "deep-learning-specialization-deeplearningai"
+    ]
+  },
+  {
+    "slug": "best-data-analytics-courses",
+    "skillSlug": "data-analytics",
+    "skillLabel": "Data Analytics",
+    "pageType": "best-courses",
+    "intent": "course-discovery",
+    "title": "Best Data Analytics Courses",
+    "metaDescription": "Explore 1 Data Analytics course option for course discovery and compare format, level, certificate availability, and pricing details.",
+    "h1": "Best Data Analytics Courses",
+    "intro": "This page lists 1 Data Analytics course option from the current Skills Compare catalog for course discovery. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Data Analytics course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Data Analytics courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Data Analytics course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "google-data-analytics-google"
+    ]
+  },
+  {
+    "slug": "data-analytics-certification",
+    "skillSlug": "data-analytics",
+    "skillLabel": "Data Analytics",
+    "pageType": "certification",
+    "intent": "credential-path",
+    "title": "Certification Data Analytics Courses",
+    "metaDescription": "Explore 1 Data Analytics course option for credential path and compare format, level, certificate availability, and pricing details.",
+    "h1": "Data Analytics Certification Courses",
+    "intro": "This page lists 1 Data Analytics course option from the current Skills Compare catalog for credential path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Data Analytics course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Data Analytics courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Data Analytics course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "google-data-analytics-google"
+    ]
+  },
+  {
+    "slug": "data-analytics-for-beginners",
+    "skillSlug": "data-analytics",
+    "skillLabel": "Data Analytics",
+    "pageType": "for-beginners",
+    "intent": "beginner-path",
+    "title": "Beginner Data Analytics Courses",
+    "metaDescription": "Explore 1 Data Analytics course option for beginner path and compare format, level, certificate availability, and pricing details.",
+    "h1": "Data Analytics Courses for Beginners",
+    "intro": "This page lists 1 Data Analytics course option from the current Skills Compare catalog for beginner path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Data Analytics course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Data Analytics courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Data Analytics course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "google-data-analytics-google"
+    ]
+  },
+  {
+    "slug": "learn-artificial-intelligence",
+    "skillSlug": "artificial-intelligence",
+    "skillLabel": "Artificial Intelligence",
+    "pageType": "learn",
+    "intent": "learning-plan",
+    "title": "Learn Artificial Intelligence Courses",
+    "metaDescription": "Explore 2 Artificial Intelligence course options for learning plan and compare format, level, certificate availability, and pricing details.",
+    "h1": "Learn Artificial Intelligence",
+    "intro": "This page lists 2 Artificial Intelligence course options from the current Skills Compare catalog for learning plan. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Artificial Intelligence course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Artificial Intelligence courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Artificial Intelligence course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "machine-learning-stanford-university",
+      "deep-learning-specialization-deeplearningai"
+    ]
+  },
+  {
+    "slug": "learn-data-analytics",
+    "skillSlug": "data-analytics",
+    "skillLabel": "Data Analytics",
+    "pageType": "learn",
+    "intent": "learning-plan",
+    "title": "Learn Data Analytics Courses",
+    "metaDescription": "Explore 1 Data Analytics course option for learning plan and compare format, level, certificate availability, and pricing details.",
+    "h1": "Learn Data Analytics",
+    "intro": "This page lists 1 Data Analytics course option from the current Skills Compare catalog for learning plan. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Data Analytics course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Data Analytics courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Data Analytics course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "google-data-analytics-google"
+    ]
+  }
+]
