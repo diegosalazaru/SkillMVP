@@ -6,9 +6,9 @@
     "pageType": "certification",
     "intent": "credential-path",
     "title": "Certification Artificial Intelligence Courses",
-    "metaDescription": "Explore 2 Artificial Intelligence course options for credential path and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 4 Artificial Intelligence course options for credential path and compare format, level, certificate availability, and pricing details.",
     "h1": "Artificial Intelligence Certification Courses",
-    "intro": "This page lists 2 Artificial Intelligence course options from the current Skills Compare catalog for credential path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 4 Artificial Intelligence course options from the current Skills Compare catalog for credential path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Artificial Intelligence course?",
@@ -25,7 +25,9 @@
     ],
     "courseIds": [
       "machine-learning-stanford-university",
-      "deep-learning-specialization-deeplearningai"
+      "deep-learning-specialization-deeplearningai",
+      "ai-for-everyone-deeplearningai",
+      "ibm-ai-engineering-ibm"
     ]
   },
   {
@@ -35,9 +37,9 @@
     "pageType": "for-beginners",
     "intent": "beginner-path",
     "title": "Beginner Artificial Intelligence Courses",
-    "metaDescription": "Explore 2 Artificial Intelligence course options for beginner path and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 4 Artificial Intelligence course options for beginner path and compare format, level, certificate availability, and pricing details.",
     "h1": "Artificial Intelligence Courses for Beginners",
-    "intro": "This page lists 2 Artificial Intelligence course options from the current Skills Compare catalog for beginner path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 4 Artificial Intelligence course options from the current Skills Compare catalog for beginner path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Artificial Intelligence course?",
@@ -54,7 +56,9 @@
     ],
     "courseIds": [
       "machine-learning-stanford-university",
-      "deep-learning-specialization-deeplearningai"
+      "deep-learning-specialization-deeplearningai",
+      "ai-for-everyone-deeplearningai",
+      "ibm-ai-engineering-ibm"
     ]
   },
   {
@@ -64,9 +68,9 @@
     "pageType": "best-courses",
     "intent": "course-discovery",
     "title": "Compare Artificial Intelligence Courses",
-    "metaDescription": "Explore 2 Artificial Intelligence course options for course discovery and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 4 Artificial Intelligence course options for course discovery and compare format, level, certificate availability, and pricing details.",
     "h1": "Compare Artificial Intelligence Courses",
-    "intro": "This page lists 2 Artificial Intelligence course options from the current Skills Compare catalog for course discovery. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 4 Artificial Intelligence course options from the current Skills Compare catalog for course discovery. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Artificial Intelligence course?",
@@ -83,7 +87,69 @@
     ],
     "courseIds": [
       "machine-learning-stanford-university",
-      "deep-learning-specialization-deeplearningai"
+      "deep-learning-specialization-deeplearningai",
+      "ai-for-everyone-deeplearningai",
+      "ibm-ai-engineering-ibm"
+    ]
+  },
+  {
+    "slug": "best-cloud-computing-courses",
+    "skillSlug": "cloud-computing",
+    "skillLabel": "Cloud Computing",
+    "pageType": "best-courses",
+    "intent": "course-discovery",
+    "title": "Compare Cloud Computing Courses",
+    "metaDescription": "Explore 3 Cloud Computing course options for course discovery and compare format, level, certificate availability, and pricing details.",
+    "h1": "Compare Cloud Computing Courses",
+    "intro": "This page lists 3 Cloud Computing course options from the current Skills Compare catalog for course discovery. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Cloud Computing course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Cloud Computing courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Cloud Computing course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "aws-cloud-technical-essentials-aws",
+      "google-cloud-fundamentals-core-infrastructure-google",
+      "introduction-to-cloud-computing-ibm"
+    ]
+  },
+  {
+    "slug": "best-cybersecurity-courses",
+    "skillSlug": "cybersecurity",
+    "skillLabel": "Cybersecurity",
+    "pageType": "best-courses",
+    "intent": "course-discovery",
+    "title": "Compare Cybersecurity Courses",
+    "metaDescription": "Explore 3 Cybersecurity course options for course discovery and compare format, level, certificate availability, and pricing details.",
+    "h1": "Compare Cybersecurity Courses",
+    "intro": "This page lists 3 Cybersecurity course options from the current Skills Compare catalog for course discovery. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Cybersecurity course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Cybersecurity courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Cybersecurity course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "ibm-cybersecurity-analyst-ibm",
+      "google-cybersecurity-google",
+      "introduction-cyber-security-nyux-edx"
     ]
   },
   {
@@ -93,9 +159,9 @@
     "pageType": "best-courses",
     "intent": "course-discovery",
     "title": "Compare Data Analytics Courses",
-    "metaDescription": "Explore 1 Data Analytics course option for course discovery and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 4 Data Analytics course options for course discovery and compare format, level, certificate availability, and pricing details.",
     "h1": "Compare Data Analytics Courses",
-    "intro": "This page lists 1 Data Analytics course option from the current Skills Compare catalog for course discovery. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 4 Data Analytics course options from the current Skills Compare catalog for course discovery. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Data Analytics course?",
@@ -111,7 +177,160 @@
       }
     ],
     "courseIds": [
-      "google-data-analytics-google"
+      "google-data-analytics-google",
+      "ibm-data-analyst-ibm",
+      "google-advanced-data-analytics-google",
+      "data-analytics-essentials-cisco"
+    ]
+  },
+  {
+    "slug": "best-project-management-courses",
+    "skillSlug": "project-management",
+    "skillLabel": "Project Management",
+    "pageType": "best-courses",
+    "intent": "course-discovery",
+    "title": "Compare Project Management Courses",
+    "metaDescription": "Explore 3 Project Management course options for course discovery and compare format, level, certificate availability, and pricing details.",
+    "h1": "Compare Project Management Courses",
+    "intro": "This page lists 3 Project Management course options from the current Skills Compare catalog for course discovery. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Project Management course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Project Management courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Project Management course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "google-project-management-google",
+      "introduction-project-management-edx-adelaidex",
+      "project-management-principles-practices-umci"
+    ]
+  },
+  {
+    "slug": "cloud-computing-certification",
+    "skillSlug": "cloud-computing",
+    "skillLabel": "Cloud Computing",
+    "pageType": "certification",
+    "intent": "credential-path",
+    "title": "Certification Cloud Computing Courses",
+    "metaDescription": "Explore 3 Cloud Computing course options for credential path and compare format, level, certificate availability, and pricing details.",
+    "h1": "Cloud Computing Certification Courses",
+    "intro": "This page lists 3 Cloud Computing course options from the current Skills Compare catalog for credential path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Cloud Computing course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Cloud Computing courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Cloud Computing course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "aws-cloud-technical-essentials-aws",
+      "google-cloud-fundamentals-core-infrastructure-google",
+      "introduction-to-cloud-computing-ibm"
+    ]
+  },
+  {
+    "slug": "cloud-computing-for-beginners",
+    "skillSlug": "cloud-computing",
+    "skillLabel": "Cloud Computing",
+    "pageType": "for-beginners",
+    "intent": "beginner-path",
+    "title": "Beginner Cloud Computing Courses",
+    "metaDescription": "Explore 3 Cloud Computing course options for beginner path and compare format, level, certificate availability, and pricing details.",
+    "h1": "Cloud Computing Courses for Beginners",
+    "intro": "This page lists 3 Cloud Computing course options from the current Skills Compare catalog for beginner path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Cloud Computing course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Cloud Computing courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Cloud Computing course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "aws-cloud-technical-essentials-aws",
+      "google-cloud-fundamentals-core-infrastructure-google",
+      "introduction-to-cloud-computing-ibm"
+    ]
+  },
+  {
+    "slug": "cybersecurity-certification",
+    "skillSlug": "cybersecurity",
+    "skillLabel": "Cybersecurity",
+    "pageType": "certification",
+    "intent": "credential-path",
+    "title": "Certification Cybersecurity Courses",
+    "metaDescription": "Explore 3 Cybersecurity course options for credential path and compare format, level, certificate availability, and pricing details.",
+    "h1": "Cybersecurity Certification Courses",
+    "intro": "This page lists 3 Cybersecurity course options from the current Skills Compare catalog for credential path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Cybersecurity course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Cybersecurity courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Cybersecurity course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "ibm-cybersecurity-analyst-ibm",
+      "google-cybersecurity-google",
+      "introduction-cyber-security-nyux-edx"
+    ]
+  },
+  {
+    "slug": "cybersecurity-for-beginners",
+    "skillSlug": "cybersecurity",
+    "skillLabel": "Cybersecurity",
+    "pageType": "for-beginners",
+    "intent": "beginner-path",
+    "title": "Beginner Cybersecurity Courses",
+    "metaDescription": "Explore 3 Cybersecurity course options for beginner path and compare format, level, certificate availability, and pricing details.",
+    "h1": "Cybersecurity Courses for Beginners",
+    "intro": "This page lists 3 Cybersecurity course options from the current Skills Compare catalog for beginner path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Cybersecurity course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Cybersecurity courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Cybersecurity course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "ibm-cybersecurity-analyst-ibm",
+      "google-cybersecurity-google",
+      "introduction-cyber-security-nyux-edx"
     ]
   },
   {
@@ -121,9 +340,9 @@
     "pageType": "certification",
     "intent": "credential-path",
     "title": "Certification Data Analytics Courses",
-    "metaDescription": "Explore 1 Data Analytics course option for credential path and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 4 Data Analytics course options for credential path and compare format, level, certificate availability, and pricing details.",
     "h1": "Data Analytics Certification Courses",
-    "intro": "This page lists 1 Data Analytics course option from the current Skills Compare catalog for credential path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 4 Data Analytics course options from the current Skills Compare catalog for credential path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Data Analytics course?",
@@ -139,7 +358,10 @@
       }
     ],
     "courseIds": [
-      "google-data-analytics-google"
+      "google-data-analytics-google",
+      "ibm-data-analyst-ibm",
+      "google-advanced-data-analytics-google",
+      "data-analytics-essentials-cisco"
     ]
   },
   {
@@ -149,9 +371,9 @@
     "pageType": "for-beginners",
     "intent": "beginner-path",
     "title": "Beginner Data Analytics Courses",
-    "metaDescription": "Explore 1 Data Analytics course option for beginner path and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 4 Data Analytics course options for beginner path and compare format, level, certificate availability, and pricing details.",
     "h1": "Data Analytics Courses for Beginners",
-    "intro": "This page lists 1 Data Analytics course option from the current Skills Compare catalog for beginner path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 4 Data Analytics course options from the current Skills Compare catalog for beginner path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Data Analytics course?",
@@ -167,7 +389,10 @@
       }
     ],
     "courseIds": [
-      "google-data-analytics-google"
+      "google-data-analytics-google",
+      "ibm-data-analyst-ibm",
+      "google-advanced-data-analytics-google",
+      "data-analytics-essentials-cisco"
     ]
   },
   {
@@ -177,9 +402,9 @@
     "pageType": "learn",
     "intent": "learning-plan",
     "title": "Learn Artificial Intelligence Courses",
-    "metaDescription": "Explore 2 Artificial Intelligence course options for learning plan and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 4 Artificial Intelligence course options for learning plan and compare format, level, certificate availability, and pricing details.",
     "h1": "Learn Artificial Intelligence",
-    "intro": "This page lists 2 Artificial Intelligence course options from the current Skills Compare catalog for learning plan. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 4 Artificial Intelligence course options from the current Skills Compare catalog for learning plan. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Artificial Intelligence course?",
@@ -196,7 +421,69 @@
     ],
     "courseIds": [
       "machine-learning-stanford-university",
-      "deep-learning-specialization-deeplearningai"
+      "deep-learning-specialization-deeplearningai",
+      "ai-for-everyone-deeplearningai",
+      "ibm-ai-engineering-ibm"
+    ]
+  },
+  {
+    "slug": "learn-cloud-computing",
+    "skillSlug": "cloud-computing",
+    "skillLabel": "Cloud Computing",
+    "pageType": "learn",
+    "intent": "learning-plan",
+    "title": "Learn Cloud Computing Courses",
+    "metaDescription": "Explore 3 Cloud Computing course options for learning plan and compare format, level, certificate availability, and pricing details.",
+    "h1": "Learn Cloud Computing",
+    "intro": "This page lists 3 Cloud Computing course options from the current Skills Compare catalog for learning plan. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Cloud Computing course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Cloud Computing courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Cloud Computing course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "aws-cloud-technical-essentials-aws",
+      "google-cloud-fundamentals-core-infrastructure-google",
+      "introduction-to-cloud-computing-ibm"
+    ]
+  },
+  {
+    "slug": "learn-cybersecurity",
+    "skillSlug": "cybersecurity",
+    "skillLabel": "Cybersecurity",
+    "pageType": "learn",
+    "intent": "learning-plan",
+    "title": "Learn Cybersecurity Courses",
+    "metaDescription": "Explore 3 Cybersecurity course options for learning plan and compare format, level, certificate availability, and pricing details.",
+    "h1": "Learn Cybersecurity",
+    "intro": "This page lists 3 Cybersecurity course options from the current Skills Compare catalog for learning plan. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Cybersecurity course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Cybersecurity courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Cybersecurity course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "ibm-cybersecurity-analyst-ibm",
+      "google-cybersecurity-google",
+      "introduction-cyber-security-nyux-edx"
     ]
   },
   {
@@ -206,9 +493,9 @@
     "pageType": "learn",
     "intent": "learning-plan",
     "title": "Learn Data Analytics Courses",
-    "metaDescription": "Explore 1 Data Analytics course option for learning plan and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 4 Data Analytics course options for learning plan and compare format, level, certificate availability, and pricing details.",
     "h1": "Learn Data Analytics",
-    "intro": "This page lists 1 Data Analytics course option from the current Skills Compare catalog for learning plan. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 4 Data Analytics course options from the current Skills Compare catalog for learning plan. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Data Analytics course?",
@@ -224,7 +511,100 @@
       }
     ],
     "courseIds": [
-      "google-data-analytics-google"
+      "google-data-analytics-google",
+      "ibm-data-analyst-ibm",
+      "google-advanced-data-analytics-google",
+      "data-analytics-essentials-cisco"
+    ]
+  },
+  {
+    "slug": "learn-project-management",
+    "skillSlug": "project-management",
+    "skillLabel": "Project Management",
+    "pageType": "learn",
+    "intent": "learning-plan",
+    "title": "Learn Project Management Courses",
+    "metaDescription": "Explore 3 Project Management course options for learning plan and compare format, level, certificate availability, and pricing details.",
+    "h1": "Learn Project Management",
+    "intro": "This page lists 3 Project Management course options from the current Skills Compare catalog for learning plan. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Project Management course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Project Management courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Project Management course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "google-project-management-google",
+      "introduction-project-management-edx-adelaidex",
+      "project-management-principles-practices-umci"
+    ]
+  },
+  {
+    "slug": "project-management-certification",
+    "skillSlug": "project-management",
+    "skillLabel": "Project Management",
+    "pageType": "certification",
+    "intent": "credential-path",
+    "title": "Certification Project Management Courses",
+    "metaDescription": "Explore 3 Project Management course options for credential path and compare format, level, certificate availability, and pricing details.",
+    "h1": "Project Management Certification Courses",
+    "intro": "This page lists 3 Project Management course options from the current Skills Compare catalog for credential path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Project Management course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Project Management courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Project Management course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "google-project-management-google",
+      "introduction-project-management-edx-adelaidex",
+      "project-management-principles-practices-umci"
+    ]
+  },
+  {
+    "slug": "project-management-for-beginners",
+    "skillSlug": "project-management",
+    "skillLabel": "Project Management",
+    "pageType": "for-beginners",
+    "intent": "beginner-path",
+    "title": "Beginner Project Management Courses",
+    "metaDescription": "Explore 3 Project Management course options for beginner path and compare format, level, certificate availability, and pricing details.",
+    "h1": "Project Management Courses for Beginners",
+    "intro": "This page lists 3 Project Management course options from the current Skills Compare catalog for beginner path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "faq": [
+      {
+        "question": "How should I choose a Project Management course?",
+        "answer": "Compare course level, duration, language, pricing model, and certificate availability. Then verify the full syllabus and requirements on the provider website."
+      },
+      {
+        "question": "Do all Project Management courses include a certificate?",
+        "answer": "No. Certificate availability depends on each provider and course plan. Check the course details and provider page before enrolling."
+      },
+      {
+        "question": "Are these Project Management course details final?",
+        "answer": "Course information can change. Always confirm current pricing, duration, and certificate terms on the provider website."
+      }
+    ],
+    "courseIds": [
+      "google-project-management-google",
+      "introduction-project-management-edx-adelaidex",
+      "project-management-principles-practices-umci"
     ]
   }
 ]
