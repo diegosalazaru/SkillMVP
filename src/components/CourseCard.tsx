@@ -21,15 +21,15 @@ export const CourseCard = ({ course }: CourseCardProps) => {
     .toLowerCase()
     .includes("no disponible");
   const facts = [
-    { label: "Plataforma", value: course.platform },
-    { label: "Nivel", value: course.level },
+    { label: "Platform", value: course.platform },
+    { label: "Level", value: course.level },
     hasKnownDuration ? { label: "Duration", value: course.durationText } : null,
-    hasKnownPrice ? { label: "Precio", value: course.priceText } : null,
+    hasKnownPrice ? { label: "Price", value: course.priceText } : null,
     {
-      label: "Certificado",
-      value: course.certificate ? "Incluido" : "No verificado"
+      label: "Certificate",
+      value: course.certificate ? "Certificate available" : "Certificate not verified"
     },
-    course.language ? { label: "Idioma", value: course.language } : null
+    course.language ? { label: "Language", value: course.language } : null
   ].filter((fact): fact is { label: string; value: string } => fact !== null);
 
   return (
@@ -52,7 +52,7 @@ export const CourseCard = ({ course }: CourseCardProps) => {
       ) : null}
       <div className="space-y-2">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
-          Datos para decidir
+          Key facts
         </p>
         <div className="grid gap-2 text-sm text-slate-600 sm:grid-cols-2">
           {facts.map((fact) => (
@@ -74,13 +74,13 @@ export const CourseCard = ({ course }: CourseCardProps) => {
             onClick={() => trackOutboundCourseClick(course, "card")}
             className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
           >
-            View course on {course.platform}
+            View course
           </a>
           <Link
             href={`/courses/${course.id}`}
             className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
           >
-            Detalles
+            Details
           </Link>
         </div>
         <label className="flex items-center gap-2 text-sm text-slate-600">
@@ -93,7 +93,7 @@ export const CourseCard = ({ course }: CourseCardProps) => {
           Add to compare
         </label>
       </div>
-      <p className="text-xs text-slate-500">Opens on an external page.</p>
+      <p className="text-xs text-slate-500">Open provider page. Provider details may change.</p>
       <p className="text-xs text-slate-500">{EXTERNAL_LINK_DISCLOSURE}</p>
       {atLimit && !selected ? (
         <p className="text-xs text-amber-600">

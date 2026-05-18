@@ -26,8 +26,11 @@ export default function CompareClient() {
 
   const hasTwoCourses = ids.length === 2 && leftCourse && rightCourse;
 
+  const getLastSkill = () =>
+    typeof window === "undefined" ? null : window.localStorage.getItem(LAST_SKILL_KEY);
+
   const handleChangeCourses = () => {
-    const lastSkill = window.localStorage.getItem(LAST_SKILL_KEY);
+    const lastSkill = getLastSkill();
     router.push(lastSkill ? `/skills/${lastSkill}` : "/");
   };
 
@@ -35,18 +38,23 @@ export default function CompareClient() {
     return (
       <section className="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center">
         <h2 className="text-2xl font-semibold text-slate-900">
-          Select courses to compare
+          Select exactly 2 courses to compare
         </h2>
         <p className="text-slate-600">
-          Return to the list and select courses to compare.
+          We need two valid selected courses to show a side-by-side comparison.
         </p>
-        <button
-          type="button"
-          onClick={handleChangeCourses}
-          className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-500"
-        >
-          Back to course selection
-        </button>
+        <div className="flex flex-wrap justify-center gap-3">
+          <Link href="/" className="rounded-lg border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300">Browse available skills</Link>
+          {getLastSkill() ? (
+            <button
+              type="button"
+              onClick={handleChangeCourses}
+              className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-500"
+            >
+              Return to last skill
+            </button>
+          ) : null}
+        </div>
       </section>
     );
   }
@@ -139,10 +147,10 @@ export default function CompareClient() {
               onClick={() => trackOutboundCourseClick(leftCourse, "compare")}
               className="w-fit rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
             >
-              View course on {leftCourse.platform}
+Open provider page
             </a>
             <span className="text-xs font-normal text-slate-500">
-              Opens on an external page.
+Provider details may change.
             </span>
           </span>
           <span className="flex flex-col gap-3">
@@ -164,10 +172,10 @@ export default function CompareClient() {
               onClick={() => trackOutboundCourseClick(rightCourse, "compare")}
               className="w-fit rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
             >
-              View course on {rightCourse.platform}
+Open provider page
             </a>
             <span className="text-xs font-normal text-slate-500">
-              Opens on an external page.
+Provider details may change.
             </span>
           </span>
         </div>
