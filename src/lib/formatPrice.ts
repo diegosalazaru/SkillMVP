@@ -21,7 +21,7 @@ export const formatCoursePrice = (course: PriceInput): string => {
   if (course.priceModel === "subscription") {
     if (course.priceAmount != null && course.currency) {
       if (course.priceInterval === "month") {
-        return `${course.priceAmount} ${course.currency} / mes`;
+        return `${course.priceAmount} ${course.currency} / month`;
       }
 
       if (course.priceInterval === "year") {
@@ -32,5 +32,5 @@ export const formatCoursePrice = (course: PriceInput): string => {
     return "Subscription — price unverified";
   }
 
-  return "Precio no verificado";
+  return "Price not verified";
 };
