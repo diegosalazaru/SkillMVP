@@ -143,5 +143,411 @@
       "Interes en crear interfaces web"
     ],
     "source": "coursera-curated"
+  },
+  {
+    "id": "ibm-cybersecurity-analyst-ibm",
+    "platform": "coursera",
+    "title": "IBM Cybersecurity Analyst Professional Certificate",
+    "url": "https://www.coursera.org/professional-certificates/ibm-cybersecurity-analyst",
+    "skillSlug": "cybersecurity",
+    "level": "beginner",
+    "durationHours": null,
+    "language": "en",
+    "priceModel": "subscription",
+    "priceAmount": null,
+    "currency": null,
+    "priceInterval": "month",
+    "rating": null,
+    "reviewCount": null,
+    "certificate": true,
+    "lastUpdatedAt": null,
+    "shortDescription": "Professional certificate covering core cybersecurity concepts, tools, and incident response workflows.",
+    "syllabusBullets": [
+      "Cybersecurity foundations and threat concepts",
+      "Network security and endpoint protection basics",
+      "Incident response and SOC-oriented practices"
+    ],
+    "prerequisitesBullets": [
+      "No prior cybersecurity experience required",
+      "Basic computer literacy"
+    ],
+    "source": "coursera-curated"
+  },
+  {
+    "id": "google-cybersecurity-google",
+    "platform": "coursera",
+    "title": "Google Cybersecurity Professional Certificate",
+    "url": "https://www.coursera.org/professional-certificates/google-cybersecurity",
+    "skillSlug": "cybersecurity",
+    "level": "beginner",
+    "durationHours": null,
+    "language": "en",
+    "priceModel": "subscription",
+    "priceAmount": null,
+    "currency": null,
+    "priceInterval": "month",
+    "rating": null,
+    "reviewCount": null,
+    "certificate": true,
+    "lastUpdatedAt": null,
+    "shortDescription": "Professional certificate that introduces security operations, risk management, and incident handling.",
+    "syllabusBullets": [
+      "Security domains and risk fundamentals",
+      "Linux, SQL, and security tooling basics",
+      "Detection and incident response workflows"
+    ],
+    "prerequisitesBullets": [
+      "No prior experience required",
+      "Interest in security operations"
+    ],
+    "source": "coursera-curated"
+  },
+  {
+    "id": "introduction-cyber-security-nyux-edx",
+    "platform": "edx",
+    "title": "Introduction to Cyber Security",
+    "url": "https://www.edx.org/learn/cybersecurity/new-york-university-introduction-to-cyber-security",
+    "skillSlug": "cybersecurity",
+    "level": "beginner",
+    "durationHours": null,
+    "language": "en",
+    "priceModel": "unknown",
+    "priceAmount": null,
+    "currency": null,
+    "priceInterval": null,
+    "rating": null,
+    "reviewCount": null,
+    "certificate": null,
+    "lastUpdatedAt": null,
+    "shortDescription": "Introductory cybersecurity course covering foundational concepts and common security challenges.",
+    "syllabusBullets": [
+      "Core cybersecurity terminology",
+      "Threats, vulnerabilities, and controls",
+      "Security fundamentals for modern systems"
+    ],
+    "prerequisitesBullets": [
+      "Beginner-friendly course",
+      "General interest in cybersecurity"
+    ],
+    "source": "manual"
+  },
+  {
+    "id": "aws-cloud-technical-essentials-aws",
+    "platform": "coursera",
+    "title": "AWS Cloud Technical Essentials",
+    "url": "https://www.coursera.org/learn/aws-cloud-technical-essentials",
+    "skillSlug": "cloud-computing",
+    "level": "beginner",
+    "durationHours": null,
+    "language": "en",
+    "priceModel": "subscription",
+    "priceAmount": null,
+    "currency": null,
+    "priceInterval": "month",
+    "rating": null,
+    "reviewCount": null,
+    "certificate": true,
+    "lastUpdatedAt": null,
+    "shortDescription": "Foundational AWS course introducing key cloud concepts and core AWS services.",
+    "syllabusBullets": [
+      "Cloud computing fundamentals",
+      "Core AWS services overview",
+      "Basic architecture and deployment concepts"
+    ],
+    "prerequisitesBullets": [
+      "Beginner level",
+      "Basic IT familiarity is helpful"
+    ],
+    "source": "coursera-curated"
+  },
+  {
+    "id": "google-cloud-fundamentals-core-infrastructure-google",
+    "platform": "coursera",
+    "title": "Google Cloud Fundamentals: Core Infrastructure",
+    "url": "https://www.coursera.org/learn/gcp-fundamentals",
+    "skillSlug": "cloud-computing",
+    "level": "beginner",
+    "durationHours": null,
+    "language": "en",
+    "priceModel": "subscription",
+    "priceAmount": null,
+    "currency": null,
+    "priceInterval": "month",
+    "rating": null,
+    "reviewCount": null,
+    "certificate": true,
+    "lastUpdatedAt": null,
+    "shortDescription": "Introductory Google Cloud course covering compute, storage, networking, and IAM basics.",
+    "syllabusBullets": [
+      "Google Cloud products and services overview",
+      "Compute, storage, and networking basics",
+      "Identity and access management fundamentals"
+    ],
+    "prerequisitesBullets": [
+      "Beginner level",
+      "General technical curiosity"
+    ],
+    "source": "coursera-curated"
+  },
+  {
+    "id": "introduction-to-cloud-computing-ibm",
+    "platform": "coursera",
+    "title": "Introduction to Cloud Computing",
+    "url": "https://www.coursera.org/learn/introduction-to-cloud",
+    "skillSlug": "cloud-computing",
+    "level": "beginner",
+    "durationHours": null,
+    "language": "en",
+    "priceModel": "subscription",
+    "priceAmount": null,
+    "currency": null,
+    "priceInterval": "month",
+    "rating": null,
+    "reviewCount": null,
+    "certificate": true,
+    "lastUpdatedAt": null,
+    "shortDescription": "Beginner course on cloud service models, deployment models, and cloud adoption basics.",
+    "syllabusBullets": [
+      "Cloud concepts and value proposition",
+      "IaaS, PaaS, and SaaS models",
+      "Public, private, and hybrid cloud basics"
+    ],
+    "prerequisitesBullets": [
+      "No prior cloud experience required",
+      "Basic computing knowledge"
+    ],
+    "source": "coursera-curated"
+  },
+  {
+    "id": "google-project-management-google",
+    "platform": "coursera",
+    "title": "Google Project Management: Professional Certificate",
+    "url": "https://www.coursera.org/professional-certificates/google-project-management",
+    "skillSlug": "project-management",
+    "level": "beginner",
+    "durationHours": null,
+    "language": "en",
+    "priceModel": "subscription",
+    "priceAmount": null,
+    "currency": null,
+    "priceInterval": "month",
+    "rating": null,
+    "reviewCount": null,
+    "certificate": true,
+    "lastUpdatedAt": null,
+    "shortDescription": "Professional certificate covering project initiation, planning, execution, and agile practices.",
+    "syllabusBullets": [
+      "Project lifecycle and roles",
+      "Planning, scheduling, and risk basics",
+      "Agile and stakeholder communication practices"
+    ],
+    "prerequisitesBullets": [
+      "No prior project management experience required",
+      "Interest in managing projects"
+    ],
+    "source": "coursera-curated"
+  },
+  {
+    "id": "introduction-project-management-edx-adelaidex",
+    "platform": "edx",
+    "title": "Introduction to Project Management",
+    "url": "https://www.edx.org/learn/project-management/the-university-of-adelaide-introduction-to-project-management",
+    "skillSlug": "project-management",
+    "level": "beginner",
+    "durationHours": null,
+    "language": "en",
+    "priceModel": "unknown",
+    "priceAmount": null,
+    "currency": null,
+    "priceInterval": null,
+    "rating": null,
+    "reviewCount": null,
+    "certificate": null,
+    "lastUpdatedAt": null,
+    "shortDescription": "Introductory project management course focused on planning, scope, and delivery basics.",
+    "syllabusBullets": [
+      "Project planning fundamentals",
+      "Scope, schedule, and resource basics",
+      "Project communication and tracking"
+    ],
+    "prerequisitesBullets": [
+      "Beginner-friendly",
+      "No formal PM background required"
+    ],
+    "source": "manual"
+  },
+  {
+    "id": "project-management-principles-practices-umci",
+    "platform": "coursera",
+    "title": "Project Management Principles and Practices Specialization",
+    "url": "https://www.coursera.org/specializations/project-management",
+    "skillSlug": "project-management",
+    "level": "beginner",
+    "durationHours": null,
+    "language": "en",
+    "priceModel": "subscription",
+    "priceAmount": null,
+    "currency": null,
+    "priceInterval": "month",
+    "rating": null,
+    "reviewCount": null,
+    "certificate": true,
+    "lastUpdatedAt": null,
+    "shortDescription": "Specialization introducing planning, scheduling, budgeting, and managing project risks.",
+    "syllabusBullets": [
+      "Project planning and scheduling",
+      "Budgeting and resource management basics",
+      "Risk identification and communication"
+    ],
+    "prerequisitesBullets": [
+      "Suitable for beginners",
+      "General professional experience is helpful"
+    ],
+    "source": "coursera-curated"
+  },
+  {
+    "id": "ibm-data-analyst-ibm",
+    "platform": "coursera",
+    "title": "IBM Data Analyst Professional Certificate",
+    "url": "https://www.coursera.org/professional-certificates/ibm-data-analyst",
+    "skillSlug": "data-analysis",
+    "level": "beginner",
+    "durationHours": null,
+    "language": "en",
+    "priceModel": "subscription",
+    "priceAmount": null,
+    "currency": null,
+    "priceInterval": "month",
+    "rating": null,
+    "reviewCount": null,
+    "certificate": true,
+    "lastUpdatedAt": null,
+    "shortDescription": "Professional certificate focused on spreadsheets, SQL, Python, and data visualization basics.",
+    "syllabusBullets": [
+      "Data analysis workflow fundamentals",
+      "SQL, spreadsheets, and Python basics",
+      "Data visualization and reporting"
+    ],
+    "prerequisitesBullets": [
+      "No prior data analyst experience required",
+      "Comfort with basic computer tasks"
+    ],
+    "source": "coursera-curated"
+  },
+  {
+    "id": "google-advanced-data-analytics-google",
+    "platform": "coursera",
+    "title": "Google Advanced Data Analytics Professional Certificate",
+    "url": "https://www.coursera.org/professional-certificates/google-advanced-data-analytics",
+    "skillSlug": "data-analysis",
+    "level": "intermediate",
+    "durationHours": null,
+    "language": "en",
+    "priceModel": "subscription",
+    "priceAmount": null,
+    "currency": null,
+    "priceInterval": "month",
+    "rating": null,
+    "reviewCount": null,
+    "certificate": true,
+    "lastUpdatedAt": null,
+    "shortDescription": "Professional certificate covering advanced analytics topics with Python, statistics, and machine learning foundations.",
+    "syllabusBullets": [
+      "Exploratory data analysis and statistics",
+      "Python for analysis workflows",
+      "Applied machine learning foundations"
+    ],
+    "prerequisitesBullets": [
+      "Foundational analytics knowledge recommended",
+      "Comfort with spreadsheets or basic programming"
+    ],
+    "source": "coursera-curated"
+  },
+  {
+    "id": "data-analytics-essentials-cisco",
+    "platform": "coursera",
+    "title": "Data Analytics Essentials",
+    "url": "https://www.coursera.org/learn/data-analytics-essentials",
+    "skillSlug": "data-analysis",
+    "level": "beginner",
+    "durationHours": null,
+    "language": "en",
+    "priceModel": "subscription",
+    "priceAmount": null,
+    "currency": null,
+    "priceInterval": "month",
+    "rating": null,
+    "reviewCount": null,
+    "certificate": true,
+    "lastUpdatedAt": null,
+    "shortDescription": "Beginner course on data analytics basics, data lifecycle concepts, and foundational tools.",
+    "syllabusBullets": [
+      "Data analytics fundamentals",
+      "Data lifecycle and governance basics",
+      "Introductory tools and methods"
+    ],
+    "prerequisitesBullets": [
+      "Beginner level",
+      "Interest in data-focused roles"
+    ],
+    "source": "coursera-curated"
+  },
+  {
+    "id": "ai-for-everyone-deeplearningai",
+    "platform": "coursera",
+    "title": "AI For Everyone",
+    "url": "https://www.coursera.org/learn/ai-for-everyone",
+    "skillSlug": "ai",
+    "level": "beginner",
+    "durationHours": null,
+    "language": "en",
+    "priceModel": "subscription",
+    "priceAmount": null,
+    "currency": null,
+    "priceInterval": "month",
+    "rating": null,
+    "reviewCount": null,
+    "certificate": true,
+    "lastUpdatedAt": null,
+    "shortDescription": "Non-technical introduction to AI concepts, strategy, and practical organizational considerations.",
+    "syllabusBullets": [
+      "Core AI concepts and terminology",
+      "AI project workflow overview",
+      "Responsible adoption considerations"
+    ],
+    "prerequisitesBullets": [
+      "No technical background required",
+      "Designed for broad audiences"
+    ],
+    "source": "coursera-curated"
+  },
+  {
+    "id": "ibm-ai-engineering-ibm",
+    "platform": "coursera",
+    "title": "IBM AI Engineering Professional Certificate",
+    "url": "https://www.coursera.org/professional-certificates/ai-engineer",
+    "skillSlug": "machine-learning",
+    "level": "intermediate",
+    "durationHours": null,
+    "language": "en",
+    "priceModel": "subscription",
+    "priceAmount": null,
+    "currency": null,
+    "priceInterval": "month",
+    "rating": null,
+    "reviewCount": null,
+    "certificate": true,
+    "lastUpdatedAt": null,
+    "shortDescription": "Professional certificate covering machine learning and deep learning implementation with Python frameworks.",
+    "syllabusBullets": [
+      "Supervised and unsupervised learning fundamentals",
+      "Deep learning model development",
+      "Model training and evaluation workflows"
+    ],
+    "prerequisitesBullets": [
+      "Python and basic math familiarity recommended",
+      "Some prior ML exposure is helpful"
+    ],
+    "source": "coursera-curated"
   }
 ]
