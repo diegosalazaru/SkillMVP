@@ -130,8 +130,8 @@ export default function CompareClient() {
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <div className="grid grid-cols-3 gap-4 border-b border-slate-200 bg-slate-50 px-6 py-4 text-sm font-semibold text-slate-700">
-          <span>Detail</span>
+        <div className="grid gap-4 border-b border-slate-200 bg-slate-50 px-4 py-4 text-sm font-semibold text-slate-700 sm:grid-cols-3 sm:px-6">
+          <span className="hidden sm:block">Detail</span>
           <span className="flex flex-col gap-3">
             <Link
               href={`/courses/${leftCourse.id}`}
@@ -186,13 +186,23 @@ export default function CompareClient() {
             return (
               <div
                 key={row.label}
-                className={`grid grid-cols-3 gap-4 px-6 py-4 text-sm text-slate-600 ${
+                className={`grid gap-3 px-4 py-4 text-sm text-slate-600 sm:grid-cols-3 sm:gap-4 sm:px-6 ${
                   differs ? "bg-blue-50/50" : "bg-white"
                 }`}
               >
                 <span className="font-semibold text-slate-700">{row.label}</span>
-                <span>{row.left}</span>
-                <span>{row.right}</span>
+                <span className="rounded-lg bg-white/70 px-3 py-2 sm:rounded-none sm:bg-transparent sm:px-0 sm:py-0">
+                  <span className="block text-xs font-semibold text-slate-500 sm:hidden">
+                    {leftCourse.title}
+                  </span>
+                  {row.left}
+                </span>
+                <span className="rounded-lg bg-white/70 px-3 py-2 sm:rounded-none sm:bg-transparent sm:px-0 sm:py-0">
+                  <span className="block text-xs font-semibold text-slate-500 sm:hidden">
+                    {rightCourse.title}
+                  </span>
+                  {row.right}
+                </span>
               </div>
             );
           })}

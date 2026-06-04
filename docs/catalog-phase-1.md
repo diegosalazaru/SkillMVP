@@ -38,6 +38,8 @@ Optional data can be present when verified:
 - Every externally sourced record must be traceable to a provider/source URL.
 - Provenance should identify the ingestion or curation source.
 - If provenance cannot be confirmed, the record should not be published as verified catalog data.
+- Per-course source metadata lives in `data/normalized/course-source-metadata.json`.
+- Source metadata should stay separate from the runtime course schema until there is a product need to display it.
 
 ## Data quality rules
 - Do not invent course data.
@@ -56,7 +58,7 @@ Optional data can be present when verified:
 - No fake ratings or review counts
 - No fake affiliate URLs
 - No scraping introduced in this phase
-- No unverifiable claims of “best” ranking
+- No unverifiable claims of "best" ranking
 
 ## Update workflow
 1. Add or update source data in repository-managed source files.
@@ -68,10 +70,12 @@ Optional data can be present when verified:
 ## Validation workflow
 Run:
 - `pnpm validate:data`
+- `pnpm report:data-quality`
 - `pnpm generate:seo` (when SEO templates/catalog changes)
 - `pnpm build`
 
 Validation failures should be fixed at data/source level; do not bypass checks to make CI pass.
+The data quality report is allowed to show unknown prices, ratings, review counts, durations, and certificate values. Unknown data is expected until manual verification is complete.
 
 ## Future affiliate fields (out of scope for Phase 1)
 These are planned but not implemented in this phase:
