@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { blogPosts, getBlogPost } from "@/lib/blog";
 import { AdPlaceholder } from "@/components/AdPlaceholder";
+import { buildPageMetadata } from "@/lib/metadata";
 
 type BlogPostPageProps = {
   params: { slug: string };
@@ -12,9 +13,19 @@ export const generateStaticParams = () => blogPosts.map((post) => ({ slug: post.
 export const generateMetadata = ({ params }: BlogPostPageProps): Metadata => {
   const post = getBlogPost(params.slug);
   if (!post) {
-    return { title: "Article not found | Blog", description: "Article unavailable." };
+    return buildPageMetadata({
+      title: "Article not found | Blog",
+      description: "Article unavailable.",
+      path: `/blog/${params.slug}`,
+      type: "article"
+    });
   }
-  return { title: `${post.title} | Compare courses`, description: post.description };
+  return buildPageMetadata({
+    title: `${post.title} | Compare courses`,
+    description: post.description,
+    path: `/blog/${post.slug}`,
+    type: "article"
+  });
 };
 
 export default function BlogPostPage({ params }: BlogPostPageProps) {
