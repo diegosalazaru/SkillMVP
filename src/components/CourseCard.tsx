@@ -16,10 +16,10 @@ export const CourseCard = ({ course }: CourseCardProps) => {
   const atLimit = selectedIds.length >= 2;
   const hasKnownDuration = !course.durationText
     .toLowerCase()
-    .includes("no disponible");
+    .includes("pending verification");
   const hasKnownPrice = !course.priceText
     .toLowerCase()
-    .includes("no disponible");
+    .includes("pending verification");
   const facts = [
     { label: "Platform", value: course.platform },
     { label: "Level", value: course.level },

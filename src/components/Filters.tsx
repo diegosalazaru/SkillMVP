@@ -38,7 +38,7 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
   return (
     <div className="grid gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:grid-cols-4">
       <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
-        Plataforma
+        Platform
         <select
           value={value.platform}
           onChange={(event) =>
@@ -48,13 +48,13 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
         >
           {platformOptions.map((platform) => (
             <option key={platform} value={platform}>
-              {platform === "All" ? "Todas" : platform}
+              {platform === "All" ? "All" : platform}
             </option>
           ))}
         </select>
       </label>
       <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
-        Nivel
+        Level
         <select
           value={value.level}
           onChange={(event) => onChange({ ...value, level: event.target.value })}
@@ -68,7 +68,7 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
         </select>
       </label>
       <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
-        Precio
+        Price
         <select
           value={value.priceModel}
           onChange={(event) =>
@@ -84,7 +84,7 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
         </select>
       </label>
       <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
-        Idioma
+        Language
         <select
           value={value.language}
           onChange={(event) =>

@@ -34,8 +34,9 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
       <header className="space-y-2">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Practical guide</p>
         <h2 className="text-3xl font-semibold text-slate-900">{post.title}</h2>
-        <p className="text-slate-600">{post.description}</p>
+      <p className="text-slate-600">{post.description}</p>
       </header>
+      <p className="rounded-lg bg-slate-50 px-4 py-3 text-sm leading-relaxed text-slate-700">{post.intro}</p>
       {post.sections.map((section, index) => (
         <section key={section.heading} className="space-y-3">
           <h3 className="text-xl font-semibold text-slate-800">{section.heading}</h3>
@@ -47,6 +48,36 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           {index === 0 ? <AdPlaceholder /> : null}
         </section>
       ))}
+      <section className="space-y-3">
+        <h3 className="text-xl font-semibold text-slate-800">Common mistakes to avoid</h3>
+        <ul className="grid gap-2 text-slate-600">
+          {post.commonMistakes.map((mistake) => (
+            <li key={mistake} className="rounded-lg bg-amber-50 px-3 py-2 text-amber-800">{mistake}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="space-y-3">
+        <h3 className="text-xl font-semibold text-slate-800">Helpful next steps in Skills Compare</h3>
+        <ul className="grid gap-2 text-slate-600 sm:grid-cols-2">
+          {post.internalLinks.map((item) => (
+            <li key={item.href}>
+              <Link href={item.href} className="block rounded-lg bg-blue-50 px-3 py-2 font-medium text-blue-700 hover:bg-blue-100">
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="space-y-3">
+        <h3 className="text-xl font-semibold text-slate-800">Final checklist</h3>
+        <ul className="grid gap-2 text-slate-600">
+          {post.checklist.map((item) => (
+            <li key={item} className="rounded-lg bg-emerald-50 px-3 py-2 text-emerald-800">{item}</li>
+          ))}
+        </ul>
+      </section>
     </article>
   );
 }

@@ -47,7 +47,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
   const pendingSignals = [
     course.rating ? null : "Rating pending verification",
     course.priceAmount == null ? "Exact price pending verification" : null,
-    course.durationText.toLowerCase().includes("pendiente")
+    course.durationText.toLowerCase().includes("pending verification")
       ? "Duration pending verification"
       : null
   ].filter((item): item is string => item !== null);
