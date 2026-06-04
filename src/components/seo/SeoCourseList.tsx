@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PROVIDER_CTA_LABEL, PROVIDER_DETAILS_NOTICE } from "@/lib/providerCta";
 import { Course } from "@/types/course";
 
 type SeoCourseListProps = {
@@ -7,7 +8,10 @@ type SeoCourseListProps = {
 
 export const SeoCourseList = ({ courses }: SeoCourseListProps) => (
   <section className="space-y-4">
-    <h2 className="text-2xl font-semibold text-slate-900">Available courses</h2>
+    <div className="space-y-2">
+      <h2 className="text-2xl font-semibold text-slate-900">Available courses</h2>
+      <p className="text-sm text-slate-600">{PROVIDER_DETAILS_NOTICE}</p>
+    </div>
     <div className="grid gap-4">
       {courses.map((course) => (
         <article key={course.id} className="rounded-xl border border-slate-200 bg-white p-4">
@@ -18,7 +22,7 @@ export const SeoCourseList = ({ courses }: SeoCourseListProps) => (
               View course details
             </Link>
             <a href={course.externalUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-slate-700 underline">
-              Provider page
+              {PROVIDER_CTA_LABEL}
             </a>
           </div>
         </article>
