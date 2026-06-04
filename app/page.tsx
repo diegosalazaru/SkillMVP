@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import HomeClient from "./HomeClient";
 import { SeoLinks } from "../src/components/seo/SeoLinks";
+import { buildPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Compare courses online | Skills Compare",
   description:
-    "Compare online courses by price, duration, level and certificate before deciding."
-};
+    "Compare online courses by price, duration, level and certificate before deciding.",
+  path: "/"
+});
 
 export default function HomePage() {
   return (
