@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SeoPageTemplate } from "@/components/seo/SeoPageTemplate";
+import { buildSeoPageMetadata } from "@/lib/metadata";
 import { getSeoPageBySlug } from "@/lib/seo/seoPages";
 
 const slug = "data-analytics-for-beginners";
@@ -9,10 +10,7 @@ export const generateMetadata = (): Metadata => {
   const page = getSeoPageBySlug(slug);
   if (!page) return { title: "Page not found" };
 
-  return {
-    title: page.title,
-    description: page.metaDescription
-  };
+  return buildSeoPageMetadata(page);
 };
 
 export default function SeoRoutePage() {
