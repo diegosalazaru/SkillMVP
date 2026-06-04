@@ -4,7 +4,11 @@ import Link from "next/link";
 import { Course } from "@/types/course";
 import { useCompareSelection } from "@/contexts/CompareSelectionContext";
 import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
-import { EXTERNAL_LINK_DISCLOSURE } from "@/lib/disclosure";
+import {
+  EXTERNAL_PROVIDER_CONTEXT,
+  PROVIDER_CTA_LABEL,
+  PROVIDER_DETAILS_NOTICE
+} from "@/lib/providerCta";
 
 type CourseCardProps = {
   course: Course;
@@ -71,10 +75,10 @@ export const CourseCard = ({ course }: CourseCardProps) => {
             href={course.externalUrl}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackOutboundCourseClick(course, "card")}
+            onClick={() => trackOutboundCourseClick(course, EXTERNAL_PROVIDER_CONTEXT.card)}
             className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
           >
-            View course
+            {PROVIDER_CTA_LABEL}
           </a>
           <Link
             href={`/courses/${course.id}`}
@@ -93,8 +97,7 @@ export const CourseCard = ({ course }: CourseCardProps) => {
           Add to compare
         </label>
       </div>
-      <p className="text-xs text-slate-500">Open provider page. Provider details may change.</p>
-      <p className="text-xs text-slate-500">{EXTERNAL_LINK_DISCLOSURE}</p>
+      <p className="text-xs text-slate-500">{PROVIDER_DETAILS_NOTICE}</p>
       {atLimit && !selected ? (
         <p className="text-xs text-amber-600">
           Limit reached: remove a course to add another.
