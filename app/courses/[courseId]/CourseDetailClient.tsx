@@ -5,7 +5,11 @@ import { useMemo } from "react";
 import { courses } from "@/lib/catalog-adapter";
 import { useCompareSelection } from "@/contexts/CompareSelectionContext";
 import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
-import { EXTERNAL_LINK_DISCLOSURE } from "@/lib/disclosure";
+import {
+  EXTERNAL_PROVIDER_CONTEXT,
+  PROVIDER_CTA_LABEL,
+  PROVIDER_DETAILS_NOTICE
+} from "@/lib/providerCta";
 
 type CourseDetailClientProps = {
   courseId: string;
@@ -99,10 +103,10 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
             href={course.externalUrl}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackOutboundCourseClick(course, "detail")}
+            onClick={() => trackOutboundCourseClick(course, EXTERNAL_PROVIDER_CONTEXT.detail)}
             className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
           >
-            Open provider page
+            {PROVIDER_CTA_LABEL}
           </a>
           <button
             type="button"
@@ -114,7 +118,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
             {selected ? "Selected for compare" : "Add to compare"}
           </button>
         </div>
-        <p className="text-xs text-slate-500">{EXTERNAL_LINK_DISCLOSURE}</p>
+        <p className="text-xs text-slate-500">{PROVIDER_DETAILS_NOTICE}</p>
         {atLimit ? (
           <p className="text-xs text-amber-600">
             You already selected 2 courses. Remove one to continue.
