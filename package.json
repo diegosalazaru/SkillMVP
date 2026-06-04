@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "validate:data": "tsx scripts/validate-data.ts",
+    "report:data-quality": "node scripts/report-data-quality.ts",
     "ingest:edx": "tsx scripts/ingest-edx.ts",
     "ingest:coursera": "tsx scripts/ingest-coursera.ts",
     "build:catalog": "tsx scripts/build-catalog.ts",
