@@ -215,13 +215,33 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
             Use these criteria to decide which course fits your context best.
           </p>
           <ul className="mt-3 grid gap-2 text-sm text-slate-600 sm:grid-cols-2 lg:grid-cols-5">
-            {["Price", "Duration", "Level", "Certificate", "Platform"].map(
-              (item) => (
-                <li key={item} className="rounded-lg bg-slate-50 px-3 py-2">
-                  {item}
-                </li>
-              )
-            )}
+            {[
+              {
+                label: "Price",
+                help: "Compare total cost, including subscription time and certificate fees."
+              },
+              {
+                label: "Duration",
+                help: "Check whether the weekly workload fits your real availability."
+              },
+              {
+                label: "Level",
+                help: "Choose a starting point that matches your current experience."
+              },
+              {
+                label: "Certificate",
+                help: "Verify whether certification is included or requires extra payment."
+              },
+              {
+                label: "Platform",
+                help: "Consider delivery format, support, and language experience."
+              }
+            ].map((item) => (
+              <li key={item.label} className="rounded-lg bg-slate-50 px-3 py-2">
+                <span className="block font-semibold text-slate-800">{item.label}</span>
+                <span>{item.help}</span>
+              </li>
+            ))}
           </ul>
         </div>
       ) : null}
