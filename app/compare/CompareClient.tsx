@@ -4,10 +4,14 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 import { AdPlaceholder } from "@/components/AdPlaceholder";
-import { EXTERNAL_LINK_DISCLOSURE } from "@/lib/disclosure";
 import { formatCoursePrice } from "@/lib/formatPrice";
 import { courses } from "@/lib/catalog-adapter";
 import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
+import {
+  EXTERNAL_PROVIDER_CONTEXT,
+  PROVIDER_CTA_LABEL,
+  PROVIDER_DETAILS_NOTICE
+} from "@/lib/providerCta";
 
 const LAST_SKILL_KEY = "skills-compare-last-skill";
 
@@ -144,14 +148,11 @@ export default function CompareClient() {
               href={leftCourse.externalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackOutboundCourseClick(leftCourse, "compare")}
+              onClick={() => trackOutboundCourseClick(leftCourse, EXTERNAL_PROVIDER_CONTEXT.compare)}
               className="w-fit rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
             >
-Open provider page
+              {PROVIDER_CTA_LABEL}
             </a>
-            <span className="text-xs font-normal text-slate-500">
-Provider details may change.
-            </span>
           </span>
           <span className="flex flex-col gap-3">
             <Link
@@ -169,16 +170,16 @@ Provider details may change.
               href={rightCourse.externalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackOutboundCourseClick(rightCourse, "compare")}
+              onClick={() => trackOutboundCourseClick(rightCourse, EXTERNAL_PROVIDER_CONTEXT.compare)}
               className="w-fit rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
             >
-Open provider page
+              {PROVIDER_CTA_LABEL}
             </a>
-            <span className="text-xs font-normal text-slate-500">
-Provider details may change.
-            </span>
           </span>
         </div>
+        <p className="border-b border-slate-200 px-6 py-3 text-xs text-slate-500">
+          {PROVIDER_DETAILS_NOTICE}
+        </p>
         <div className="divide-y divide-slate-200">
           {rawRows.map((row) => {
             const differs = row.left !== row.right;
@@ -199,7 +200,6 @@ Provider details may change.
       </div>
 
       <AdPlaceholder />
-      <p className="text-xs text-slate-500">{EXTERNAL_LINK_DISCLOSURE}</p>
 
       <button
         type="button"
