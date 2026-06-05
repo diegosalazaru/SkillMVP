@@ -15,7 +15,7 @@ type CourseCardProps = {
 };
 
 export const CourseCard = ({ course }: CourseCardProps) => {
-  const { toggle, isSelected, selectedIds } = useCompareSelection();
+  const { toggle, isSelected, selectedIds, clear } = useCompareSelection();
   const selected = isSelected(course.id);
   const atLimit = selectedIds.length >= 2;
   const hasKnownDuration = !course.durationText
@@ -99,9 +99,12 @@ export const CourseCard = ({ course }: CourseCardProps) => {
       </div>
       <p className="text-xs text-slate-500">{PROVIDER_DETAILS_NOTICE}</p>
       {atLimit && !selected ? (
-        <p className="text-xs text-amber-600">
-          Limit reached: remove a course to add another.
-        </p>
+        <div className="flex flex-wrap items-center gap-2 text-xs text-amber-700">
+          <span>Two courses are already selected. Clear the compare bar selection to add this course.</span>
+          <button type="button" onClick={clear} className="font-semibold underline">
+            Clear selection
+          </button>
+        </div>
       ) : null}
     </div>
   );

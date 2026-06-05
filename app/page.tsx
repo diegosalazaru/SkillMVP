@@ -16,7 +16,12 @@ export default function HomePage() {
       <HomeClient />
 
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold text-slate-900">Explore courses by skill</h2>
+        <div className="space-y-2">
+          <h2 className="text-2xl font-semibold text-slate-900">Guides and comparison pages</h2>
+          <p className="text-sm text-slate-600">
+            Browse generated guide pages for specific course comparison searches.
+          </p>
+        </div>
         <SeoLinks />
       </section>
     </div>

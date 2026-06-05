@@ -4,22 +4,25 @@ import { slugify, titleFromSlug } from "@/utils/slugify";
 const SKILL_ALIASES: Record<string, string> = {
   ai: "ai",
   "artificial-intelligence": "ai",
-  "artificial-inteligence": "ai",
-  "inteligencia-artificial": "ai",
+  "artificial-intelligence-courses": "ai",
   ia: "ai",
   llm: "ai",
   llms: "ai",
-  ml: "ai",
-  "machine-learning": "ai",
-  "machine-learning-ai": "ai",
-  "ai-fundamentals": "ai",
-  "prompt-engineering": "ai",
-  analytics: "data-analysis",
+  data: "data-analysis",
+  "data-analysis": "data-analysis",
   "data-analytics": "data-analysis",
   "data-analyst": "data-analysis",
-  "analisis-de-datos": "data-analysis",
-  "data-science": "data-science",
-  "ciencia-de-datos": "data-science",
+  analytics: "data-analysis",
+  ml: "machine-learning",
+  "machine-learning": "machine-learning",
+  project: "project-management",
+  pm: "project-management",
+  "project-management": "project-management",
+  cyber: "cybersecurity",
+  cybersecurity: "cybersecurity",
+  security: "cybersecurity",
+  cloud: "cloud-computing",
+  "cloud-computing": "cloud-computing",
   frontend: "frontend",
   "front-end": "frontend",
   "web-development": "frontend",
@@ -34,6 +37,8 @@ export type SkillOption = {
 
 const stripRoutePrefix = (value: string) =>
   value.replace(/^\/?skills\/?/, "").replace(/^skills-?/, "");
+
+const normalizeSearchValue = (value: string) => slugify(stripRoutePrefix(value.trim()));
 
 export const getSkillOptions = (): SkillOption[] => {
   const counts = new Map<string, number>();
@@ -59,39 +64,51 @@ export const getSkillOptions = (): SkillOption[] => {
 };
 
 export const resolveSkillSlug = (value: string): string | null => {
-  const normalized = slugify(stripRoutePrefix(value));
+  const normalized = normalizeSearchValue(value);
 
   if (!normalized) {
     return null;
   }
 
-  const candidate = SKILL_ALIASES[normalized] ?? normalized;
   const validSlugs = new Set(getSkillOptions().map((skill) => skill.slug));
+  const candidate = SKILL_ALIASES[normalized] ?? normalized;
 
-  return validSlugs.has(candidate) ? candidate : null;
+  if (validSlugs.has(candidate)) {
+    return candidate;
+  }
+
+  const partialMatch = getSkillOptions().find((option) => {
+    const titleSlug = slugify(option.title);
+    return option.slug.includes(normalized) || titleSlug.includes(normalized);
+  });
+
+  return partialMatch?.slug ?? null;
 };
 
 export const getSkillSuggestions = (limit = 4): SkillOption[] =>
   getSkillOptions().slice(0, limit);
 
-
 export const searchSkillOptions = (query: string, limit = 5): SkillOption[] => {
-  const normalizedQuery = slugify(stripRoutePrefix(query));
+  const normalizedQuery = normalizeSearchValue(query);
   if (!normalizedQuery) {
     return [];
   }
 
   const options = getSkillOptions();
-  const exactSlug = options.find((option) => option.slug === normalizedQuery);
-  if (exactSlug) {
-    return [exactSlug];
-  }
+  const resolvedSlug = resolveSkillSlug(query);
+  const matches = options.filter((option) => {
+    const titleSlug = slugify(option.title);
+    const aliasMatchesOption = Object.entries(SKILL_ALIASES).some(
+      ([alias, slug]) => slug === option.slug && alias.includes(normalizedQuery)
+    );
 
-  return options
-    .filter((option) =>
-      option.title.toLowerCase().includes(query.toLowerCase().trim()) ||
-      option.slug.includes(query.toLowerCase().trim()) ||
-      option.slug.includes(normalizedQuery)
-    )
-    .slice(0, limit);
+    return (
+      option.slug === resolvedSlug ||
+      option.slug.includes(normalizedQuery) ||
+      titleSlug.includes(normalizedQuery) ||
+      aliasMatchesOption
+    );
+  });
+
+  return matches.slice(0, limit);
 };

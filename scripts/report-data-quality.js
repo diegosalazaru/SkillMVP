@@ -1,31 +1,13 @@
-const fs = require("node:fs") as typeof import("node:fs");
-const path = require("node:path") as typeof import("node:path");
+const { existsSync, readFileSync } = require("node:fs");
+const { resolve } = require("node:path");
 
-type NormalizedCourse = {
-  id: string;
-  platform: string;
-  skillSlug: string;
-  priceAmount: number | null;
-  rating: number | null;
-  reviewCount: number | null;
-  durationHours: number | null;
-  certificate: boolean | null;
-  url: string;
+const readJsonFile = (filePath) => {
+  const raw = readFileSync(filePath, "utf8");
+  return JSON.parse(raw);
 };
 
-type CourseSourceMetadata = {
-  courseId: string;
-  sourceUrl: string;
-  verificationStatus: string;
-};
-
-const readJsonFile = <T>(filePath: string): T => {
-  const raw = fs.readFileSync(filePath, "utf8");
-  return JSON.parse(raw) as T;
-};
-
-const countBy = <T>(items: T[], getKey: (item: T) => string) => {
-  const counts = new Map<string, number>();
+const countBy = (items, getKey) => {
+  const counts = new Map();
 
   items.forEach((item) => {
     const key = getKey(item);
@@ -37,15 +19,15 @@ const countBy = <T>(items: T[], getKey: (item: T) => string) => {
   );
 };
 
-const printCountList = (label: string, counts: [string, number][]) => {
+const printCountList = (label, counts) => {
   console.log(`\n${label}`);
   counts.forEach(([key, count]) => {
     console.log(`- ${key}: ${count}`);
   });
 };
 
-const coursesPath = path.join(process.cwd(), "data", "normalized", "courses.json");
-const metadataPath = path.join(
+const coursesPath = resolve(process.cwd(), "data", "normalized", "courses.json");
+const metadataPath = resolve(
   process.cwd(),
   "data",
   "normalized",
@@ -53,14 +35,12 @@ const metadataPath = path.join(
 );
 
 try {
-  const courses = readJsonFile<NormalizedCourse[]>(coursesPath);
-  const metadata = fs.existsSync(metadataPath)
-    ? readJsonFile<CourseSourceMetadata[]>(metadataPath)
-    : [];
+  const courses = readJsonFile(coursesPath);
+  const metadata = existsSync(metadataPath) ? readJsonFile(metadataPath) : [];
 
   const coursesById = new Map(courses.map((course) => [course.id, course]));
-  const metadataByCourseId = new Map<string, CourseSourceMetadata>();
-  const duplicateMetadataIds = new Set<string>();
+  const metadataByCourseId = new Map();
+  const duplicateMetadataIds = new Set();
 
   metadata.forEach((record) => {
     if (metadataByCourseId.has(record.courseId)) {
@@ -92,36 +72,16 @@ try {
   );
 
   console.log("\nUnknown or pending course fields");
-  console.log(
-    `- priceAmount unknown/null: ${
-      courses.filter((course) => course.priceAmount == null).length
-    }`
-  );
-  console.log(
-    `- rating null: ${courses.filter((course) => course.rating == null).length}`
-  );
-  console.log(
-    `- reviewCount null: ${
-      courses.filter((course) => course.reviewCount == null).length
-    }`
-  );
-  console.log(
-    `- durationHours null: ${
-      courses.filter((course) => course.durationHours == null).length
-    }`
-  );
-  console.log(
-    `- certificate null: ${
-      courses.filter((course) => course.certificate == null).length
-    }`
-  );
+  console.log(`- priceAmount unknown/null: ${courses.filter((course) => course.priceAmount == null).length}`);
+  console.log(`- rating null: ${courses.filter((course) => course.rating == null).length}`);
+  console.log(`- reviewCount null: ${courses.filter((course) => course.reviewCount == null).length}`);
+  console.log(`- durationHours null: ${courses.filter((course) => course.durationHours == null).length}`);
+  console.log(`- certificate null: ${courses.filter((course) => course.certificate == null).length}`);
 
   console.log("\nSource metadata coverage");
   console.log(`- metadata records: ${metadata.length}`);
   console.log(`- courses missing source metadata: ${missingSourceMetadata.length}`);
-  console.log(
-    `- source metadata records without matching course: ${metadataWithoutCourse.length}`
-  );
+  console.log(`- source metadata records without matching course: ${metadataWithoutCourse.length}`);
   console.log(`- source URL mismatches: ${sourceUrlMismatches.length}`);
   console.log(`- duplicate metadata courseIds: ${duplicateMetadataIds.size}`);
 
