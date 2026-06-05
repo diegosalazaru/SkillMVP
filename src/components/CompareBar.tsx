@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useCompareSelection } from "@/contexts/CompareSelectionContext";
+import { courses } from "@/lib/catalog-adapter";
 
 export const CompareBar = () => {
   const router = useRouter();
@@ -9,6 +10,9 @@ export const CompareBar = () => {
     useCompareSelection();
   const enabled = selectedIds.length === 2;
   const visibleCount = Math.min(selectedIds.length, 2);
+  const selectedCourseLabels = selectedIds.map(
+    (id) => courses.find((course) => course.id === id)?.title ?? id
+  );
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-20 border-t border-slate-200 bg-white/95 backdrop-blur">
@@ -18,8 +22,13 @@ export const CompareBar = () => {
             {visibleCount} of 2 courses selected
           </p>
           <p className="text-xs text-slate-500">
-            {visibleCount === 1 ? "Select 1 more course to compare." : "Select 2 courses to compare."}
+            {visibleCount === 0
+              ? "Select 2 courses to compare."
+              : selectedCourseLabels.join(" + ")}
           </p>
+          {visibleCount === 1 ? (
+            <p className="mt-1 text-xs text-slate-500">Select 1 more course to compare.</p>
+          ) : null}
           {notice ? (
             <p className="mt-2 text-xs font-semibold text-amber-600">{notice}</p>
           ) : null}

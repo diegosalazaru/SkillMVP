@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { courses } from "@/data/courses";
+import { courses } from "@/lib/catalog-adapter";
 import { Course } from "@/types/course";
 import { GeneratedSeoPage } from "@/lib/seo/seoTypes";
 

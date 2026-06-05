@@ -2,6 +2,7 @@ import { getCoursesForSeoPage } from "@/lib/seo/seoPages";
 import { GeneratedSeoPage } from "@/lib/seo/seoTypes";
 import { SeoCourseList } from "@/components/seo/SeoCourseList";
 import { SeoFAQ } from "@/components/seo/SeoFAQ";
+import { resolveSkillSlug } from "@/lib/skill-routing";
 
 type SeoPageTemplateProps = {
   page: GeneratedSeoPage;
@@ -9,6 +10,8 @@ type SeoPageTemplateProps = {
 
 export const SeoPageTemplate = ({ page }: SeoPageTemplateProps) => {
   const pageCourses = getCoursesForSeoPage(page);
+  const skillRouteSlug =
+    resolveSkillSlug(page.skillSlug) ?? resolveSkillSlug(page.skillLabel) ?? page.skillSlug;
 
   return (
     <main className="mx-auto max-w-4xl space-y-8 px-4 py-10">
@@ -19,7 +22,7 @@ export const SeoPageTemplate = ({ page }: SeoPageTemplateProps) => {
           Course information may change. Verify pricing, duration, certificate terms, and enrollment details on the provider website.
         </p>
       </header>
-      <SeoCourseList courses={pageCourses} />
+      <SeoCourseList courses={pageCourses} skillSlug={skillRouteSlug} skillLabel={page.skillLabel} />
       <SeoFAQ faq={page.faq} />
     </main>
   );
