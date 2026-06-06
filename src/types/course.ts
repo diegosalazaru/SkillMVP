@@ -10,7 +10,8 @@ export type Course = {
   priceInterval: "month" | "year" | null;
   priceText: string;
   durationText: string;
-  rating?: number;
+  rating?: number | null;
+  reviewCount?: number | null;
   language: string;
   certificate: boolean;
   shortDescription: string | null;

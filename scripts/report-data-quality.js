@@ -26,6 +26,25 @@ const printCountList = (label, counts) => {
   });
 };
 
+const getVerifiedFieldCoverage = (metadata) => {
+  const coverage = new Map();
+
+  metadata.forEach((record) => {
+    Object.entries(record.verifiedFields ?? {}).forEach(([field, verified]) => {
+      const current = coverage.get(field) ?? { verified: 0, total: 0 };
+      current.total += 1;
+      if (verified === true) {
+        current.verified += 1;
+      }
+      coverage.set(field, current);
+    });
+  });
+
+  return Array.from(coverage.entries()).sort(([left], [right]) =>
+    left.localeCompare(right)
+  );
+};
+
 const coursesPath = resolve(process.cwd(), "data", "normalized", "courses.json");
 const metadataPath = resolve(
   process.cwd(),
@@ -70,6 +89,23 @@ try {
     "Verification status counts",
     countBy(metadata, (record) => record.verificationStatus)
   );
+
+  const fullyPendingCourses = metadata
+    .filter((record) => record.verificationStatus === "pending")
+    .map((record) => record.courseId)
+    .sort();
+
+  console.log("\nVerified field coverage");
+  getVerifiedFieldCoverage(metadata).forEach(([field, coverage]) => {
+    console.log(`- ${field}: ${coverage.verified}/${coverage.total}`);
+  });
+
+  console.log("\nCourses still fully pending");
+  if (fullyPendingCourses.length > 0) {
+    fullyPendingCourses.forEach((courseId) => console.log(`- ${courseId}`));
+  } else {
+    console.log("- none");
+  }
 
   console.log("\nUnknown or pending course fields");
   console.log(`- priceAmount unknown/null: ${courses.filter((course) => course.priceAmount == null).length}`);
