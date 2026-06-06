@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { blogPosts } from "@/lib/blog";
 import { AdPlaceholder } from "@/components/AdPlaceholder";
+import { buildPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Blog | Compare online courses",
-  description: "Practical guides to compare online courses and decide before you pay."
-};
+  description: "Practical guides to compare online courses and decide before you pay.",
+  path: "/blog"
+});
 
 export default function BlogPage() {
   return (

@@ -3,10 +3,20 @@ import Link from "next/link";
 import "./globals.css";
 import { Providers } from "./providers";
 import { AnalyticsLoader } from "@/components/seo/AnalyticsLoader";
+import { SITE_NAME } from "@/config/siteConfig";
+import { siteBaseUrl } from "@/lib/metadata";
 
 export const metadata: Metadata = {
+  metadataBase: siteBaseUrl,
   title: "Compare online courses | Skills Compare",
-  description: "Course comparison tool to compare online courses by price, duration, level and certificate."
+  description: "Course comparison tool to compare online courses by price, duration, level and certificate.",
+  openGraph: {
+    title: "Compare online courses | Skills Compare",
+    description: "Course comparison tool to compare online courses by price, duration, level and certificate.",
+    siteName: SITE_NAME,
+    type: "website",
+    url: "/"
+  }
 };
 
 export default function RootLayout({
@@ -15,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
+    <html lang="en">
       <body className="min-h-screen">
         <Providers>
           <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-6">

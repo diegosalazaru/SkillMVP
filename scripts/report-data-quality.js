@@ -11,7 +11,7 @@ const countBy = (items, getKey) => {
 
   items.forEach((item) => {
     const key = getKey(item);
-    counts.set(key, (counts.get(key) ?? 0) + 1;
+    counts.set(key, (counts.get(key) ?? 0) + 1);
   });
 
   return Array.from(counts.entries()).sort(([left], [right]) =>
