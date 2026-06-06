@@ -151,7 +151,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
             What this course can help you evaluate
           </h3>
           <ul className="mt-4 space-y-2 text-sm leading-relaxed text-slate-600">
-            {getCourseDecisionSummary(course).map((item) => (
+            {getCourseDecisionSummary(course).known.map((item) => (
               <li key={item} className="rounded-lg bg-slate-50 px-3 py-2">
                 {item}
               </li>
@@ -187,7 +187,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
           <div className="rounded-xl bg-white p-4">
             <h4 className="font-semibold text-slate-900">Provider checks</h4>
             <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-600">
-              {getPendingDataRisks(course).slice(0, 5).map((item) => (
+              {getPendingDataRisks([course]).slice(0, 5).map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
