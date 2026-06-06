@@ -31,7 +31,7 @@
   {
     "id": "google-data-analytics-google",
     "platform": "coursera",
-    "title": "Google Data Analytics",
+    "title": "Google Data Analytics Professional Certificate",
     "url": "https://www.coursera.org/professional-certificates/google-data-analytics",
     "skillSlug": "data-analysis",
     "level": "beginner",
@@ -45,15 +45,16 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "Google Data Analytics program on Coursera, oriented to beginner-level learners.",
+    "shortDescription": "Google professional certificate introducing data analysis practices, tools, and ways to communicate findings.",
     "syllabusBullets": [
-      "Data analysis fundamentals",
-      "Data preparation and exploration",
-      "Communicating findings"
+      "Practices and processes used by junior or associate data analysts",
+      "Data cleaning, analysis, and visualization with spreadsheets, SQL, Python, and Tableau",
+      "Cleaning and organizing data for analysis",
+      "Visualizing and presenting findings through dashboards and presentations"
     ],
     "prerequisitesBullets": [
-      "Beginner-level orientation",
-      "Interest in working with data"
+      "No degree or prior data analytics experience required",
+      "Beginner-level orientation"
     ],
     "source": "coursera-curated"
   },
@@ -190,15 +191,16 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "Professional certificate that introduces security operations, risk management, and incident handling.",
+    "shortDescription": "Google professional certificate introducing cybersecurity practices, risks, tools, and incident response workflows.",
     "syllabusBullets": [
-      "Security domains and risk fundamentals",
-      "Linux, SQL, and security tooling basics",
-      "Detection and incident response workflows"
+      "Cybersecurity practices and their impact for organizations",
+      "Common risks, threats, vulnerabilities, and mitigation techniques",
+      "Protecting networks, devices, people, and data with security tools",
+      "Hands-on exposure to Python, Linux, and SQL"
     ],
     "prerequisitesBullets": [
       "No prior experience required",
-      "Interest in security operations"
+      "Beginner-level orientation"
     ],
     "source": "coursera-curated"
   },
@@ -238,7 +240,7 @@
     "url": "https://www.coursera.org/learn/aws-cloud-technical-essentials",
     "skillSlug": "cloud-computing",
     "level": "beginner",
-    "durationHours": null,
+    "durationHours": 20,
     "language": "en",
     "priceModel": "subscription",
     "priceAmount": null,
@@ -250,13 +252,14 @@
     "lastUpdatedAt": null,
     "shortDescription": "Foundational AWS course introducing key cloud concepts and core AWS services.",
     "syllabusBullets": [
-      "Cloud computing fundamentals",
-      "Core AWS services overview",
-      "Basic architecture and deployment concepts"
+      "AWS service terminology and core cloud concepts",
+      "AWS security concepts and Identity and Access Management basics",
+      "Differences between compute services such as EC2, Lambda, and ECS",
+      "AWS database and storage offerings including RDS, DynamoDB, and S3"
     ],
     "prerequisitesBullets": [
-      "Beginner level",
-      "Basic IT familiarity is helpful"
+      "No prior cloud computing or AWS product knowledge required",
+      "Designed for learners beginning a cloud-learning journey"
     ],
     "source": "coursera-curated"
   },
@@ -267,7 +270,7 @@
     "url": "https://www.coursera.org/learn/gcp-fundamentals",
     "skillSlug": "cloud-computing",
     "level": "beginner",
-    "durationHours": null,
+    "durationHours": 6,
     "language": "en",
     "priceModel": "subscription",
     "priceAmount": null,
@@ -279,13 +282,14 @@
     "lastUpdatedAt": null,
     "shortDescription": "Introductory Google Cloud course covering compute, storage, networking, and IAM basics.",
     "syllabusBullets": [
-      "Google Cloud products and services overview",
-      "Compute, storage, and networking basics",
-      "Identity and access management fundamentals"
+      "Purpose and value of Google Cloud products and services",
+      "How infrastructure is organized and controlled in Google Cloud",
+      "Creating basic infrastructure in Google Cloud",
+      "Selecting and using Google Cloud storage options"
     ],
     "prerequisitesBullets": [
-      "Beginner level",
-      "General technical curiosity"
+      "No prior experience required",
+      "Beginner-level orientation"
     ],
     "source": "coursera-curated"
   },
@@ -321,7 +325,7 @@
   {
     "id": "google-project-management-google",
     "platform": "coursera",
-    "title": "Google Project Management: Professional Certificate",
+    "title": "Google Project Management Professional Certificate",
     "url": "https://www.coursera.org/professional-certificates/google-project-management",
     "skillSlug": "project-management",
     "level": "beginner",
@@ -335,15 +339,16 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "Professional certificate covering project initiation, planning, execution, and agile practices.",
+    "shortDescription": "Google professional certificate covering project management practices, documentation, agile concepts, and stakeholder communication.",
     "syllabusBullets": [
-      "Project lifecycle and roles",
-      "Planning, scheduling, and risk basics",
-      "Agile and stakeholder communication practices"
+      "Practices and skills used in entry-level project management roles",
+      "Creating project documentation and artifacts across project phases",
+      "Agile project management foundations, including Scrum events, artifacts, and roles",
+      "Strategic communication, problem-solving, and stakeholder management scenarios"
     ],
     "prerequisitesBullets": [
-      "No prior project management experience required",
-      "Interest in managing projects"
+      "No degree or prior project management experience required",
+      "Beginner-level orientation"
     ],
     "source": "coursera-curated"
   },
@@ -422,15 +427,16 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "Professional certificate focused on spreadsheets, SQL, Python, and data visualization basics.",
+    "shortDescription": "IBM professional certificate focused on practical data analyst tools including spreadsheets, SQL, Python, and visualization.",
     "syllabusBullets": [
-      "Data analysis workflow fundamentals",
-      "SQL, spreadsheets, and Python basics",
-      "Data visualization and reporting"
+      "Practical skills and tools data analysts use in daily work",
+      "Data visualization and presenting findings with Excel, Cognos Analytics, and Tableau",
+      "Python for data analysis with libraries such as Pandas and NumPy",
+      "Hands-on labs and projects for applied data analysis practice"
     ],
     "prerequisitesBullets": [
-      "No prior data analyst experience required",
-      "Comfort with basic computer tasks"
+      "No prior experience required",
+      "Beginner-level orientation"
     ],
     "source": "coursera-curated"
   },
@@ -499,7 +505,7 @@
     "url": "https://www.coursera.org/learn/ai-for-everyone",
     "skillSlug": "ai",
     "level": "beginner",
-    "durationHours": null,
+    "durationHours": 7,
     "language": "en",
     "priceModel": "subscription",
     "priceAmount": null,
@@ -511,13 +517,14 @@
     "lastUpdatedAt": null,
     "shortDescription": "Non-technical introduction to AI concepts, strategy, and practical organizational considerations.",
     "syllabusBullets": [
-      "Core AI concepts and terminology",
-      "AI project workflow overview",
-      "Responsible adoption considerations"
+      "Common AI terminology, including machine learning, deep learning, and data science",
+      "What AI can and cannot realistically do",
+      "Spotting opportunities to apply AI in an organization",
+      "Working with AI teams, AI strategy, and ethical or societal considerations"
     ],
     "prerequisitesBullets": [
-      "No technical background required",
-      "Designed for broad audiences"
+      "No prior experience required",
+      "Designed for non-technical and broad audiences"
     ],
     "source": "coursera-curated"
   },
