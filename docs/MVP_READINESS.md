@@ -8,13 +8,13 @@
 - Provider CTA copy and external-link disclosure copy are centralized.
 - Provider URLs are direct official provider URLs only.
 - Outbound tracking is local-only and does not send data to an external analytics vendor.
-- Source metadata exists for normalized courses in `data/normalized/course-source-metadata.json`, with a small priority subset now marked `partially_verified`.
+- Source metadata exists for normalized courses in `data/normalized/course-source-metadata.json`, but most records are still pending manual verification.
 - A data quality report is available with `corepack pnpm report:data-quality` and includes verification-status counts, verified-field coverage, and courses still fully pending.
 
 ## Trust and Data Quality Reality
 
 - Most source metadata is still marked `pending` until manual verification is completed.
-- Priority verification has started for selected Google, AWS, IBM, and DeepLearning.AI courses using official provider pages only.
+- Source verification remains a separate, conservative data-quality task.
 - Prices, ratings, review counts, and some durations are mostly unverified or unknown.
 - Unknown data must remain null, unknown, pending, or explicitly unverified.
 - Certificate information is present where the catalog currently has it, but provider terms may change.
