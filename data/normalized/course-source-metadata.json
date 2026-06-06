@@ -8,11 +8,16 @@
     "verifiedFields": {
       "title": false,
       "platform": false,
+      "sourceUrl": false,
       "price": false,
+      "rating": false,
+      "reviewCount": false,
       "duration": false,
       "certificate": false,
       "language": false,
-      "level": false
+      "level": false,
+      "syllabus": false,
+      "prerequisites": false
     },
     "notes": "Pending manual verification against provider page."
   },
@@ -20,18 +25,23 @@
     "courseId": "google-data-analytics-google",
     "sourceUrl": "https://www.coursera.org/professional-certificates/google-data-analytics",
     "sourceType": "official_provider_page",
-    "verificationStatus": "pending",
-    "lastVerifiedAt": null,
+    "verificationStatus": "partially_verified",
+    "lastVerifiedAt": "2026-06-06",
     "verifiedFields": {
-      "title": false,
-      "platform": false,
+      "title": true,
+      "platform": true,
+      "sourceUrl": true,
       "price": false,
-      "duration": false,
-      "certificate": false,
-      "language": false,
-      "level": false
+      "rating": false,
+      "reviewCount": false,
+      "duration": true,
+      "certificate": true,
+      "language": true,
+      "level": true,
+      "syllabus": true,
+      "prerequisites": true
     },
-    "notes": "Pending manual verification against provider page."
+    "notes": "Source: official Coursera provider page. Verified title, platform/source URL, beginner level, English language, shareable certificate, workload/duration signal, learning topics, and no prior degree/experience requirement. Existing 180-hour catalog value is supported by the provider's statement that the program includes over 180 hours. Price, rating, and review count intentionally remain unknown/null because they are volatile."
   },
   {
     "courseId": "deep-learning-specialization-deeplearningai",
@@ -42,11 +52,16 @@
     "verifiedFields": {
       "title": false,
       "platform": false,
+      "sourceUrl": false,
       "price": false,
+      "rating": false,
+      "reviewCount": false,
       "duration": false,
       "certificate": false,
       "language": false,
-      "level": false
+      "level": false,
+      "syllabus": false,
+      "prerequisites": false
     },
     "notes": "Pending manual verification against provider page."
   },
@@ -59,11 +74,16 @@
     "verifiedFields": {
       "title": false,
       "platform": false,
+      "sourceUrl": false,
       "price": false,
+      "rating": false,
+      "reviewCount": false,
       "duration": false,
       "certificate": false,
       "language": false,
-      "level": false
+      "level": false,
+      "syllabus": false,
+      "prerequisites": false
     },
     "notes": "Pending manual verification against provider page."
   },
@@ -76,11 +96,16 @@
     "verifiedFields": {
       "title": false,
       "platform": false,
+      "sourceUrl": false,
       "price": false,
+      "rating": false,
+      "reviewCount": false,
       "duration": false,
       "certificate": false,
       "language": false,
-      "level": false
+      "level": false,
+      "syllabus": false,
+      "prerequisites": false
     },
     "notes": "Pending manual verification against provider page."
   },
@@ -93,11 +118,16 @@
     "verifiedFields": {
       "title": false,
       "platform": false,
+      "sourceUrl": false,
       "price": false,
+      "rating": false,
+      "reviewCount": false,
       "duration": false,
       "certificate": false,
       "language": false,
-      "level": false
+      "level": false,
+      "syllabus": false,
+      "prerequisites": false
     },
     "notes": "Pending manual verification against provider page."
   },
@@ -105,18 +135,23 @@
     "courseId": "google-cybersecurity-google",
     "sourceUrl": "https://www.coursera.org/professional-certificates/google-cybersecurity",
     "sourceType": "official_provider_page",
-    "verificationStatus": "pending",
-    "lastVerifiedAt": null,
+    "verificationStatus": "partially_verified",
+    "lastVerifiedAt": "2026-06-06",
     "verifiedFields": {
-      "title": false,
-      "platform": false,
+      "title": true,
+      "platform": true,
+      "sourceUrl": true,
       "price": false,
-      "duration": false,
-      "certificate": false,
-      "language": false,
-      "level": false
+      "rating": false,
+      "reviewCount": false,
+      "duration": true,
+      "certificate": true,
+      "language": true,
+      "level": true,
+      "syllabus": true,
+      "prerequisites": true
     },
-    "notes": "Pending manual verification against provider page."
+    "notes": "Source: official Coursera provider page. Verified title, platform/source URL, beginner level, English language, shareable certificate, 6 months at 7 hours/week workload signal, learning topics, and no prior experience requirement. durationHours remains null because converting a monthly schedule to exact hours would be an estimate. Price, rating, and review count intentionally remain unknown/null because they are volatile."
   },
   {
     "courseId": "introduction-cyber-security-nyux-edx",
@@ -127,11 +162,16 @@
     "verifiedFields": {
       "title": false,
       "platform": false,
+      "sourceUrl": false,
       "price": false,
+      "rating": false,
+      "reviewCount": false,
       "duration": false,
       "certificate": false,
       "language": false,
-      "level": false
+      "level": false,
+      "syllabus": false,
+      "prerequisites": false
     },
     "notes": "Pending manual verification against provider page."
   },
@@ -139,35 +179,45 @@
     "courseId": "aws-cloud-technical-essentials-aws",
     "sourceUrl": "https://www.coursera.org/learn/aws-cloud-technical-essentials",
     "sourceType": "official_provider_page",
-    "verificationStatus": "pending",
-    "lastVerifiedAt": null,
+    "verificationStatus": "partially_verified",
+    "lastVerifiedAt": "2026-06-06",
     "verifiedFields": {
-      "title": false,
-      "platform": false,
+      "title": true,
+      "platform": true,
+      "sourceUrl": true,
       "price": false,
-      "duration": false,
-      "certificate": false,
-      "language": false,
-      "level": false
+      "rating": false,
+      "reviewCount": false,
+      "duration": true,
+      "certificate": true,
+      "language": true,
+      "level": true,
+      "syllabus": true,
+      "prerequisites": true
     },
-    "notes": "Pending manual verification against provider page."
+    "notes": "Source: official Coursera provider page. Verified title, platform/source URL, beginner level, English language, shareable certificate, 2 weeks at 10 hours/week workload signal, learning topics, and stated prerequisites. Price, rating, and review count intentionally remain unknown/null because they are volatile."
   },
   {
     "courseId": "google-cloud-fundamentals-core-infrastructure-google",
     "sourceUrl": "https://www.coursera.org/learn/gcp-fundamentals",
     "sourceType": "official_provider_page",
-    "verificationStatus": "pending",
-    "lastVerifiedAt": null,
+    "verificationStatus": "partially_verified",
+    "lastVerifiedAt": "2026-06-06",
     "verifiedFields": {
-      "title": false,
-      "platform": false,
+      "title": true,
+      "platform": true,
+      "sourceUrl": true,
       "price": false,
-      "duration": false,
-      "certificate": false,
-      "language": false,
-      "level": false
+      "rating": false,
+      "reviewCount": false,
+      "duration": true,
+      "certificate": true,
+      "language": true,
+      "level": true,
+      "syllabus": true,
+      "prerequisites": true
     },
-    "notes": "Pending manual verification against provider page."
+    "notes": "Source: official Coursera provider page. Verified title, platform/source URL, beginner level, English language, shareable certificate, 6-hour duration signal, learning topics, and no prior experience requirement. Price, rating, and review count intentionally remain unknown/null because they are volatile."
   },
   {
     "courseId": "introduction-to-cloud-computing-ibm",
@@ -178,11 +228,16 @@
     "verifiedFields": {
       "title": false,
       "platform": false,
+      "sourceUrl": false,
       "price": false,
+      "rating": false,
+      "reviewCount": false,
       "duration": false,
       "certificate": false,
       "language": false,
-      "level": false
+      "level": false,
+      "syllabus": false,
+      "prerequisites": false
     },
     "notes": "Pending manual verification against provider page."
   },
@@ -190,18 +245,23 @@
     "courseId": "google-project-management-google",
     "sourceUrl": "https://www.coursera.org/professional-certificates/google-project-management",
     "sourceType": "official_provider_page",
-    "verificationStatus": "pending",
-    "lastVerifiedAt": null,
+    "verificationStatus": "partially_verified",
+    "lastVerifiedAt": "2026-06-06",
     "verifiedFields": {
-      "title": false,
-      "platform": false,
+      "title": true,
+      "platform": true,
+      "sourceUrl": true,
       "price": false,
-      "duration": false,
-      "certificate": false,
-      "language": false,
-      "level": false
+      "rating": false,
+      "reviewCount": false,
+      "duration": true,
+      "certificate": true,
+      "language": true,
+      "level": true,
+      "syllabus": true,
+      "prerequisites": true
     },
-    "notes": "Pending manual verification against provider page."
+    "notes": "Source: official Coursera provider page. Verified title, platform/source URL, beginner level, English language, shareable certificate, 6 months at 10 hours/week workload signal, learning topics, and no degree/prior experience requirement. durationHours remains null because converting a monthly schedule to exact hours would be an estimate. Price, rating, and review count intentionally remain unknown/null because they are volatile."
   },
   {
     "courseId": "introduction-project-management-edx-adelaidex",
@@ -212,11 +272,16 @@
     "verifiedFields": {
       "title": false,
       "platform": false,
+      "sourceUrl": false,
       "price": false,
+      "rating": false,
+      "reviewCount": false,
       "duration": false,
       "certificate": false,
       "language": false,
-      "level": false
+      "level": false,
+      "syllabus": false,
+      "prerequisites": false
     },
     "notes": "Pending manual verification against provider page."
   },
@@ -229,11 +294,16 @@
     "verifiedFields": {
       "title": false,
       "platform": false,
+      "sourceUrl": false,
       "price": false,
+      "rating": false,
+      "reviewCount": false,
       "duration": false,
       "certificate": false,
       "language": false,
-      "level": false
+      "level": false,
+      "syllabus": false,
+      "prerequisites": false
     },
     "notes": "Pending manual verification against provider page."
   },
@@ -241,18 +311,23 @@
     "courseId": "ibm-data-analyst-ibm",
     "sourceUrl": "https://www.coursera.org/professional-certificates/ibm-data-analyst",
     "sourceType": "official_provider_page",
-    "verificationStatus": "pending",
-    "lastVerifiedAt": null,
+    "verificationStatus": "partially_verified",
+    "lastVerifiedAt": "2026-06-06",
     "verifiedFields": {
-      "title": false,
-      "platform": false,
+      "title": true,
+      "platform": true,
+      "sourceUrl": true,
       "price": false,
-      "duration": false,
-      "certificate": false,
-      "language": false,
-      "level": false
+      "rating": false,
+      "reviewCount": false,
+      "duration": true,
+      "certificate": true,
+      "language": true,
+      "level": true,
+      "syllabus": true,
+      "prerequisites": true
     },
-    "notes": "Pending manual verification against provider page."
+    "notes": "Source: official Coursera provider page. Verified title, platform/source URL, beginner level, English language, shareable certificate, 4 months at 10 hours/week workload signal, learning topics, and no prior experience requirement. durationHours remains null because converting a monthly schedule to exact hours would be an estimate. Price, rating, and review count intentionally remain unknown/null because they are volatile."
   },
   {
     "courseId": "google-advanced-data-analytics-google",
@@ -263,11 +338,16 @@
     "verifiedFields": {
       "title": false,
       "platform": false,
+      "sourceUrl": false,
       "price": false,
+      "rating": false,
+      "reviewCount": false,
       "duration": false,
       "certificate": false,
       "language": false,
-      "level": false
+      "level": false,
+      "syllabus": false,
+      "prerequisites": false
     },
     "notes": "Pending manual verification against provider page."
   },
@@ -280,11 +360,16 @@
     "verifiedFields": {
       "title": false,
       "platform": false,
+      "sourceUrl": false,
       "price": false,
+      "rating": false,
+      "reviewCount": false,
       "duration": false,
       "certificate": false,
       "language": false,
-      "level": false
+      "level": false,
+      "syllabus": false,
+      "prerequisites": false
     },
     "notes": "Pending manual verification against provider page."
   },
@@ -292,18 +377,23 @@
     "courseId": "ai-for-everyone-deeplearningai",
     "sourceUrl": "https://www.coursera.org/learn/ai-for-everyone",
     "sourceType": "official_provider_page",
-    "verificationStatus": "pending",
-    "lastVerifiedAt": null,
+    "verificationStatus": "partially_verified",
+    "lastVerifiedAt": "2026-06-06",
     "verifiedFields": {
-      "title": false,
-      "platform": false,
+      "title": true,
+      "platform": true,
+      "sourceUrl": true,
       "price": false,
-      "duration": false,
-      "certificate": false,
-      "language": false,
-      "level": false
+      "rating": false,
+      "reviewCount": false,
+      "duration": true,
+      "certificate": true,
+      "language": true,
+      "level": true,
+      "syllabus": true,
+      "prerequisites": true
     },
-    "notes": "Pending manual verification against provider page."
+    "notes": "Source: official Coursera provider page. Verified title, platform/source URL, beginner level, English language, shareable certificate, 7-hour duration signal, learning topics, and no prior experience requirement. Price, rating, and review count intentionally remain unknown/null because they are volatile."
   },
   {
     "courseId": "ibm-ai-engineering-ibm",
@@ -314,11 +404,16 @@
     "verifiedFields": {
       "title": false,
       "platform": false,
+      "sourceUrl": false,
       "price": false,
+      "rating": false,
+      "reviewCount": false,
       "duration": false,
       "certificate": false,
       "language": false,
-      "level": false
+      "level": false,
+      "syllabus": false,
+      "prerequisites": false
     },
     "notes": "Pending manual verification against provider page."
   }

@@ -8,14 +8,18 @@
 - Provider CTA copy and external-link disclosure copy are centralized.
 - Provider URLs are direct official provider URLs only.
 - Outbound tracking is local-only and does not send data to an external analytics vendor.
-- Source metadata exists for normalized courses in `data/normalized/course-source-metadata.json`, but most records are still pending manual verification.
-- A data quality report is available with `corepack pnpm report:data-quality` and includes verification-status counts, verified-field coverage, and courses still fully pending.
+- Source metadata exists for normalized courses in `data/normalized/course-source-metadata.json`, with seven priority courses now marked `partially_verified`.
+- A data quality report is available with `corepack pnpm report:data-quality` and includes verification-status counts, verified-field coverage, fully pending courses, partially verified courses, and unknown field counts.
 
 ## Trust and Data Quality Reality
 
 - Most source metadata is still marked `pending` until manual verification is completed.
+- Priority verification has started using official Coursera provider pages only.
 - Source verification remains a separate, conservative data-quality task.
+- The partially verified priority courses are Google Data Analytics, Google Cybersecurity, Google Project Management, AI For Everyone, AWS Cloud Technical Essentials, Google Cloud Fundamentals: Core Infrastructure, and IBM Data Analyst.
+- Verified fields include stable catalog facts such as title, platform/source URL, level, language, certificate visibility, workload/duration signals, learning topics, and prerequisites where clearly shown.
 - Prices, ratings, review counts, and some durations are mostly unverified or unknown.
+- Monthly workload estimates are not converted into exact `durationHours`; those values remain null where an exact total is not clearly shown.
 - Unknown data must remain null, unknown, pending, or explicitly unverified.
 - Certificate information is present where the catalog currently has it, but provider terms may change.
 - Users should verify pricing, duration, certificate terms, enrollment details, and availability on the provider page before deciding.
@@ -57,7 +61,7 @@ Do not run `corepack pnpm generate:seo` unless catalog or SEO generation inputs 
 
 1. Continue manually verifying source metadata fields against provider pages.
 2. Expand catalog coverage with a small, reviewable set per skill.
-3. Replace remaining unverified course bullets with source-backed content where available.
+3. Continue replacing generic course descriptions and bullets only when official provider pages clearly support the replacement.
 4. Add freshness display only after there is enough `lastVerifiedAt` coverage to avoid implying full-catalog verification.
 5. Define explicit ranking criteria before making any ranking-style claims.
 6. Add monetized links only when a real and auditable affiliate or referral program exists.

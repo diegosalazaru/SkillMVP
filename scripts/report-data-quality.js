@@ -94,6 +94,10 @@ try {
     .filter((record) => record.verificationStatus === "pending")
     .map((record) => record.courseId)
     .sort();
+  const partiallyVerifiedCourses = metadata
+    .filter((record) => record.verificationStatus === "partially_verified")
+    .map((record) => record.courseId)
+    .sort();
 
   console.log("\nVerified field coverage");
   getVerifiedFieldCoverage(metadata).forEach(([field, coverage]) => {
@@ -103,6 +107,13 @@ try {
   console.log("\nCourses still fully pending");
   if (fullyPendingCourses.length > 0) {
     fullyPendingCourses.forEach((courseId) => console.log(`- ${courseId}`));
+  } else {
+    console.log("- none");
+  }
+
+  console.log("\nPartially verified courses");
+  if (partiallyVerifiedCourses.length > 0) {
+    partiallyVerifiedCourses.forEach((courseId) => console.log(`- ${courseId}`));
   } else {
     console.log("- none");
   }
