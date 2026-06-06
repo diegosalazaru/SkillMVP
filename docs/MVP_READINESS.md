@@ -8,12 +8,13 @@
 - Provider CTA copy and external-link disclosure copy are centralized.
 - Provider URLs are direct official provider URLs only.
 - Outbound tracking is local-only and does not send data to an external analytics vendor.
-- Source metadata exists for normalized courses in `data/normalized/course-source-metadata.json`.
-- A data quality report is available with `corepack pnpm report:data-quality`.
+- Source metadata exists for normalized courses in `data/normalized/course-source-metadata.json`, with a small priority subset now marked `partially_verified`.
+- A data quality report is available with `corepack pnpm report:data-quality` and includes verification-status counts, verified-field coverage, and courses still fully pending.
 
 ## Trust and Data Quality Reality
 
-- Source metadata is currently marked `pending` until manual verification is completed.
+- Most source metadata is still marked `pending` until manual verification is completed.
+- Priority verification has started for selected Google, AWS, IBM, and DeepLearning.AI courses using official provider pages only.
 - Prices, ratings, review counts, and some durations are mostly unverified or unknown.
 - Unknown data must remain null, unknown, pending, or explicitly unverified.
 - Certificate information is present where the catalog currently has it, but provider terms may change.
@@ -24,9 +25,9 @@
 - Users can search for a skill and land on skill-specific course pages.
 - Skill pages show available courses from the normalized catalog.
 - Course cards expose core decision facts: platform, level, duration, price, certificate, and rating when available.
-- Course detail pages expose summary, provider CTA, compare action, learning content, and key facts.
-- Compare supports two-course comparison with outbound provider CTAs.
-- The compare page is readable on mobile and desktop.
+- Course detail pages are decision-support pages with fit framing, pending-data impact, verify-before-enrolling checks, provider CTA, compare action, learning content, and key facts.
+- Compare supports two-course comparison with deterministic decision summary, fit cards, row-level interpretation, missing-data risks, compact course details, checklist, and outbound provider CTAs.
+- The compare page uses stacked criterion cards on mobile instead of relying on a cramped side-by-side table.
 - Canonical and Open Graph metadata foundations are present for core pages.
 - Data validation runs with `corepack pnpm validate:data`.
 - Production build runs with `corepack pnpm build`.
@@ -37,6 +38,7 @@
 - No affiliate links or fake affiliate links are present.
 - No ads are implemented beyond existing placeholder behavior.
 - No verified rankings or recommendation algorithm exists.
+- No "best course" recommendation engine exists; comparison copy must stay tied to explicit, factual criteria.
 - No outcome, employment, partnership, or provider endorsement claims should be made.
 - No user accounts, cookies, database, scraping, external APIs, or new analytics vendors are implemented.
 
@@ -53,9 +55,9 @@ Do not run `corepack pnpm generate:seo` unless catalog or SEO generation inputs 
 
 ## Near-Term Priorities
 
-1. Manually verify source metadata fields against provider pages.
+1. Continue manually verifying source metadata fields against provider pages.
 2. Expand catalog coverage with a small, reviewable set per skill.
-3. Replace unverified course bullets with source-backed content where available.
-4. Add freshness display only after `lastVerifiedAt` is populated.
-5. Define ranking criteria before making any ranking-style claims.
+3. Replace remaining unverified course bullets with source-backed content where available.
+4. Add freshness display only after there is enough `lastVerifiedAt` coverage to avoid implying full-catalog verification.
+5. Define explicit ranking criteria before making any ranking-style claims.
 6. Add monetized links only when a real and auditable affiliate or referral program exists.
