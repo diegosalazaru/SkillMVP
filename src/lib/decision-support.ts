@@ -86,7 +86,7 @@ export const getPendingDataImpact = (course: Course) => {
     isDurationPending(course)
       ? "Duration pending: check weekly workload and total time commitment on the provider page."
       : null,
-    course.certificate === null
+    !course.certificate
       ? "Certificate status pending: verify whether a certificate is available and under what terms."
       : null
   ].filter((item): item is string => item !== null);
