@@ -2,11 +2,11 @@
   {
     "id": "machine-learning-stanford-university",
     "platform": "coursera",
-    "title": "Machine Learning",
+    "title": "Supervised Machine Learning: Regression and Classification",
     "url": "https://www.coursera.org/learn/machine-learning",
     "skillSlug": "ai",
     "level": "beginner",
-    "durationHours": 60,
+    "durationHours": null,
     "language": "en",
     "priceModel": "subscription",
     "priceAmount": null,
@@ -16,7 +16,7 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "Machine learning course from Stanford University on Coursera, oriented to beginner-level learners.",
+    "shortDescription": "Beginner course from DeepLearning.AI and Stanford Online covering regression, classification, and supervised learning fundamentals.",
     "syllabusBullets": [
       "Core machine learning concepts",
       "Models and result evaluation",
@@ -90,11 +90,11 @@
   {
     "id": "ibm-data-science-ibm",
     "platform": "coursera",
-    "title": "IBM Data Science",
+    "title": "IBM Data Science Professional Certificate",
     "url": "https://www.coursera.org/professional-certificates/ibm-data-science",
     "skillSlug": "data-science",
     "level": "beginner",
-    "durationHours": 160,
+    "durationHours": null,
     "language": "en",
     "priceModel": "subscription",
     "priceAmount": null,
@@ -104,26 +104,26 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "IBM Data Science program on Coursera, oriented to beginner-level learners.",
+    "shortDescription": "IBM professional certificate covering data science tools, analysis, visualization, and machine learning projects.",
     "syllabusBullets": [
       "Data science fundamentals",
       "Practical work with data",
       "Introduction to data science tools"
     ],
     "prerequisitesBullets": [
-      "Beginner-level orientation",
-      "Interest in analytics and data science"
+      "No prior experience required",
+      "No prior computer science or programming knowledge required"
     ],
     "source": "coursera-curated"
   },
   {
     "id": "meta-front-end-developer-meta",
     "platform": "coursera",
-    "title": "Meta Front-End Developer",
+    "title": "Meta Front-End Developer Professional Certificate",
     "url": "https://www.coursera.org/professional-certificates/meta-front-end-developer",
     "skillSlug": "frontend",
     "level": "beginner",
-    "durationHours": 210,
+    "durationHours": null,
     "language": "en",
     "priceModel": "subscription",
     "priceAmount": null,
@@ -133,15 +133,15 @@
     "reviewCount": null,
     "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "Meta Front-End Developer program on Coursera, oriented to beginner-level learners.",
+    "shortDescription": "Meta professional certificate covering HTML, CSS, JavaScript, React, version control, and portfolio projects.",
     "syllabusBullets": [
       "Front-end development fundamentals",
       "Building web interfaces",
       "Project-oriented practice"
     ],
     "prerequisitesBullets": [
-      "Beginner-level orientation",
-      "Interest in creating web interfaces"
+      "No degree or prior experience required",
+      "Beginner-level orientation"
     ],
     "source": "coursera-curated"
   },
@@ -405,8 +405,8 @@
       "Risk identification and communication"
     ],
     "prerequisitesBullets": [
-      "Suitable for beginners",
-      "General professional experience is helpful"
+      "No prior experience required",
+      "Beginner-level orientation"
     ],
     "source": "coursera-curated"
   },
