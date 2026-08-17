@@ -54,15 +54,54 @@ Not implemented:
 
 These are intentional roadmap constraints, not missing requirements to fill opportunistically.
 
-## Next Approved Product Initiative
+## Approved Execution Sequence
 
-No new product implementation initiative is currently approved.
+Two small initiatives are approved, and they must be implemented as **separate branches / PRs** in this order.
 
-Coding agents must not start another visual, SEO, data, monetization, recommendation, infrastructure, or catalog-expansion initiative based only on prior roadmap ideas. The next initiative must be explicitly approved after product review and then recorded here before implementation begins.
+### 1. Course Card Metadata Deduplication
+
+Purpose: fix the minor visual issue detected after PR #78 where the course platform is displayed twice on course cards.
+
+Scope:
+
+- Remove the duplicated platform presentation in `src/components/CourseCard.tsx`.
+- Preserve the current visual hierarchy and the level signal.
+- Do not redesign the card or touch unrelated UI.
+- No data, SEO, monetization, ranking, dependency, or architecture changes.
+
+### 2. Phase 1 Source Verification — Coverage Batch A
+
+Purpose: improve trustworthy comparison coverage across important skills using a small, auditable manual verification batch.
+
+Verify these five pending catalog entries against their official provider pages already recorded in source metadata:
+
+1. `machine-learning-stanford-university` — AI
+2. `ibm-data-science-ibm` — Data Science
+3. `meta-front-end-developer-meta` — Frontend
+4. `ibm-cybersecurity-analyst-ibm` — Cybersecurity
+5. `project-management-principles-practices-umci` — Project Management
+
+Verification rules:
+
+- Use official provider pages only.
+- Verify only facts clearly supported by the current provider page.
+- Update source metadata conservatively; partial verification is expected.
+- If an existing normalized field is contradicted by the official provider page, correct it only when the evidence is clear.
+- If the existing source URL is stale or redirects to a different canonical official provider page, update provenance consistently and document the change.
+- Do not infer exact hours from monthly/weekly workload statements.
+- Do not add or infer volatile price, rating, or review-count values unless the product strategy is explicitly changed later.
+- Unknown or unsupported fields must remain null, unknown, pending, or unverified.
+- No scraping, new provider API, new dependency, ranking, recommendation, SEO expansion, monetization, or catalog expansion in this batch.
+
+Success means the five records have more trustworthy provenance and verified-field coverage without invented precision or scope expansion.
+
+## After This Sequence
+
+Do not automatically start another product implementation initiative. After both PRs are reviewed and merged, update this file with the resulting verification coverage and return to product review before approving the next batch or phase.
 
 ## Parallel Ongoing Work
 
-Phase 1 data verification may continue only in small, explicitly approved and auditable batches. SEO expansion follows after the core experience remains stable. Monetization remains gated behind a real program and disclosure design.
+Phase 1 data verification should continue only in small, explicitly approved and auditable batches. SEO expansion follows after the core experience remains stable. Monetization remains gated behind a real program and disclosure design.
 
 ## Operational Note
 
