@@ -65,6 +65,8 @@ corepack pnpm exec tsc --noEmit
 corepack pnpm build
 ```
 
+If the pnpm TypeScript launcher fails on Windows only because the shell cannot resolve `tsc`, use the narrow repository-local fallback documented in `docs/ENGINEERING_RULES.md`; do not install or change dependencies to work around that launcher issue.
+
 Do not initialize ESLint configuration just to make `lint` run. Do not regenerate SEO output unless the task changes catalog or SEO generation inputs.
 
 ## PR Discipline
