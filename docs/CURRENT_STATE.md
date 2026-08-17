@@ -58,15 +58,58 @@ These are intentional roadmap constraints, not missing requirements to fill oppo
 
 ## Next Approved Product Initiative
 
-No new product implementation initiative is currently approved.
+### Phase 1 Source Verification — Coverage Batch B
 
-The approved Course Card Metadata Deduplication and Phase 1 Source Verification — Coverage Batch A sequence is complete. Coding agents must not automatically begin another verification batch, SEO expansion, monetization, recommendation, infrastructure, catalog expansion, or visual initiative.
+Purpose: complete a manual source review of the seven catalog records that remain `pending`, increasing trustworthy comparison coverage without expanding the catalog or inventing precision.
 
-The next initiative must be chosen through product review and recorded here before implementation begins.
+Review exactly these records against their official provider pages already recorded in source metadata:
+
+1. `deep-learning-specialization-deeplearningai` — AI — Coursera
+2. `introduction-cyber-security-nyux-edx` — Cybersecurity — edX
+3. `introduction-to-cloud-computing-ibm` — Cloud Computing — Coursera
+4. `introduction-project-management-edx-adelaidex` — Project Management — edX
+5. `google-advanced-data-analytics-google` — Data Analysis — Coursera
+6. `data-analytics-essentials-cisco` — Data Analysis — Coursera
+7. `ibm-ai-engineering-ibm` — AI — Coursera
+
+For each record, attempt to verify these stable fields when the current official page clearly supports them:
+
+- current title and provider/platform attribution
+- canonical official source URL
+- level
+- primary taught language
+- certificate availability
+- workload or duration signal
+- learning topics / syllabus coverage
+- prerequisites or recommended experience
+
+Verification rules:
+
+- Use official provider pages only.
+- Review all seven records, but do not force a record to `partially_verified` if the official page is unavailable or does not support enough fields.
+- If an official URL redirects, has moved, or is no longer available, use a current canonical official provider page only when it clearly represents the same offering; otherwise keep the uncertainty documented.
+- Correct normalized catalog fields only when the current official source clearly contradicts the existing value.
+- Workload statements may be recorded as source evidence without converting months/weeks at a weekly pace into invented exact `durationHours` values.
+- Exact duration hours may remain or be added only when the official source itself provides a sufficiently exact hour total.
+- Do not add or infer price, rating, or review-count values. These remain unknown/null and unverified in this batch.
+- Do not infer certificate, language, prerequisites, level, or availability from generic platform behavior.
+- Unknown or unsupported facts remain null, unknown, pending, or unverified as appropriate.
+- No scraping, provider API, new dependency, catalog expansion, SEO expansion, ranking, recommendation, monetization, or unrelated UI work.
+- Keep the change small and auditable in the existing normalized catalog/source metadata files.
+
+Success means all seven pending records have been manually reviewed and their provenance/status accurately reflects what the official sources support. The target is better trust coverage, not a forced zero-pending metric.
+
+After implementation, run the full required repository validation sequence, using the documented narrow Windows TypeScript launcher fallback only if the normal pnpm launcher hits that exact executable-resolution issue.
+
+The implementation must use one dedicated branch and PR and must not be merged by the coding agent.
+
+## After Batch B
+
+Do not automatically start another product implementation initiative. After Batch B is reviewed and merged, update this file with the resulting verification coverage and return to product review before approving SEO expansion, another data initiative, monetization, recommendation, infrastructure, catalog expansion, or further visual work.
 
 ## Parallel Ongoing Work
 
-Phase 1 data verification remains the active roadmap area, but additional batches must be small, explicitly approved, and auditable. SEO expansion follows only after the core experience remains stable. Monetization remains gated behind a real program and disclosure design.
+Phase 1 data verification remains the active roadmap area. SEO expansion follows only after the core experience remains stable and the catalog is sufficiently trustworthy. Monetization remains gated behind a real program and disclosure design.
 
 ## Operational Note
 
