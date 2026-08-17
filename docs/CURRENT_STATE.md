@@ -1,6 +1,6 @@
 # Current State
 
-Last updated after the Mobile Selection and Discovery UX merge on 2026-08-17.
+Last updated after the Decision-focused Visual Polish merge on 2026-08-17.
 
 ## Product State
 
@@ -8,20 +8,25 @@ Skills Compare is an advanced MVP with the core Search -> Compare -> Decide jour
 
 The current UI is English-first. The product supports skill discovery, curated course listings, course details, selection of up to two courses, persistent compare selection, side-by-side decision support, and outbound links to official provider pages.
 
+The core journey now has a more deliberate visual hierarchy across mobile and desktop, with stronger spacing, typography, component rhythm, and emphasis on decision actions.
+
 ## Latest Completed Initiative
 
-**Mobile Selection and Discovery UX** — merged in PR #76.
+**Decision-focused Visual Polish** — merged in PR #78.
 
 Key outcomes:
 
-- Compare selection persists with a versioned timestamp and 24-hour expiry.
-- Returning selections are surfaced rather than silently restored.
-- Compare selection is available globally through a persistent mobile-friendly compare bar.
-- Skill pages prioritize filters and course discovery before secondary explanatory content.
-- Course cards make Compare the primary action, Details secondary, and Provider tertiary.
-- Compare pages surface decision summary, provider actions, verification risk, comparison details, fit context, and final checks in a clearer order.
-- Course detail pages reduce duplicated warnings and improve mobile actions.
-- Search, filters, blog pages, and SEO course lists received mobile usability improvements.
+- Home/search hierarchy is stronger and the Search -> Compare -> Decide flow is more explicit.
+- Shared layout, spacing, typography, and visual rhythm are more consistent.
+- Skill pages, filters, and course cards have clearer decision hierarchy.
+- Compare remains the primary action on course cards and is more visually prominent.
+- The persistent compare bar has stronger contrast and clearer action emphasis.
+- Compare pages give greater visual weight to the deterministic decision summary and comparison criteria.
+- Course detail pages have clearer hierarchy between provider actions, compare actions, decision support, and factual details.
+- Mobile and desktop browser checks passed without overflow, overlays, or console errors during the initiative.
+- No dependencies, catalog data, SEO scope, monetization, ranking, recommendation, or provider-strategy changes were introduced.
+
+The prior **Mobile Selection and Discovery UX** initiative remains in place, including versioned 24-hour compare persistence, returning-selection messaging, global compare selection, mobile usability improvements, and clearer decision-page ordering.
 
 ## Catalog and Trust State
 
@@ -51,22 +56,13 @@ These are intentional roadmap constraints, not missing requirements to fill oppo
 
 ## Next Approved Product Initiative
 
-**Decision-focused Visual Polish.**
+No new product implementation initiative is currently approved.
 
-Objective: make the core experience feel more coherent, premium, and deliberate without changing product scope.
-
-Direction:
-
-- Stronger whitespace and hierarchy.
-- More consistent typography and component rhythm.
-- Cleaner visual emphasis on the primary decision action.
-- Mobile and desktop polish together.
-- Inspiration may come from high-quality product interfaces, including Apple's use of whitespace and hierarchy, but no visual copying or brand imitation.
-- Avoid introducing a broad design system or new dependency unless a concrete need justifies it.
+Coding agents must not start another visual, SEO, data, monetization, recommendation, infrastructure, or catalog-expansion initiative based only on prior roadmap ideas. The next initiative must be explicitly approved after product review and then recorded here before implementation begins.
 
 ## Parallel Ongoing Work
 
-Phase 1 data verification should continue in small, auditable batches. SEO expansion follows after the core experience remains stable. Monetization remains gated behind a real program and disclosure design.
+Phase 1 data verification may continue only in small, explicitly approved and auditable batches. SEO expansion follows after the core experience remains stable. Monetization remains gated behind a real program and disclosure design.
 
 ## Operational Note
 
