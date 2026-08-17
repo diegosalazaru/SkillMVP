@@ -47,11 +47,11 @@ const decisionChecklist = [
 ];
 
 const CourseFitCard = ({ course }: { course: Course }) => (
-  <div className="min-w-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+  <div className="min-w-0 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_14px_36px_-30px_rgba(15,23,42,0.4)] sm:p-6">
     <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
       May fit you if
     </p>
-    <h3 className="mt-2 break-words text-lg font-semibold text-slate-900">{course.title}</h3>
+    <h3 className="mt-2 break-words text-xl font-semibold tracking-tight text-slate-950">{course.title}</h3>
     <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-600">
       {getCourseFitBullets(course).map((bullet) => (
         <li key={bullet}>{bullet}</li>
@@ -61,9 +61,9 @@ const CourseFitCard = ({ course }: { course: Course }) => (
 );
 
 const CourseDecisionDetails = ({ course }: { course: Course }) => (
-  <article className="min-w-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+  <article className="min-w-0 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_14px_36px_-30px_rgba(15,23,42,0.4)] sm:p-6">
     <div className="space-y-2">
-      <h3 className="break-words text-lg font-semibold text-slate-900">{course.title}</h3>
+      <h3 className="break-words text-xl font-semibold tracking-tight text-slate-950">{course.title}</h3>
       <p className="text-sm leading-relaxed text-slate-600">
         {course.shortDescription ?? "Description unavailable."}
       </p>
@@ -175,39 +175,39 @@ export default function CompareClient() {
   const pendingRisks = getPendingDataRisks([leftCourse, rightCourse]);
 
   return (
-    <section className="flex min-w-0 flex-col gap-6 pb-8 sm:gap-8">
-      <header className="flex flex-col gap-3">
-        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">
+    <section className="flex min-w-0 flex-col gap-8 pb-8 sm:gap-10">
+      <header className="flex flex-col gap-4">
+        <p className="text-xs font-bold uppercase tracking-[0.22em] text-blue-700">
           Course comparison
         </p>
-        <h2 className="break-words text-2xl font-semibold text-slate-900 sm:text-3xl">
+        <h2 className="max-w-5xl break-words text-3xl font-semibold leading-tight tracking-[-0.03em] text-slate-950 sm:text-4xl lg:text-5xl">
           {leftCourse.title} vs {rightCourse.title}
         </h2>
-        <p className="max-w-3xl text-slate-600">
+        <p className="max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg">
           Use the comparison below to understand practical differences, uncertainty, and what to verify before opening the provider page.
         </p>
       </header>
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-        <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+      <section className="rounded-[1.75rem] border border-slate-800 bg-slate-950 p-5 shadow-[0_28px_70px_-42px_rgba(15,23,42,0.65)] sm:p-8">
+        <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between md:gap-8">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-300">
               Decision summary
             </p>
-            <h3 className="mt-2 text-xl font-semibold text-slate-900">
+            <h3 className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
               What changes your decision?
             </h3>
           </div>
-          <p className="max-w-md text-sm leading-relaxed text-slate-600">
+          <p className="max-w-md text-sm leading-relaxed text-slate-300">
             This summary is deterministic. It highlights factual fit signals and uncertainty; it does not rank courses.
           </p>
         </div>
 
-        <div className="mt-5 grid gap-4 md:grid-cols-2">
+        <div className="mt-6 grid gap-3 md:grid-cols-2 sm:mt-8 sm:gap-4">
           {sectionGroups.map((group) => (
-            <div key={group.key} className="rounded-xl bg-slate-50 p-4">
-              <h4 className="font-semibold text-slate-900">{group.title}</h4>
-              <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-600">
+            <div key={group.key} className="rounded-2xl border border-white/10 bg-white/[0.06] p-4 sm:p-5">
+              <h4 className="font-semibold text-white">{group.title}</h4>
+              <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-300 marker:text-blue-300">
                 {decisionSummary[group.key].map((item) => (
                   <li key={item}>{item}</li>
                 ))}
@@ -217,7 +217,7 @@ export default function CompareClient() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+      <section className="rounded-2xl border border-blue-200/80 bg-blue-50/60 p-5 sm:p-6">
         <h3 className="text-lg font-semibold text-slate-900">Open provider pages</h3>
         <p className="mt-2 text-sm leading-relaxed text-slate-600">{PROVIDER_DETAILS_NOTICE}</p>
         <div className="mt-4 grid gap-3 sm:flex sm:flex-wrap">
@@ -260,16 +260,16 @@ export default function CompareClient() {
         </ul>
       </section>
 
-      <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <div className="border-b border-slate-200 bg-slate-50 px-4 py-4 sm:px-6">
-          <h3 className="text-lg font-semibold text-slate-900">Criteria that matter</h3>
+      <section className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[0_18px_45px_-36px_rgba(15,23,42,0.45)]">
+        <div className="border-b border-slate-200 bg-slate-50/80 px-5 py-5 sm:px-6">
+          <h3 className="text-xl font-semibold tracking-tight text-slate-950">Criteria that matter</h3>
           <p className="mt-1 text-sm text-slate-600">
             Each row includes a status and interpretation so you do not have to infer the tradeoff from raw facts alone.
           </p>
         </div>
         <div className="divide-y divide-slate-200">
           {comparisonRows.map((row) => (
-            <div key={row.label} className="grid min-w-0 gap-3 px-4 py-5 sm:px-6 lg:grid-cols-[0.8fr_1fr_1fr_1fr]">
+            <div key={row.label} className="grid min-w-0 gap-4 px-5 py-6 sm:px-6 lg:grid-cols-[0.7fr_1fr_1fr_1.1fr]">
               <div className="space-y-2">
                 <p className="font-semibold text-slate-900">{row.label}</p>
                 <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ring-1 ${statusClasses[row.status]}`}>
@@ -304,10 +304,8 @@ export default function CompareClient() {
         <h3 className="text-lg font-semibold text-slate-900">Before you choose</h3>
         <div className="mt-4 grid gap-3 md:grid-cols-2">
           {decisionChecklist.map((item) => (
-            <div key={item} className="flex gap-3 rounded-xl bg-slate-50 p-3 text-sm text-slate-700">
-              <span aria-hidden="true" className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full border border-slate-300 text-xs font-semibold text-slate-500">
-                Check
-              </span>
+            <div key={item} className="flex gap-3 rounded-xl border border-slate-100 bg-slate-50/80 p-3.5 text-sm text-slate-700">
+              <span aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 rounded-md border border-slate-300 bg-white" />
               <span>{item}</span>
             </div>
           ))}

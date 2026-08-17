@@ -29,21 +29,21 @@ export default function RootLayout({
     <html lang="en">
       <body className="min-h-screen">
         <Providers>
-          <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 sm:px-6">
-            <header className="flex flex-col gap-4 border-b border-slate-200 py-5 sm:flex-row sm:items-center sm:justify-between sm:py-6">
-              <Link href="/" className="block hover:text-slate-700">
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+          <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 sm:px-6 lg:px-8">
+            <header className="flex items-center justify-between gap-4 border-b border-slate-200/80 py-4 sm:py-6">
+              <Link href="/" className="min-w-0 rounded-lg transition hover:text-slate-700">
+                <p className="truncate text-xs font-semibold uppercase tracking-[0.24em] text-slate-500 sm:text-sm">
                   Skills Compare
                 </p>
-                <h1 className="text-xl font-semibold">Find the right course</h1>
+                <h1 className="truncate text-base font-semibold tracking-tight sm:text-xl">Find the right course</h1>
               </Link>
-              <nav className="flex items-center gap-4 text-sm font-medium text-slate-600">
-                <Link href="/compare" className="hover:text-slate-900">Compare courses</Link>
-                <Link href="/blog" className="hover:text-slate-900">Blog</Link>
+              <nav className="flex shrink-0 items-center gap-1 rounded-full border border-slate-200/80 bg-white/80 p-1 text-xs font-semibold text-slate-600 shadow-sm backdrop-blur sm:gap-2 sm:text-sm">
+                <Link href="/compare" className="rounded-full px-3 py-2 transition hover:bg-slate-100 hover:text-slate-950 sm:px-4">Compare</Link>
+                <Link href="/blog" className="rounded-full px-3 py-2 transition hover:bg-slate-100 hover:text-slate-950 sm:px-4">Blog</Link>
               </nav>
             </header>
-            <main className="min-w-0 flex-1 pb-44 pt-6 sm:pb-36 sm:pt-8">{children}</main>
-            <footer className="border-t border-slate-200 py-6 text-sm text-slate-500">
+            <main className="min-w-0 flex-1 pb-44 pt-8 sm:pb-36 sm:pt-12">{children}</main>
+            <footer className="border-t border-slate-200/80 py-8 text-sm text-slate-500">
               Curated data and links to external platforms.
             </footer>
           </div>
