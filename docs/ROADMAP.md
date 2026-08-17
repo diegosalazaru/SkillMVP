@@ -18,8 +18,9 @@ Included:
 - Initial SEO/blog foundation.
 - Curated normalized dataset.
 - Trust and data-quality signaling.
+- Decision-focused visual polish across the core journey.
 
-Remaining Phase 0 work is primarily decision-focused visual polish and fixing concrete usability defects, not expanding feature breadth.
+Remaining Phase 0 work should be limited to concrete usability defects or regressions discovered through review. Do not expand feature breadth under Phase 0.
 
 ## Phase 1 — Real Data
 
@@ -37,6 +38,8 @@ Priorities:
 - Small, reviewable catalog expansion.
 
 Gate to progress: data quality must improve without introducing invented precision.
+
+Verification work should proceed in small, explicitly approved batches chosen for decision value and coverage. Official provider pages are the preferred source. Partial verification is expected when volatile or unsupported fields cannot be confirmed.
 
 ## Phase 2 — Monetization
 
@@ -98,7 +101,7 @@ Do not build Phase 5 architecture to solve hypothetical scale.
 ## Immediate Sequence
 
 1. Maintain the project-context foundation so execution agents work from durable product rules.
-2. Execute lightweight visual polish on the core Search -> Compare -> Decide journey.
-3. Continue Phase 1 source verification and catalog quality work.
-4. Expand SEO only after the core experience remains clear and stable.
+2. Continue Phase 1 source verification and catalog-quality work in small, auditable batches.
+3. Correct concrete usability defects discovered during review without opening another broad polish phase.
+4. Expand SEO only after the core experience remains clear and stable and catalog coverage supports useful pages.
 5. Consider Phase 2 monetization only when a real program and appropriate disclosures are ready.
