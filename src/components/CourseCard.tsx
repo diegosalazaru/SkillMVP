@@ -59,7 +59,7 @@ export const CourseCard = ({ course }: CourseCardProps) => {
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-blue-700">{course.platform}</p>
           <h3 className="break-words text-xl font-semibold leading-snug tracking-tight text-slate-950">{course.title}</h3>
           <p className="mt-2 text-sm font-medium text-slate-500">
-            {course.platform} / {course.level}
+            {course.level}
           </p>
         </div>
         {course.rating ? (
