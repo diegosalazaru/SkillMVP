@@ -47,23 +47,23 @@
     "courseId": "deep-learning-specialization-deeplearningai",
     "sourceUrl": "https://www.coursera.org/specializations/deep-learning",
     "sourceType": "official_provider_page",
-    "verificationStatus": "pending",
-    "lastVerifiedAt": null,
+    "verificationStatus": "partially_verified",
+    "lastVerifiedAt": "2026-08-17",
     "verifiedFields": {
-      "title": false,
-      "platform": false,
-      "sourceUrl": false,
+      "title": true,
+      "platform": true,
+      "sourceUrl": true,
       "price": false,
       "rating": false,
       "reviewCount": false,
-      "duration": false,
-      "certificate": false,
-      "language": false,
-      "level": false,
-      "syllabus": false,
-      "prerequisites": false
+      "duration": true,
+      "certificate": true,
+      "language": true,
+      "level": true,
+      "syllabus": true,
+      "prerequisites": true
     },
-    "notes": "Pending manual verification against provider page."
+    "notes": "Source: official Coursera provider page at the existing canonical URL. Verified the Deep Learning Specialization title, Coursera platform/source URL, DeepLearning.AI attribution, intermediate level, English as the primary taught language, shareable certificate, 3 months at 10 hours/week workload signal, learning topics, and stated Python, linear algebra, and machine learning background. durationHours changed from 120 to null because the page does not provide an exact program total. The page separately lists 27 available languages; this does not change the verified English primary taught language. Price, rating, and review count intentionally remain unknown/null because they are volatile."
   },
   {
     "courseId": "ibm-data-science-ibm",
@@ -173,7 +173,7 @@
       "syllabus": false,
       "prerequisites": false
     },
-    "notes": "Pending manual verification against provider page."
+    "notes": "Manual review attempted on 2026-08-17. The recorded official edX URL did not expose an available course page, and no current official edX page clearly representing this exact NYUx offering was found. The record remains pending with all fields unverified; no catalog facts were changed. Price, rating, and review count remain unknown/null."
   },
   {
     "courseId": "aws-cloud-technical-essentials-aws",
@@ -223,23 +223,23 @@
     "courseId": "introduction-to-cloud-computing-ibm",
     "sourceUrl": "https://www.coursera.org/learn/introduction-to-cloud",
     "sourceType": "official_provider_page",
-    "verificationStatus": "pending",
-    "lastVerifiedAt": null,
+    "verificationStatus": "partially_verified",
+    "lastVerifiedAt": "2026-08-17",
     "verifiedFields": {
-      "title": false,
-      "platform": false,
-      "sourceUrl": false,
+      "title": true,
+      "platform": true,
+      "sourceUrl": true,
       "price": false,
       "rating": false,
       "reviewCount": false,
-      "duration": false,
-      "certificate": false,
-      "language": false,
-      "level": false,
-      "syllabus": false,
+      "duration": true,
+      "certificate": true,
+      "language": true,
+      "level": true,
+      "syllabus": true,
       "prerequisites": false
     },
-    "notes": "Pending manual verification against provider page."
+    "notes": "Source: official Coursera provider page at the existing canonical URL. Verified the Introduction to Cloud Computing title, Coursera platform/source URL, IBM attribution, beginner level, English language, shareable certificate, 1 week at 10 hours/week workload signal, and learning topics covering cloud characteristics, service and deployment models, infrastructure, and emerging cloud trends. durationHours remains null. Prerequisites remain unverified because the page exposes only a generic recommended-experience label without supporting the catalog's specific statements. Price, rating, and review count intentionally remain unknown/null because they are volatile."
   },
   {
     "courseId": "google-project-management-google",
@@ -265,25 +265,25 @@
   },
   {
     "courseId": "introduction-project-management-edx-adelaidex",
-    "sourceUrl": "https://www.edx.org/learn/project-management/the-university-of-adelaide-introduction-to-project-management",
+    "sourceUrl": "https://www.edx.org/learn/project-management/university-of-adelaide-introduction-to-project-management",
     "sourceType": "official_provider_page",
-    "verificationStatus": "pending",
-    "lastVerifiedAt": null,
+    "verificationStatus": "partially_verified",
+    "lastVerifiedAt": "2026-08-17",
     "verifiedFields": {
-      "title": false,
-      "platform": false,
-      "sourceUrl": false,
+      "title": true,
+      "platform": true,
+      "sourceUrl": true,
       "price": false,
       "rating": false,
       "reviewCount": false,
-      "duration": false,
-      "certificate": false,
-      "language": false,
-      "level": false,
-      "syllabus": false,
-      "prerequisites": false
+      "duration": true,
+      "certificate": true,
+      "language": true,
+      "level": true,
+      "syllabus": true,
+      "prerequisites": true
     },
-    "notes": "Pending manual verification against provider page."
+    "notes": "Source: current official edX provider page for the same AdelaideX offering. The recorded URL moved to the current canonical URL, and the normalized URL, title, description, certificate availability, and prerequisites were corrected. Verified the AdelaideX: Introduction to Project Management title, edX platform/source URL, Adelaide University attribution, introductory level, English language, paid-track certificate availability, 6 weeks at 2-3 hours/week workload signal, learning topics covering planning, scope, scheduling, costing, risk, communication, and delivery, and no prior experience requirement. durationHours remains null because the weekly range is not an exact total. Price, rating, and review count intentionally remain unknown/null because they are volatile."
   },
   {
     "courseId": "project-management-principles-practices-umci",
@@ -333,23 +333,23 @@
     "courseId": "google-advanced-data-analytics-google",
     "sourceUrl": "https://www.coursera.org/professional-certificates/google-advanced-data-analytics",
     "sourceType": "official_provider_page",
-    "verificationStatus": "pending",
-    "lastVerifiedAt": null,
+    "verificationStatus": "partially_verified",
+    "lastVerifiedAt": "2026-08-17",
     "verifiedFields": {
-      "title": false,
-      "platform": false,
-      "sourceUrl": false,
+      "title": true,
+      "platform": true,
+      "sourceUrl": true,
       "price": false,
       "rating": false,
       "reviewCount": false,
-      "duration": false,
-      "certificate": false,
-      "language": false,
-      "level": false,
-      "syllabus": false,
-      "prerequisites": false
+      "duration": true,
+      "certificate": true,
+      "language": true,
+      "level": true,
+      "syllabus": true,
+      "prerequisites": true
     },
-    "notes": "Pending manual verification against provider page."
+    "notes": "Source: official Coursera provider page at the existing canonical URL. Verified the Google Advanced Data Analytics Professional Certificate title, Coursera platform/source URL, Google attribution, advanced level, English language, shareable certificate, 6 months at 10 hours/week workload signal, learning topics covering exploratory analysis, statistics, Python, regression, and machine learning, and stated foundational analytics background. The normalized level was corrected from intermediate to advanced and prerequisites were aligned to the current page. durationHours remains null because the page's over-200-hours statement is not an exact total. Price, rating, and review count intentionally remain unknown/null because they are volatile."
   },
   {
     "courseId": "data-analytics-essentials-cisco",
@@ -371,7 +371,7 @@
       "syllabus": false,
       "prerequisites": false
     },
-    "notes": "Pending manual verification against provider page."
+    "notes": "Manual review attempted on 2026-08-17. The recorded official Coursera URL did not expose an available course page. Cisco's current official Networking Academy page has the same course title but presents a Cisco-hosted instructor-led offering, which is insufficient to verify that the recorded Coursera offering and canonical destination remain the same listing. The record remains pending with all fields unverified; no catalog facts were changed. Price, rating, and review count remain unknown/null."
   },
   {
     "courseId": "ai-for-everyone-deeplearningai",
@@ -399,22 +399,22 @@
     "courseId": "ibm-ai-engineering-ibm",
     "sourceUrl": "https://www.coursera.org/professional-certificates/ai-engineer",
     "sourceType": "official_provider_page",
-    "verificationStatus": "pending",
-    "lastVerifiedAt": null,
+    "verificationStatus": "partially_verified",
+    "lastVerifiedAt": "2026-08-17",
     "verifiedFields": {
-      "title": false,
-      "platform": false,
-      "sourceUrl": false,
+      "title": true,
+      "platform": true,
+      "sourceUrl": true,
       "price": false,
       "rating": false,
       "reviewCount": false,
-      "duration": false,
-      "certificate": false,
-      "language": false,
-      "level": false,
-      "syllabus": false,
-      "prerequisites": false
+      "duration": true,
+      "certificate": true,
+      "language": true,
+      "level": true,
+      "syllabus": true,
+      "prerequisites": true
     },
-    "notes": "Pending manual verification against provider page."
+    "notes": "Source: official Coursera provider page at the existing canonical URL. Verified the IBM AI Engineering Professional Certificate title, Coursera platform/source URL, IBM attribution, intermediate level, English language, shareable certificate, 4 months at 10 hours/week workload signal, learning topics covering machine learning, deep learning, neural networks, Python frameworks, generative AI, and RAG, and stated Python, Jupyter Notebook, and mathematics prerequisites. The normalized prerequisites were corrected and durationHours remains null because the workload schedule is not an exact total. Price, rating, and review count intentionally remain unknown/null because they are volatile."
   }
 ]

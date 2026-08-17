@@ -65,7 +65,7 @@
     "url": "https://www.coursera.org/specializations/deep-learning",
     "skillSlug": "ai",
     "level": "intermediate",
-    "durationHours": 120,
+    "durationHours": null,
     "language": "en",
     "priceModel": "subscription",
     "priceAmount": null,
@@ -82,8 +82,8 @@
       "Practical applications of deep models"
     ],
     "prerequisitesBullets": [
-      "Intermediate level",
-      "Prior machine learning foundation recommended"
+      "Intermediate Python experience, including basic programming, control flow, lists, and dictionaries",
+      "Basic linear algebra and machine learning knowledge recommended"
     ],
     "source": "coursera-curated"
   },
@@ -355,8 +355,8 @@
   {
     "id": "introduction-project-management-edx-adelaidex",
     "platform": "edx",
-    "title": "Introduction to Project Management",
-    "url": "https://www.edx.org/learn/project-management/the-university-of-adelaide-introduction-to-project-management",
+    "title": "AdelaideX: Introduction to Project Management",
+    "url": "https://www.edx.org/learn/project-management/university-of-adelaide-introduction-to-project-management",
     "skillSlug": "project-management",
     "level": "beginner",
     "durationHours": null,
@@ -367,17 +367,16 @@
     "priceInterval": null,
     "rating": null,
     "reviewCount": null,
-    "certificate": null,
+    "certificate": true,
     "lastUpdatedAt": null,
-    "shortDescription": "Introductory project management course focused on planning, scope, and delivery basics.",
+    "shortDescription": "Adelaide University introductory course covering project planning, scope, scheduling, costing, risk, communication, and delivery.",
     "syllabusBullets": [
       "Project planning fundamentals",
       "Scope, schedule, and resource basics",
       "Project communication and tracking"
     ],
     "prerequisitesBullets": [
-      "Beginner-friendly",
-      "No formal PM background required"
+      "No prior experience required"
     ],
     "source": "manual"
   },
@@ -446,7 +445,7 @@
     "title": "Google Advanced Data Analytics Professional Certificate",
     "url": "https://www.coursera.org/professional-certificates/google-advanced-data-analytics",
     "skillSlug": "data-analysis",
-    "level": "intermediate",
+    "level": "advanced",
     "durationHours": null,
     "language": "en",
     "priceModel": "subscription",
@@ -464,8 +463,8 @@
       "Applied machine learning foundations"
     ],
     "prerequisitesBullets": [
-      "Foundational analytics knowledge recommended",
-      "Comfort with spreadsheets or basic programming"
+      "Foundational data analytics skills or equivalent experience",
+      "Understanding of spreadsheets, databases, SQL, programming concepts, data visualization, and dashboards"
     ],
     "source": "coursera-curated"
   },
@@ -552,8 +551,8 @@
       "Model training and evaluation workflows"
     ],
     "prerequisitesBullets": [
-      "Python and basic math familiarity recommended",
-      "Some prior ML exposure is helpful"
+      "Working knowledge of Python and Jupyter Notebooks",
+      "High school mathematics or mathematics for machine learning"
     ],
     "source": "coursera-curated"
   }
