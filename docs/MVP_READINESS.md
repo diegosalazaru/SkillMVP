@@ -59,9 +59,10 @@ Do not run `corepack pnpm generate:seo` unless catalog or SEO generation inputs 
 
 ## Near-Term Priorities
 
-1. Continue manually verifying source metadata fields against provider pages.
-2. Expand catalog coverage with a small, reviewable set per skill.
-3. Continue replacing generic course descriptions and bullets only when official provider pages clearly support the replacement.
-4. Add freshness display only after there is enough `lastVerifiedAt` coverage to avoid implying full-catalog verification.
-5. Define explicit ranking criteria before making any ranking-style claims.
-6. Add monetized links only when a real and auditable affiliate or referral program exists.
+1. Make the core mobile journey clear and usable before scaling traffic.
+2. Continue Phase 1 manual verification of source metadata against provider pages.
+3. Keep visual polish decision-focused and lightweight rather than introducing a broad design system.
+4. Continue SEO expansion after the core mobile experience is acceptable.
+5. Add freshness display only after there is enough `lastVerifiedAt` coverage to avoid implying full-catalog verification.
+6. Define explicit ranking criteria before making any ranking-style claims.
+7. Add monetized links only when a real and auditable affiliate or referral program exists.

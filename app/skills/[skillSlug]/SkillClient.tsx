@@ -4,11 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { CourseCard } from "@/components/CourseCard";
 import { Filters } from "@/components/Filters";
-import { CompareBar } from "@/components/CompareBar";
 import { AdPlaceholder } from "@/components/AdPlaceholder";
 import { courses } from "@/lib/catalog-adapter";
 import { getSkillAlternatives, getSkillIntro } from "@/lib/skill-catalog";
 import { slugify, titleFromSlug } from "@/utils/slugify";
+import { useCompareSelection } from "@/contexts/CompareSelectionContext";
+import type { Course } from "@/types/course";
 
 const LAST_SKILL_KEY = "skills-compare-last-skill";
 
@@ -20,8 +21,7 @@ const normalizeSkillSlug = (value: string) => {
     : normalized;
 
   const aliases: Record<string, string> = {
-    "machine": "ai",
-    "machine-learning": "ai",
+    "machine": "machine-learning",
     "ai-fundamentals": "ai",
     "prompt-engineering": "ai",
     "llms": "ai",
@@ -42,16 +42,9 @@ type SkillClientProps = {
   skillSlug: string;
 };
 
-const formatList = (values: string[]) => {
-  if (values.length === 0) {
-    return "unknown";
-  }
-
-  return values.join(", ");
-};
-
 export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProps) {
   const skillSlug = rawSkillSlug ? normalizeSkillSlug(rawSkillSlug) : undefined;
+  const { selectedIds, clear } = useCompareSelection();
 
   const [filters, setFilters] = useState<FiltersState>({
     platform: "All",
@@ -120,6 +113,15 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
       course.skillTags.some((tag) => slugify(tag) === skillSlug)
     );
   }, [skillExists, skillSlug]);
+  const selectedCourses = selectedIds
+    .map((id) => courses.find((course) => course.id === id))
+    .filter((course): course is Course => course != null);
+  const hasOtherSkillSelection =
+    selectedIds.length === 2 &&
+    Boolean(skillSlug) &&
+    selectedCourses.every((course) =>
+      course.skillTags.every((tag) => slugify(tag) !== skillSlug)
+    );
   const skillIntro = skillExists
     ? getSkillIntro({
         slug: skillSlug ?? "",
@@ -165,27 +167,18 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
       );
   }, [filters.language, filters.level, filters.platform, filters.priceModel, skillSlug]);
 
-  const filteredPlatforms = Array.from(
-    new Set(filteredCourses.map((course) => course.platform))
-  ).sort();
-  const filteredLevels = Array.from(
-    new Set(filteredCourses.map((course) => course.level))
-  ).sort();
-  const filteredPriceModels = Array.from(
-    new Set(filteredCourses.map((course) => course.priceText))
-  ).sort();
   const filteredCertificateCount = filteredCourses.filter(
     (course) => course.certificate
   ).length;
   const hasActiveFilters = Object.values(filters).some((value) => value !== "All");
 
   return (
-    <section className="flex flex-col gap-8 pb-24">
+    <section className="flex flex-col gap-6 sm:gap-8">
       <div>
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">
           Skill
         </p>
-        <h2 className="text-3xl font-semibold text-slate-900">
+        <h2 className="text-2xl font-semibold text-slate-900 sm:text-3xl">
           {skillExists ? skillTitle : "Skill not found"}
         </h2>
         <p className="mt-2 text-slate-600">
@@ -195,54 +188,18 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
         
       </div>
 
-      {skillExists ? (
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 className="text-lg font-semibold text-slate-900">About this skill</h3>
-          <p className="mt-2 text-sm text-slate-600">
-            {skillCourses.length} verified courses
-            {availablePlatforms ? ` on ${availablePlatforms}` : ""}
-            {availableLevels ? `, levels ${availableLevels}` : ""}.
+      {hasOtherSkillSelection ? (
+        <div className="flex flex-col gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            You have two courses selected from another skill. Clear them to compare courses in this skill.
           </p>
-        </div>
-      ) : null}
-
-      {skillExists ? (
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 className="text-lg font-semibold text-slate-900">
-            How to compare courses
-          </h3>
-          <p className="mt-2 text-sm text-slate-600">
-            Use these criteria to decide which course fits your context best.
-          </p>
-          <ul className="mt-3 grid gap-2 text-sm text-slate-600 sm:grid-cols-2 lg:grid-cols-5">
-            {[
-              {
-                label: "Price",
-                help: "Compare total cost, including subscription time and certificate fees."
-              },
-              {
-                label: "Duration",
-                help: "Check whether the weekly workload fits your real availability."
-              },
-              {
-                label: "Level",
-                help: "Choose a starting point that matches your current experience."
-              },
-              {
-                label: "Certificate",
-                help: "Verify whether certification is included or requires extra payment."
-              },
-              {
-                label: "Platform",
-                help: "Consider delivery format, support, and language experience."
-              }
-            ].map((item) => (
-              <li key={item.label} className="rounded-lg bg-slate-50 px-3 py-2">
-                <span className="block font-semibold text-slate-800">{item.label}</span>
-                <span>{item.help}</span>
-              </li>
-            ))}
-          </ul>
+          <button
+            type="button"
+            onClick={clear}
+            className="min-h-11 shrink-0 rounded-xl border border-amber-300 bg-white px-4 py-2 font-semibold"
+          >
+            Clear selection
+          </button>
         </div>
       ) : null}
 
@@ -258,47 +215,14 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
       />
 
       {skillExists ? (
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-            <div>
-              <h3 className="text-lg font-semibold text-slate-900">
-                Results to support your decision
-              </h3>
-              <p className="mt-1 text-sm text-slate-600">
-                {filteredCourses.length} of {skillCourses.length} courses visible
-                {hasActiveFilters ? " with current filters" : ""}.
-              </p>
-            </div>
-            <span className="w-fit rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
-              {filteredCertificateCount} with verified certificate
-            </span>
-          </div>
-          <div className="mt-4 grid gap-3 text-sm text-slate-600 md:grid-cols-3">
-            <div className="rounded-lg bg-slate-50 px-4 py-3">
-              <span className="block text-xs font-medium text-slate-500">
-                Visible platforms
-              </span>
-              <span className="font-semibold text-slate-800">
-                {formatList(filteredPlatforms)}
-              </span>
-            </div>
-            <div className="rounded-lg bg-slate-50 px-4 py-3">
-              <span className="block text-xs font-medium text-slate-500">
-                Visible levels
-              </span>
-              <span className="font-semibold text-slate-800">
-                {formatList(filteredLevels)}
-              </span>
-            </div>
-            <div className="rounded-lg bg-slate-50 px-4 py-3">
-              <span className="block text-xs font-medium text-slate-500">
-                Price visible
-              </span>
-              <span className="font-semibold text-slate-800">
-                {formatList(filteredPriceModels)}
-              </span>
-            </div>
-          </div>
+        <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-slate-600">
+          <p>
+            <span className="font-semibold text-slate-900">{filteredCourses.length}</span> of{" "}
+            {skillCourses.length} courses shown{hasActiveFilters ? " with current filters" : ""}.
+          </p>
+          <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+            {filteredCertificateCount} with certificate shown
+          </span>
         </div>
       ) : null}
 
@@ -330,26 +254,47 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
           No courses match these filters. Try adjusting your search or clearing filters.
         </div>
       ) : (
-        <div className="grid gap-6 lg:grid-cols-2">
-          {filteredCourses.map((course, index) => (
-            <div key={course.id} className="contents">
-              <CourseCard course={course} />
-              {index === 1 ? (
-                <div className="lg:col-span-2">
-                  <AdPlaceholder />
-                </div>
-              ) : null}
-            </div>
+        <div className="grid gap-5 lg:grid-cols-2">
+          {filteredCourses.map((course) => (
+            <CourseCard key={course.id} course={course} />
           ))}
-          {filteredCourses.length < 2 ? (
-            <div className="lg:col-span-2">
-              <AdPlaceholder />
-            </div>
-          ) : null}
         </div>
       )}
 
-      <CompareBar />
+      {skillExists ? (
+        <details className="group rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <summary className="cursor-pointer list-none font-semibold text-slate-900">
+            How to compare these courses
+            <span className="ml-2 text-sm font-normal text-slate-500 group-open:hidden">
+              Show guidance
+            </span>
+          </summary>
+          <ul className="mt-4 grid gap-2 text-sm text-slate-600 sm:grid-cols-2 lg:grid-cols-5">
+            {[
+              ["Price", "Compare total cost and certificate fees."],
+              ["Duration", "Check workload against your schedule."],
+              ["Level", "Match the course to your experience."],
+              ["Certificate", "Verify availability and payment terms."],
+              ["Platform", "Consider format, support, and language."]
+            ].map(([label, help]) => (
+              <li key={label} className="rounded-lg bg-slate-50 px-3 py-2">
+                <span className="block font-semibold text-slate-800">{label}</span>
+                <span>{help}</span>
+              </li>
+            ))}
+          </ul>
+        </details>
+      ) : null}
+
+      {skillExists ? (
+        <p className="text-sm text-slate-500">
+          {skillCourses.length} courses in the catalog
+          {availablePlatforms ? ` across ${availablePlatforms}` : ""}
+          {availableLevels ? `, with ${availableLevels} levels shown` : ""}.
+        </p>
+      ) : null}
+
+      <AdPlaceholder />
     </section>
   );
 }

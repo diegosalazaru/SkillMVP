@@ -14,9 +14,9 @@ export const SeoPageTemplate = ({ page }: SeoPageTemplateProps) => {
     resolveSkillSlug(page.skillSlug) ?? resolveSkillSlug(page.skillLabel) ?? page.skillSlug;
 
   return (
-    <main className="mx-auto max-w-4xl space-y-8 px-4 py-10">
+    <main className="mx-auto max-w-4xl space-y-8 py-4 sm:py-8">
       <header className="space-y-3">
-        <h1 className="text-3xl font-bold text-slate-900">{page.h1}</h1>
+        <h1 className="break-words text-2xl font-semibold text-slate-900 sm:text-3xl">{page.h1}</h1>
         <p className="text-slate-700">{page.intro}</p>
         <p className="text-sm text-slate-500">
           Course information may change. Verify pricing, duration, certificate terms, and enrollment details on the provider website.

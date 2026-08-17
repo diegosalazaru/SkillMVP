@@ -47,11 +47,11 @@ const decisionChecklist = [
 ];
 
 const CourseFitCard = ({ course }: { course: Course }) => (
-  <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+  <div className="min-w-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
     <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
       May fit you if
     </p>
-    <h3 className="mt-2 text-lg font-semibold text-slate-900">{course.title}</h3>
+    <h3 className="mt-2 break-words text-lg font-semibold text-slate-900">{course.title}</h3>
     <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-600">
       {getCourseFitBullets(course).map((bullet) => (
         <li key={bullet}>{bullet}</li>
@@ -61,9 +61,9 @@ const CourseFitCard = ({ course }: { course: Course }) => (
 );
 
 const CourseDecisionDetails = ({ course }: { course: Course }) => (
-  <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+  <article className="min-w-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
     <div className="space-y-2">
-      <h3 className="text-lg font-semibold text-slate-900">{course.title}</h3>
+      <h3 className="break-words text-lg font-semibold text-slate-900">{course.title}</h3>
       <p className="text-sm leading-relaxed text-slate-600">
         {course.shortDescription ?? "Description unavailable."}
       </p>
@@ -100,19 +100,19 @@ const CourseDecisionDetails = ({ course }: { course: Course }) => (
       </div>
     </div>
 
-    <div className="mt-5 flex flex-wrap gap-3">
+    <div className="mt-5 grid gap-3 sm:flex sm:flex-wrap">
       <a
         href={course.externalUrl}
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => trackOutboundCourseClick(course, EXTERNAL_PROVIDER_CONTEXT.compare)}
-        className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
+        className="min-h-11 rounded-lg bg-blue-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-blue-500"
       >
         {PROVIDER_CTA_LABEL}
       </a>
       <Link
         href={`/courses/${course.id}`}
-        className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
+        className="min-h-11 rounded-lg border border-slate-200 px-4 py-2 text-center text-sm font-semibold text-slate-700 hover:border-slate-300"
       >
         View course details
       </Link>
@@ -175,12 +175,12 @@ export default function CompareClient() {
   const pendingRisks = getPendingDataRisks([leftCourse, rightCourse]);
 
   return (
-    <section className="flex flex-col gap-8">
+    <section className="flex min-w-0 flex-col gap-6 pb-8 sm:gap-8">
       <header className="flex flex-col gap-3">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">
           Course comparison
         </p>
-        <h2 className="text-3xl font-semibold text-slate-900">
+        <h2 className="break-words text-2xl font-semibold text-slate-900 sm:text-3xl">
           {leftCourse.title} vs {rightCourse.title}
         </h2>
         <p className="max-w-3xl text-slate-600">
@@ -188,7 +188,7 @@ export default function CompareClient() {
         </p>
       </header>
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
         <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
@@ -217,9 +217,47 @@ export default function CompareClient() {
         </div>
       </section>
 
-      <section className="grid gap-4 lg:grid-cols-2">
-        <CourseFitCard course={leftCourse} />
-        <CourseFitCard course={rightCourse} />
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+        <h3 className="text-lg font-semibold text-slate-900">Open provider pages</h3>
+        <p className="mt-2 text-sm leading-relaxed text-slate-600">{PROVIDER_DETAILS_NOTICE}</p>
+        <div className="mt-4 grid gap-3 sm:flex sm:flex-wrap">
+          <a
+            href={leftCourse.externalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackOutboundCourseClick(leftCourse, EXTERNAL_PROVIDER_CONTEXT.compare)}
+            aria-label={`Open provider page for ${leftCourse.title}`}
+            className="min-h-11 rounded-lg bg-blue-600 px-5 py-2 text-center text-sm font-semibold text-white hover:bg-blue-500"
+          >
+            Open first provider
+          </a>
+          <a
+            href={rightCourse.externalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackOutboundCourseClick(rightCourse, EXTERNAL_PROVIDER_CONTEXT.compare)}
+            aria-label={`Open provider page for ${rightCourse.title}`}
+            className="min-h-11 rounded-lg bg-blue-600 px-5 py-2 text-center text-sm font-semibold text-white hover:bg-blue-500"
+          >
+            Open second provider
+          </a>
+          <button
+            type="button"
+            onClick={handleChangeCourses}
+            className="min-h-11 rounded-lg border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
+          >
+            Change courses
+          </button>
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-amber-200 bg-amber-50 p-4 sm:p-5">
+        <h3 className="text-lg font-semibold text-amber-950">Data to verify before enrolling</h3>
+        <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-amber-900">
+          {pendingRisks.map((risk) => (
+            <li key={risk}>{risk}</li>
+          ))}
+        </ul>
       </section>
 
       <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
@@ -231,7 +269,7 @@ export default function CompareClient() {
         </div>
         <div className="divide-y divide-slate-200">
           {comparisonRows.map((row) => (
-            <div key={row.label} className="grid gap-3 px-4 py-5 sm:px-6 lg:grid-cols-[0.8fr_1fr_1fr_1fr]">
+            <div key={row.label} className="grid min-w-0 gap-3 px-4 py-5 sm:px-6 lg:grid-cols-[0.8fr_1fr_1fr_1fr]">
               <div className="space-y-2">
                 <p className="font-semibold text-slate-900">{row.label}</p>
                 <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ring-1 ${statusClasses[row.status]}`}>
@@ -239,12 +277,12 @@ export default function CompareClient() {
                 </span>
               </div>
               <div className="rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-700 lg:bg-transparent lg:px-0 lg:py-0">
-                <p className="text-xs font-semibold text-slate-500">{leftCourse.title}</p>
-                <p className="mt-1">{row.left}</p>
+                <p className="break-words text-xs font-semibold text-slate-500">{leftCourse.title}</p>
+                <p className="mt-1 break-words">{row.left}</p>
               </div>
               <div className="rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-700 lg:bg-transparent lg:px-0 lg:py-0">
-                <p className="text-xs font-semibold text-slate-500">{rightCourse.title}</p>
-                <p className="mt-1">{row.right}</p>
+                <p className="break-words text-xs font-semibold text-slate-500">{rightCourse.title}</p>
+                <p className="mt-1 break-words">{row.right}</p>
               </div>
               <p className="text-sm leading-relaxed text-slate-600">{row.interpretation}</p>
             </div>
@@ -252,16 +290,9 @@ export default function CompareClient() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
-        <h3 className="text-lg font-semibold text-amber-950">Data to verify before enrolling</h3>
-        <p className="mt-2 text-sm leading-relaxed text-amber-900">
-          Skills Compare keeps uncertain data visible. Use this section as a final verification list before making a paid or time-intensive decision.
-        </p>
-        <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-amber-900">
-          {pendingRisks.map((risk) => (
-            <li key={risk}>{risk}</li>
-          ))}
-        </ul>
+      <section className="grid gap-4 lg:grid-cols-2">
+        <CourseFitCard course={leftCourse} />
+        <CourseFitCard course={rightCourse} />
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">
@@ -269,49 +300,17 @@ export default function CompareClient() {
         <CourseDecisionDetails course={rightCourse} />
       </section>
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
         <h3 className="text-lg font-semibold text-slate-900">Before you choose</h3>
         <div className="mt-4 grid gap-3 md:grid-cols-2">
           {decisionChecklist.map((item) => (
             <div key={item} className="flex gap-3 rounded-xl bg-slate-50 p-3 text-sm text-slate-700">
               <span aria-hidden="true" className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full border border-slate-300 text-xs font-semibold text-slate-500">
-                ✓
+                Check
               </span>
               <span>{item}</span>
             </div>
           ))}
-        </div>
-      </section>
-
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <h3 className="text-lg font-semibold text-slate-900">Next step</h3>
-        <p className="mt-2 text-sm leading-relaxed text-slate-600">{PROVIDER_DETAILS_NOTICE}</p>
-        <div className="mt-4 flex flex-wrap gap-3">
-          <a
-            href={leftCourse.externalUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackOutboundCourseClick(leftCourse, EXTERNAL_PROVIDER_CONTEXT.compare)}
-            className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-500"
-          >
-            Open {leftCourse.title}
-          </a>
-          <a
-            href={rightCourse.externalUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackOutboundCourseClick(rightCourse, EXTERNAL_PROVIDER_CONTEXT.compare)}
-            className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-500"
-          >
-            Open {rightCourse.title}
-          </a>
-          <button
-            type="button"
-            onClick={handleChangeCourses}
-            className="rounded-lg border border-blue-200 px-5 py-2 text-sm font-semibold text-blue-700 hover:border-blue-300"
-          >
-            Change courses
-          </button>
         </div>
       </section>
 

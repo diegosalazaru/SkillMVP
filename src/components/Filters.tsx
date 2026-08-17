@@ -36,7 +36,7 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
   const languageOptions = options?.languages ?? languages;
 
   return (
-    <div className="grid gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:grid-cols-4">
+    <div className="grid min-w-0 gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:grid-cols-2 lg:grid-cols-4">
       <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
         Platform
         <select
@@ -44,7 +44,7 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
           onChange={(event) =>
             onChange({ ...value, platform: event.target.value })
           }
-          className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700"
+          className="min-h-11 w-full min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700"
         >
           {platformOptions.map((platform) => (
             <option key={platform} value={platform}>
@@ -58,7 +58,7 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
         <select
           value={value.level}
           onChange={(event) => onChange({ ...value, level: event.target.value })}
-          className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700"
+          className="min-h-11 w-full min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700"
         >
           {levelOptions.map((level) => (
             <option key={level} value={level}>
@@ -74,7 +74,7 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
           onChange={(event) =>
             onChange({ ...value, priceModel: event.target.value })
           }
-          className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700"
+          className="min-h-11 w-full min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700"
         >
           {priceOptions.map((price) => (
             <option key={price.value} value={price.value}>
@@ -90,7 +90,7 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
           onChange={(event) =>
             onChange({ ...value, language: event.target.value })
           }
-          className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700"
+          className="min-h-11 w-full min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700"
         >
           {languageOptions.map((language) => (
             <option key={language} value={language}>
