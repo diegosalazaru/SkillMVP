@@ -1,26 +1,63 @@
-# Core interaction model
+# Core Interaction Model
 
 ## Purpose
 
-## Core objects (Course, Skill)
+Define the current interaction rules for course selection and comparison so UI changes remain consistent across skill, detail, and compare pages.
 
-## Selection model (N-ready; UI may cap at 2 for now)
-- `selectedIds` es un array ordenado (FIFO): el primer elemento es el más antiguo.
-- El estado es la fuente de verdad; la persistencia en localStorage ocurre en efectos.
-- MVP: se permite comparar hasta 2 cursos, pero el modelo está listo para N.
+## Core Objects
 
-## Compare rules
-- Solo se habilita la comparación cuando hay exactamente 2 cursos seleccionados.
-- Si la URL trae más de 2 IDs, se usan solo los primeros 2.
+The user primarily interacts with:
 
-## Empty states
-- Skill inválida: mensaje claro y CTA para volver a buscar.
-- Skill válida sin resultados por filtros: sugerir limpiar o ajustar filtros.
-- Comparador con menos de 2 cursos: pedir selección exacta y CTA para volver a elegir.
+- **Skill** — the discovery entry point.
+- **Course** — the decision option.
+- **Compare selection** — an ordered set of up to two course IDs.
 
-## UX guardrails
-- Intentar seleccionar un 3er curso muestra feedback visible y no cambia la selección.
-- CompareBar muestra el contador `n/2` y valida antes de navegar.
-- Copy consistente: “Selecciona 2 para comparar (por ahora)”.
+## Selection Model
 
-## Future: multi-platform, multi-language
+- `selectedIds` is an ordered array.
+- The active product limit is two courses.
+- Selecting a third course must not silently replace an existing course.
+- The UI should explain the limit and provide an obvious clear/remove action.
+- Selection persists in `localStorage` as a versioned object with an `updatedAt` timestamp.
+- Persisted selection expires after 24 hours.
+- Legacy, malformed, future-dated, or stale stored selection should be cleared instead of restored.
+- A recently restored selection must be surfaced to the user as a returning selection rather than appearing silently.
+
+## Compare Rules
+
+- Comparison is enabled only when exactly two valid course IDs are selected.
+- Compare URLs should contain at most the intended two course IDs.
+- The compare page should not show the persistent compare bar because the user is already in the comparison destination.
+- Changing courses should preserve a clear route back to discovery rather than trapping the user in the compare page.
+
+## Cross-Skill Selection
+
+A user may navigate from one skill to another with a two-course selection already stored.
+
+When both selected courses belong to another skill:
+
+- Do not silently discard the selection.
+- Explain that two courses from another skill are selected.
+- Provide a prominent clear-selection action.
+- Do not allow a confusing third-course selection attempt to replace the pair.
+
+## Empty and Limit States
+
+- Invalid skill: show a clear message and route back to discovery.
+- Valid skill with no filtered results: suggest adjusting or clearing filters.
+- Compare with fewer than two valid courses: explain that two selections are required and route back to choose courses.
+- Selection at limit: explain why another course cannot be added and provide clear/remove controls.
+
+## UX Guardrails
+
+- Compare is the primary action on course cards.
+- Course details are secondary.
+- Provider outbound actions are tertiary during discovery.
+- Persistent compare UI must not cover meaningful page content.
+- Course titles must truncate or wrap safely on narrow screens.
+- Buttons and controls should remain comfortable touch targets on mobile.
+- Selection state must be visible through text/state, not color alone.
+
+## Future
+
+Any move beyond two-course comparison, introduction of accounts/server-side persistence, or change to the 24-hour persistence model is a product decision and should not be implemented opportunistically.

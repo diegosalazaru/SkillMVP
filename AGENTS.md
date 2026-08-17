@@ -1,73 +1,76 @@
-# AGENTS.md
+# Skills Compare Agent Instructions
 
-## Project context
+This file is the entry point for coding agents working on Skills Compare.
 
-Skills Compare helps users search for a skill, view online courses, compare them, and decide what to learn.
+## Mission
 
-Current product principles:
-- Product-first decisions.
-- Do not invent course data. Unknown or unverified data must remain `unknown`, `null`, or explicitly mock/placeholder.
-- Prefer automation over manual work, but do not over-engineer before there is traction.
-- Keep PRs small, reviewable, and scoped.
-- UX clarity is more important than feature breadth.
-- Data validation must pass before merging data or ingestion changes.
+Build a trustworthy decision product for people choosing online courses by skill. The core journey is:
 
-## Technical context
+**Search -> Compare -> Decide**
 
-- Framework: Next.js 14 App Router.
-- Package manager: pnpm.
-- Data validation command: `pnpm validate:data`.
-- edX ingestion command: `pnpm ingest:edx`.
-- Normalized course output: `data/normalized/courses.json`.
-- Course schema lives under `src/lib/schema/course`.
+Optimize for user understanding, decision quality, low maintenance, and validated product learning. Do not optimize for feature count or technical novelty.
 
-## Required behavior for coding agents
+## Mandatory Context Read Order
 
-Before proposing or changing code:
-1. Identify whether the change affects product UX, data quality, CI/infra, or docs only.
-2. Prefer the smallest safe diff.
-3. Do not mix unrelated changes in one PR.
-4. Do not add new dependencies unless the value is clear and maintenance cost is low.
-5. Do not change UI, rankings, monetization, or SEO behavior as part of infra-only PRs.
-6. Do not bypass validation just to make CI green.
+Before implementing product or code changes, read:
 
-## Validation expectations
+1. `docs/PRODUCT_CONTEXT.md`
+2. `docs/ROADMAP.md`
+3. `docs/CURRENT_STATE.md`
+4. `docs/PRODUCT_DECISIONS.md`
+5. `docs/ENGINEERING_RULES.md`
+6. Relevant domain docs such as `docs/MVP_READINESS.md`, `docs/catalog-phase-1.md`, `docs/core-interaction-model.md`, and `docs/external-links-and-future-monetization.md`
 
-For data or ingestion changes, run or preserve:
-- `pnpm validate:data`
-- relevant ingestion smoke checks when available
+If documents conflict, prefer the files earlier in this list and flag the conflict in the PR.
 
-For UI/runtime changes, preserve or run:
-- `pnpm build`
-- any available lint/type checks
+## Product Guardrails
 
-## PR risk policy
+- Never invent course facts, prices, ratings, review counts, outcomes, rankings, partnerships, or verification claims.
+- Unknown or unverified facts must remain explicitly unknown, pending, or absent.
+- Do not add affiliate links, referral links, ads, paid placement, or monetization tracking until the roadmap explicitly moves to Phase 2.
+- Do not add ranking or recommendation claims until explicit criteria and real signals exist.
+- Do not add employment, salary, provider endorsement, or outcome promises.
+- The product UI is English-first unless a task explicitly changes language strategy.
+- Compare remains the primary decision action on skill pages; course details are secondary; opening the provider is tertiary.
+- Prefer simple, maintainable UX and architecture over broad frameworks or speculative infrastructure.
 
-Safe/low-risk PRs:
-- docs-only changes
-- PR templates and repo metadata
-- CI metadata that does not expand permissions or secrets usage
-- non-runtime scripts/tooling
+## Execution Boundary
 
-Product-review PRs:
-- `app/**`
-- `src/**`
-- `components/**`
-- user-facing data transforms
-- ranking/recommendation logic
-- SEO, tracking, monetization, pricing display, or affiliate logic
+Coding agents are execution agents, not autonomous product owners.
 
-High-risk PRs:
-- workflow permission expansion
-- secret handling
-- auth/payment logic, if introduced later
-- schema changes that could invalidate existing catalog data
+They may decide implementation details inside an approved task, but must not independently change product scope, roadmap phase, monetization strategy, data truth standards, ranking policy, or core interaction priorities.
 
-## Output style for agent PRs
+If a requested implementation would cross one of those boundaries, stop and report the product decision required.
 
-Every PR should include:
-- Summary
-- Files changed by category
-- Validation run or expected checks
-- Risk level: safe / product-review / high-risk
-- Follow-ups, if any
+## Mandatory Publishing Preflight
+
+For local or cloud coding agents that use Git, before implementation:
+
+1. Confirm the repository and remote are `diegosalazaru/SkillMVP`.
+2. Fetch the real latest `origin/main`.
+3. Create or reset the task branch from `origin/main`.
+4. Verify the merge base is the real latest `origin/main`.
+5. Push the empty task branch to origin before modifying files.
+
+If fetch, checkout, authentication, permissions, proxy, history, or the initial push fails, **stop before implementation**. Do not create local-only work that cannot be published.
+
+## Validation Before PR Completion
+
+Run the validations defined in `docs/ENGINEERING_RULES.md`. At minimum for normal product changes:
+
+```bash
+corepack pnpm validate:data
+corepack pnpm report:data-quality
+corepack pnpm exec tsc --noEmit
+corepack pnpm build
+```
+
+Do not initialize ESLint configuration just to make `lint` run. Do not regenerate SEO output unless the task changes catalog or SEO generation inputs.
+
+## PR Discipline
+
+- Keep each PR tied to one approved initiative.
+- Avoid unrelated refactors.
+- Report changed-file count and validation results.
+- Do not merge when checks fail or material product questions remain.
+- Update durable documentation when a decision, roadmap phase, or current-state assumption materially changes.

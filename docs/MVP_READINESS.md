@@ -8,13 +8,14 @@
 - Provider CTA copy and external-link disclosure copy are centralized.
 - Provider URLs are direct official provider URLs only.
 - Outbound tracking is local-only and does not send data to an external analytics vendor.
-- Source metadata exists for normalized courses in `data/normalized/course-source-metadata.json`, with seven priority courses now marked `partially_verified`.
+- Source metadata exists for normalized courses in `data/normalized/course-source-metadata.json`, with seven priority courses marked `partially_verified`.
 - A data quality report is available with `corepack pnpm report:data-quality` and includes verification-status counts, verified-field coverage, fully pending courses, partially verified courses, and unknown field counts.
+- Mobile Selection and Discovery UX is merged: compare selection persists for up to 24 hours, returning selections are surfaced, and the compare bar is available globally outside the compare page.
 
 ## Trust and Data Quality Reality
 
 - Most source metadata is still marked `pending` until manual verification is completed.
-- Priority verification has started using official Coursera provider pages only.
+- Priority verification has started using official provider pages.
 - Source verification remains a separate, conservative data-quality task.
 - The partially verified priority courses are Google Data Analytics, Google Cybersecurity, Google Project Management, AI For Everyone, AWS Cloud Technical Essentials, Google Cloud Fundamentals: Core Infrastructure, and IBM Data Analyst.
 - Verified fields include stable catalog facts such as title, platform/source URL, level, language, certificate visibility, workload/duration signals, learning topics, and prerequisites where clearly shown.
@@ -28,10 +29,11 @@
 
 - Users can search for a skill and land on skill-specific course pages.
 - Skill pages show available courses from the normalized catalog.
-- Course cards expose core decision facts: platform, level, duration, price, certificate, and rating when available.
-- Course detail pages are decision-support pages with fit framing, pending-data impact, verify-before-enrolling checks, provider CTA, compare action, learning content, and key facts.
-- Compare supports two-course comparison with deterministic decision summary, fit cards, row-level interpretation, missing-data risks, compact course details, checklist, and outbound provider CTAs.
-- The compare page uses stacked criterion cards on mobile instead of relying on a cramped side-by-side table.
+- Course cards expose core decision facts and prioritize compare selection over outbound provider clicks.
+- Course detail pages are decision-support pages with fit framing, verify-before-enrolling checks, provider CTA, compare action, learning content, and key facts.
+- Compare supports two-course comparison with deterministic decision summary, verification risks, fit context, deep comparison details, checklist, and outbound provider CTAs.
+- The compare page uses mobile-friendly stacked content instead of relying on a cramped desktop table.
+- Compare selection persists across navigation and recent visits for up to 24 hours, with an explicit returning-selection state and clear action.
 - Canonical and Open Graph metadata foundations are present for core pages.
 - Data validation runs with `corepack pnpm validate:data`.
 - Production build runs with `corepack pnpm build`.
@@ -40,7 +42,7 @@
 
 - No affiliate program is implemented.
 - No affiliate links or fake affiliate links are present.
-- No ads are implemented beyond existing placeholder behavior.
+- No external ads are implemented beyond reserved placeholder behavior.
 - No verified rankings or recommendation algorithm exists.
 - No "best course" recommendation engine exists; comparison copy must stay tied to explicit, factual criteria.
 - No outcome, employment, partnership, or provider endorsement claims should be made.
@@ -48,21 +50,22 @@
 
 ## Validation Workflow
 
-Run these before opening or updating a PR:
+Run these before opening or updating a normal product PR:
 
 - `corepack pnpm validate:data`
 - `corepack pnpm report:data-quality`
 - `corepack pnpm exec tsc --noEmit`
 - `corepack pnpm build`
 
-Do not run `corepack pnpm generate:seo` unless catalog or SEO generation inputs change. Do not run `corepack pnpm lint` until ESLint is configured, because `next lint` currently prompts for setup.
+Do not run `corepack pnpm generate:seo` unless catalog or SEO generation inputs change. Do not initialize ESLint configuration just to run lint; `next lint` may currently prompt for setup.
 
 ## Near-Term Priorities
 
-1. Make the core mobile journey clear and usable before scaling traffic.
+1. Execute decision-focused visual polish across the core Search -> Compare -> Decide journey.
 2. Continue Phase 1 manual verification of source metadata against provider pages.
-3. Keep visual polish decision-focused and lightweight rather than introducing a broad design system.
-4. Continue SEO expansion after the core mobile experience is acceptable.
-5. Add freshness display only after there is enough `lastVerifiedAt` coverage to avoid implying full-catalog verification.
-6. Define explicit ranking criteria before making any ranking-style claims.
-7. Add monetized links only when a real and auditable affiliate or referral program exists.
+3. Keep visual polish lightweight and consistent rather than introducing a broad design system.
+4. Validate mobile and desktop usability after each polish batch before widening scope.
+5. Continue SEO expansion after the core experience remains stable and useful.
+6. Add freshness display only after there is enough `lastVerifiedAt` coverage to avoid implying full-catalog verification.
+7. Define explicit ranking criteria before making any ranking-style claims.
+8. Add monetized links only when a real and auditable affiliate or referral program exists.
