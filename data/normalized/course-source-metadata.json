@@ -58,12 +58,12 @@
       "reviewCount": false,
       "duration": true,
       "certificate": true,
-      "language": false,
+      "language": true,
       "level": true,
       "syllabus": true,
       "prerequisites": true
     },
-    "notes": "Source: official Coursera provider page at the existing canonical URL. Verified the Deep Learning Specialization title, Coursera platform/source URL, DeepLearning.AI attribution, intermediate level, shareable certificate, 3 months at 10 hours/week workload signal, learning topics, and stated Python, linear algebra, and machine learning background. durationHours changed from 120 to null because the page does not provide an exact program total. Primary taught language remains unverified because the current page exposed a French AI-dubbed presentation and multiple language options rather than clearly establishing the underlying primary language. Price, rating, and review count intentionally remain unknown/null because they are volatile."
+    "notes": "Source: official Coursera provider page at the existing canonical URL. Verified the Deep Learning Specialization title, Coursera platform/source URL, DeepLearning.AI attribution, intermediate level, English as the primary taught language, shareable certificate, 3 months at 10 hours/week workload signal, learning topics, and stated Python, linear algebra, and machine learning background. durationHours changed from 120 to null because the page does not provide an exact program total. The page separately lists 27 available languages; this does not change the verified English primary taught language. Price, rating, and review count intentionally remain unknown/null because they are volatile."
   },
   {
     "courseId": "ibm-data-science-ibm",
