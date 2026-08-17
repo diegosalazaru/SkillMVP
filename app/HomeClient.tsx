@@ -41,19 +41,21 @@ export default function HomeClient() {
   };
 
   return (
-    <section className="flex flex-col gap-10">
+    <section className="flex flex-col gap-8 sm:gap-10">
       <div className="space-y-3">
-        <h2 className="text-3xl font-semibold leading-tight text-slate-900">
-          Compare online courses and choose with confidence.
+        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-700">
+          Start with a skill
+        </p>
+        <h2 className="max-w-3xl text-3xl font-semibold leading-tight text-slate-900 sm:text-4xl">
+          Compare courses before you commit.
         </h2>
         <p className="max-w-2xl text-slate-600">
-          Find a skill and review real courses by price, duration, level, and
-          certificate details before you choose.
+          Search a skill, review course facts, and compare two options side by side.
         </p>
       </div>
 
       <SearchBar
-        placeholder="Example: ai, data analysis, frontend"
+        placeholder="Try data analytics, cybersecurity, or AI"
         onSearch={handleSearch}
         feedback={searchFeedback}
       />
@@ -63,7 +65,7 @@ export default function HomeClient() {
             <Link
               key={skill.slug}
               href={`/skills/${skill.slug}`}
-              className="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm font-semibold text-slate-700 hover:border-slate-300"
+              className="min-h-10 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
             >
               {skill.title}
             </Link>
@@ -80,7 +82,7 @@ export default function HomeClient() {
             <Link
               key={skill.slug}
               href={`/skills/${skill.slug}`}
-              className="rounded-xl border border-slate-200 bg-white p-4 text-left shadow-sm hover:border-slate-300"
+              className="rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:border-slate-300 sm:p-5"
             >
               <p className="font-semibold text-slate-900">{skill.title}</p>
               <p className="mt-1 text-sm text-slate-600">{skill.courseCount} courses available</p>

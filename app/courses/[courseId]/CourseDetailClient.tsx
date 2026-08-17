@@ -8,7 +8,6 @@ import {
   formatCertificate,
   getCourseDecisionSummary,
   getCourseFitBullets,
-  getPendingDataRisks,
   isDurationPending,
   isExactPricePending
 } from "@/lib/decision-support";
@@ -52,6 +51,14 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
 
   const selected = isSelected(course.id);
   const atLimit = selectedIds.length >= 2 && !selected;
+  const selectedCourses = selectedIds
+    .map((id) => courses.find((item) => item.id === id))
+    .filter((item): item is NonNullable<typeof item> => item != null);
+  const selectedFromAnotherSkill =
+    atLimit &&
+    selectedCourses.every((item) =>
+      item.skillTags.every((tag) => !course.skillTags.includes(tag))
+    );
   const hasLearningBullets = course.syllabusBullets.length > 0;
   const hasPrerequisites = course.prerequisitesBullets.length > 0;
   const compareHref =
@@ -80,48 +87,46 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
   ];
 
   return (
-    <section className="flex flex-col gap-8">
+    <section className="flex flex-col gap-6 pb-8 sm:gap-8">
       <div className="space-y-4">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">
           Course
         </p>
         <div className="grid gap-5 lg:grid-cols-[1fr_0.42fr] lg:items-start">
           <div>
-            <h2 className="text-3xl font-semibold text-slate-900">{course.title}</h2>
+            <h2 className="break-words text-2xl font-semibold text-slate-900 sm:text-3xl">{course.title}</h2>
             <p className="mt-3 max-w-3xl text-slate-600">
               {course.shortDescription ?? "Description unavailable."}
             </p>
           </div>
-          <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
             <div className="flex flex-col gap-3">
               <a
                 href={course.externalUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackOutboundCourseClick(course, EXTERNAL_PROVIDER_CONTEXT.detail)}
-                className="rounded-lg bg-blue-600 px-5 py-2 text-center text-sm font-semibold text-white transition hover:bg-blue-500"
+                className="min-h-11 rounded-lg bg-blue-600 px-5 py-2 text-center text-sm font-semibold text-white transition hover:bg-blue-500"
               >
                 {PROVIDER_CTA_LABEL}
               </a>
               <button
                 type="button"
+                aria-pressed={selected}
                 onClick={() => toggle(course.id)}
-                className={`rounded-lg px-5 py-2 text-sm font-semibold text-white transition ${
+                className={`min-h-11 rounded-lg px-5 py-2 text-sm font-semibold text-white transition ${
                   selected ? "bg-emerald-600 hover:bg-emerald-500" : "bg-slate-700 hover:bg-slate-600"
                 } ${atLimit ? "bg-slate-300" : ""}`}
               >
-                {selected ? "Selected for compare" : "Add to compare"}
+                {selected ? "Remove from compare" : "Add to compare"}
               </button>
               <Link
                 href={course.skillTags[0] ? `/skills/${course.skillTags[0]}` : "/"}
-                className="rounded-lg border border-slate-200 px-5 py-2 text-center text-sm font-semibold text-slate-700 hover:border-slate-300"
+                className="min-h-11 rounded-lg border border-slate-200 px-5 py-2 text-center text-sm font-semibold text-slate-700 hover:border-slate-300"
               >
                 Back to related courses
               </Link>
             </div>
-            <p className="mt-3 text-xs leading-relaxed text-slate-500">
-              {PROVIDER_DETAILS_NOTICE}
-            </p>
           </div>
         </div>
 
@@ -143,7 +148,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
             Decision summary
           </p>
@@ -159,7 +164,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
           </ul>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
             May fit you if
           </p>
@@ -171,48 +176,36 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
         </div>
       </div>
 
-      <div className="rounded-2xl border border-amber-200 bg-amber-50/60 p-6">
+      <div className="rounded-2xl border border-amber-200 bg-amber-50/60 p-4 sm:p-6">
         <h3 className="text-lg font-semibold text-slate-900">
           Verify before enrolling
         </h3>
-        <div className="mt-4 grid gap-5 lg:grid-cols-2">
-          <div className="rounded-xl bg-white p-4">
-            <h4 className="font-semibold text-slate-900">Decision impact</h4>
-            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-600">
-              {pendingImpacts.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-xl bg-white p-4">
-            <h4 className="font-semibold text-slate-900">Provider checks</h4>
-            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-600">
-              {getPendingDataRisks([course]).slice(0, 5).map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <p className="mt-2 text-sm leading-relaxed text-amber-900">
+          {PROVIDER_DETAILS_NOTICE}
+        </p>
+        <ul className="mt-4 grid gap-2 text-sm leading-relaxed text-slate-700 sm:grid-cols-2">
+          {pendingImpacts.map((item) => (
+            <li key={item} className="rounded-xl bg-white px-3 py-2">
+              {item}
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
         <h3 className="text-lg font-semibold text-slate-900">
           Compare for better context
         </h3>
-        {selectedIds.length < 2 ? (
-          <p className="mt-3 text-sm leading-relaxed text-slate-600">
-            Comparing this course with another option gives better decision context for workload, content, certificate visibility, and provider terms.
-          </p>
-        ) : (
-          <p className="mt-3 text-sm leading-relaxed text-slate-600">
-            You have two courses selected. You can open the comparison, remove this course, or clear the selection and choose a different pair.
-          </p>
-        )}
-        <div className="mt-4 flex flex-wrap gap-3">
+        <p className="mt-2 text-sm leading-relaxed text-slate-600">
+          {selectedIds.length < 2
+            ? "Add this course, then choose one more option for side-by-side context."
+            : "Your two-course comparison is ready."}
+        </p>
+        <div className="mt-4 grid gap-3 sm:flex sm:flex-wrap">
           {compareHref ? (
             <Link
               href={compareHref}
-              className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-500"
+              className="min-h-11 rounded-lg bg-blue-600 px-5 py-2 text-center text-sm font-semibold text-white hover:bg-blue-500"
             >
               Open comparison
             </Link>
@@ -220,7 +213,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
           <button
             type="button"
             onClick={() => toggle(course.id)}
-            className="rounded-lg border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
+            className="min-h-11 rounded-lg border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
           >
             {selected ? "Remove from compare" : "Add to compare"}
           </button>
@@ -228,16 +221,29 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
             <button
               type="button"
               onClick={clear}
-              className="rounded-lg border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
+              className="min-h-11 rounded-lg border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
             >
               Clear selection
             </button>
           ) : null}
         </div>
         {atLimit ? (
-          <p className="mt-3 text-xs text-amber-700">
-            Two courses are already selected. Clear or remove one course to choose a different pair.
-          </p>
+          <div className="mt-4 rounded-xl bg-amber-50 p-3 text-sm text-amber-900">
+            <p>
+              {selectedFromAnotherSkill
+                ? "You have two courses selected from another skill. Clear them to compare courses in this skill."
+                : "Two courses are already selected. Clear or remove one course to choose a different pair."}
+            </p>
+            {selectedFromAnotherSkill ? (
+              <button
+                type="button"
+                onClick={clear}
+                className="mt-2 min-h-10 rounded-lg border border-amber-300 bg-white px-3 py-2 font-semibold"
+              >
+                Clear selection
+              </button>
+            ) : null}
+          </div>
         ) : null}
         {notice ? (
           <p className="mt-3 text-xs font-semibold text-amber-700">{notice}</p>
@@ -245,7 +251,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
       </div>
 
       {(hasLearningBullets || hasPrerequisites) ? (
-        <div className="grid gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-2">
+        <div className="grid gap-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 md:grid-cols-2">
           {hasLearningBullets ? (
             <div>
               <h3 className="text-lg font-semibold text-slate-900">What you will learn</h3>
@@ -269,7 +275,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
         </div>
       ) : null}
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
         <h3 className="text-lg font-semibold text-slate-900">Key facts</h3>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {keyFacts.map((fact) => (

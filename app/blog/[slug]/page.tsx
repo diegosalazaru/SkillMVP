@@ -41,11 +41,11 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <article className="mx-auto flex max-w-3xl flex-col gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <article className="mx-auto flex max-w-3xl flex-col gap-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
       <header className="space-y-2">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Practical guide</p>
-        <h2 className="text-3xl font-semibold text-slate-900">{post.title}</h2>
-      <p className="text-slate-600">{post.description}</p>
+        <h2 className="break-words text-2xl font-semibold text-slate-900 sm:text-3xl">{post.title}</h2>
+        <p className="text-slate-600">{post.description}</p>
       </header>
       <p className="rounded-lg bg-slate-50 px-4 py-3 text-sm leading-relaxed text-slate-700">{post.intro}</p>
       {post.sections.map((section, index) => (

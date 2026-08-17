@@ -52,7 +52,7 @@ export const blogPosts: BlogPost[] = [
         points: [
           "Beginner courses are best when you are changing domains; advanced courses are more useful when foundations are already strong.",
           "Certificate status should be verified before purchase if you need formal proof for hiring or internal promotion.",
-          "Example: choose a beginner option with verified certificate over an advanced option without clear certificate details when proof is mandatory."
+          "Example: choose a beginner option with clear certificate details over an advanced option without them when proof is mandatory."
         ]
       }
     ],
@@ -154,7 +154,7 @@ export const blogPosts: BlogPost[] = [
       {
         heading: "2) What paid options can add",
         points: [
-          "Paid tracks may include structured assessments, graded projects, or verified certificates.",
+          "Paid tracks may include structured assessments, graded projects, or certificate options.",
           "A financial commitment can improve consistency for some learners, but it does not guarantee better outcomes.",
           "If certificate credibility matters, verify whether it is included or requires separate payment."
         ]
@@ -171,7 +171,7 @@ export const blogPosts: BlogPost[] = [
         heading: "4) Example decision paths",
         points: [
           "If you are exploring a new field, begin with a free course and then upgrade only if you need deeper projects or certification.",
-          "If you need proof for your resume this quarter, a paid course with verified certificate details may be safer.",
+          "If you need proof for your resume this quarter, a paid course with clear certificate details may be safer.",
           "If time is limited, prioritize the option with clear duration and realistic weekly pacing."
         ]
       }

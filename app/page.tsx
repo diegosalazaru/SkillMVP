@@ -12,14 +12,20 @@ export const metadata: Metadata = buildPageMetadata({
 
 export default function HomePage() {
   return (
-    <div className="space-y-10">
+    <div className="space-y-12">
       <HomeClient />
 
-      <section className="space-y-4">
+      <section className="border-l-2 border-blue-200 pl-4 text-sm leading-relaxed text-slate-600">
+        <p>
+          Compare factual course signals, then verify final provider details before enrolling.
+        </p>
+      </section>
+
+      <section className="space-y-4 border-t border-slate-200 pt-8">
         <div className="space-y-2">
-          <h2 className="text-2xl font-semibold text-slate-900">Guides and comparison pages</h2>
+          <h2 className="text-xl font-semibold text-slate-900">More course guides</h2>
           <p className="text-sm text-slate-600">
-            Browse generated guide pages for specific course comparison searches.
+            Secondary guides for exploring the available catalog.
           </p>
         </div>
         <SeoLinks />

@@ -31,19 +31,19 @@ export const SeoCourseList = ({ courses, skillSlug, skillLabel }: SeoCourseListP
       ) : (
         <div className="grid gap-4">
           {courses.map((course) => (
-            <article key={course.id} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-              <h3 className="text-lg font-semibold text-slate-900">{course.title}</h3>
+            <article key={course.id} className="min-w-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+              <h3 className="break-words text-lg font-semibold text-slate-900">{course.title}</h3>
               <p className="mt-1 text-sm text-slate-600">
                 {course.platform} | {course.level} | {course.priceText}
               </p>
               {course.shortDescription ? (
                 <p className="mt-3 text-sm leading-relaxed text-slate-600">{course.shortDescription}</p>
               ) : null}
-              <div className="mt-4 flex flex-wrap gap-3">
-                <Link href={`/courses/${course.id}`} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300">
+              <div className="mt-4 grid gap-2 sm:flex sm:flex-wrap">
+                <Link href={`/courses/${course.id}`} className="min-h-11 rounded-lg bg-blue-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-blue-500">
                   View course details
                 </Link>
-                <a href={course.externalUrl} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500">
+                <a href={course.externalUrl} target="_blank" rel="noopener noreferrer" className="min-h-11 rounded-lg border border-slate-200 px-4 py-2 text-center text-sm font-semibold text-slate-700 hover:border-slate-300">
                   {PROVIDER_CTA_LABEL}
                 </a>
               </div>
