@@ -36,15 +36,15 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
   const languageOptions = options?.languages ?? languages;
 
   return (
-    <div className="grid min-w-0 gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:grid-cols-2 lg:grid-cols-4">
-      <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
+    <div className="grid min-w-0 gap-5 rounded-2xl border border-slate-200/80 bg-slate-100/70 p-4 sm:grid-cols-2 sm:p-5 lg:grid-cols-4">
+      <label className="flex flex-col gap-2 text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
         Platform
         <select
           value={value.platform}
           onChange={(event) =>
             onChange({ ...value, platform: event.target.value })
           }
-          className="min-h-11 w-full min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700"
+          className="min-h-12 w-full min-w-0 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium normal-case tracking-normal text-slate-800 shadow-sm focus:border-blue-400 focus:outline-none"
         >
           {platformOptions.map((platform) => (
             <option key={platform} value={platform}>
@@ -53,12 +53,12 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
           ))}
         </select>
       </label>
-      <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
+      <label className="flex flex-col gap-2 text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
         Level
         <select
           value={value.level}
           onChange={(event) => onChange({ ...value, level: event.target.value })}
-          className="min-h-11 w-full min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700"
+          className="min-h-12 w-full min-w-0 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium normal-case tracking-normal text-slate-800 shadow-sm focus:border-blue-400 focus:outline-none"
         >
           {levelOptions.map((level) => (
             <option key={level} value={level}>
@@ -67,14 +67,14 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
           ))}
         </select>
       </label>
-      <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
+      <label className="flex flex-col gap-2 text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
         Price
         <select
           value={value.priceModel}
           onChange={(event) =>
             onChange({ ...value, priceModel: event.target.value })
           }
-          className="min-h-11 w-full min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700"
+          className="min-h-12 w-full min-w-0 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium normal-case tracking-normal text-slate-800 shadow-sm focus:border-blue-400 focus:outline-none"
         >
           {priceOptions.map((price) => (
             <option key={price.value} value={price.value}>
@@ -83,14 +83,14 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
           ))}
         </select>
       </label>
-      <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
+      <label className="flex flex-col gap-2 text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
         Language
         <select
           value={value.language}
           onChange={(event) =>
             onChange({ ...value, language: event.target.value })
           }
-          className="min-h-11 w-full min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700"
+          className="min-h-12 w-full min-w-0 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium normal-case tracking-normal text-slate-800 shadow-sm focus:border-blue-400 focus:outline-none"
         >
           {languageOptions.map((language) => (
             <option key={language} value={language}>

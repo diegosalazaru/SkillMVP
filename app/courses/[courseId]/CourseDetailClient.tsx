@@ -87,26 +87,26 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
   ];
 
   return (
-    <section className="flex flex-col gap-6 pb-8 sm:gap-8">
-      <div className="space-y-4">
-        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">
+    <section className="flex flex-col gap-8 pb-8 sm:gap-10">
+      <div className="rounded-[1.75rem] border border-slate-200/80 bg-white/90 p-5 shadow-[0_24px_70px_-50px_rgba(15,23,42,0.45)] sm:p-8 lg:p-10">
+        <p className="text-xs font-bold uppercase tracking-[0.22em] text-blue-700">
           Course
         </p>
-        <div className="grid gap-5 lg:grid-cols-[1fr_0.42fr] lg:items-start">
+        <div className="mt-3 grid gap-6 lg:grid-cols-[1fr_0.42fr] lg:items-start lg:gap-10">
           <div>
-            <h2 className="break-words text-2xl font-semibold text-slate-900 sm:text-3xl">{course.title}</h2>
-            <p className="mt-3 max-w-3xl text-slate-600">
+            <h2 className="break-words text-3xl font-semibold leading-tight tracking-[-0.03em] text-slate-950 sm:text-4xl lg:text-5xl">{course.title}</h2>
+            <p className="mt-4 max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg">
               {course.shortDescription ?? "Description unavailable."}
             </p>
           </div>
-          <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+          <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4 shadow-[0_18px_45px_-32px_rgba(15,23,42,0.8)] sm:p-5">
             <div className="flex flex-col gap-3">
               <a
                 href={course.externalUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackOutboundCourseClick(course, EXTERNAL_PROVIDER_CONTEXT.detail)}
-                className="min-h-11 rounded-lg bg-blue-600 px-5 py-2 text-center text-sm font-semibold text-white transition hover:bg-blue-500"
+                className="min-h-12 rounded-xl bg-blue-600 px-5 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-blue-500"
               >
                 {PROVIDER_CTA_LABEL}
               </a>
@@ -114,15 +114,19 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
                 type="button"
                 aria-pressed={selected}
                 onClick={() => toggle(course.id)}
-                className={`min-h-11 rounded-lg px-5 py-2 text-sm font-semibold text-white transition ${
-                  selected ? "bg-emerald-600 hover:bg-emerald-500" : "bg-slate-700 hover:bg-slate-600"
-                } ${atLimit ? "bg-slate-300" : ""}`}
+                className={`min-h-12 rounded-xl px-5 py-2.5 text-sm font-semibold transition ${
+                  selected
+                    ? "bg-emerald-600 text-white hover:bg-emerald-500"
+                    : atLimit
+                      ? "bg-slate-800 text-slate-500"
+                      : "bg-white text-slate-950 hover:bg-slate-100"
+                }`}
               >
                 {selected ? "Remove from compare" : "Add to compare"}
               </button>
               <Link
                 href={course.skillTags[0] ? `/skills/${course.skillTags[0]}` : "/"}
-                className="min-h-11 rounded-lg border border-slate-200 px-5 py-2 text-center text-sm font-semibold text-slate-700 hover:border-slate-300"
+                className="min-h-11 rounded-xl border border-slate-700 px-5 py-2.5 text-center text-sm font-semibold text-slate-300 transition hover:border-slate-500 hover:text-white"
               >
                 Back to related courses
               </Link>
@@ -130,17 +134,17 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2 text-sm text-slate-600">
+        <div className="mt-6 flex flex-wrap gap-2 border-t border-slate-200/80 pt-5 text-sm text-slate-600">
           {course.skillTags[0] ? (
             <Link
               href={`/skills/${course.skillTags[0]}`}
-              className="rounded-full bg-blue-50 px-3 py-1 font-medium text-blue-700 hover:bg-blue-100"
+              className="rounded-full bg-blue-50 px-3 py-1.5 font-semibold text-blue-700 transition hover:bg-blue-100"
             >
               View skill
             </Link>
           ) : null}
           {keyFacts.slice(0, 5).map((fact) => (
-            <span key={fact.label} className="rounded-full bg-slate-100 px-3 py-1">
+            <span key={fact.label} className="rounded-full bg-slate-100 px-3 py-1.5">
               {fact.value}
             </span>
           ))}
@@ -148,7 +152,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+        <div className="rounded-2xl border border-blue-200/80 bg-blue-50/60 p-5 sm:p-6">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
             Decision summary
           </p>
@@ -164,7 +168,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
           </ul>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+        <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_14px_36px_-30px_rgba(15,23,42,0.4)] sm:p-6">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
             May fit you if
           </p>
@@ -192,7 +196,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
         </ul>
       </div>
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+      <div className="rounded-2xl border border-blue-200/80 bg-white p-5 shadow-[0_18px_45px_-36px_rgba(37,99,235,0.35)] sm:p-6">
         <h3 className="text-lg font-semibold text-slate-900">
           Compare for better context
         </h3>
@@ -205,7 +209,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
           {compareHref ? (
             <Link
               href={compareHref}
-              className="min-h-11 rounded-lg bg-blue-600 px-5 py-2 text-center text-sm font-semibold text-white hover:bg-blue-500"
+              className="min-h-11 rounded-xl bg-blue-700 px-5 py-2.5 text-center text-sm font-semibold text-white hover:bg-blue-600"
             >
               Open comparison
             </Link>
@@ -213,7 +217,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
           <button
             type="button"
             onClick={() => toggle(course.id)}
-            className="min-h-11 rounded-lg border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
+            className="min-h-11 rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 hover:border-slate-400"
           >
             {selected ? "Remove from compare" : "Add to compare"}
           </button>

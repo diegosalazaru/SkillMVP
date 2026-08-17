@@ -173,15 +173,15 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
   const hasActiveFilters = Object.values(filters).some((value) => value !== "All");
 
   return (
-    <section className="flex flex-col gap-6 sm:gap-8">
-      <div>
-        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">
+    <section className="flex flex-col gap-8 sm:gap-10">
+      <div className="rounded-[1.75rem] border border-slate-200/80 bg-white/90 p-5 shadow-[0_24px_70px_-50px_rgba(15,23,42,0.45)] sm:p-8 lg:p-10">
+        <p className="text-xs font-bold uppercase tracking-[0.22em] text-blue-700">
           Skill
         </p>
-        <h2 className="text-2xl font-semibold text-slate-900 sm:text-3xl">
+        <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-4xl lg:text-5xl">
           {skillExists ? skillTitle : "Skill not found"}
         </h2>
-        <p className="mt-2 text-slate-600">
+        <p className="mt-4 max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg">
           {skillIntro ??
             "We do not have validated courses for this skill yet. Review available alternatives in the catalog."}
         </p>
@@ -215,12 +215,12 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
       />
 
       {skillExists ? (
-        <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-slate-600">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 pb-4 text-sm text-slate-600">
           <p>
             <span className="font-semibold text-slate-900">{filteredCourses.length}</span> of{" "}
             {skillCourses.length} courses shown{hasActiveFilters ? " with current filters" : ""}.
           </p>
-          <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+          <span className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600">
             {filteredCertificateCount} with certificate shown
           </span>
         </div>
@@ -254,7 +254,7 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
           No courses match these filters. Try adjusting your search or clearing filters.
         </div>
       ) : (
-        <div className="grid gap-5 lg:grid-cols-2">
+        <div className="grid items-stretch gap-6 lg:grid-cols-2">
           {filteredCourses.map((course) => (
             <CourseCard key={course.id} course={course} />
           ))}
@@ -262,8 +262,8 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
       )}
 
       {skillExists ? (
-        <details className="group rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-          <summary className="cursor-pointer list-none font-semibold text-slate-900">
+        <details className="group rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_14px_36px_-30px_rgba(15,23,42,0.4)] sm:p-6">
+          <summary className="cursor-pointer list-none font-semibold text-slate-950">
             How to compare these courses
             <span className="ml-2 text-sm font-normal text-slate-500 group-open:hidden">
               Show guidance
