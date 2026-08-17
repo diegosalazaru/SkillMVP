@@ -40,8 +40,10 @@ Optional data can be present when verified:
 - If provenance cannot be confirmed, the record should not be published as verified catalog data.
 - Per-course source metadata lives in `data/normalized/course-source-metadata.json`.
 - Source metadata should stay separate from the runtime course schema until there is a product need to display it.
-- Verification can be partial. Stable fields such as title, platform, source URL, level, language, duration signals, certificate visibility, syllabus topics, and prerequisites can be marked verified while volatile fields such as price, rating, and review count remain unknown/null.
-- Seven priority courses currently have partial verification from official Coursera provider pages: Google Data Analytics, Google Cybersecurity, Google Project Management, AI For Everyone, AWS Cloud Technical Essentials, Google Cloud Fundamentals: Core Infrastructure, and IBM Data Analyst.
+- Verification can be partial. Stable fields such as title, platform, source URL, level, primary taught language, duration signals, certificate visibility, syllabus topics, and prerequisites can be marked verified while volatile fields such as price, rating, and review count remain unknown/null.
+- After the Batch A and Batch B manual verification passes, 17 of 19 curated courses are `partially_verified`; 2 remain `pending` because their exact recorded offerings could not be confirmed from a current official provider page.
+- The two pending records are `introduction-cyber-security-nyux-edx` and `data-analytics-essentials-cisco`. Their pending state reflects explicit source uncertainty rather than an unreviewed backlog.
+- The normalized `language` field represents the primary taught language when the official provider source clearly identifies it. Additional dubbing, subtitles, translations, or available presentation languages should remain provenance context unless a future product initiative expands the runtime schema.
 - Workload statements such as months at a weekly pace can be verified in source metadata without converting them into an exact `durationHours` value.
 
 ## Data quality rules
@@ -51,6 +53,7 @@ Optional data can be present when verified:
 - Treat pricing, certificate terms, and availability as volatile.
 - Use explicit unverified wording where needed.
 - Unknown price, rating, review count, duration, and certificate terms are expected during phase 1 and should be surfaced as decision risk, not hidden.
+- Do not force a record out of `pending` merely to improve a coverage metric when the exact offering cannot be confirmed from an official source.
 
 ## Allowed source types
 - Official provider course pages

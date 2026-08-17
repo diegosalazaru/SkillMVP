@@ -50,6 +50,13 @@ The product UI is **English-first** in the current phase.
 
 Do not introduce mixed-language UI incidentally. Localization can be considered as an explicit future initiative.
 
+For course catalog data, the current normalized `language` field means the **primary taught language**, not every language in which the provider may offer dubbing, subtitles, translations, or other presentation options.
+
+- Mark `language` verified only when the current official provider source clearly supports the primary taught language, for example with an explicit `Taught in English` statement.
+- Additional available languages, AI dubbing, subtitles, or translated presentation options should be documented in source metadata/provenance when useful, but they do not change the meaning of the current single `language` field.
+- Do not overload `language` with a list of every available presentation language.
+- Do not expand the runtime schema solely for an isolated multi-language case. If repeated user/product need emerges, consider a separate initiative for fields such as `availableLanguages`, audio languages, or subtitle languages.
+
 ## Mobile UX
 
 Mobile is a first-class product surface, not a compressed desktop layout.
