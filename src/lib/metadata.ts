@@ -38,9 +38,14 @@ export const buildPageMetadata = ({
   };
 };
 
-export const buildSeoPageMetadata = (page: GeneratedSeoPage): Metadata =>
-  buildPageMetadata({
+export const buildSeoPageMetadata = (page: GeneratedSeoPage): Metadata => ({
+  ...buildPageMetadata({
     title: page.title,
     description: page.metaDescription,
     path: `/${page.slug}`
-  });
+  }),
+  robots: {
+    index: false,
+    follow: true
+  }
+});

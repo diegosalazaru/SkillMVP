@@ -1,30 +1,23 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "../src/config/siteConfig";
-import { getAllSeoPages } from "../src/lib/seo/seoPages";
+import { courses } from "../src/lib/catalog-adapter";
+import { getSkillSummaries } from "../src/lib/skill-catalog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-  const seoPages = getAllSeoPages();
+  const skills = getSkillSummaries();
 
   return [
     {
       url: `${SITE_URL}/`,
-      lastModified: now,
       priority: 1
     },
-    {
-      url: `${SITE_URL}/compare`,
-      lastModified: now,
+    ...skills.map((skill) => ({
+      url: `${SITE_URL}/skills/${skill.slug}`,
       priority: 0.8
-    },
-    ...seoPages.map((page) => {
-      const updatedAt = (page as { updatedAt?: string | number | Date }).updatedAt;
-
-      return {
-        url: `${SITE_URL}/${page.slug}`,
-        lastModified: new Date(updatedAt || Date.now()),
-        priority: 0.6
-      };
-    })
+    })),
+    ...courses.map((course) => ({
+      url: `${SITE_URL}/courses/${course.id}`,
+      priority: 0.7
+    }))
   ];
 }
