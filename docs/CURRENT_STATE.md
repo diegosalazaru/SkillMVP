@@ -1,6 +1,6 @@
 # Current State
 
-Last updated after Phase 1 Source Verification — Coverage Batch B merged in PR #85.
+Last updated after product review closed Phase 1 for the current MVP catalog and activated Phase 3 Discovery/SEO.
 
 ## Product State
 
@@ -30,11 +30,20 @@ Key outcomes:
 
 Earlier completed initiatives, including Batch A, Course Card Metadata Deduplication, Decision-focused Visual Polish, and Mobile Selection and Discovery UX, remain in place.
 
+## Phase Status
+
+- **Phase 0 — MVP:** complete for the current MVP scope. Future Phase 0 work is limited to concrete defects/regressions unless product review explicitly reopens scope.
+- **Phase 1 — Real Data:** complete for the current 19-course curated MVP catalog. Data verification becomes ongoing maintenance rather than a blocking execution phase.
+- **Phase 2 — Monetization:** gated / not started. It activates only when a real auditable affiliate/referral program exists and does not block Phase 3.
+- **Phase 3 — Discovery and SEO:** active.
+- **Phase 4 — Recommendation:** later, gated behind explicit criteria and trustworthy signals.
+- **Phase 5 — Robust Product:** only if traction justifies the additional architecture.
+
 ## Catalog and Trust State
 
 - The normalized catalog contains 19 curated courses.
 - 17 courses are currently `partially_verified`.
-- 2 courses remain `pending`.
+- 2 courses remain `pending` with explicit source blockers rather than unreviewed status.
 - Source URL mismatches: 0 after Batch B.
 - Most pricing, ratings, and review counts remain unknown or unverified by design; some duration values also remain unknown where providers expose only workload estimates.
 - The current normalized `language` field represents the primary taught language when that is clearly supported by an official source. Additional dubbing/subtitle/language availability is provenance context rather than a second meaning for the same field.
@@ -60,28 +69,34 @@ These are intentional roadmap constraints, not missing requirements to fill oppo
 
 ## Next Approved Product Initiative
 
-No new product implementation initiative is currently approved.
+### Phase 3 Discovery/SEO — Indexable Surface Foundation (Batch A)
 
-The approved Phase 1 Source Verification — Coverage Batch B initiative is complete. Coding agents must not automatically begin another verification batch, SEO expansion, monetization, recommendation, infrastructure, catalog expansion, language-schema expansion, or visual initiative.
+Purpose: make the site's search-facing surface reflect the most useful canonical decision pages before creating any new SEO content volume.
 
-The next initiative must be chosen through product review and recorded here before implementation begins.
+Current repository review found that the sitemap prioritizes the homepage, `/compare`, and the generated SEO route set, while canonical skill pages and course-detail decision pages are not represented there. The generated SEO system also creates multiple intent variants per skill from shared course lists and highly repetitive template copy. This first Phase 3 batch should correct that foundation before any keyword or page expansion.
 
-## Product Review Focus
+Approved scope:
 
-Phase 1 now has high verification coverage across the curated catalog: 17 of 19 records are partially verified and the remaining two have explicit source blockers rather than unreviewed status.
+- Update sitemap generation so it includes the homepage plus canonical skill pages and canonical course-detail pages backed by the current normalized catalog.
+- Remove `/compare` from the sitemap; it is a functional comparison surface rather than a durable organic discovery landing page.
+- Remove the current generated template SEO routes from the sitemap for now.
+- Keep those generated routes accessible, but mark them `noindex, follow` until a later explicitly approved initiative gives each indexable route sufficiently distinct user value and intent-specific content.
+- Preserve clear self-referencing canonical metadata on indexable skill/course pages and avoid conflicting canonical/indexing signals.
+- Where existing prominent internal SEO links point primarily to the generated template routes, prefer canonical skill pages instead; do not redesign navigation broadly.
+- Do not add new SEO page types, new generated routes, keyword-scaled content, provider claims, catalog records, dependencies, analytics vendors, scraping, monetization, ranking, recommendation, or unrelated UI changes.
+- Do not delete legacy generated routes or introduce redirect migrations in this batch unless required to prevent a broken route; route consolidation can be evaluated later with evidence.
 
-Before approving more implementation work, product review should decide whether the highest-value next move is:
+Success means the sitemap and indexing directives point search engines toward useful canonical product decision surfaces, while generic generated variants stop being actively promoted for indexing. The goal is a safer, clearer discovery foundation, not more URLs.
 
-- resolving or replacing the two blocked pending records,
-- moving to Phase 3 discovery/SEO work on the now-better-trusted catalog,
-- preparing a real Phase 2 monetization path only if an actual affiliate/referral program is available,
-- or another narrowly defined user-decision improvement supported by observed product needs.
+Implementation must use one dedicated branch and PR, run the full required validation sequence, run `generate:seo` only if actual SEO generation inputs are changed, and must not be merged by the coding agent.
 
-Do not treat zero pending records as a goal by itself.
+## After Phase 3 Batch A
+
+Return to product review. Do not automatically create more SEO pages. Review the resulting indexable surface and then choose a small number of skill/intent pages to strengthen only where the catalog has enough depth to provide differentiated, people-first decision value.
 
 ## Parallel Ongoing Work
 
-Phase 1 data quality remains an active product concern even though the planned Batch A and Batch B verification passes are complete. Future verification should remain small, explicit, source-backed, and auditable. Monetization remains gated behind a real program and disclosure design, and recommendation remains gated behind trustworthy signals and explicit criteria.
+Phase 1 data quality remains an ongoing maintenance concern even though the planned verification phase is complete for the current MVP catalog. Future verification should remain small, explicit, source-backed, and auditable. Monetization remains gated behind a real program and disclosure design, and recommendation remains gated behind trustworthy signals and explicit criteria.
 
 ## Operational Note
 
