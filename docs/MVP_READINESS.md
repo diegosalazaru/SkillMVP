@@ -3,10 +3,14 @@
 ## Current State
 
 - Skills Compare is an English-first product for finding skills, reviewing relevant online courses, comparing two options, and opening the original provider page.
+- Phase 0 is complete for the current MVP scope.
+- Phase 1 is complete for the current 19-course curated MVP catalog and now continues as data-quality maintenance rather than a blocking execution phase.
+- Phase 2 monetization is gated until a real auditable affiliate/referral program exists and does not block Phase 3.
+- Phase 3 Discovery and SEO is active.
 - The normalized catalog contains 19 curated courses.
 - 17 courses are `partially_verified`; 2 remain `pending` because the exact recorded offering could not be confirmed from a current official source.
 - Source URL mismatches are 0 after Phase 1 Source Verification — Coverage Batch B.
-- Generated SEO pages, sitemap support, and internal SEO links are present as a foundation.
+- Generated SEO pages, sitemap support, and internal SEO links are present as an initial foundation, but the current generated SEO surface is not treated as automatically index-worthy.
 - Provider CTA copy and external-link disclosure copy are centralized.
 - Provider URLs are direct official provider URLs only.
 - Outbound tracking is local-only and does not send data to an external analytics vendor.
@@ -16,7 +20,7 @@
 
 ## Trust and Data Quality Reality
 
-- Phase 1 manual verification has now reviewed the full 19-course curated catalog at least at the record level.
+- Phase 1 manual verification reviewed the full 19-course curated catalog at least at the record level.
 - Verification remains conservative and can be partial when a current official page does not support a field.
 - Stable fields such as title, platform/source URL, level, primary taught language, certificate visibility, workload/duration signals, learning topics, and prerequisites are marked verified only when clearly supported.
 - Prices, ratings, review counts, and some durations remain unverified or unknown by design.
@@ -50,6 +54,17 @@
 - No outcome, employment, partnership, or provider endorsement claims should be made.
 - No user accounts, cookies, database, scraping, external APIs, or new analytics vendors are implemented.
 
+## Phase 3 Foundation Reality
+
+Repository review before the first Phase 3 batch found:
+
+- Canonical skill pages already generate page metadata and self-referencing canonical URLs.
+- Canonical course detail pages already generate page metadata and self-referencing canonical URLs.
+- The current sitemap includes the homepage, `/compare`, and every generated SEO page, but does not currently include the canonical skill/course decision surfaces.
+- The generated SEO system creates several intent variants per configured skill from shared course lists and mostly reusable template intros/FAQ copy.
+
+The first Phase 3 initiative therefore focuses on indexable-surface quality rather than generating more pages.
+
 ## Validation Workflow
 
 Run these before opening or updating a normal product PR:
@@ -59,17 +74,12 @@ Run these before opening or updating a normal product PR:
 - `corepack pnpm exec tsc --noEmit`
 - `corepack pnpm build`
 
-Use the documented repository-local TypeScript fallback only when the normal pnpm command fails solely because Windows cannot resolve the local `tsc` executable. Do not run `corepack pnpm generate:seo` unless catalog or SEO generation inputs change. Do not initialize ESLint configuration just to run lint; `next lint` may currently prompt for setup.
+Use the documented repository-local TypeScript fallback only when the normal pnpm command fails solely because Windows cannot resolve the local `tsc` executable. Run `corepack pnpm generate:seo` only when SEO generation inputs actually change. Do not initialize ESLint configuration just to run lint; `next lint` may currently prompt for setup.
 
-## Near-Term Product Review
+## Active Near-Term Initiative
 
-The planned Phase 1 Batch A and Batch B verification passes are complete. The two remaining pending records are explicit source blockers, not an unreviewed backlog, and zero pending records is not a product goal by itself.
+**Phase 3 Discovery/SEO — Indexable Surface Foundation (Batch A)** is approved in `docs/CURRENT_STATE.md`.
 
-No new implementation initiative is automatically approved. Product review should choose the next move based on user and business value. The strongest current candidates are:
+The implementation should make the sitemap and indexing directives favor useful canonical skill/course decision pages, stop actively promoting the generic generated SEO variants for indexing, and avoid adding any new SEO page volume.
 
-1. Begin a narrow Phase 3 discovery/SEO initiative now that the core experience is stable and catalog trust coverage is high enough to support useful pages.
-2. Resolve or replace one of the two blocked records only if doing so materially improves an important skill page or comparison path.
-3. Prepare Phase 2 monetization only when a real, auditable affiliate or referral program is available.
-4. Prioritize another narrowly defined decision-UX improvement only if review or usage evidence identifies a concrete problem.
-
-Do not expand the catalog, language schema, ranking, recommendation, infrastructure, or visual scope opportunistically.
+After this batch, return to product review before strengthening or creating any additional skill/intent pages. Phase 2 monetization remains gated until a real program exists and is not a prerequisite for this work.
