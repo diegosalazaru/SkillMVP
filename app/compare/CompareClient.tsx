@@ -6,6 +6,8 @@ import { useMemo } from "react";
 import { AdPlaceholder } from "@/components/AdPlaceholder";
 import {
   buildComparisonRows,
+  formatPricingOption,
+  getActionablePricingOptions,
   getCourseFitBullets,
   getDecisionSummary,
   getPendingDataRisks,
@@ -16,8 +18,7 @@ import { courses } from "@/lib/catalog-adapter";
 import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
 import {
   EXTERNAL_PROVIDER_CONTEXT,
-  PROVIDER_CTA_LABEL,
-  PROVIDER_DETAILS_NOTICE
+  PROVIDER_CTA_LABEL
 } from "@/lib/providerCta";
 import type { Course } from "@/types/course";
 
@@ -37,12 +38,99 @@ const sectionGroups = [
 ] as const;
 
 const decisionChecklist = [
-  "I verified final provider price/subscription terms.",
+  "I confirmed the final checkout amount and renewal terms.",
   "I checked certificate terms.",
   "I confirmed duration fits my weekly schedule.",
   "I reviewed prerequisites and learning topics.",
   "I compared at least two options."
 ];
+
+const pricingModelLabels = {
+  one_time: "One-time",
+  subscription: "Program subscription",
+  platform_subscription: "Platform subscription",
+  free_audit: "Free / audit"
+};
+
+const PricingCommitmentCard = ({ course }: { course: Course }) => {
+  const pricingOptions = getActionablePricingOptions(course);
+
+  return (
+    <article className="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <h4 className="break-words text-lg font-semibold text-slate-950">{course.title}</h4>
+      {pricingOptions.length > 0 ? (
+        <div className="mt-4 space-y-4">
+          {pricingOptions.map((option, index) => (
+            <div
+              key={option.id}
+              className="rounded-xl border border-blue-100 bg-blue-50/60 p-4"
+            >
+              <div className="flex flex-wrap gap-2 text-xs font-semibold">
+                <span className="rounded-full bg-blue-100 px-2.5 py-1 text-blue-800">
+                  {pricingModelLabels[option.model]}
+                </span>
+                <span className="rounded-full bg-white px-2.5 py-1 text-slate-600 ring-1 ring-slate-200">
+                  {index === 0 ? "First displayed path" : "Verified alternative"}
+                </span>
+              </div>
+              <p className="mt-3 text-base font-semibold leading-relaxed text-slate-950">
+                {formatPricingOption(option)}
+              </p>
+              <dl className="mt-3 grid gap-2 text-xs leading-relaxed text-slate-600 sm:grid-cols-2">
+                <div>
+                  <dt className="font-semibold text-slate-800">Source amount</dt>
+                  <dd>
+                    {option.amount} {option.currency}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-slate-800">USD basis</dt>
+                  <dd>
+                    {option.normalizationBasis === "provider_published_usd"
+                      ? "Provider-published USD"
+                      : "Dated currency conversion"}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-slate-800">Observed</dt>
+                  <dd>{option.observedAt}</dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-slate-800">Market context</dt>
+                  <dd>{option.referenceMarket ?? "No stated market restriction"}</dd>
+                </div>
+              </dl>
+              {option.conditions ? (
+                <p className="mt-3 text-xs leading-relaxed text-slate-600">
+                  {option.conditions}
+                </p>
+              ) : null}
+              <p className="mt-3 text-xs text-slate-500">
+                Evidence: {option.evidenceUrls.map((url, evidenceIndex) => (
+                  <span key={url}>
+                    {evidenceIndex > 0 ? ", " : ""}
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-blue-700 underline decoration-blue-300 underline-offset-2"
+                    >
+                      official source {evidenceIndex + 1}
+                    </a>
+                  </span>
+                ))}
+              </p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+          Actionable source-backed pricing is not yet available for this course.
+        </p>
+      )}
+    </article>
+  );
+};
 
 const CourseFitCard = ({ course }: { course: Course }) => (
   <div className="min-w-0 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_14px_36px_-30px_rgba(15,23,42,0.4)] sm:p-6">
@@ -218,7 +306,7 @@ export default function CompareClient() {
           {leftCourse.title} vs {rightCourse.title}
         </h2>
         <p className="max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg">
-          Use the comparison below to understand practical differences, uncertainty, and what to verify before opening the provider page.
+          Compare current payment commitments, practical differences, and uncertainty before using provider checkout for final confirmation.
         </p>
       </header>
 
@@ -251,9 +339,29 @@ export default function CompareClient() {
         </div>
       </section>
 
+      <section className="rounded-[1.75rem] border border-blue-200 bg-gradient-to-br from-blue-50 to-white p-5 sm:p-7">
+        <div className="max-w-3xl">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-700">
+            Pricing commitments
+          </p>
+          <h3 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">
+            What you would pay now
+          </h3>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+            All comparable amounts are shown in USD. Course or program paths appear before broader platform-subscription alternatives when both are verified.
+          </p>
+        </div>
+        <div className="mt-5 grid gap-4 lg:grid-cols-2">
+          <PricingCommitmentCard course={leftCourse} />
+          <PricingCommitmentCard course={rightCourse} />
+        </div>
+      </section>
+
       <section className="rounded-2xl border border-blue-200/80 bg-blue-50/60 p-5 sm:p-6">
         <h3 className="text-lg font-semibold text-slate-900">Open provider pages</h3>
-        <p className="mt-2 text-sm leading-relaxed text-slate-600">{PROVIDER_DETAILS_NOTICE}</p>
+        <p className="mt-2 text-sm leading-relaxed text-slate-600">
+          Use provider pages to confirm the final transaction, taxes, eligibility, and availability; the comparison above contains the current verified pricing evidence.
+        </p>
         <div className="mt-4 grid gap-3 sm:flex sm:flex-wrap">
           <a
             href={leftCourse.externalUrl}

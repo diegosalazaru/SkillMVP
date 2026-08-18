@@ -22,6 +22,26 @@ const CostModelSchema = z.object({
   text: z.string().min(1)
 });
 
+const PricingOptionSchema = z.object({
+  id: z.string().min(1),
+  model: z.enum(["one_time", "subscription", "platform_subscription", "free_audit"]),
+  amount: z.number().nonnegative(),
+  currency: z.string().length(3),
+  normalizedUsdAmount: z.number().nonnegative(),
+  cadence: z.enum(["one_time", "month", "year", "other"]),
+  scope: z.string().min(1),
+  normalizationBasis: z.enum(["provider_published_usd", "currency_converted"]),
+  evidenceUrls: z.array(z.string().url()).min(1),
+  observedAt: z.string().date(),
+  referenceMarket: z.string().min(1).nullable(),
+  accessContext: z.enum([
+    "public_provider_page",
+    "public_provider_checkout",
+    "account_visible_enrollment"
+  ]),
+  conditions: z.string().min(1).nullable()
+});
+
 export const CourseSchema = z.object({
   id: z.string(),
   platform: z.string(),
@@ -51,6 +71,7 @@ export const CourseSchema = z.object({
   practicalWorkBullets: z.array(z.string()).default([]),
   credential: CredentialSchema.nullable().default(null),
   costModel: CostModelSchema.nullable().default(null),
+  pricingOptions: z.array(PricingOptionSchema).default([]),
   source: z.enum(["manual", "edx", "coursera", "coursera-curated", "other"]),
 });
 

@@ -22,6 +22,8 @@ export const CORE_DECISION_DIMENSIONS = [
 
 export type CoreDecisionDimension = (typeof CORE_DECISION_DIMENSIONS)[number]["key"];
 
+export type PricingOption = NonNullable<Course["pricingOptions"]>[number];
+
 const normalize = (value: string) => value.trim().toLowerCase();
 
 type VerifiedField = keyof NonNullable<Course["verifiedFields"]>;
@@ -38,13 +40,67 @@ export const isDurationPending = (course: Course) =>
 export const isCostModelPending = (course: Course) =>
   !isFieldVerified(course, "costModel") || course.costModel == null;
 
+export const getActionablePricingOptions = (course: Course) =>
+  isFieldVerified(course, "price") && isFieldVerified(course, "pricingOptions")
+    ? (course.pricingOptions ?? []).filter(
+        (option) =>
+          option.amount > 0 &&
+          option.normalizedUsdAmount > 0 &&
+          option.evidenceUrls.length > 0 &&
+          Boolean(option.observedAt)
+      )
+    : [];
+
 export const isExactPricePending = (course: Course) =>
-  !isFieldVerified(course, "price") ||
-  course.priceModel === "unknown" ||
-  (course.priceModel !== "free" &&
-    (course.priceAmount == null ||
-      !course.currency ||
-      (course.priceModel === "subscription" && course.priceInterval == null)));
+  getActionablePricingOptions(course).length === 0 &&
+  (!isFieldVerified(course, "price") ||
+    course.priceModel === "unknown" ||
+    (course.priceModel !== "free" &&
+      (course.priceAmount == null ||
+        !course.currency ||
+        (course.priceModel === "subscription" && course.priceInterval == null))));
+
+const formatUsd = (amount: number) =>
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: Number.isInteger(amount) ? 0 : 2
+  }).format(amount);
+
+export const formatPricingOption = (option: PricingOption) => {
+  const approximation =
+    option.normalizationBasis === "currency_converted" ? "≈ " : "";
+  const cadence = {
+    one_time: " total",
+    month: "/month",
+    year: "/year",
+    other: ""
+  }[option.cadence];
+
+  return `${approximation}${formatUsd(option.normalizedUsdAmount)}${cadence} — ${option.scope}`;
+};
+
+export const formatCoursePricing = (course: Course) => {
+  const pricingOptions = getActionablePricingOptions(course);
+
+  return pricingOptions.length > 0
+    ? pricingOptions.map(formatPricingOption).join("; ")
+    : course.priceText;
+};
+
+const equalPricingOptions = (left: PricingOption[], right: PricingOption[]) =>
+  left.length === right.length &&
+  left.every((leftOption, index) => {
+    const rightOption = right[index];
+
+    return (
+      rightOption != null &&
+      leftOption.normalizedUsdAmount === rightOption.normalizedUsdAmount &&
+      leftOption.cadence === rightOption.cadence &&
+      leftOption.model === rightOption.model &&
+      normalize(leftOption.scope) === normalize(rightOption.scope)
+    );
+  });
 
 export const formatCertificate = (course: Course) =>
   course.certificate === true
@@ -106,13 +162,17 @@ export const getPairDecisionReadiness = (left: Course, right: Course) => {
   const sourceBackedForBoth = CORE_DECISION_DIMENSIONS.filter(
     ({ key }) => leftReadiness[key] && rightReadiness[key]
   );
+  const pricingReady = [left, right].every(
+    (course) => getActionablePricingOptions(course).length > 0
+  );
 
   return {
+    pricingReady,
     sourceBackedForBoth,
     insufficient: CORE_DECISION_DIMENSIONS.filter(
       ({ key }) => !(leftReadiness[key] && rightReadiness[key])
     ),
-    passes: sourceBackedForBoth.length >= 5
+    passes: pricingReady && sourceBackedForBoth.length >= 5
   };
 };
 
@@ -129,9 +189,9 @@ export const getCourseFitBullets = (course: Course) => {
     isDurationPending(course)
       ? "You are comfortable verifying duration and workload before committing."
       : `You can assess the provider-described workload: ${course.durationText}.`,
-    isCostModelPending(course)
+    isExactPricePending(course)
       ? "You are comfortable confirming final price or subscription terms on the provider page."
-      : `You can evaluate the verified cost model: ${course.costModel?.text}.`,
+      : `You can evaluate the verified commitment: ${formatCoursePricing(course)}.`,
     course.prerequisitesBullets.length > 0
       ? `The listed prerequisites fit your background: ${summarizeBullets(course.prerequisitesBullets, "prerequisites available")}.`
       : "You can verify prerequisites directly on the provider page."
@@ -158,12 +218,17 @@ export const getCourseDecisionSummary = (course: Course) => {
       : formatCertificate(course),
     isDurationPending(course)
       ? "Workload is pending verification."
-      : `Provider-described workload: ${course.durationText}.`
+      : `Provider-described workload: ${course.durationText}.`,
+    isExactPricePending(course)
+      ? "Exact actionable pricing is pending verification."
+      : `Verified pricing: ${formatCoursePricing(course)}.`
   ];
 
   const pending = [
     course.rating == null ? "Rating/review count is not available in Skills Compare." : null,
-    isExactPricePending(course) ? "Exact price or subscription terms must be verified on the provider page." : null,
+    isExactPricePending(course)
+      ? "Exact price or subscription terms must be verified on the provider page."
+      : null,
     isDurationPending(course) ? "Workload must be checked before committing time." : null,
     course.prerequisitesBullets.length === 0 ? "Prerequisites should be verified on the provider page." : null,
     course.syllabusBullets.length === 0 ? "Current syllabus should be verified on the provider page." : null
@@ -226,8 +291,9 @@ export const getDecisionSummary = (left: Course, right: Course) => {
           ]
         : ["All displayed criteria have enough catalog evidence for a factual comparison."],
     fitFraming: [
+      "Compare the verified payment amount, renewal cadence, and what each path covers.",
       "Choose based on your current level, time commitment, and need for certificate visibility.",
-      "Use the provider page to verify volatile details before enrolling.",
+      "Use provider checkout to confirm the final transaction and regional terms.",
       "The comparison is factual and does not rank one course above the other."
     ]
   };
@@ -275,8 +341,33 @@ export const buildComparisonRows = (left: Course, right: Course): ComparisonRow[
       (course.practicalWorkBullets?.length ?? 0) > 0
   );
 
+  const leftPricingOptions = getActionablePricingOptions(left);
+  const rightPricingOptions = getActionablePricingOptions(right);
+  const pricingRow: RawComparisonRow = {
+    label: "Verified pricing",
+    left: formatCoursePricing(left),
+    right: formatCoursePricing(right),
+    comparable:
+      (leftPricingOptions.length > 0 && rightPricingOptions.length > 0) ||
+      (!isExactPricePending(left) && !isExactPricePending(right)),
+    equal:
+      leftPricingOptions.length > 0 && rightPricingOptions.length > 0
+        ? equalPricingOptions(leftPricingOptions, rightPricingOptions)
+        : left.priceModel === right.priceModel &&
+          left.priceAmount === right.priceAmount &&
+          left.currency === right.currency &&
+          left.priceInterval === right.priceInterval,
+    sameInterpretation:
+      "Verified amount, cadence, payment model, and scope match for the displayed paths.",
+    differentInterpretation:
+      "The verified commitments differ in amount, cadence, payment model, scope, or available paths.",
+    uncertainInterpretation:
+      "Actionable source-backed pricing is unavailable for one or both options."
+  };
+
   const rows: RawComparisonRow[] = bothHaveDecisionDataV2
     ? [
+        pricingRow,
         {
           label: "Offering / credential",
           left: formatOfferingCredential(left),
@@ -371,20 +462,7 @@ export const buildComparisonRows = (left: Course, right: Course): ComparisonRow[
         }
       ]
     : [
-        {
-          label: "Price",
-          left: left.priceText,
-          right: right.priceText,
-          comparable: !isExactPricePending(left) && !isExactPricePending(right),
-          equal:
-            left.priceModel === right.priceModel &&
-            left.priceAmount === right.priceAmount &&
-            left.currency === right.currency &&
-            left.priceInterval === right.priceInterval,
-          sameInterpretation: "Verified price data does not differentiate these options.",
-          differentInterpretation: "Verified cost structure differs and may affect fit.",
-          uncertainInterpretation: "Exact comparable pricing is unavailable; verify provider terms."
-        },
+        pricingRow,
         {
           label: "Duration",
           left: left.durationText,
@@ -523,6 +601,13 @@ export const buildComparisonRows = (left: Course, right: Course): ComparisonRow[
 };
 
 export const getPendingDataRisks = (items: Course[]) => {
+  const observedDates = Array.from(
+    new Set(
+      items.flatMap((course) =>
+        getActionablePricingOptions(course).map((option) => option.observedAt)
+      )
+    )
+  ).sort();
   const risks = [
     items.some(isExactPricePending)
       ? "Exact price: current amount or subscription terms are not verified for one or both courses."
@@ -545,7 +630,10 @@ export const getPendingDataRisks = (items: Course[]) => {
     )
       ? "Course details: verify any incomplete prerequisites or learning topics on the provider pages."
       : null,
-    "Provider details can change; confirm current terms and availability before enrolling."
+    items.every((course) => !isExactPricePending(course)) && observedDates.length > 0
+      ? `Pricing was checked ${observedDates.join(" and ")}; region, taxes, eligibility, and checkout terms may vary.`
+      : null,
+    "Provider details can change; confirm final checkout terms and availability before enrolling."
   ].filter((risk): risk is string => risk !== null);
 
   return risks;
@@ -554,7 +642,7 @@ export const getPendingDataRisks = (items: Course[]) => {
 export const getVerifyBeforeEnrollingItems = (course: Course) => [
   isExactPricePending(course)
     ? "Confirm exact price, trial terms, and subscription renewal before enrolling."
-    : "Confirm the listed price model is still current on the provider page.",
+    : `Confirm the final checkout amount; pricing was observed ${getActionablePricingOptions(course)[0]?.observedAt ?? "on the provider page"}.`,
   course.certificate
     ? "Check certificate terms, eligibility, and whether payment is required."
     : "Verify whether a certificate is available and under what terms.",

@@ -39,6 +39,24 @@ export type Course = {
     type: "free" | "one_time" | "subscription" | "paid_certificate" | "other";
     text: string;
   } | null;
+  pricingOptions?: Array<{
+    id: string;
+    model: "one_time" | "subscription" | "platform_subscription" | "free_audit";
+    amount: number;
+    currency: string;
+    normalizedUsdAmount: number;
+    cadence: "one_time" | "month" | "year" | "other";
+    scope: string;
+    normalizationBasis: "provider_published_usd" | "currency_converted";
+    evidenceUrls: string[];
+    observedAt: string;
+    referenceMarket: string | null;
+    accessContext:
+      | "public_provider_page"
+      | "public_provider_checkout"
+      | "account_visible_enrollment";
+    conditions: string | null;
+  }>;
   externalUrl: string;
   verifiedFields?: Partial<
     Record<
@@ -57,7 +75,8 @@ export type Course = {
       | "toolsTechnologies"
       | "practicalWork"
       | "credential"
-      | "costModel",
+      | "costModel"
+      | "pricingOptions",
       boolean
     >
   >;

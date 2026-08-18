@@ -68,6 +68,28 @@ const formatDurationText = (
 };
 
 const formatPriceText = (course: NormalizedCourse): string => {
+  const primaryPricingOption = course.pricingOptions[0];
+
+  if (primaryPricingOption) {
+    const approximation =
+      primaryPricingOption.normalizationBasis === "currency_converted" ? "≈ " : "";
+    const amount = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: Number.isInteger(primaryPricingOption.normalizedUsdAmount)
+        ? 0
+        : 2
+    }).format(primaryPricingOption.normalizedUsdAmount);
+    const cadence = {
+      one_time: " total",
+      month: "/month",
+      year: "/year",
+      other: ""
+    }[primaryPricingOption.cadence];
+
+    return `${approximation}${amount}${cadence}`;
+  }
+
   if (course.priceModel === "free") {
     return course.certificate ? "Free (paid certificate)" : "Free";
   }
@@ -116,6 +138,7 @@ const mapCourse = (course: NormalizedCourse): Course | null => {
     practicalWorkBullets: course.practicalWorkBullets,
     credential: course.credential,
     costModel: course.costModel,
+    pricingOptions: course.pricingOptions,
     externalUrl: course.url,
     verifiedFields: sourceMetadataByCourseId.get(course.id)?.verifiedFields ?? {}
   };

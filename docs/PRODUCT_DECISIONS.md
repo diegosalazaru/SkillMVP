@@ -44,6 +44,15 @@ Do not manufacture a winner when the available evidence does not justify one.
 - Do not convert workload estimates into exact total duration without evidence.
 - Do not infer ratings, review counts, employment outcomes, or provider endorsements.
 
+## Pricing as Decision Data
+
+- For the Phase 1B.3 pilot, a comparison is not decision-ready unless both courses have at least one actionable, source-backed payable pricing path displayed in USD.
+- Preserve amount, cadence, payment model, scope, source, observation date, and regional or access context. Do not collapse genuinely distinct paths into one scalar claim.
+- Course- or program-specific paths appear before verified platform-subscription alternatives.
+- Currency-converted amounts must preserve the original amount and render with approximation semantics.
+- Promotional prices, inferred completion totals, and generic provider-wide starting prices are not canonical course prices.
+- Pricing remains a hard gate in addition to, not instead of, the existing 5/7 Phase 1B.2 decision-dimension gate.
+
 ## Language
 
 The product UI is **English-first** in the current phase.

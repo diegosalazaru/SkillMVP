@@ -68,8 +68,8 @@
     "durationHours": null,
     "language": "en",
     "priceModel": "subscription",
-    "priceAmount": null,
-    "currency": null,
+    "priceAmount": 30,
+    "currency": "USD",
     "priceInterval": "month",
     "rating": null,
     "reviewCount": null,
@@ -109,6 +109,25 @@
       "type": "subscription",
       "text": "An active subscription is required to access labs and submit assignments"
     },
+    "pricingOptions": [
+      {
+        "id": "deeplearning-ai-pro-monthly",
+        "model": "platform_subscription",
+        "amount": 30,
+        "currency": "USD",
+        "normalizedUsdAmount": 30,
+        "cadence": "month",
+        "scope": "DeepLearning.AI Pro access to the Deep Learning Specialization, graded assignments, and certificate",
+        "normalizationBasis": "provider_published_usd",
+        "evidenceUrls": [
+          "https://www.deeplearning.ai/specializations/deep-learning"
+        ],
+        "observedAt": "2026-08-18",
+        "referenceMarket": null,
+        "accessContext": "public_provider_page",
+        "conditions": "Billed monthly; taxes may apply depending on location"
+      }
+    ],
     "source": "coursera-curated"
   },
   {
@@ -179,8 +198,8 @@
     "durationHours": null,
     "language": "en",
     "priceModel": "subscription",
-    "priceAmount": null,
-    "currency": null,
+    "priceAmount": 59,
+    "currency": "USD",
     "priceInterval": "month",
     "rating": null,
     "reviewCount": null,
@@ -215,6 +234,26 @@
       "text": "IBM Professional Certificate and digital badge"
     },
     "costModel": null,
+    "pricingOptions": [
+      {
+        "id": "coursera-plus-monthly",
+        "model": "platform_subscription",
+        "amount": 59,
+        "currency": "USD",
+        "normalizedUsdAmount": 59,
+        "cadence": "month",
+        "scope": "Coursera Plus catalog access, including the IBM Cybersecurity Analyst Professional Certificate",
+        "normalizationBasis": "provider_published_usd",
+        "evidenceUrls": [
+          "https://www.coursera.org/professional-certificates/ibm-cybersecurity-analyst",
+          "https://www.coursera.org/courseraplus"
+        ],
+        "observedAt": "2026-08-18",
+        "referenceMarket": null,
+        "accessContext": "public_provider_page",
+        "conditions": "Coursera Plus monthly plan; cancel anytime after the initial 7-day free trial"
+      }
+    ],
     "source": "coursera-curated"
   },
   {
@@ -227,8 +266,8 @@
     "durationHours": null,
     "language": "en",
     "priceModel": "subscription",
-    "priceAmount": null,
-    "currency": null,
+    "priceAmount": 49,
+    "currency": "USD",
     "priceInterval": "month",
     "rating": null,
     "reviewCount": null,
@@ -271,6 +310,43 @@
       "type": "subscription",
       "text": "Monthly subscription after an initial free trial in the U.S. and Canada; regional pricing may vary"
     },
+    "pricingOptions": [
+      {
+        "id": "google-certificate-monthly",
+        "model": "subscription",
+        "amount": 49,
+        "currency": "USD",
+        "normalizedUsdAmount": 49,
+        "cadence": "month",
+        "scope": "Google Cybersecurity Professional Certificate",
+        "normalizationBasis": "provider_published_usd",
+        "evidenceUrls": [
+          "https://www.coursera.org/professional-certificates/google-cybersecurity"
+        ],
+        "observedAt": "2026-08-18",
+        "referenceMarket": "United States and Canada",
+        "accessContext": "public_provider_page",
+        "conditions": "Charged after the initial 7-day free trial; other countries may have lower pricing"
+      },
+      {
+        "id": "coursera-plus-monthly",
+        "model": "platform_subscription",
+        "amount": 59,
+        "currency": "USD",
+        "normalizedUsdAmount": 59,
+        "cadence": "month",
+        "scope": "Coursera Plus catalog access, including the Google Cybersecurity Professional Certificate",
+        "normalizationBasis": "provider_published_usd",
+        "evidenceUrls": [
+          "https://www.coursera.org/professional-certificates/google-cybersecurity",
+          "https://www.coursera.org/courseraplus"
+        ],
+        "observedAt": "2026-08-18",
+        "referenceMarket": null,
+        "accessContext": "public_provider_page",
+        "conditions": "Coursera Plus monthly plan; cancel anytime after the initial 7-day free trial"
+      }
+    ],
     "source": "coursera-curated"
   },
   {
@@ -575,10 +651,10 @@
     "level": "beginner",
     "durationHours": 7,
     "language": "en",
-    "priceModel": "subscription",
-    "priceAmount": null,
-    "currency": null,
-    "priceInterval": "month",
+    "priceModel": "paid_once",
+    "priceAmount": 49,
+    "currency": "USD",
+    "priceInterval": null,
     "rating": null,
     "reviewCount": null,
     "certificate": true,
@@ -611,6 +687,25 @@
       "type": "paid_certificate",
       "text": "The certificate experience requires purchase; a free trial or full course without a certificate may be available"
     },
+    "pricingOptions": [
+      {
+        "id": "course-certificate-180-days",
+        "model": "one_time",
+        "amount": 49,
+        "currency": "USD",
+        "normalizedUsdAmount": 49,
+        "cadence": "one_time",
+        "scope": "AI For Everyone course access and certificate eligibility for 180 days",
+        "normalizationBasis": "provider_published_usd",
+        "evidenceUrls": [
+          "https://www.deeplearning.ai/courses/ai-for-everyone"
+        ],
+        "observedAt": "2026-08-18",
+        "referenceMarket": null,
+        "accessContext": "public_provider_page",
+        "conditions": null
+      }
+    ],
     "source": "coursera-curated"
   },
   {
