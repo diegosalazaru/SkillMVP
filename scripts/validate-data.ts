@@ -103,7 +103,10 @@ const getReadiness = (courseId: string) => {
       course.credential != null,
     workload: verified.workload === true && course.workload != null,
     startingPoint:
-      verified.prerequisites === true && course.prerequisitesBullets.length > 0,
+      verified.level === true &&
+      course.level !== "unknown" &&
+      verified.prerequisites === true &&
+      course.prerequisitesBullets.length > 0,
     learningTopics: verified.syllabus === true && course.syllabusBullets.length > 0,
     toolsTechnologies:
       verified.toolsTechnologies === true && course.toolsTechnologies.length > 0,

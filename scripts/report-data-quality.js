@@ -59,7 +59,10 @@ const decisionDimensions = [
   ["workload / time commitment", (course, verified) =>
     verified.workload === true && course.workload != null],
   ["prerequisites / starting point", (course, verified) =>
-    verified.prerequisites === true && course.prerequisitesBullets.length > 0],
+    verified.level === true &&
+    course.level !== "unknown" &&
+    verified.prerequisites === true &&
+    course.prerequisitesBullets.length > 0],
   ["learning topics", (course, verified) =>
     verified.syllabus === true && course.syllabusBullets.length > 0],
   ["tools / technologies", (course, verified) =>

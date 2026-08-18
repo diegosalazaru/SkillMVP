@@ -86,7 +86,10 @@ export const getDecisionReadiness = (course: Course): Record<CoreDecisionDimensi
     course.credential != null,
   workload: !isDurationPending(course),
   startingPoint:
-    isFieldVerified(course, "prerequisites") && course.prerequisitesBullets.length > 0,
+    isFieldVerified(course, "level") &&
+    course.level !== "Unknown" &&
+    isFieldVerified(course, "prerequisites") &&
+    course.prerequisitesBullets.length > 0,
   learningTopics: isFieldVerified(course, "syllabus") && course.syllabusBullets.length > 0,
   toolsTechnologies:
     isFieldVerified(course, "toolsTechnologies") &&
@@ -262,7 +265,7 @@ type RawComparisonRow = Omit<ComparisonRow, "status" | "interpretation"> & {
 };
 
 export const buildComparisonRows = (left: Course, right: Course): ComparisonRow[] => {
-  const hasDecisionDataV2 = [left, right].some(
+  const bothHaveDecisionDataV2 = [left, right].every(
     (course) =>
       course.offeringType != null ||
       course.workload != null ||
@@ -272,7 +275,7 @@ export const buildComparisonRows = (left: Course, right: Course): ComparisonRow[
       (course.practicalWorkBullets?.length ?? 0) > 0
   );
 
-  const rows: RawComparisonRow[] = hasDecisionDataV2
+  const rows: RawComparisonRow[] = bothHaveDecisionDataV2
     ? [
         {
           label: "Offering / credential",
@@ -283,7 +286,9 @@ export const buildComparisonRows = (left: Course, right: Course): ComparisonRow[
             getDecisionReadiness(right).offeringCredential,
           equal:
             left.offeringType === right.offeringType &&
-            left.credential?.type === right.credential?.type,
+            left.credential?.type === right.credential?.type &&
+            normalize(left.credential?.text ?? "") ===
+              normalize(right.credential?.text ?? ""),
           sameInterpretation: "The verified offering and credential formats are equivalent.",
           differentInterpretation: "You are choosing different program or credential formats.",
           uncertainInterpretation: "Offering or credential context is not verified for both options."
@@ -337,7 +342,7 @@ export const buildComparisonRows = (left: Course, right: Course): ComparisonRow[
           ),
           sameInterpretation: "Verified named tools substantially overlap.",
           differentInterpretation: "The verified tool exposure differs between these options.",
-          uncertainInterpretation: "Named tools are not explicitly supported for both options."
+          uncertainInterpretation: "Named tools are not verified for both options."
         },
         {
           label: "Practical work",
@@ -352,7 +357,7 @@ export const buildComparisonRows = (left: Course, right: Course): ComparisonRow[
           ),
           sameInterpretation: "Verified practical work substantially overlaps.",
           differentInterpretation: "The explicitly stated projects, labs, or applied work differ.",
-          uncertainInterpretation: "Practical work is not explicitly supported for both options."
+          uncertainInterpretation: "Practical work is not verified for both options."
         },
         {
           label: "Cost model",
@@ -417,6 +422,34 @@ export const buildComparisonRows = (left: Course, right: Course): ComparisonRow[
           sameInterpretation: "Verified prerequisites do not differentiate these options.",
           differentInterpretation: "Check which verified prerequisites fit your starting point.",
           uncertainInterpretation: "Prerequisites are not verified for both courses."
+        },
+        {
+          label: "Level",
+          left: left.level,
+          right: right.level,
+          comparable:
+            isFieldVerified(left, "level") &&
+            isFieldVerified(right, "level") &&
+            left.level !== "Unknown" &&
+            right.level !== "Unknown",
+          equal: left.level === right.level,
+          sameInterpretation: "Both courses target the same learner level.",
+          differentInterpretation: "Choose the verified level that matches your background.",
+          uncertainInterpretation: "Learner level is not verified for both courses."
+        },
+        {
+          label: "Certificate",
+          left: formatCertificate(left),
+          right: formatCertificate(right),
+          comparable:
+            isFieldVerified(left, "certificate") &&
+            isFieldVerified(right, "certificate") &&
+            left.certificate != null &&
+            right.certificate != null,
+          equal: left.certificate === right.certificate,
+          sameInterpretation: "Verified certificate availability is the same, but terms may change.",
+          differentInterpretation: "Verified certificate availability differs; check provider terms.",
+          uncertainInterpretation: "Certificate availability is not verified for both courses."
         }
       ];
 

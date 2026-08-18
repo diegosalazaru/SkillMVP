@@ -116,7 +116,7 @@ const CourseDecisionDetails = ({ course }: { course: Course }) => (
           </ul>
         ) : (
           <p className="mt-3 text-sm text-slate-600">
-            Named tools are not explicitly supported by the current source.
+            Named tools are not verified in the current catalog.
           </p>
         )}
       </div>
@@ -130,7 +130,7 @@ const CourseDecisionDetails = ({ course }: { course: Course }) => (
           </ul>
         ) : (
           <p className="mt-3 text-sm text-slate-600">
-            Projects, labs, or hands-on work are not explicitly supported by the current source.
+            Projects, labs, or hands-on work are not verified in the current catalog.
           </p>
         )}
       </div>
