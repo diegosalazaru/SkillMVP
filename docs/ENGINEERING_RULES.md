@@ -16,6 +16,8 @@ Before implementation, local or cloud coding agents using Git must:
 
 If any fetch, authentication, checkout, permissions, proxy, history, or push step fails, stop before implementation.
 
+GitHub CLI (`gh`) is optional and is not part of the mandatory publishing preflight. Do not install or authenticate `gh` merely to execute an approved task. Standard `git` authentication through the configured remote is sufficient for fetch and push. If the implementation branch can be pushed but the local agent cannot create a pull request because `gh` is unavailable, that is not an implementation blocker: finish the approved work, push the branch, report the limitation, and let the connected GitHub workflow or product owner create the PR.
+
 Do not reuse unrelated-history commits, synthetic-root history, stale workspaces, or unpublished local-only work.
 
 ## Scope Discipline

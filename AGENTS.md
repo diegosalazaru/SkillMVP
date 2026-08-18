@@ -54,6 +54,8 @@ For local or cloud coding agents that use Git, before implementation:
 
 If fetch, checkout, authentication, permissions, proxy, history, or the initial push fails, **stop before implementation**. Do not create local-only work that cannot be published.
 
+GitHub CLI (`gh`) is optional. It is not a publishing-preflight requirement and must not be installed merely to execute an approved task. Standard `git` authentication and the configured `origin` remote are sufficient for fetch, branch creation, and push. If the branch can be pushed but a local agent cannot open a PR because `gh` is unavailable, continue the implementation, push the completed branch, report that PR creation was unavailable locally, and leave PR creation to the connected GitHub workflow or product owner.
+
 ## Validation Before PR Completion
 
 Run the validations defined in `docs/ENGINEERING_RULES.md`. At minimum for normal product changes:
