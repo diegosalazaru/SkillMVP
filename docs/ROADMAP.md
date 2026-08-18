@@ -24,7 +24,7 @@ Future work in this area should be limited to concrete usability defects or regr
 
 ## Phase 1 — Real Data
 
-**Status: Phase 1A source trust complete; Phase 1B.3 pricing pilot implemented and awaiting product review.**
+**Status: Phase 1A source trust complete; Phase 1B.4 comparison-hierarchy pilot implemented and awaiting product review.**
 
 Goal: make the catalog both trustworthy and useful enough to support real user decisions.
 
@@ -49,6 +49,7 @@ Completed:
 - **Phase 1B.1 — Comparison Integrity Fix** in PR #93: unknown or unverified values no longer create confident `Same` / `Different` claims; runtime mapping now preserves nullable and verification semantics needed for trustworthy comparisons.
 - **Phase 1B.2 — Decision Data Contract v2 pilot** in issue #94: the structured contract and four-course migration are implemented, both required comparisons pass the internal 5/7 gate, and unsupported dimensions remain explicitly insufficient.
 - **Phase 1B.3 — Pricing as Core Decision Data** in issue #97: structured multi-path pricing is implemented for the same four-course pilot, pricing is a hard gate in addition to the unchanged 5/7 gate, and the comparison surfaces exact USD commitments with provenance and regional context.
+- **Phase 1B.4 — Compare Decision Hierarchy** in issue #99: the compare flow now moves from a deterministic decision summary into a source-backed course snapshot, detailed pricing evidence, criteria, curriculum detail, and final provider verification for the same four-course pilot.
 
 Do not migrate the remaining catalog until the pilot proves that the new contract materially improves decision quality without inventing information.
 
@@ -70,7 +71,7 @@ Do not implement speculative affiliate parameters, fake discounts, paid ranking,
 
 ## Phase 3 — Discovery and SEO
 
-**Status: active; indexable-surface foundation complete, content expansion paused pending product review of the Phase 1B.2 pilot.**
+**Status: active; indexable-surface foundation complete, content expansion paused pending product review of the Phase 1B.4 pilot.**
 
 Goal: grow qualified organic traffic by making useful decision surfaces discoverable and by adding genuinely differentiated content only when the catalog supports it.
 
@@ -78,7 +79,7 @@ Completed:
 
 - **Indexable Surface Foundation (Batch A)** in PR #92: sitemap now promotes the homepage, canonical skill pages, and canonical course-detail pages; `/compare` and generated template SEO routes are no longer promoted in the sitemap; generated routes remain accessible with `noindex, follow`; prominent homepage SEO links target canonical skill pages.
 
-Next SEO work must wait for product review after the Phase 1B.2 pilot. Do not create new SEO page types, keyword-scaled content, or indexable template volume merely because the technical foundation exists.
+Next SEO work must wait for product review after the Phase 1B.4 pilot. Do not create new SEO page types, keyword-scaled content, or indexable template volume merely because the technical foundation exists.
 
 ## Phase 4 — Recommendation
 
@@ -111,8 +112,8 @@ Do not build Phase 5 architecture to solve hypothetical scale.
 ## Immediate Sequence
 
 1. Maintain conservative Phase 1A source trust without reopening verification work for its own sake.
-2. Review the completed Phase 1B.3 four-course pricing pilot against the explicit decision-readiness and product acceptance criteria.
+2. Review the completed Phase 1B.4 four-course comparison-hierarchy pilot against the explicit decision-readiness and product acceptance criteria.
 3. Do not begin catalog-wide migration without a new product decision.
-4. Keep Phase 3 content/traffic expansion paused until the pricing pilot shows that core comparison pages provide meaningful decision value.
+4. Keep Phase 3 content/traffic expansion paused until the comparison-hierarchy pilot shows that core comparison pages provide meaningful decision value.
 5. If the pilot succeeds, migrate the remaining catalog only in small auditable batches and then return to selective people-first SEO work.
 6. Activate Phase 2 monetization only when a real program and appropriate disclosures are ready; it is not a prerequisite for Phase 3.

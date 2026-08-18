@@ -10,6 +10,18 @@ export type ComparisonRow = {
   interpretation: string;
 };
 
+export type CourseSnapshot = {
+  offeringType: string;
+  startingPoint: string;
+  pricing: string[];
+  workload: string;
+  credential: string;
+  learningFocus: string;
+  practicalSignal: string;
+  prerequisiteSignal: string;
+  fitSummary: string;
+};
+
 export const CORE_DECISION_DIMENSIONS = [
   { key: "offeringCredential", label: "Offering / credential type" },
   { key: "workload", label: "Workload / time commitment" },
@@ -25,6 +37,7 @@ export type CoreDecisionDimension = (typeof CORE_DECISION_DIMENSIONS)[number]["k
 export type PricingOption = NonNullable<Course["pricingOptions"]>[number];
 
 const normalize = (value: string) => value.trim().toLowerCase();
+const STARTS_WITH_VOWEL = /^[aeiou]/i;
 
 type VerifiedField = keyof NonNullable<Course["verifiedFields"]>;
 
@@ -122,6 +135,78 @@ const formatOfferingType = (course: Course) => {
   } as const;
 
   return course.offeringType ? labels[course.offeringType] : "Offering type not verified";
+};
+
+const summarizeSnapshotBullets = (items: string[], fallback: string) =>
+  items.length > 0 ? items.slice(0, 2).join("; ") : fallback;
+
+const withIndefiniteArticle = (value: string) =>
+  `${STARTS_WITH_VOWEL.test(value) ? "an" : "a"} ${value}`;
+
+export const getCourseSnapshot = (course: Course): CourseSnapshot => {
+  const pricingOptions = getActionablePricingOptions(course);
+  const offeringVerified =
+    isFieldVerified(course, "offeringType") && course.offeringType != null;
+  const levelVerified =
+    isFieldVerified(course, "level") && course.level !== "Unknown";
+  const prerequisitesVerified =
+    isFieldVerified(course, "prerequisites") &&
+    course.prerequisitesBullets.length > 0;
+  const learningFocusVerified =
+    isFieldVerified(course, "syllabus") && course.syllabusBullets.length > 0;
+  const practicalWorkVerified =
+    isFieldVerified(course, "practicalWork") &&
+    (course.practicalWorkBullets?.length ?? 0) > 0;
+  const credentialVerified =
+    isFieldVerified(course, "credential") && course.credential != null;
+
+  const offeringType = offeringVerified
+    ? formatOfferingType(course)
+    : "Offering type not verified";
+  const prerequisiteSignal = prerequisitesVerified
+    ? summarizeSnapshotBullets(course.prerequisitesBullets, "Prerequisites not verified")
+    : "Prerequisites not verified";
+  const descriptorParts = [
+    levelVerified ? course.level.toLowerCase() : null,
+    offeringVerified ? offeringType.toLowerCase() : "course option"
+  ].filter((part): part is string => part !== null);
+  const fitDescriptor = withIndefiniteArticle(descriptorParts.join(" "));
+  const handsOnFit = practicalWorkVerified ? " with verified hands-on work" : "";
+  const fitSummary = prerequisitesVerified
+    ? `Good fit if you want ${fitDescriptor}${handsOnFit} and this starting point matches you: ${prerequisiteSignal}.`
+    : !isDurationPending(course)
+      ? `Good fit if you want ${fitDescriptor}${handsOnFit} and can commit to ${course.durationText.toLowerCase()}.`
+      : `Good fit if you want ${fitDescriptor}${handsOnFit} and are comfortable verifying the starting point and workload.`;
+
+  return {
+    offeringType,
+    startingPoint: levelVerified
+      ? `${course.level} level`
+      : "Starting level not verified",
+    pricing:
+      pricingOptions.length > 0
+        ? pricingOptions.map(formatPricingOption)
+        : ["Actionable source-backed pricing not verified"],
+    workload: isDurationPending(course)
+      ? "Workload not verified"
+      : course.durationText,
+    credential: credentialVerified
+      ? (course.credential?.text ?? "Credential context not verified")
+      : course.certificate === true && isFieldVerified(course, "certificate")
+        ? "Certificate shown; credential context not verified"
+        : "Credential context not verified",
+    learningFocus: learningFocusVerified
+      ? summarizeSnapshotBullets(course.syllabusBullets, "Learning focus not verified")
+      : "Learning focus not verified",
+    practicalSignal: practicalWorkVerified
+      ? summarizeSnapshotBullets(
+          course.practicalWorkBullets ?? [],
+          "Practical work not verified"
+        )
+      : "Hands-on or practical work not verified",
+    prerequisiteSignal,
+    fitSummary
+  };
 };
 
 const formatOfferingCredential = (course: Course) =>
@@ -263,16 +348,40 @@ export const getPendingDataImpact = (course: Course) => {
 
 export const getDecisionSummary = (left: Course, right: Course) => {
   const rows = buildComparisonRows(left, right);
+  const priorityLabels = [
+    "Verified pricing",
+    "Workload",
+    "Duration",
+    "Starting point",
+    "Prerequisites",
+    "Offering / credential",
+    "Cost model",
+    "Practical work",
+    "Learning topics",
+    "Tools / technologies",
+    "Level",
+    "Certificate",
+    "Platform",
+    "Language",
+    "Rating / reviews"
+  ];
+  const priority = new Map(priorityLabels.map((label, index) => [label, index]));
+  const byDecisionPriority = (first: ComparisonRow, second: ComparisonRow) =>
+    (priority.get(first.label) ?? priorityLabels.length) -
+    (priority.get(second.label) ?? priorityLabels.length);
   const similarities = rows
     .filter((row) => row.status === "Same")
-    .slice(0, 3)
+    .sort(byDecisionPriority)
+    .slice(0, 2)
     .map((row) => `${row.label}: both courses show ${row.left}.`);
   const differences = rows
     .filter((row) => row.status === "Different")
-    .slice(0, 3)
+    .sort(byDecisionPriority)
+    .slice(0, 5)
     .map((row) => `${row.label}: ${row.left} vs ${row.right}.`);
   const uncertainLabels = rows
     .filter((row) => row.status === "Insufficient data")
+    .sort(byDecisionPriority)
     .map((row) => row.label.toLowerCase());
 
   return {
@@ -290,13 +399,7 @@ export const getDecisionSummary = (left: Course, right: Course) => {
             `Comparable data is insufficient for ${uncertainLabels.join(", ")}.`,
             "Those criteria are marked below so unknown values are not treated as matches or differences."
           ]
-        : ["All displayed criteria have enough catalog evidence for a factual comparison."],
-    fitFraming: [
-      "Compare the verified payment amount, renewal cadence, and what each path covers.",
-      "Choose based on your current level, time commitment, and need for certificate visibility.",
-      "Use provider checkout to confirm the final transaction and regional terms.",
-      "The comparison is factual and does not rank one course above the other."
-    ]
+        : ["All displayed criteria have enough catalog evidence for a factual comparison."]
   };
 };
 

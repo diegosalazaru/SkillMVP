@@ -1,6 +1,6 @@
 # Current State
 
-Last updated after implementing the Phase 1B.3 pricing pilot for product review.
+Last updated after implementing the Phase 1B.4 comparison-hierarchy pilot for product review.
 
 ## Product State
 
@@ -11,6 +11,15 @@ The current UI is English-first. The product supports skill discovery, curated c
 Recent product review exposed an important distinction: source-trusted catalog data is not automatically decision-useful data. The product must not only avoid inventing facts; it must preserve enough structured provider-backed information to help a user actually choose between courses.
 
 ## Latest Completed Initiatives
+
+### Phase 1B.4 — Compare Decision Hierarchy — Issue #99
+
+Key outcomes:
+
+- Compare now follows the intended decision flow: decision summary, at-a-glance course snapshot, detailed pricing evidence, criteria, curriculum detail, then final verification and provider actions.
+- The snapshot consolidates verified offering, starting point, pricing, workload, credential, learning-focus, practical-work, prerequisite, and fit signals without adding catalog fields or recommendation claims.
+- The standalone compare-page fit section was removed, while unknown or unverified values remain explicitly uncertain for mixed pilot/non-pilot comparisons.
+- Desktop and mobile checks cover both approved pilot pairs and a mixed pilot/non-pilot regression comparison without horizontal overflow or browser errors.
 
 ### Phase 1B.3 — Pricing as Core Decision Data — Issue #97
 
@@ -61,9 +70,9 @@ Earlier completed initiatives, including Phase 1 Source Verification Batches A/B
 
 - **Phase 0 — MVP:** complete for the current MVP scope.
 - **Phase 1A — Source Trust:** complete for the current 19-course curated MVP catalog; ongoing maintenance only.
-- **Phase 1B — Decision-Grade Data:** Phase 1B.1, Phase 1B.2, and the Phase 1B.3 pricing pilot are implemented; product review must decide whether and how to migrate later batches.
+- **Phase 1B — Decision-Grade Data:** Phase 1B.1 through Phase 1B.4 are implemented for the four-course pilot; product review must decide whether and how to migrate later batches.
 - **Phase 2 — Monetization:** gated / not started. It activates only when a real auditable affiliate/referral program exists and does not block Phase 3.
-- **Phase 3 — Discovery and SEO:** active, with the indexable-surface foundation complete. Further content/traffic expansion is paused until the Phase 1B.2 pilot proves that core comparisons provide meaningful decision value.
+- **Phase 3 — Discovery and SEO:** active, with the indexable-surface foundation complete. Further content/traffic expansion is paused until product review of the Phase 1B.4 pilot confirms that core comparisons provide meaningful decision value.
 - **Phase 4 — Recommendation:** later, gated behind explicit criteria and trustworthy signals.
 - **Phase 5 — Robust Product:** only if traction justifies the additional architecture.
 
@@ -107,7 +116,7 @@ Pilot scope is exactly four courses and two comparisons:
 
 The gate is internal product-quality validation, not a visible ranking or course score.
 
-## After Phase 1B.3
+## After Phase 1B.4
 
 Return to product review. Do not automatically migrate all 19 courses and do not resume SEO content expansion automatically.
 
