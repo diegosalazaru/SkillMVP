@@ -27,14 +27,13 @@ const LAST_SKILL_KEY = "skills-compare-last-skill";
 const statusClasses = {
   Same: "bg-emerald-50 text-emerald-700 ring-emerald-100",
   Different: "bg-blue-50 text-blue-700 ring-blue-100",
-  "Missing data": "bg-amber-50 text-amber-800 ring-amber-100",
-  "Needs verification": "bg-orange-50 text-orange-800 ring-orange-100"
+  "Insufficient data": "bg-amber-50 text-amber-800 ring-amber-100"
 };
 
 const sectionGroups = [
   { title: "Key similarities", key: "similarities" },
   { title: "Key differences", key: "differences" },
-  { title: "Uncertainty warnings", key: "uncertainty" },
+  { title: "What remains uncertain", key: "uncertainty" },
   { title: "Practical fit framing", key: "fitFraming" }
 ] as const;
 

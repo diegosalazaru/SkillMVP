@@ -1,4 +1,5 @@
 import normalizedCatalog from "../../data/normalized/courses.json";
+import sourceMetadata from "../../data/normalized/course-source-metadata.json";
 import { courses as fallbackCourses } from "@/data/courses";
 import { CourseSchema, type Course as NormalizedCourse } from "@/lib/schema/course";
 import type { Course } from "@/types/course";
@@ -33,8 +34,23 @@ const mapLevel = (level: NormalizedCourse["level"]): Course["level"] => {
   if (level === "intermediate") {
     return "Intermediate";
   }
-  return "Beginner";
+  if (level === "beginner") {
+    return "Beginner";
+  }
+  if (level === "mixed") {
+    return "Mixed";
+  }
+  return "Unknown";
 };
+
+type SourceMetadata = {
+  courseId: string;
+  verifiedFields: NonNullable<Course["verifiedFields"]>;
+};
+
+const sourceMetadataByCourseId = new Map(
+  (sourceMetadata as SourceMetadata[]).map((metadata) => [metadata.courseId, metadata])
+);
 
 const formatDurationText = (durationHours: number | null): string => {
   if (durationHours == null) {
@@ -78,14 +94,17 @@ const mapCourse = (course: NormalizedCourse): Course | null => {
     currency: course.currency,
     priceInterval: course.priceInterval,
     priceText: formatPriceText(course),
+    durationHours: course.durationHours,
     durationText: formatDurationText(course.durationHours),
-    rating: course.rating ?? undefined,
+    rating: course.rating,
+    reviewCount: course.reviewCount,
     language: course.language,
-    certificate: course.certificate ?? false,
+    certificate: course.certificate,
     shortDescription: course.shortDescription,
     syllabusBullets: course.syllabusBullets,
     prerequisitesBullets: course.prerequisitesBullets,
-    externalUrl: course.url
+    externalUrl: course.url,
+    verifiedFields: sourceMetadataByCourseId.get(course.id)?.verifiedFields ?? {}
   };
 };
 
