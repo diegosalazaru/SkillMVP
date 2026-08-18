@@ -46,6 +46,7 @@ export const getActionablePricingOptions = (course: Course) =>
         (option) =>
           option.amount > 0 &&
           option.normalizedUsdAmount > 0 &&
+          Boolean(option.actionUrl) &&
           option.evidenceUrls.length > 0 &&
           Boolean(option.observedAt)
       )

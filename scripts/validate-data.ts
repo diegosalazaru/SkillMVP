@@ -121,6 +121,7 @@ const hasActionablePricing = (courseId: string) => {
     (option) =>
       option.amount > 0 &&
       option.normalizedUsdAmount > 0 &&
+      Boolean(option.actionUrl) &&
       option.evidenceUrls.length > 0
   );
 };

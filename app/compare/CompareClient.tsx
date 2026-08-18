@@ -105,6 +105,18 @@ const PricingCommitmentCard = ({ course }: { course: Course }) => {
                   {option.conditions}
                 </p>
               ) : null}
+              <a
+                href={option.actionUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() =>
+                  trackOutboundCourseClick(course, EXTERNAL_PROVIDER_CONTEXT.compare)
+                }
+                aria-label={`Open ${option.scope} pricing option for ${course.title}`}
+                className="mt-4 inline-flex min-h-11 items-center rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-600"
+              >
+                Open this pricing option
+              </a>
               <p className="mt-3 text-xs text-slate-500">
                 Evidence: {option.evidenceUrls.map((url, evidenceIndex) => (
                   <span key={url}>
@@ -345,10 +357,10 @@ export default function CompareClient() {
             Pricing commitments
           </p>
           <h3 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">
-            What you would pay now
+            Current verified pricing
           </h3>
           <p className="mt-2 text-sm leading-relaxed text-slate-600">
-            All comparable amounts are shown in USD. Course or program paths appear before broader platform-subscription alternatives when both are verified.
+            All comparable commitments are shown in USD. Course or program paths appear before broader platform-subscription alternatives when both are verified; trials may change the amount due at checkout today.
           </p>
         </div>
         <div className="mt-5 grid gap-4 lg:grid-cols-2">

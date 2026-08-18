@@ -86,8 +86,14 @@ const formatPriceText = (course: NormalizedCourse): string => {
       year: "/year",
       other: ""
     }[primaryPricingOption.cadence];
+    const model = {
+      one_time: "One-time",
+      subscription: "Program subscription",
+      platform_subscription: "Platform subscription",
+      free_audit: "Free / audit"
+    }[primaryPricingOption.model];
 
-    return `${approximation}${amount}${cadence}`;
+    return `${model}: ${approximation}${amount}${cadence} — ${primaryPricingOption.scope}`;
   }
 
   if (course.priceModel === "free") {

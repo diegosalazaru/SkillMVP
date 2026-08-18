@@ -119,6 +119,7 @@
         "cadence": "month",
         "scope": "DeepLearning.AI Pro access to the Deep Learning Specialization, graded assignments, and certificate",
         "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.deeplearning.ai/specializations/deep-learning",
         "evidenceUrls": [
           "https://www.deeplearning.ai/specializations/deep-learning"
         ],
@@ -244,6 +245,7 @@
         "cadence": "month",
         "scope": "Coursera Plus catalog access, including the IBM Cybersecurity Analyst Professional Certificate",
         "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.coursera.org/courseraplus",
         "evidenceUrls": [
           "https://www.coursera.org/professional-certificates/ibm-cybersecurity-analyst",
           "https://www.coursera.org/courseraplus"
@@ -320,6 +322,7 @@
         "cadence": "month",
         "scope": "Google Cybersecurity Professional Certificate",
         "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.coursera.org/professional-certificates/google-cybersecurity",
         "evidenceUrls": [
           "https://www.coursera.org/professional-certificates/google-cybersecurity"
         ],
@@ -337,6 +340,7 @@
         "cadence": "month",
         "scope": "Coursera Plus catalog access, including the Google Cybersecurity Professional Certificate",
         "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.coursera.org/courseraplus",
         "evidenceUrls": [
           "https://www.coursera.org/professional-certificates/google-cybersecurity",
           "https://www.coursera.org/courseraplus"
@@ -697,6 +701,7 @@
         "cadence": "one_time",
         "scope": "AI For Everyone course access and certificate eligibility for 180 days",
         "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.deeplearning.ai/courses/ai-for-everyone",
         "evidenceUrls": [
           "https://www.deeplearning.ai/courses/ai-for-everyone"
         ],

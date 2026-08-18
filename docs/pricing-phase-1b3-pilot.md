@@ -10,6 +10,7 @@ Observed and reviewed on 2026-08-18. This manual curation is limited to the four
 - Model / cadence: one-time / one-time.
 - Original and normalized amount: 49 USD / 49 USD.
 - Evidence: [official DeepLearning.AI course page](https://www.deeplearning.ai/courses/ai-for-everyone).
+- Pricing action: the same official DeepLearning.AI page, where this path is offered.
 - Access context: public provider page.
 - Region/account limitation: no reference market or account requirement stated; final taxes or checkout eligibility may vary.
 - Excluded: Coursera-localized checkout amounts were not treated as universal. Possible free-trial or no-certificate access was excluded because the current course page presents it conditionally rather than as a guaranteed path.
@@ -20,6 +21,7 @@ Observed and reviewed on 2026-08-18. This manual curation is limited to the four
 - Model / cadence: platform subscription / month.
 - Original and normalized amount: 30 USD / 30 USD.
 - Evidence: [official DeepLearning.AI specialization page](https://www.deeplearning.ai/specializations/deep-learning).
+- Pricing action: the same official DeepLearning.AI specialization page, where DeepLearning.AI Pro is offered.
 - Access context: public provider page.
 - Region/account limitation: no reference market or account requirement stated; the provider says taxes may apply depending on location.
 - Excluded: the Coursera program subscription did not expose an exact current public amount. The `$25/month billed annually` effective rate was excluded because the exact annual charge is not stated. Temporary Coursera Plus discounts were excluded.
@@ -31,6 +33,7 @@ Observed and reviewed on 2026-08-18. This manual curation is limited to the four
 - Models / cadence: program subscription / month; platform subscription / month.
 - Original and normalized amounts: 49 USD / 49 USD; 59 USD / 59 USD.
 - Evidence: [official certificate page](https://www.coursera.org/professional-certificates/google-cybersecurity) and [official Coursera Plus plan page](https://www.coursera.org/courseraplus).
+- Pricing actions: the official certificate page for the program-specific path and the official Coursera Plus page for the catalog-subscription path.
 - Access context: public provider pages.
 - Region/account limitation: the program-specific `$49/month` amount is explicitly limited to the United States and Canada. The Coursera Plus public page states USD pricing but no reference market.
 - Excluded: the provider's under-`$300` completion estimate depends on completion pace and is not a factual total cost. The temporary `$239/year` Coursera Plus promotion was excluded.
@@ -41,6 +44,7 @@ Observed and reviewed on 2026-08-18. This manual curation is limited to the four
 - Model / cadence: platform subscription / month.
 - Original and normalized amount: 59 USD / 59 USD.
 - Evidence: [official certificate page showing Coursera Plus inclusion](https://www.coursera.org/professional-certificates/ibm-cybersecurity-analyst) and [official Coursera Plus plan page](https://www.coursera.org/courseraplus).
+- Pricing action: the official Coursera Plus page for this catalog-subscription path.
 - Access context: public provider pages.
 - Region/account limitation: the Coursera Plus public page states USD pricing but no reference market.
 - Excluded: the direct certificate subscription did not expose an exact current public amount. The temporary `$239/year` Coursera Plus promotion was excluded.

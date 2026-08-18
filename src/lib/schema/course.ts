@@ -31,6 +31,7 @@ const PricingOptionSchema = z.object({
   cadence: z.enum(["one_time", "month", "year", "other"]),
   scope: z.string().min(1),
   normalizationBasis: z.enum(["provider_published_usd", "currency_converted"]),
+  actionUrl: z.string().url(),
   evidenceUrls: z.array(z.string().url()).min(1),
   observedAt: z.string().date(),
   referenceMarket: z.string().min(1).nullable(),

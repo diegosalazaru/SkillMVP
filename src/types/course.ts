@@ -48,6 +48,7 @@ export type Course = {
     cadence: "one_time" | "month" | "year" | "other";
     scope: string;
     normalizationBasis: "provider_published_usd" | "currency_converted";
+    actionUrl: string;
     evidenceUrls: string[];
     observedAt: string;
     referenceMarket: string | null;
