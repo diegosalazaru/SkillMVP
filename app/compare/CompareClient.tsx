@@ -12,7 +12,6 @@ import {
   isDurationPending,
   isExactPricePending
 } from "@/lib/decision-support";
-import { formatCoursePrice } from "@/lib/formatPrice";
 import { courses } from "@/lib/catalog-adapter";
 import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
 import {
@@ -66,6 +65,16 @@ const CourseDecisionDetails = ({ course }: { course: Course }) => (
       <p className="text-sm leading-relaxed text-slate-600">
         {course.shortDescription ?? "Description unavailable."}
       </p>
+      <div className="flex flex-wrap gap-2 pt-2 text-xs font-semibold text-slate-700">
+        {course.offeringType ? (
+          <span className="rounded-full bg-blue-50 px-3 py-1.5 capitalize text-blue-700">
+            {course.offeringType.replaceAll("_", " ")}
+          </span>
+        ) : null}
+        {course.workload ? (
+          <span className="rounded-full bg-slate-100 px-3 py-1.5">{course.workload.text}</span>
+        ) : null}
+      </div>
     </div>
 
     <div className="mt-5 grid gap-5 md:grid-cols-2">
@@ -84,7 +93,7 @@ const CourseDecisionDetails = ({ course }: { course: Course }) => (
         )}
       </div>
       <div>
-        <h4 className="text-sm font-semibold text-slate-900">Prerequisites</h4>
+        <h4 className="text-sm font-semibold text-slate-900">Starting point</h4>
         {course.prerequisitesBullets.length > 0 ? (
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-600">
             {course.prerequisitesBullets.slice(0, 4).map((item) => (
@@ -93,7 +102,35 @@ const CourseDecisionDetails = ({ course }: { course: Course }) => (
           </ul>
         ) : (
           <p className="mt-3 text-sm text-slate-600">
-            Prerequisites are not available in the current catalog.
+            Starting-point requirements are not verified in the current catalog.
+          </p>
+        )}
+      </div>
+      <div>
+        <h4 className="text-sm font-semibold text-slate-900">Tools / technologies</h4>
+        {(course.toolsTechnologies?.length ?? 0) > 0 ? (
+          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-600">
+            {course.toolsTechnologies?.slice(0, 5).map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-3 text-sm text-slate-600">
+            Named tools are not explicitly supported by the current source.
+          </p>
+        )}
+      </div>
+      <div>
+        <h4 className="text-sm font-semibold text-slate-900">Practical work</h4>
+        {(course.practicalWorkBullets?.length ?? 0) > 0 ? (
+          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-600">
+            {course.practicalWorkBullets?.slice(0, 4).map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-3 text-sm text-slate-600">
+            Projects, labs, or hands-on work are not explicitly supported by the current source.
           </p>
         )}
       </div>
@@ -167,10 +204,8 @@ export default function CompareClient() {
     );
   }
 
-  const leftPrice = formatCoursePrice(leftCourse);
-  const rightPrice = formatCoursePrice(rightCourse);
-  const decisionSummary = getDecisionSummary(leftCourse, rightCourse, leftPrice, rightPrice);
-  const comparisonRows = buildComparisonRows(leftCourse, rightCourse, leftPrice, rightPrice);
+  const decisionSummary = getDecisionSummary(leftCourse, rightCourse);
+  const comparisonRows = buildComparisonRows(leftCourse, rightCourse);
   const pendingRisks = getPendingDataRisks([leftCourse, rightCourse]);
 
   return (

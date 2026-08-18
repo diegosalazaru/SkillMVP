@@ -48,7 +48,7 @@
     "sourceUrl": "https://www.coursera.org/specializations/deep-learning",
     "sourceType": "official_provider_page",
     "verificationStatus": "partially_verified",
-    "lastVerifiedAt": "2026-08-17",
+    "lastVerifiedAt": "2026-08-18",
     "verifiedFields": {
       "title": true,
       "platform": true,
@@ -61,9 +61,15 @@
       "language": true,
       "level": true,
       "syllabus": true,
-      "prerequisites": true
+      "prerequisites": true,
+      "offeringType": true,
+      "workload": true,
+      "toolsTechnologies": true,
+      "practicalWork": true,
+      "credential": true,
+      "costModel": true
     },
-    "notes": "Source: official Coursera provider page at the existing canonical URL. Verified the Deep Learning Specialization title, Coursera platform/source URL, DeepLearning.AI attribution, intermediate level, English as the primary taught language, shareable certificate, 3 months at 10 hours/week workload signal, learning topics, and stated Python, linear algebra, and machine learning background. durationHours changed from 120 to null because the page does not provide an exact program total. The page separately lists 27 available languages; this does not change the verified English primary taught language. Price, rating, and review count intentionally remain unknown/null because they are volatile."
+    "notes": "Source: official Coursera provider page at the existing canonical URL, reviewed 2026-08-18 for the Decision Data Contract v2 pilot. Verified the specialization and career-certificate context; 3 months at 10 hours/week workload wording; stated Python, linear algebra, and machine learning background; learning topics; Python, TensorFlow, and Hugging Face tools; applied learning project, programming assignments, and labs; and subscription access context. durationHours remains null because the page does not provide one explicit program total. Exact price, rating, and review count remain unknown/null because they are volatile."
   },
   {
     "courseId": "ibm-data-science-ibm",
@@ -114,7 +120,7 @@
     "sourceUrl": "https://www.coursera.org/professional-certificates/ibm-cybersecurity-analyst",
     "sourceType": "official_provider_page",
     "verificationStatus": "partially_verified",
-    "lastVerifiedAt": "2026-08-17",
+    "lastVerifiedAt": "2026-08-18",
     "verifiedFields": {
       "title": true,
       "platform": true,
@@ -127,16 +133,22 @@
       "language": true,
       "level": true,
       "syllabus": true,
-      "prerequisites": false
+      "prerequisites": false,
+      "offeringType": true,
+      "workload": true,
+      "toolsTechnologies": true,
+      "practicalWork": true,
+      "credential": true,
+      "costModel": false
     },
-    "notes": "Source: official Coursera provider page at the existing canonical URL. Verified title, platform/source URL, beginner level, English language, shareable certificate, 4 months at 10 hours/week workload signal, and learning topics covering cybersecurity fundamentals, network security, incident response, penetration testing, and forensics. durationHours remains null. Prerequisites remain unverified because the page exposes only a generic recommended-experience label without supporting the catalog's specific statements. Price, rating, and review count intentionally remain unknown/null because they are volatile."
+    "notes": "Source: official Coursera provider page at the existing canonical URL, reviewed 2026-08-18 for the Decision Data Contract v2 pilot. Verified the professional-certificate and IBM credential/digital-badge context; 4 months at 10 hours/week workload wording; learning topics; explicitly named ITIL, OWASP ZAP, and Snyk tools; and hands-on labs, projects, case studies, cybersecurity plans, and compliance-framework work. The previous prerequisite bullets were removed because the current page only exposes a generic recommended-experience label. Cost model, exact price, rating, and review count remain unverified."
   },
   {
     "courseId": "google-cybersecurity-google",
     "sourceUrl": "https://www.coursera.org/professional-certificates/google-cybersecurity",
     "sourceType": "official_provider_page",
     "verificationStatus": "partially_verified",
-    "lastVerifiedAt": "2026-06-06",
+    "lastVerifiedAt": "2026-08-18",
     "verifiedFields": {
       "title": true,
       "platform": true,
@@ -149,9 +161,15 @@
       "language": true,
       "level": true,
       "syllabus": true,
-      "prerequisites": true
+      "prerequisites": true,
+      "offeringType": true,
+      "workload": true,
+      "toolsTechnologies": true,
+      "practicalWork": true,
+      "credential": true,
+      "costModel": true
     },
-    "notes": "Source: official Coursera provider page. Verified title, platform/source URL, beginner level, English language, shareable certificate, 6 months at 7 hours/week workload signal, learning topics, and no prior experience requirement. durationHours remains null because converting a monthly schedule to exact hours would be an estimate. Price, rating, and review count intentionally remain unknown/null because they are volatile."
+    "notes": "Source: official Coursera provider page at the existing canonical URL, reviewed 2026-08-18 for the Decision Data Contract v2 pilot. Verified the professional-certificate and Google credential context; 6 months at 7 hours/week workload wording; no prior experience requirement; learning topics; Linux, Python, Bash, SQL, SIEM, and intrusion-detection tools; hands-on labs, practice-based assessments, and portfolio activities; and monthly-subscription/free-trial context with regional variation. durationHours remains null because the schedule is not converted into an exact total. Exact price, rating, and review count remain unknown/null because they are volatile."
   },
   {
     "courseId": "introduction-cyber-security-nyux-edx",
@@ -378,7 +396,7 @@
     "sourceUrl": "https://www.coursera.org/learn/ai-for-everyone",
     "sourceType": "official_provider_page",
     "verificationStatus": "partially_verified",
-    "lastVerifiedAt": "2026-06-06",
+    "lastVerifiedAt": "2026-08-18",
     "verifiedFields": {
       "title": true,
       "platform": true,
@@ -391,9 +409,15 @@
       "language": true,
       "level": true,
       "syllabus": true,
-      "prerequisites": true
+      "prerequisites": true,
+      "offeringType": true,
+      "workload": true,
+      "toolsTechnologies": false,
+      "practicalWork": false,
+      "credential": true,
+      "costModel": true
     },
-    "notes": "Source: official Coursera provider page. Verified title, platform/source URL, beginner level, English language, shareable certificate, 7-hour duration signal, learning topics, and no prior experience requirement. Price, rating, and review count intentionally remain unknown/null because they are volatile."
+    "notes": "Source: official Coursera provider page at the existing canonical URL, reviewed 2026-08-18 for the Decision Data Contract v2 pilot. Verified the single-course and shareable-course-certificate context; explicit 7-hour completion signal; no prior experience requirement; learning topics; and paid certificate experience with possible free-trial or full-course-without-certificate access. The source does not explicitly support named tools/technologies or hands-on project/lab work, so those dimensions remain empty and unverified. Exact price, rating, and review count remain unknown/null because they are volatile."
   },
   {
     "courseId": "ibm-ai-engineering-ibm",

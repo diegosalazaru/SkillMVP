@@ -45,6 +45,31 @@ const getVerifiedFieldCoverage = (metadata) => {
   );
 };
 
+const pilotComparisons = [
+  ["ai-for-everyone-deeplearningai", "deep-learning-specialization-deeplearningai"],
+  ["google-cybersecurity-google", "ibm-cybersecurity-analyst-ibm"]
+];
+
+const decisionDimensions = [
+  ["offering / credential type", (course, verified) =>
+    verified.offeringType === true &&
+    verified.credential === true &&
+    course.offeringType != null &&
+    course.credential != null],
+  ["workload / time commitment", (course, verified) =>
+    verified.workload === true && course.workload != null],
+  ["prerequisites / starting point", (course, verified) =>
+    verified.prerequisites === true && course.prerequisitesBullets.length > 0],
+  ["learning topics", (course, verified) =>
+    verified.syllabus === true && course.syllabusBullets.length > 0],
+  ["tools / technologies", (course, verified) =>
+    verified.toolsTechnologies === true && course.toolsTechnologies?.length > 0],
+  ["practical work / projects / labs", (course, verified) =>
+    verified.practicalWork === true && course.practicalWorkBullets?.length > 0],
+  ["cost model context", (course, verified) =>
+    verified.costModel === true && course.costModel != null]
+];
+
 const coursesPath = resolve(process.cwd(), "data", "normalized", "courses.json");
 const metadataPath = resolve(
   process.cwd(),
@@ -131,6 +156,26 @@ try {
   console.log(`- source metadata records without matching course: ${metadataWithoutCourse.length}`);
   console.log(`- source URL mismatches: ${sourceUrlMismatches.length}`);
   console.log(`- duplicate metadata courseIds: ${duplicateMetadataIds.size}`);
+
+  console.log("\nDecision Data Contract v2 pilot gate");
+  pilotComparisons.forEach(([leftId, rightId]) => {
+    const left = coursesById.get(leftId);
+    const right = coursesById.get(rightId);
+    const leftVerified = metadataByCourseId.get(leftId)?.verifiedFields ?? {};
+    const rightVerified = metadataByCourseId.get(rightId)?.verifiedFields ?? {};
+    const sourceBackedForBoth = decisionDimensions
+      .filter(([, isReady]) =>
+        isReady(left, leftVerified) && isReady(right, rightVerified)
+      )
+      .map(([label]) => label);
+    const insufficient = decisionDimensions
+      .map(([label]) => label)
+      .filter((label) => !sourceBackedForBoth.includes(label));
+
+    console.log(`- ${leftId} vs ${rightId}: ${sourceBackedForBoth.length}/7 ${sourceBackedForBoth.length >= 5 ? "PASS" : "FAIL"}`);
+    console.log(`  - source-backed for both: ${sourceBackedForBoth.join(", ")}`);
+    console.log(`  - insufficient: ${insufficient.length > 0 ? insufficient.join(", ") : "none"}`);
+  });
 
   const structuralIssues = [
     ...missingSourceMetadata.map((course) => `Missing metadata: ${course.id}`),

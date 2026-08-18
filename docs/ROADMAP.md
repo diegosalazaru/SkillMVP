@@ -24,7 +24,7 @@ Future work in this area should be limited to concrete usability defects or regr
 
 ## Phase 1 — Real Data
 
-**Status: Phase 1A source trust complete for the current curated MVP catalog; Phase 1B decision-grade data corrective work active.**
+**Status: Phase 1A source trust complete; Phase 1B.2 pilot implemented and awaiting product review.**
 
 Goal: make the catalog both trustworthy and useful enough to support real user decisions.
 
@@ -47,10 +47,7 @@ Product review showed that source-trusted data is not automatically decision-use
 Completed:
 
 - **Phase 1B.1 — Comparison Integrity Fix** in PR #93: unknown or unverified values no longer create confident `Same` / `Different` claims; runtime mapping now preserves nullable and verification semantics needed for trustworthy comparisons.
-
-Active approved initiative:
-
-- **Phase 1B.2 — Decision Data Contract v2 + pilot** in issue #94: evolve the smallest structured contract needed to preserve decision-useful provider signals, then validate it on exactly two pilot comparisons covering four courses.
+- **Phase 1B.2 — Decision Data Contract v2 pilot** in issue #94: the structured contract and four-course migration are implemented, both required comparisons pass the internal 5/7 gate, and unsupported dimensions remain explicitly insufficient.
 
 Do not migrate the remaining catalog until the pilot proves that the new contract materially improves decision quality without inventing information.
 
@@ -72,7 +69,7 @@ Do not implement speculative affiliate parameters, fake discounts, paid ranking,
 
 ## Phase 3 — Discovery and SEO
 
-**Status: active; indexable-surface foundation complete, content expansion paused pending the Phase 1B.2 pilot.**
+**Status: active; indexable-surface foundation complete, content expansion paused pending product review of the Phase 1B.2 pilot.**
 
 Goal: grow qualified organic traffic by making useful decision surfaces discoverable and by adding genuinely differentiated content only when the catalog supports it.
 
@@ -113,8 +110,8 @@ Do not build Phase 5 architecture to solve hypothetical scale.
 ## Immediate Sequence
 
 1. Maintain conservative Phase 1A source trust without reopening verification work for its own sake.
-2. Execute issue #94, Phase 1B.2 — Decision Data Contract v2 + pilot, on exactly the four approved pilot courses.
-3. Judge the pilot against the explicit decision-readiness gate before any catalog-wide migration.
+2. Review the completed Phase 1B.2 four-course pilot against the explicit decision-readiness and product acceptance criteria.
+3. Do not begin catalog-wide migration without a new product decision.
 4. Keep Phase 3 content/traffic expansion paused until the pilot shows that core comparison pages provide meaningful decision value.
 5. If the pilot succeeds, migrate the remaining catalog only in small auditable batches and then return to selective people-first SEO work.
 6. Activate Phase 2 monetization only when a real program and appropriate disclosures are ready; it is not a prerequisite for Phase 3.
