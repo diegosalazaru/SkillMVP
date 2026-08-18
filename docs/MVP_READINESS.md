@@ -4,9 +4,9 @@
 
 - Skills Compare is an English-first product for finding skills, reviewing relevant online courses, comparing two options, and opening the original provider page.
 - Phase 0 is complete for the current MVP scope.
-- Phase 1A source trust is complete for the current 19-course catalog; the Phase 1B.3 pricing pilot extends the Phase 1B.2 decision-data pilot on exactly four courses and awaits product review before any wider migration.
+- Phase 1A source trust is complete for the current 19-course catalog; the Phase 1B.4 comparison-hierarchy pilot builds on the Phase 1B.2 decision-data and Phase 1B.3 pricing work for exactly four courses and awaits product review before any wider migration.
 - Phase 2 monetization is gated until a real auditable affiliate/referral program exists and does not block Phase 3.
-- Phase 3 Discovery and SEO has its indexable-surface foundation in place; content expansion remains paused pending review of the Phase 1B.2 pilot.
+- Phase 3 Discovery and SEO has its indexable-surface foundation in place; content expansion remains paused pending review of the Phase 1B.4 pilot.
 - The normalized catalog contains 19 curated courses.
 - 17 courses are `partially_verified`; 2 remain `pending` because the exact recorded offering could not be confirmed from a current official source.
 - Source URL mismatches are 0 after Phase 1 Source Verification — Coverage Batch B.
@@ -19,6 +19,7 @@
 - Decision-focused visual polish is merged across the core Search -> Compare -> Decide journey.
 - Decision Data Contract v2 preserves provider-backed offering, workload, tool, practical-work, credential, and cost-model signals for the four-course pilot.
 - Structured pricing preserves source-backed payable paths, USD amounts, cadence, scope, provenance, freshness, and regional/access context for the same four-course pilot.
+- Compare presents decision differences and a source-backed at-a-glance snapshot before detailed pricing, criteria, curriculum, and final provider verification.
 
 ## Trust and Data Quality Reality
 
@@ -40,7 +41,7 @@
 - Skill pages show available courses from the normalized catalog.
 - Course cards expose core decision facts and prioritize compare selection over outbound provider clicks.
 - Course detail pages are decision-support pages with fit framing, verify-before-enrolling checks, provider CTA, compare action, learning content, and key facts.
-- Compare supports two-course comparison with deterministic decision summary, verification risks, fit context, deep comparison details, checklist, and outbound provider CTAs. Pilot comparisons additionally expose the seven approved decision dimensions.
+- Compare supports two-course comparison with a deterministic decision summary, consolidated fit context, deep comparison details, final verification checklist, and outbound provider CTAs. Pilot comparisons additionally expose an at-a-glance snapshot and the seven approved decision dimensions.
 - The compare page uses mobile-friendly stacked content instead of relying on a cramped desktop table.
 - Compare selection persists across navigation and recent visits for up to 24 hours, with an explicit returning-selection state and clear action.
 - Canonical and Open Graph metadata foundations are present for core pages.
@@ -78,4 +79,4 @@ Use the documented repository-local TypeScript fallback only when the normal pnp
 
 ## Active Near-Term Gate
 
-Product review must evaluate the Phase 1B.3 pricing pilot before approving any migration of the remaining 15 catalog records or resuming Phase 3 content expansion. Phase 2 monetization remains gated until a real program exists.
+Product review must evaluate the Phase 1B.4 comparison-hierarchy pilot before approving any migration of the remaining 15 catalog records or resuming Phase 3 content expansion. Phase 2 monetization remains gated until a real program exists.
