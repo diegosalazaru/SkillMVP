@@ -24,9 +24,11 @@ Future work in this area should be limited to concrete usability defects or regr
 
 ## Phase 1 — Real Data
 
-**Status: complete for the current curated MVP catalog; ongoing maintenance only.**
+**Status: Phase 1A source trust complete for the current curated MVP catalog; Phase 1B decision-grade data corrective work active.**
 
-Goal: make the catalog trustworthy and consistent enough to support useful comparison and discovery.
+Goal: make the catalog both trustworthy and useful enough to support real user decisions.
+
+### Phase 1A — Source Trust
 
 Completed for the current 19-course MVP catalog:
 
@@ -36,9 +38,21 @@ Completed for the current 19-course MVP catalog:
 - Stable-field verification where official provider pages support it.
 - Explicit provenance blockers where an exact current offering cannot be confirmed.
 
-Current gate result: 17 of 19 courses are `partially_verified`, 2 remain `pending` with explicit source blockers, and source URL mismatches are 0. Zero pending records is not a goal by itself.
+Current trust result: 17 of 19 courses are `partially_verified`, 2 remain `pending` with explicit source blockers, and source URL mismatches are 0. Zero pending records is not a goal by itself.
 
-Phase 1 remains an ongoing quality-maintenance concern. Future verification or small catalog expansion must remain source-backed, auditable, and explicitly approved when it materially improves user decision value.
+### Phase 1B — Decision-Grade Data
+
+Product review showed that source-trusted data is not automatically decision-useful data. The normalized model and comparison layer must preserve enough provider-backed information to help users choose without making them perform the full comparison on provider sites.
+
+Completed:
+
+- **Phase 1B.1 — Comparison Integrity Fix** in PR #93: unknown or unverified values no longer create confident `Same` / `Different` claims; runtime mapping now preserves nullable and verification semantics needed for trustworthy comparisons.
+
+Active approved initiative:
+
+- **Phase 1B.2 — Decision Data Contract v2 + pilot** in issue #94: evolve the smallest structured contract needed to preserve decision-useful provider signals, then validate it on exactly two pilot comparisons covering four courses.
+
+Do not migrate the remaining catalog until the pilot proves that the new contract materially improves decision quality without inventing information.
 
 ## Phase 2 — Monetization
 
@@ -58,19 +72,15 @@ Do not implement speculative affiliate parameters, fake discounts, paid ranking,
 
 ## Phase 3 — Discovery and SEO
 
-**Status: active.**
+**Status: active; indexable-surface foundation complete, content expansion paused pending the Phase 1B.2 pilot.**
 
 Goal: grow qualified organic traffic by making useful decision surfaces discoverable and by adding genuinely differentiated content only when the catalog supports it.
 
-Priority order:
+Completed:
 
-- Correct the indexable surface so search engines are pointed at useful canonical product pages rather than generic template volume.
-- Strengthen useful pages by skill and comparison intent.
-- Improve internal linking around real user journeys.
-- Add evergreen decision content selectively.
-- Add search-performance measurement when an appropriate real measurement path is available.
+- **Indexable Surface Foundation (Batch A)** in PR #92: sitemap now promotes the homepage, canonical skill pages, and canonical course-detail pages; `/compare` and generated template SEO routes are no longer promoted in the sitemap; generated routes remain accessible with `noindex, follow`; prominent homepage SEO links target canonical skill pages.
 
-SEO must support the product rather than create thin, duplicated, mass-generated, or misleading pages.
+Next SEO work must wait for product review after the Phase 1B.2 pilot. Do not create new SEO page types, keyword-scaled content, or indexable template volume merely because the technical foundation exists.
 
 ## Phase 4 — Recommendation
 
@@ -102,8 +112,9 @@ Do not build Phase 5 architecture to solve hypothetical scale.
 
 ## Immediate Sequence
 
-1. Treat Phase 1 as completed for the current MVP catalog while maintaining conservative source-backed data quality.
-2. Execute the approved Phase 3 Discovery/SEO — Indexable Surface Foundation batch before adding new SEO page types or content volume.
-3. After that batch, review the actual indexable surfaces and choose a small number of skill/intent pages to strengthen based on user value and available catalog depth.
-4. Correct concrete usability defects discovered during review without opening another broad polish phase.
-5. Activate Phase 2 monetization only when a real program and appropriate disclosures are ready; it is not a prerequisite for Phase 3.
+1. Maintain conservative Phase 1A source trust without reopening verification work for its own sake.
+2. Execute issue #94, Phase 1B.2 — Decision Data Contract v2 + pilot, on exactly the four approved pilot courses.
+3. Judge the pilot against the explicit decision-readiness gate before any catalog-wide migration.
+4. Keep Phase 3 content/traffic expansion paused until the pilot shows that core comparison pages provide meaningful decision value.
+5. If the pilot succeeds, migrate the remaining catalog only in small auditable batches and then return to selective people-first SEO work.
+6. Activate Phase 2 monetization only when a real program and appropriate disclosures are ready; it is not a prerequisite for Phase 3.
