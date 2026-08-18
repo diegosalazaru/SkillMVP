@@ -24,7 +24,7 @@ Future work in this area should be limited to concrete usability defects or regr
 
 ## Phase 1 — Real Data
 
-**Status: Phase 1A source trust complete; Phase 1B.2 pilot implemented and awaiting product review.**
+**Status: Phase 1A source trust complete; Phase 1B.3 pricing pilot implemented and awaiting product review.**
 
 Goal: make the catalog both trustworthy and useful enough to support real user decisions.
 
@@ -48,6 +48,7 @@ Completed:
 
 - **Phase 1B.1 — Comparison Integrity Fix** in PR #93: unknown or unverified values no longer create confident `Same` / `Different` claims; runtime mapping now preserves nullable and verification semantics needed for trustworthy comparisons.
 - **Phase 1B.2 — Decision Data Contract v2 pilot** in issue #94: the structured contract and four-course migration are implemented, both required comparisons pass the internal 5/7 gate, and unsupported dimensions remain explicitly insufficient.
+- **Phase 1B.3 — Pricing as Core Decision Data** in issue #97: structured multi-path pricing is implemented for the same four-course pilot, pricing is a hard gate in addition to the unchanged 5/7 gate, and the comparison surfaces exact USD commitments with provenance and regional context.
 
 Do not migrate the remaining catalog until the pilot proves that the new contract materially improves decision quality without inventing information.
 
@@ -110,8 +111,8 @@ Do not build Phase 5 architecture to solve hypothetical scale.
 ## Immediate Sequence
 
 1. Maintain conservative Phase 1A source trust without reopening verification work for its own sake.
-2. Review the completed Phase 1B.2 four-course pilot against the explicit decision-readiness and product acceptance criteria.
+2. Review the completed Phase 1B.3 four-course pricing pilot against the explicit decision-readiness and product acceptance criteria.
 3. Do not begin catalog-wide migration without a new product decision.
-4. Keep Phase 3 content/traffic expansion paused until the pilot shows that core comparison pages provide meaningful decision value.
+4. Keep Phase 3 content/traffic expansion paused until the pricing pilot shows that core comparison pages provide meaningful decision value.
 5. If the pilot succeeds, migrate the remaining catalog only in small auditable batches and then return to selective people-first SEO work.
 6. Activate Phase 2 monetization only when a real program and appropriate disclosures are ready; it is not a prerequisite for Phase 3.

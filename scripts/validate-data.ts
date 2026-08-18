@@ -29,7 +29,8 @@ const decisionDataFields = [
   "toolsTechnologies",
   "practicalWorkBullets",
   "credential",
-  "costModel"
+  "costModel",
+  "pricingOptions"
 ] as const;
 
 if (!existsSync(coursesPath)) {
@@ -87,6 +88,44 @@ const metadata = JSON.parse(readFileSync(metadataPath, "utf-8")) as SourceMetada
 const metadataByCourseId = new Map(metadata.map((item) => [item.courseId, item]));
 const coursesById = new Map(result.data.map((course) => [course.id, course]));
 
+const hasActionablePricing = (courseId: string) => {
+  const course = coursesById.get(courseId);
+  const verified = metadataByCourseId.get(courseId)?.verifiedFields ?? {};
+
+  if (!course) {
+    throw new Error(`Missing pilot course: ${courseId}`);
+  }
+
+  if (verified.price !== true || verified.pricingOptions !== true) {
+    return false;
+  }
+
+  const optionIds = new Set(course.pricingOptions.map((option) => option.id));
+
+  if (optionIds.size !== course.pricingOptions.length) {
+    throw new Error(`Duplicate pricing option id for ${courseId}.`);
+  }
+
+  for (const option of course.pricingOptions) {
+    if (
+      option.normalizationBasis === "provider_published_usd" &&
+      (option.currency !== "USD" || option.amount !== option.normalizedUsdAmount)
+    ) {
+      throw new Error(
+        `Provider-published USD pricing must preserve the exact amount for ${courseId}/${option.id}.`
+      );
+    }
+  }
+
+  return course.pricingOptions.some(
+    (option) =>
+      option.amount > 0 &&
+      option.normalizedUsdAmount > 0 &&
+      Boolean(option.actionUrl) &&
+      option.evidenceUrls.length > 0
+  );
+};
+
 const getReadiness = (courseId: string) => {
   const course = coursesById.get(courseId);
   const verified = metadataByCourseId.get(courseId)?.verifiedFields ?? {};
@@ -124,6 +163,14 @@ for (const [leftId, rightId] of PILOT_COMPARISONS) {
       leftReadiness[key as keyof typeof leftReadiness] &&
       rightReadiness[key as keyof typeof rightReadiness]
   );
+  const pricingReady = hasActionablePricing(leftId) && hasActionablePricing(rightId);
+
+  if (!pricingReady) {
+    console.error(
+      `[validate:data] Pilot pricing hard gate failed for ${leftId} vs ${rightId}.`
+    );
+    process.exit(1);
+  }
 
   if (sourceBackedForBoth.length < 5) {
     console.error(
@@ -133,7 +180,7 @@ for (const [leftId, rightId] of PILOT_COMPARISONS) {
   }
 
   console.log(
-    `[validate:data] Pilot gate passed for ${leftId} vs ${rightId}: ${sourceBackedForBoth.length}/7.`
+    `[validate:data] Pilot gate passed for ${leftId} vs ${rightId}: pricing PASS + ${sourceBackedForBoth.length}/7.`
   );
 }
 

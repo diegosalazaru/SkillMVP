@@ -6,6 +6,7 @@ import { courses } from "@/lib/catalog-adapter";
 import { useCompareSelection } from "@/contexts/CompareSelectionContext";
 import {
   formatCertificate,
+  getActionablePricingOptions,
   getCourseDecisionSummary,
   getCourseFitBullets,
   isDurationPending,
@@ -50,6 +51,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
   }
 
   const selected = isSelected(course.id);
+  const primaryPricingOption = getActionablePricingOptions(course)[0] ?? null;
   const atLimit = selectedIds.length >= 2 && !selected;
   const selectedCourses = selectedIds
     .map((id) => courses.find((item) => item.id === id))
@@ -110,6 +112,17 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
               >
                 {PROVIDER_CTA_LABEL}
               </a>
+              {primaryPricingOption ? (
+                <a
+                  href={primaryPricingOption.actionUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Open verified pricing path for ${course.title}: ${primaryPricingOption.scope}`}
+                  className="flex min-h-11 items-center justify-center rounded-xl border border-blue-400 px-5 py-2.5 text-center text-sm font-semibold text-blue-100 transition hover:border-blue-300 hover:bg-blue-950"
+                >
+                  Open verified pricing path
+                </a>
+              ) : null}
               <button
                 type="button"
                 aria-pressed={selected}

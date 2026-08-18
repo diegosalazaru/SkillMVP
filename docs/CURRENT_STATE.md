@@ -1,6 +1,6 @@
 # Current State
 
-Last updated after implementing the Phase 1B.2 Decision Data Contract v2 pilot for product review.
+Last updated after implementing the Phase 1B.3 pricing pilot for product review.
 
 ## Product State
 
@@ -11,6 +11,16 @@ The current UI is English-first. The product supports skill discovery, curated c
 Recent product review exposed an important distinction: source-trusted catalog data is not automatically decision-useful data. The product must not only avoid inventing facts; it must preserve enough structured provider-backed information to help a user actually choose between courses.
 
 ## Latest Completed Initiatives
+
+### Phase 1B.3 — Pricing as Core Decision Data — Issue #97
+
+Key outcomes:
+
+- The normalized contract supports multiple structured pricing paths with USD display, payment model, cadence, scope, provenance, observation date, and regional/access context.
+- Migration remains limited to the same four approved pilot courses; the remaining 15 catalog records are unchanged.
+- Both required comparisons pass a new pricing hard gate while retaining the unchanged 5/7 Phase 1B.2 dimension gate.
+- Compare surfaces current payable commitments before provider links and distinguishes course/program pricing from broader platform-subscription alternatives.
+- Pricing evidence and intentional exclusions are recorded in `docs/pricing-phase-1b3-pilot.md`.
 
 ### Phase 1B.2 — Decision Data Contract v2 pilot — Issue #94
 
@@ -51,7 +61,7 @@ Earlier completed initiatives, including Phase 1 Source Verification Batches A/B
 
 - **Phase 0 — MVP:** complete for the current MVP scope.
 - **Phase 1A — Source Trust:** complete for the current 19-course curated MVP catalog; ongoing maintenance only.
-- **Phase 1B — Decision-Grade Data:** Phase 1B.1 is complete and the Phase 1B.2 pilot is implemented; product review must decide whether and how to migrate later batches.
+- **Phase 1B — Decision-Grade Data:** Phase 1B.1, Phase 1B.2, and the Phase 1B.3 pricing pilot are implemented; product review must decide whether and how to migrate later batches.
 - **Phase 2 — Monetization:** gated / not started. It activates only when a real auditable affiliate/referral program exists and does not block Phase 3.
 - **Phase 3 — Discovery and SEO:** active, with the indexable-surface foundation complete. Further content/traffic expansion is paused until the Phase 1B.2 pilot proves that core comparisons provide meaningful decision value.
 - **Phase 4 — Recommendation:** later, gated behind explicit criteria and trustworthy signals.
@@ -63,7 +73,7 @@ Earlier completed initiatives, including Phase 1 Source Verification Batches A/B
 - 17 courses are currently `partially_verified`.
 - 2 courses remain `pending` with explicit source blockers rather than unreviewed status.
 - Source URL mismatches: 0 after the completed verification batches.
-- Most pricing, ratings, and review counts remain unknown or unverified by design.
+- Pricing remains unknown or unverified for the 15 non-pilot courses; the four pilot records now have actionable source-backed USD pricing paths. Most ratings and review counts remain unknown by design.
 - The four Phase 1B.2 pilot records preserve provider-described workload schedules such as months plus hours per week while exact `durationHours` remains null unless the source explicitly states a total.
 - The current normalized `language` field represents the primary taught language when clearly supported by an official source. Additional dubbing/subtitle/language availability remains provenance context unless a later explicit schema initiative changes that model.
 - `report:data-quality` remains part of normal validation.
@@ -84,7 +94,7 @@ Not implemented:
 
 These are intentional roadmap constraints, not missing requirements to fill opportunistically.
 
-## Phase 1B.2 Pilot Result
+## Phase 1B.3 Pilot Result
 
 Pilot scope is exactly four courses and two comparisons:
 
@@ -93,14 +103,15 @@ Pilot scope is exactly four courses and two comparisons:
 
 - AI For Everyone vs Deep Learning Specialization: **5/7 pass**. Source-backed for both: offering/credential type, workload, starting point, learning topics, and cost-model context. Insufficient for both: tools/technologies and practical work.
 - Google Cybersecurity vs IBM Cybersecurity Analyst: **5/7 pass**. Source-backed for both: offering/credential type, workload, learning topics, tools/technologies, and practical work. Insufficient for both: starting point and cost-model context.
+- Pricing hard gate: **pass for both pairs**. Each pilot course has at least one actionable payable path displayed in USD; the 5/7 dimension gate was not weakened.
 
 The gate is internal product-quality validation, not a visible ranking or course score.
 
-## After Phase 1B.2
+## After Phase 1B.3
 
 Return to product review. Do not automatically migrate all 19 courses and do not resume SEO content expansion automatically.
 
-First judge whether the two pilot comparisons materially reduce the need for a user to open both provider pages merely to understand basic differences. If the pilot succeeds, decide the smallest auditable migration sequence for the remaining catalog. If it fails, revise the decision-data model before scaling it.
+First judge whether the two pilot comparisons let a user understand both the learning tradeoffs and current economic commitments without opening both provider pages. If the pilot succeeds, decide the smallest auditable migration sequence for the remaining catalog. If it fails, revise the decision-data or pricing model before scaling it.
 
 ## Parallel Ongoing Work
 

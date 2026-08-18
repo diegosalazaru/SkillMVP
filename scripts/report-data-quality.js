@@ -73,6 +73,16 @@ const decisionDimensions = [
     verified.costModel === true && course.costModel != null]
 ];
 
+const hasActionablePricing = (course, verified) =>
+  verified.price === true &&
+  verified.pricingOptions === true &&
+  course.pricingOptions?.some(
+    (option) =>
+      option.amount > 0 &&
+      option.normalizedUsdAmount > 0 &&
+      option.evidenceUrls?.length > 0
+  );
+
 const coursesPath = resolve(process.cwd(), "data", "normalized", "courses.json");
 const metadataPath = resolve(
   process.cwd(),
@@ -148,6 +158,7 @@ try {
 
   console.log("\nUnknown or pending course fields");
   console.log(`- priceAmount unknown/null: ${courses.filter((course) => course.priceAmount == null).length}`);
+  console.log(`- courses with structured pricing options: ${courses.filter((course) => course.pricingOptions?.length > 0).length}`);
   console.log(`- rating null: ${courses.filter((course) => course.rating == null).length}`);
   console.log(`- reviewCount null: ${courses.filter((course) => course.reviewCount == null).length}`);
   console.log(`- durationHours null: ${courses.filter((course) => course.durationHours == null).length}`);
@@ -166,6 +177,9 @@ try {
     const right = coursesById.get(rightId);
     const leftVerified = metadataByCourseId.get(leftId)?.verifiedFields ?? {};
     const rightVerified = metadataByCourseId.get(rightId)?.verifiedFields ?? {};
+    const pricingReady =
+      hasActionablePricing(left, leftVerified) &&
+      hasActionablePricing(right, rightVerified);
     const sourceBackedForBoth = decisionDimensions
       .filter(([, isReady]) =>
         isReady(left, leftVerified) && isReady(right, rightVerified)
@@ -175,9 +189,14 @@ try {
       .map(([label]) => label)
       .filter((label) => !sourceBackedForBoth.includes(label));
 
-    console.log(`- ${leftId} vs ${rightId}: ${sourceBackedForBoth.length}/7 ${sourceBackedForBoth.length >= 5 ? "PASS" : "FAIL"}`);
+    console.log(`- ${leftId} vs ${rightId}: pricing ${pricingReady ? "PASS" : "FAIL"} + ${sourceBackedForBoth.length}/7 ${pricingReady && sourceBackedForBoth.length >= 5 ? "PASS" : "FAIL"}`);
     console.log(`  - source-backed for both: ${sourceBackedForBoth.join(", ")}`);
     console.log(`  - insufficient: ${insufficient.length > 0 ? insufficient.join(", ") : "none"}`);
+    [left, right].forEach((course) => {
+      (course.pricingOptions ?? []).forEach((option) => {
+        console.log(`  - ${course.id}/${option.id}: ${option.amount} ${option.currency} -> ${option.normalizedUsdAmount} USD; ${option.model}; ${option.cadence}; ${option.scope}; observed ${option.observedAt}; market ${option.referenceMarket ?? "not restricted"}; access ${option.accessContext}; evidence ${option.evidenceUrls.join(", ")}`);
+      });
+    });
   });
 
   const structuralIssues = [

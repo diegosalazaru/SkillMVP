@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Course } from "@/types/course";
 import { useCompareSelection } from "@/contexts/CompareSelectionContext";
 import { courses } from "@/lib/catalog-adapter";
+import { getActionablePricingOptions } from "@/lib/decision-support";
 import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
 import {
   EXTERNAL_PROVIDER_CONTEXT,
@@ -17,6 +18,7 @@ type CourseCardProps = {
 
 export const CourseCard = ({ course }: CourseCardProps) => {
   const { toggle, isSelected, selectedIds, clear } = useCompareSelection();
+  const primaryPricingOption = getActionablePricingOptions(course)[0] ?? null;
   const selected = isSelected(course.id);
   const atLimit = selectedIds.length >= 2;
   const selectedCourses = selectedIds
@@ -101,6 +103,17 @@ export const CourseCard = ({ course }: CourseCardProps) => {
         >
           {selected ? "Remove from compare" : "Add to compare"}
         </button>
+        {primaryPricingOption ? (
+          <a
+            href={primaryPricingOption.actionUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open verified pricing path for ${course.title}: ${primaryPricingOption.scope}`}
+            className="flex min-h-11 w-full items-center justify-center rounded-xl border border-blue-200 bg-blue-50 px-4 py-2.5 text-center text-sm font-semibold text-blue-800 transition hover:border-blue-300 hover:bg-blue-100"
+          >
+            Open verified pricing path
+          </a>
+        ) : null}
         <div className="grid gap-2 sm:grid-cols-2">
           <Link
             href={`/courses/${course.id}`}

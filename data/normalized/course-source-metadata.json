@@ -53,7 +53,7 @@
       "title": true,
       "platform": true,
       "sourceUrl": true,
-      "price": false,
+      "price": true,
       "rating": false,
       "reviewCount": false,
       "duration": true,
@@ -67,9 +67,10 @@
       "toolsTechnologies": true,
       "practicalWork": true,
       "credential": true,
-      "costModel": true
+      "costModel": true,
+      "pricingOptions": true
     },
-    "notes": "Source: official Coursera provider page at the existing canonical URL, reviewed 2026-08-18 for the Decision Data Contract v2 pilot. Verified the specialization and career-certificate context; 3 months at 10 hours/week workload wording; stated Python, linear algebra, and machine learning background; learning topics; Python, TensorFlow, and Hugging Face tools; applied learning project, programming assignments, and labs; and subscription access context. durationHours remains null because the page does not provide one explicit program total. Exact price, rating, and review count remain unknown/null because they are volatile."
+    "notes": "Sources: official Coursera program page and official DeepLearning.AI specialization page, reviewed 2026-08-18. Verified the specialization and career-certificate context; 3 months at 10 hours/week workload wording; stated Python, linear algebra, and machine learning background; learning topics; Python, TensorFlow, and Hugging Face tools; applied learning project, programming assignments, and labs; and subscription access context. Pricing path: $30 USD/month for DeepLearning.AI Pro access to this specialization, graded assignments, and certificate, published on the public DeepLearning.AI page; taxes may apply. The Coursera program subscription was excluded because its exact current amount was not public. DeepLearning.AI's $25/month billed-annually effective rate was excluded because the source does not state the exact annual charge. Temporary Coursera Plus discounts were excluded. durationHours remains null because the page does not provide one explicit program total. Rating and review count remain unknown/null because they are volatile."
   },
   {
     "courseId": "ibm-data-science-ibm",
@@ -125,7 +126,7 @@
       "title": true,
       "platform": true,
       "sourceUrl": true,
-      "price": false,
+      "price": true,
       "rating": false,
       "reviewCount": false,
       "duration": true,
@@ -139,9 +140,10 @@
       "toolsTechnologies": true,
       "practicalWork": true,
       "credential": true,
-      "costModel": false
+      "costModel": false,
+      "pricingOptions": true
     },
-    "notes": "Source: official Coursera provider page at the existing canonical URL, reviewed 2026-08-18 for the Decision Data Contract v2 pilot. Verified the professional-certificate and IBM credential/digital-badge context; 4 months at 10 hours/week workload wording; learning topics; explicitly named ITIL, OWASP ZAP, and Snyk tools; and hands-on labs, projects, case studies, cybersecurity plans, and compliance-framework work. The previous prerequisite bullets were removed because the current page only exposes a generic recommended-experience label. Cost model, exact price, rating, and review count remain unverified."
+    "notes": "Sources: official IBM Cybersecurity Analyst Professional Certificate page on Coursera and official Coursera Plus plan page, reviewed 2026-08-18. Verified the professional-certificate and IBM credential/digital-badge context; 4 months at 10 hours/week workload wording; learning topics; explicitly named ITIL, OWASP ZAP, and Snyk tools; and hands-on labs, projects, case studies, cybersecurity plans, and compliance-framework work. Pricing path: $59 USD/month for Coursera Plus catalog access; the program page explicitly marks this certificate as included, and the plan page publishes the monthly amount and initial 7-day trial. The direct certificate subscription was excluded because its exact current amount was not public. The temporary $239/year Coursera Plus promotion was excluded. The previous prerequisite bullets were removed because the current page only exposes a generic recommended-experience label. The course-specific cost model, rating, and review count remain unverified."
   },
   {
     "courseId": "google-cybersecurity-google",
@@ -153,7 +155,7 @@
       "title": true,
       "platform": true,
       "sourceUrl": true,
-      "price": false,
+      "price": true,
       "rating": false,
       "reviewCount": false,
       "duration": true,
@@ -167,9 +169,10 @@
       "toolsTechnologies": true,
       "practicalWork": true,
       "credential": true,
-      "costModel": true
+      "costModel": true,
+      "pricingOptions": true
     },
-    "notes": "Source: official Coursera provider page at the existing canonical URL, reviewed 2026-08-18 for the Decision Data Contract v2 pilot. Verified the professional-certificate and Google credential context; 6 months at 7 hours/week workload wording; no prior experience requirement; learning topics; Linux, Python, Bash, SQL, SIEM, and intrusion-detection tools; hands-on labs, practice-based assessments, and portfolio activities; and monthly-subscription/free-trial context with regional variation. durationHours remains null because the schedule is not converted into an exact total. Exact price, rating, and review count remain unknown/null because they are volatile."
+    "notes": "Sources: official Google Cybersecurity Professional Certificate page on Coursera and official Coursera Plus plan page, reviewed 2026-08-18. Verified the professional-certificate and Google credential context; 6 months at 7 hours/week workload wording; no prior experience requirement; learning topics; Linux, Python, Bash, SQL, SIEM, and intrusion-detection tools; and hands-on labs, practice-based assessments, and portfolio activities. Pricing paths: $49 USD/month for the certificate in the United States and Canada after an initial 7-day trial, with lower pricing possible elsewhere; and $59 USD/month for Coursera Plus catalog access, with the program page explicitly marking this certificate as included. The provider's under-$300 completion estimate was excluded because it depends on completion pace, and the temporary $239/year Coursera Plus promotion was excluded. durationHours remains null because the schedule is not converted into an exact total. Rating and review count remain unknown/null because they are volatile."
   },
   {
     "courseId": "introduction-cyber-security-nyux-edx",
@@ -401,7 +404,7 @@
       "title": true,
       "platform": true,
       "sourceUrl": true,
-      "price": false,
+      "price": true,
       "rating": false,
       "reviewCount": false,
       "duration": true,
@@ -415,9 +418,10 @@
       "toolsTechnologies": false,
       "practicalWork": false,
       "credential": true,
-      "costModel": true
+      "costModel": true,
+      "pricingOptions": true
     },
-    "notes": "Source: official Coursera provider page at the existing canonical URL, reviewed 2026-08-18 for the Decision Data Contract v2 pilot. Verified the single-course and shareable-course-certificate context; explicit 7-hour completion signal; no prior experience requirement; learning topics; and paid certificate experience with possible free-trial or full-course-without-certificate access. The source does not explicitly support named tools/technologies or hands-on project/lab work, so those dimensions remain empty and unverified. Exact price, rating, and review count remain unknown/null because they are volatile."
+    "notes": "Sources: official Coursera course page and official DeepLearning.AI course page, reviewed 2026-08-18. Verified the single-course and shareable-course-certificate context; explicit 7-hour completion signal; no prior experience requirement; learning topics; and paid certificate experience. Pricing path: $49 USD one-time for course access and 180 days of certificate eligibility, published on the public DeepLearning.AI page. Coursera-localized checkout amounts were not used as universal pricing, and possible free-trial or no-certificate access was excluded because the course page presents it conditionally rather than as a guaranteed current path. The source does not explicitly support named tools/technologies or hands-on project/lab work, so those dimensions remain empty and unverified. Rating and review count remain unknown/null because they are volatile."
   },
   {
     "courseId": "ibm-ai-engineering-ibm",

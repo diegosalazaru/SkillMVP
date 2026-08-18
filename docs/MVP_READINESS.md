@@ -4,7 +4,7 @@
 
 - Skills Compare is an English-first product for finding skills, reviewing relevant online courses, comparing two options, and opening the original provider page.
 - Phase 0 is complete for the current MVP scope.
-- Phase 1A source trust is complete for the current 19-course catalog; the Phase 1B.2 decision-data pilot is implemented on exactly four courses and awaits product review before any wider migration.
+- Phase 1A source trust is complete for the current 19-course catalog; the Phase 1B.3 pricing pilot extends the Phase 1B.2 decision-data pilot on exactly four courses and awaits product review before any wider migration.
 - Phase 2 monetization is gated until a real auditable affiliate/referral program exists and does not block Phase 3.
 - Phase 3 Discovery and SEO has its indexable-surface foundation in place; content expansion remains paused pending review of the Phase 1B.2 pilot.
 - The normalized catalog contains 19 curated courses.
@@ -18,20 +18,21 @@
 - Mobile Selection and Discovery UX is merged: compare selection persists for up to 24 hours, returning selections are surfaced, and the compare bar is available globally outside the compare page.
 - Decision-focused visual polish is merged across the core Search -> Compare -> Decide journey.
 - Decision Data Contract v2 preserves provider-backed offering, workload, tool, practical-work, credential, and cost-model signals for the four-course pilot.
+- Structured pricing preserves source-backed payable paths, USD amounts, cadence, scope, provenance, freshness, and regional/access context for the same four-course pilot.
 
 ## Trust and Data Quality Reality
 
 - Phase 1 manual verification reviewed the full 19-course curated catalog at least at the record level.
 - Verification remains conservative and can be partial when a current official page does not support a field.
 - Stable fields such as title, platform/source URL, level, primary taught language, certificate visibility, workload/duration signals, learning topics, and prerequisites are marked verified only when clearly supported.
-- Prices, ratings, review counts, and some durations remain unverified or unknown by design.
+- Prices remain unverified or unknown for the 15 non-pilot courses; the four pilot courses have actionable source-backed USD pricing paths. Ratings, review counts, and some durations remain unknown by design.
 - Monthly or weekly workload estimates are not converted into invented exact `durationHours`; those values remain null unless the official source provides a sufficiently exact total.
 - The normalized `language` field represents the primary taught language when clearly supported. Additional dubbing, subtitle, translation, or language availability remains provenance context unless a future explicit schema initiative expands the model.
 - `introduction-cyber-security-nyux-edx` remains pending because the recorded edX page is unavailable and no current official page clearly represents the exact same NYUx offering.
 - `data-analytics-essentials-cisco` remains pending because the recorded Coursera listing is unavailable and Cisco's current instructor-led offering does not establish that it is the same listing.
 - Unknown data must remain null, unknown, pending, or explicitly unverified.
-- Both approved pilot comparisons pass the internal 5/7 decision-readiness gate while retaining explicit insufficiencies; this gate is not a visible ranking or course score.
-- Users should verify final pricing, duration, certificate terms, enrollment details, and availability on the provider page before deciding.
+- Both approved pilot comparisons pass the pricing hard gate and the unchanged internal 5/7 decision-readiness gate while retaining explicit insufficiencies; these gates are not visible rankings or course scores.
+- Users can compare the current verified pricing commitments inside Skills Compare and should use provider checkout to confirm final taxes, regional terms, eligibility, and availability.
 
 ## What Works
 
@@ -56,12 +57,13 @@
 - No outcome, employment, partnership, or provider endorsement claims should be made.
 - No user accounts, cookies, database, scraping, external APIs, or new analytics vendors are implemented.
 
-## Decision Data Pilot Reality
+## Decision Data and Pricing Pilot Reality
 
 - AI For Everyone vs Deep Learning Specialization passes 5/7 with tools and practical work explicitly insufficient for both sides.
 - Google Cybersecurity vs IBM Cybersecurity Analyst passes 5/7 with starting point and cost-model context explicitly insufficient for both sides.
+- Both pairs also pass the separate pricing hard gate; every pilot course has at least one source-backed payable path displayed in USD.
 - The schema migration is limited to those four records. Product review must decide whether a later small-batch rollout is justified.
-- Exact volatile prices remain outside the decision-readiness requirement; provider pages remain the final source for enrollment terms.
+- Exact actionable pricing is now required for pilot decision-readiness. Provider checkout remains the final source for transaction-specific taxes, eligibility, regional variation, and availability.
 
 ## Validation Workflow
 
@@ -76,4 +78,4 @@ Use the documented repository-local TypeScript fallback only when the normal pnp
 
 ## Active Near-Term Gate
 
-Product review must evaluate the Phase 1B.2 pilot before approving any migration of the remaining 15 catalog records or resuming Phase 3 content expansion. Phase 2 monetization remains gated until a real program exists.
+Product review must evaluate the Phase 1B.3 pricing pilot before approving any migration of the remaining 15 catalog records or resuming Phase 3 content expansion. Phase 2 monetization remains gated until a real program exists.
