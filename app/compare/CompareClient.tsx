@@ -475,8 +475,6 @@ export default function CompareClient() {
         </div>
       </section>
 
-      <AdPlaceholder />
-
       <section className="rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-[0_18px_45px_-36px_rgba(15,23,42,0.45)] sm:p-7">
         <div className="max-w-3xl">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-700">
@@ -541,6 +539,8 @@ export default function CompareClient() {
           </button>
         </div>
       </section>
+
+      <AdPlaceholder />
 
     </section>
   );
