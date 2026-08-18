@@ -52,7 +52,14 @@ const sourceMetadataByCourseId = new Map(
   (sourceMetadata as SourceMetadata[]).map((metadata) => [metadata.courseId, metadata])
 );
 
-const formatDurationText = (durationHours: number | null): string => {
+const formatDurationText = (
+  durationHours: number | null,
+  workload: NormalizedCourse["workload"]
+): string => {
+  if (workload) {
+    return workload.text;
+  }
+
   if (durationHours == null) {
     return "Duration pending verification";
   }
@@ -95,7 +102,7 @@ const mapCourse = (course: NormalizedCourse): Course | null => {
     priceInterval: course.priceInterval,
     priceText: formatPriceText(course),
     durationHours: course.durationHours,
-    durationText: formatDurationText(course.durationHours),
+    durationText: formatDurationText(course.durationHours, course.workload),
     rating: course.rating,
     reviewCount: course.reviewCount,
     language: course.language,
@@ -103,6 +110,12 @@ const mapCourse = (course: NormalizedCourse): Course | null => {
     shortDescription: course.shortDescription,
     syllabusBullets: course.syllabusBullets,
     prerequisitesBullets: course.prerequisitesBullets,
+    offeringType: course.offeringType,
+    workload: course.workload,
+    toolsTechnologies: course.toolsTechnologies,
+    practicalWorkBullets: course.practicalWorkBullets,
+    credential: course.credential,
+    costModel: course.costModel,
     externalUrl: course.url,
     verifiedFields: sourceMetadataByCourseId.get(course.id)?.verifiedFields ?? {}
   };

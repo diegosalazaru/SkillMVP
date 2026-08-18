@@ -10,6 +10,18 @@ export type ComparisonRow = {
   interpretation: string;
 };
 
+export const CORE_DECISION_DIMENSIONS = [
+  { key: "offeringCredential", label: "Offering / credential type" },
+  { key: "workload", label: "Workload / time commitment" },
+  { key: "startingPoint", label: "Prerequisites / starting point" },
+  { key: "learningTopics", label: "Learning topics" },
+  { key: "toolsTechnologies", label: "Tools / technologies" },
+  { key: "practicalWork", label: "Practical work / projects / labs" },
+  { key: "costModel", label: "Cost model context" }
+] as const;
+
+export type CoreDecisionDimension = (typeof CORE_DECISION_DIMENSIONS)[number]["key"];
+
 const normalize = (value: string) => value.trim().toLowerCase();
 
 type VerifiedField = keyof NonNullable<Course["verifiedFields"]>;
@@ -18,7 +30,13 @@ const isFieldVerified = (course: Course, field: VerifiedField) =>
   course.verifiedFields?.[field] === true;
 
 export const isDurationPending = (course: Course) =>
-  !isFieldVerified(course, "duration") || course.durationHours == null;
+  !(
+    (isFieldVerified(course, "workload") && course.workload != null) ||
+    (isFieldVerified(course, "duration") && course.durationHours != null)
+  );
+
+export const isCostModelPending = (course: Course) =>
+  !isFieldVerified(course, "costModel") || course.costModel == null;
 
 export const isExactPricePending = (course: Course) =>
   !isFieldVerified(course, "price") ||
@@ -38,20 +56,82 @@ export const formatCertificate = (course: Course) =>
 export const summarizeBullets = (items: string[], fallback: string) =>
   items.length > 0 ? items.slice(0, 3).join("; ") : fallback;
 
+const formatOfferingType = (course: Course) => {
+  const labels = {
+    course: "Course",
+    specialization: "Specialization",
+    professional_certificate: "Professional Certificate",
+    other: "Other provider-described format"
+  } as const;
+
+  return course.offeringType ? labels[course.offeringType] : "Offering type not verified";
+};
+
+const formatOfferingCredential = (course: Course) =>
+  course.credential
+    ? `${formatOfferingType(course)} · ${course.credential.text}`
+    : `${formatOfferingType(course)} · Credential context not verified`;
+
+const formatStartingPoint = (course: Course) =>
+  `${course.level} level · ${summarizeBullets(
+    course.prerequisitesBullets,
+    "Starting point not verified"
+  )}`;
+
+export const getDecisionReadiness = (course: Course): Record<CoreDecisionDimension, boolean> => ({
+  offeringCredential:
+    isFieldVerified(course, "offeringType") &&
+    isFieldVerified(course, "credential") &&
+    course.offeringType != null &&
+    course.credential != null,
+  workload: !isDurationPending(course),
+  startingPoint:
+    isFieldVerified(course, "level") &&
+    course.level !== "Unknown" &&
+    isFieldVerified(course, "prerequisites") &&
+    course.prerequisitesBullets.length > 0,
+  learningTopics: isFieldVerified(course, "syllabus") && course.syllabusBullets.length > 0,
+  toolsTechnologies:
+    isFieldVerified(course, "toolsTechnologies") &&
+    (course.toolsTechnologies?.length ?? 0) > 0,
+  practicalWork:
+    isFieldVerified(course, "practicalWork") &&
+    (course.practicalWorkBullets?.length ?? 0) > 0,
+  costModel: !isCostModelPending(course)
+});
+
+export const getPairDecisionReadiness = (left: Course, right: Course) => {
+  const leftReadiness = getDecisionReadiness(left);
+  const rightReadiness = getDecisionReadiness(right);
+  const sourceBackedForBoth = CORE_DECISION_DIMENSIONS.filter(
+    ({ key }) => leftReadiness[key] && rightReadiness[key]
+  );
+
+  return {
+    sourceBackedForBoth,
+    insufficient: CORE_DECISION_DIMENSIONS.filter(
+      ({ key }) => !(leftReadiness[key] && rightReadiness[key])
+    ),
+    passes: sourceBackedForBoth.length >= 5
+  };
+};
+
 export const getCourseFitBullets = (course: Course) => {
   const bullets = [
     course.level === "Unknown"
       ? "You are comfortable verifying the intended learner level."
       : `You want a ${course.level}-level course.`,
-    course.certificate === true
-      ? "You want certificate availability to be visible before opening the provider page."
+    course.credential && isFieldVerified(course, "credential")
+      ? `You want this credential context: ${course.credential.text}.`
+      : course.certificate === true
+        ? "You want certificate availability to be visible before opening the provider page."
       : "You are comfortable verifying certificate availability on the provider page.",
     isDurationPending(course)
       ? "You are comfortable verifying duration and workload before committing."
-      : "You can assess time commitment because duration is available in the catalog.",
-    isExactPricePending(course)
+      : `You can assess the provider-described workload: ${course.durationText}.`,
+    isCostModelPending(course)
       ? "You are comfortable confirming final price or subscription terms on the provider page."
-      : `You can evaluate the listed price model: ${course.priceText}.`,
+      : `You can evaluate the verified cost model: ${course.costModel?.text}.`,
     course.prerequisitesBullets.length > 0
       ? `The listed prerequisites fit your background: ${summarizeBullets(course.prerequisitesBullets, "prerequisites available")}.`
       : "You can verify prerequisites directly on the provider page."
@@ -73,16 +153,18 @@ export const getCourseDecisionSummary = (course: Course) => {
       ? "Level is pending verification."
       : `Level: ${course.level}.`,
     `Language: ${course.language}.`,
-    formatCertificate(course),
+    course.credential && isFieldVerified(course, "credential")
+      ? `Credential: ${course.credential.text}.`
+      : formatCertificate(course),
     isDurationPending(course)
-      ? "Duration is pending verification."
-      : `Catalog duration: ${course.durationText}.`
+      ? "Workload is pending verification."
+      : `Provider-described workload: ${course.durationText}.`
   ];
 
   const pending = [
     course.rating == null ? "Rating/review count is not available in Skills Compare." : null,
     isExactPricePending(course) ? "Exact price or subscription terms must be verified on the provider page." : null,
-    isDurationPending(course) ? "Duration/workload must be checked before committing time." : null,
+    isDurationPending(course) ? "Workload must be checked before committing time." : null,
     course.prerequisitesBullets.length === 0 ? "Prerequisites should be verified on the provider page." : null,
     course.syllabusBullets.length === 0 ? "Current syllabus should be verified on the provider page." : null
   ].filter((item): item is string => item !== null);
@@ -101,7 +183,7 @@ export const getPendingDataImpact = (course: Course) => {
       ? "Exact price pending: confirm total cost, trial terms, and subscription renewal before enrolling."
       : null,
     isDurationPending(course)
-      ? "Duration pending: check weekly workload and total time commitment on the provider page."
+      ? "Workload pending: check weekly workload and total time commitment on the provider page."
       : null,
     course.certificate == null || !isFieldVerified(course, "certificate")
       ? "Certificate status pending: verify whether a certificate is available and under what terms."
@@ -113,13 +195,8 @@ export const getPendingDataImpact = (course: Course) => {
     : ["No major pending catalog fields are currently flagged, but provider details may still change."];
 };
 
-export const getDecisionSummary = (
-  left: Course,
-  right: Course,
-  leftPrice: string,
-  rightPrice: string
-) => {
-  const rows = buildComparisonRows(left, right, leftPrice, rightPrice);
+export const getDecisionSummary = (left: Course, right: Course) => {
+  const rows = buildComparisonRows(left, right);
   const similarities = rows
     .filter((row) => row.status === "Same")
     .slice(0, 3)
@@ -179,27 +256,204 @@ const formatSocialProof = (course: Course) => {
   return parts.length > 0 ? parts.join(" · ") : "Not available";
 };
 
-export const buildComparisonRows = (
-  left: Course,
-  right: Course,
-  leftPrice: string,
-  rightPrice: string
-): ComparisonRow[] => {
-  const rows = [
-    {
-      label: "Price",
-      left: leftPrice,
-      right: rightPrice,
-      comparable: !isExactPricePending(left) && !isExactPricePending(right),
-      equal:
-        left.priceModel === right.priceModel &&
-        left.priceAmount === right.priceAmount &&
-        left.currency === right.currency &&
-        left.priceInterval === right.priceInterval,
-      sameInterpretation: "Verified price data does not differentiate these options.",
-      differentInterpretation: "Verified cost structure differs and may affect fit.",
-      uncertainInterpretation: "Exact comparable pricing is unavailable; verify provider terms."
-    },
+type RawComparisonRow = Omit<ComparisonRow, "status" | "interpretation"> & {
+  comparable: boolean;
+  equal: boolean;
+  sameInterpretation: string;
+  differentInterpretation: string;
+  uncertainInterpretation: string;
+};
+
+export const buildComparisonRows = (left: Course, right: Course): ComparisonRow[] => {
+  const bothHaveDecisionDataV2 = [left, right].every(
+    (course) =>
+      course.offeringType != null ||
+      course.workload != null ||
+      course.credential != null ||
+      course.costModel != null ||
+      (course.toolsTechnologies?.length ?? 0) > 0 ||
+      (course.practicalWorkBullets?.length ?? 0) > 0
+  );
+
+  const rows: RawComparisonRow[] = bothHaveDecisionDataV2
+    ? [
+        {
+          label: "Offering / credential",
+          left: formatOfferingCredential(left),
+          right: formatOfferingCredential(right),
+          comparable:
+            getDecisionReadiness(left).offeringCredential &&
+            getDecisionReadiness(right).offeringCredential,
+          equal:
+            left.offeringType === right.offeringType &&
+            left.credential?.type === right.credential?.type &&
+            normalize(left.credential?.text ?? "") ===
+              normalize(right.credential?.text ?? ""),
+          sameInterpretation: "The verified offering and credential formats are equivalent.",
+          differentInterpretation: "You are choosing different program or credential formats.",
+          uncertainInterpretation: "Offering or credential context is not verified for both options."
+        },
+        {
+          label: "Workload",
+          left: left.durationText,
+          right: right.durationText,
+          comparable: !isDurationPending(left) && !isDurationPending(right),
+          equal: normalize(left.durationText) === normalize(right.durationText),
+          sameInterpretation: "Provider-described workload does not differentiate these options.",
+          differentInterpretation: "Provider-described pace or time commitment differs.",
+          uncertainInterpretation: "Comparable provider-described workload is unavailable."
+        },
+        {
+          label: "Starting point",
+          left: formatStartingPoint(left),
+          right: formatStartingPoint(right),
+          comparable:
+            getDecisionReadiness(left).startingPoint &&
+            getDecisionReadiness(right).startingPoint,
+          equal:
+            left.level === right.level &&
+            equalStringArrays(left.prerequisitesBullets, right.prerequisitesBullets),
+          sameInterpretation: "Verified starting-point requirements substantially match.",
+          differentInterpretation: "Choose the verified starting point that matches your background.",
+          uncertainInterpretation: "Prerequisites or no-experience guidance is not verified for both options."
+        },
+        {
+          label: "Learning topics",
+          left: summarizeBullets(left.syllabusBullets, "Learning topics not available"),
+          right: summarizeBullets(right.syllabusBullets, "Learning topics not available"),
+          comparable:
+            getDecisionReadiness(left).learningTopics &&
+            getDecisionReadiness(right).learningTopics,
+          equal: equalStringArrays(left.syllabusBullets, right.syllabusBullets),
+          sameInterpretation: "Verified learning topics substantially overlap in the catalog.",
+          differentInterpretation: "Compare which verified topics match what you want to learn.",
+          uncertainInterpretation: "Learning topics are not verified for both options."
+        },
+        {
+          label: "Tools / technologies",
+          left: summarizeBullets(left.toolsTechnologies ?? [], "Tools not verified"),
+          right: summarizeBullets(right.toolsTechnologies ?? [], "Tools not verified"),
+          comparable:
+            getDecisionReadiness(left).toolsTechnologies &&
+            getDecisionReadiness(right).toolsTechnologies,
+          equal: equalStringArrays(
+            left.toolsTechnologies ?? [],
+            right.toolsTechnologies ?? []
+          ),
+          sameInterpretation: "Verified named tools substantially overlap.",
+          differentInterpretation: "The verified tool exposure differs between these options.",
+          uncertainInterpretation: "Named tools are not verified for both options."
+        },
+        {
+          label: "Practical work",
+          left: summarizeBullets(left.practicalWorkBullets ?? [], "Practical work not verified"),
+          right: summarizeBullets(right.practicalWorkBullets ?? [], "Practical work not verified"),
+          comparable:
+            getDecisionReadiness(left).practicalWork &&
+            getDecisionReadiness(right).practicalWork,
+          equal: equalStringArrays(
+            left.practicalWorkBullets ?? [],
+            right.practicalWorkBullets ?? []
+          ),
+          sameInterpretation: "Verified practical work substantially overlaps.",
+          differentInterpretation: "The explicitly stated projects, labs, or applied work differ.",
+          uncertainInterpretation: "Practical work is not verified for both options."
+        },
+        {
+          label: "Cost model",
+          left: left.costModel?.text ?? "Cost model not verified",
+          right: right.costModel?.text ?? "Cost model not verified",
+          comparable: !isCostModelPending(left) && !isCostModelPending(right),
+          equal: left.costModel?.type === right.costModel?.type,
+          sameInterpretation: "The verified cost model is the same; exact current prices may still vary.",
+          differentInterpretation: "The verified payment or access terms differ.",
+          uncertainInterpretation: "Cost-model context is not verified for both options."
+        }
+      ]
+    : [
+        {
+          label: "Price",
+          left: left.priceText,
+          right: right.priceText,
+          comparable: !isExactPricePending(left) && !isExactPricePending(right),
+          equal:
+            left.priceModel === right.priceModel &&
+            left.priceAmount === right.priceAmount &&
+            left.currency === right.currency &&
+            left.priceInterval === right.priceInterval,
+          sameInterpretation: "Verified price data does not differentiate these options.",
+          differentInterpretation: "Verified cost structure differs and may affect fit.",
+          uncertainInterpretation: "Exact comparable pricing is unavailable; verify provider terms."
+        },
+        {
+          label: "Duration",
+          left: left.durationText,
+          right: right.durationText,
+          comparable: !isDurationPending(left) && !isDurationPending(right),
+          equal: left.durationHours === right.durationHours,
+          sameInterpretation: "Verified total duration does not differentiate these options.",
+          differentInterpretation: "Verified time commitment differs and may affect fit.",
+          uncertainInterpretation: "Comparable total duration is unavailable; verify workload."
+        },
+        {
+          label: "Learning topics",
+          left: summarizeBullets(left.syllabusBullets, "Learning topics not available"),
+          right: summarizeBullets(right.syllabusBullets, "Learning topics not available"),
+          comparable:
+            isFieldVerified(left, "syllabus") &&
+            isFieldVerified(right, "syllabus") &&
+            left.syllabusBullets.length > 0 &&
+            right.syllabusBullets.length > 0,
+          equal: equalStringArrays(left.syllabusBullets, right.syllabusBullets),
+          sameInterpretation: "Verified learning topics substantially overlap in the catalog.",
+          differentInterpretation: "Compare which verified topics match what you want to learn.",
+          uncertainInterpretation: "Learning topics are not verified for both courses."
+        },
+        {
+          label: "Prerequisites",
+          left: summarizeBullets(left.prerequisitesBullets, "Prerequisites not available"),
+          right: summarizeBullets(right.prerequisitesBullets, "Prerequisites not available"),
+          comparable:
+            isFieldVerified(left, "prerequisites") &&
+            isFieldVerified(right, "prerequisites") &&
+            left.prerequisitesBullets.length > 0 &&
+            right.prerequisitesBullets.length > 0,
+          equal: equalStringArrays(left.prerequisitesBullets, right.prerequisitesBullets),
+          sameInterpretation: "Verified prerequisites do not differentiate these options.",
+          differentInterpretation: "Check which verified prerequisites fit your starting point.",
+          uncertainInterpretation: "Prerequisites are not verified for both courses."
+        },
+        {
+          label: "Level",
+          left: left.level,
+          right: right.level,
+          comparable:
+            isFieldVerified(left, "level") &&
+            isFieldVerified(right, "level") &&
+            left.level !== "Unknown" &&
+            right.level !== "Unknown",
+          equal: left.level === right.level,
+          sameInterpretation: "Both courses target the same learner level.",
+          differentInterpretation: "Choose the verified level that matches your background.",
+          uncertainInterpretation: "Learner level is not verified for both courses."
+        },
+        {
+          label: "Certificate",
+          left: formatCertificate(left),
+          right: formatCertificate(right),
+          comparable:
+            isFieldVerified(left, "certificate") &&
+            isFieldVerified(right, "certificate") &&
+            left.certificate != null &&
+            right.certificate != null,
+          equal: left.certificate === right.certificate,
+          sameInterpretation: "Verified certificate availability is the same, but terms may change.",
+          differentInterpretation: "Verified certificate availability differs; check provider terms.",
+          uncertainInterpretation: "Certificate availability is not verified for both courses."
+        }
+      ];
+
+  rows.push(
     {
       label: "Platform",
       left: left.platform,
@@ -209,30 +463,6 @@ export const buildComparisonRows = (
       sameInterpretation: "Both courses are delivered on the same platform experience.",
       differentInterpretation: "Platform preference, account access, and certificate handling may differ.",
       uncertainInterpretation: "Platform information is not verified for both courses."
-    },
-    {
-      label: "Duration",
-      left: left.durationText,
-      right: right.durationText,
-      comparable: !isDurationPending(left) && !isDurationPending(right),
-      equal: left.durationHours === right.durationHours,
-      sameInterpretation: "Verified total duration does not differentiate these options.",
-      differentInterpretation: "Verified time commitment differs and may affect fit.",
-      uncertainInterpretation: "Comparable total duration is unavailable; verify workload."
-    },
-    {
-      label: "Level",
-      left: left.level,
-      right: right.level,
-      comparable:
-        isFieldVerified(left, "level") &&
-        isFieldVerified(right, "level") &&
-        left.level !== "Unknown" &&
-        right.level !== "Unknown",
-      equal: left.level === right.level,
-      sameInterpretation: "Both courses target the same learner level.",
-      differentInterpretation: "Choose the verified level that matches your background.",
-      uncertainInterpretation: "Learner level is not verified for both courses."
     },
     {
       label: "Language",
@@ -247,50 +477,8 @@ export const buildComparisonRows = (
       sameInterpretation: "Language does not differentiate these options.",
       differentInterpretation: "Language may affect accessibility and completion.",
       uncertainInterpretation: "Primary taught language is not verified for both courses."
-    },
-    {
-      label: "Certificate",
-      left: formatCertificate(left),
-      right: formatCertificate(right),
-      comparable:
-        isFieldVerified(left, "certificate") &&
-        isFieldVerified(right, "certificate") &&
-        left.certificate != null &&
-        right.certificate != null,
-      equal: left.certificate === right.certificate,
-      sameInterpretation: "Verified certificate availability is the same, but terms may change.",
-      differentInterpretation: "Verified certificate availability differs; check provider terms.",
-      uncertainInterpretation: "Certificate availability is not verified for both courses."
-    },
-    {
-      label: "Learning topics",
-      left: summarizeBullets(left.syllabusBullets, "Learning topics not available"),
-      right: summarizeBullets(right.syllabusBullets, "Learning topics not available"),
-      comparable:
-        isFieldVerified(left, "syllabus") &&
-        isFieldVerified(right, "syllabus") &&
-        left.syllabusBullets.length > 0 &&
-        right.syllabusBullets.length > 0,
-      equal: equalStringArrays(left.syllabusBullets, right.syllabusBullets),
-      sameInterpretation: "Verified learning topics substantially overlap in the catalog.",
-      differentInterpretation: "Compare which verified topics match what you want to learn.",
-      uncertainInterpretation: "Learning topics are not verified for both courses."
-    },
-    {
-      label: "Prerequisites",
-      left: summarizeBullets(left.prerequisitesBullets, "Prerequisites not available"),
-      right: summarizeBullets(right.prerequisitesBullets, "Prerequisites not available"),
-      comparable:
-        isFieldVerified(left, "prerequisites") &&
-        isFieldVerified(right, "prerequisites") &&
-        left.prerequisitesBullets.length > 0 &&
-        right.prerequisitesBullets.length > 0,
-      equal: equalStringArrays(left.prerequisitesBullets, right.prerequisitesBullets),
-      sameInterpretation: "Verified prerequisites do not differentiate these options.",
-      differentInterpretation: "Check which verified prerequisites fit your starting point.",
-      uncertainInterpretation: "Prerequisites are not verified for both courses."
     }
-  ];
+  );
 
   const hasSocialProof = [left.rating, left.reviewCount, right.rating, right.reviewCount].some(
     (value) => value != null
@@ -306,7 +494,7 @@ export const buildComparisonRows = (
       (left.reviewCount == null ||
         (isFieldVerified(left, "reviewCount") && isFieldVerified(right, "reviewCount")));
 
-    rows.splice(6, 0, {
+    rows.push({
       label: "Rating / reviews",
       left: formatSocialProof(left),
       right: formatSocialProof(right),
@@ -337,10 +525,10 @@ export const buildComparisonRows = (
 export const getPendingDataRisks = (items: Course[]) => {
   const risks = [
     items.some(isExactPricePending)
-      ? "Price: exact cost or subscription terms are not verified for one or both courses."
+      ? "Exact price: current amount or subscription terms are not verified for one or both courses."
       : null,
     items.some(isDurationPending)
-      ? "Duration: comparable total duration is unavailable for one or both courses."
+      ? "Workload: provider-described time commitment is unavailable for one or both courses."
       : null,
     items.some(
       (course) =>

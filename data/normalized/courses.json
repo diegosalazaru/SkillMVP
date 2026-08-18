@@ -85,6 +85,30 @@
       "Intermediate Python experience, including basic programming, control flow, lists, and dictionaries",
       "Basic linear algebra and machine learning knowledge recommended"
     ],
+    "offeringType": "specialization",
+    "workload": {
+      "durationQuantity": 3,
+      "durationUnit": "month",
+      "hoursPerWeek": 10,
+      "text": "3 months at 10 hours a week"
+    },
+    "toolsTechnologies": [
+      "Python",
+      "TensorFlow",
+      "Hugging Face"
+    ],
+    "practicalWorkBullets": [
+      "Applied learning project building and training deep neural networks",
+      "Programming assignments and labs using TensorFlow"
+    ],
+    "credential": {
+      "type": "specialization_certificate",
+      "text": "Career certificate for the five-course specialization"
+    },
+    "costModel": {
+      "type": "subscription",
+      "text": "An active subscription is required to access labs and submit assignments"
+    },
     "source": "coursera-curated"
   },
   {
@@ -168,10 +192,29 @@
       "Network security and endpoint protection basics",
       "Incident response and SOC-oriented practices"
     ],
-    "prerequisitesBullets": [
-      "No prior cybersecurity experience required",
-      "Basic computer literacy"
+    "prerequisitesBullets": [],
+    "offeringType": "professional_certificate",
+    "workload": {
+      "durationQuantity": 4,
+      "durationUnit": "month",
+      "hoursPerWeek": 10,
+      "text": "4 months at 10 hours a week"
+    },
+    "toolsTechnologies": [
+      "Information Technology Infrastructure Library (ITIL)",
+      "OWASP ZAP",
+      "Snyk"
     ],
+    "practicalWorkBullets": [
+      "Hands-on labs and projects using industry-specific security tools",
+      "Real-world incident response and forensics case studies",
+      "Projects developing cybersecurity plans and compliance frameworks"
+    ],
+    "credential": {
+      "type": "professional_certificate",
+      "text": "IBM Professional Certificate and digital badge"
+    },
+    "costModel": null,
     "source": "coursera-curated"
   },
   {
@@ -202,6 +245,32 @@
       "No prior experience required",
       "Beginner-level orientation"
     ],
+    "offeringType": "professional_certificate",
+    "workload": {
+      "durationQuantity": 6,
+      "durationUnit": "month",
+      "hoursPerWeek": 7,
+      "text": "6 months at 7 hours a week"
+    },
+    "toolsTechnologies": [
+      "Linux",
+      "Python",
+      "Bash",
+      "SQL",
+      "SIEM and intrusion detection tools"
+    ],
+    "practicalWorkBullets": [
+      "Hands-on labs and practice-based assessments simulating cybersecurity scenarios",
+      "Portfolio activities in each course"
+    ],
+    "credential": {
+      "type": "professional_certificate",
+      "text": "Google Professional Certificate"
+    },
+    "costModel": {
+      "type": "subscription",
+      "text": "Monthly subscription after an initial free trial in the U.S. and Canada; regional pricing may vary"
+    },
     "source": "coursera-curated"
   },
   {
@@ -525,6 +594,23 @@
       "No prior experience required",
       "Designed for non-technical and broad audiences"
     ],
+    "offeringType": "course",
+    "workload": {
+      "durationQuantity": 7,
+      "durationUnit": "hour",
+      "hoursPerWeek": null,
+      "text": "7 hours to complete"
+    },
+    "toolsTechnologies": [],
+    "practicalWorkBullets": [],
+    "credential": {
+      "type": "course_certificate",
+      "text": "Shareable course certificate"
+    },
+    "costModel": {
+      "type": "paid_certificate",
+      "text": "The certificate experience requires purchase; a free trial or full course without a certificate may be available"
+    },
     "source": "coursera-curated"
   },
   {

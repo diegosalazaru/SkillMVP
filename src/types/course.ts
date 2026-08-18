@@ -18,6 +18,27 @@ export type Course = {
   shortDescription: string | null;
   syllabusBullets: string[];
   prerequisitesBullets: string[];
+  offeringType?: "course" | "specialization" | "professional_certificate" | "other" | null;
+  workload?: {
+    durationQuantity: number | null;
+    durationUnit: "hour" | "day" | "week" | "month" | null;
+    hoursPerWeek: number | null;
+    text: string;
+  } | null;
+  toolsTechnologies?: string[];
+  practicalWorkBullets?: string[];
+  credential?: {
+    type:
+      | "course_certificate"
+      | "specialization_certificate"
+      | "professional_certificate"
+      | "other";
+    text: string;
+  } | null;
+  costModel?: {
+    type: "free" | "one_time" | "subscription" | "paid_certificate" | "other";
+    text: string;
+  } | null;
   externalUrl: string;
   verifiedFields?: Partial<
     Record<
@@ -30,7 +51,13 @@ export type Course = {
       | "language"
       | "level"
       | "syllabus"
-      | "prerequisites",
+      | "prerequisites"
+      | "offeringType"
+      | "workload"
+      | "toolsTechnologies"
+      | "practicalWork"
+      | "credential"
+      | "costModel",
       boolean
     >
   >;
