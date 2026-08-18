@@ -26,12 +26,12 @@
     "sourceUrl": "https://www.coursera.org/professional-certificates/google-data-analytics",
     "sourceType": "official_provider_page",
     "verificationStatus": "partially_verified",
-    "lastVerifiedAt": "2026-06-06",
+    "lastVerifiedAt": "2026-08-18",
     "verifiedFields": {
       "title": true,
       "platform": true,
       "sourceUrl": true,
-      "price": false,
+      "price": true,
       "rating": false,
       "reviewCount": false,
       "duration": true,
@@ -39,9 +39,16 @@
       "language": true,
       "level": true,
       "syllabus": true,
-      "prerequisites": true
+      "prerequisites": true,
+      "offeringType": true,
+      "workload": true,
+      "toolsTechnologies": true,
+      "practicalWork": true,
+      "credential": true,
+      "costModel": true,
+      "pricingOptions": true
     },
-    "notes": "Source: official Coursera provider page. Verified title, platform/source URL, beginner level, English language, shareable certificate, workload/duration signal, learning topics, and no prior degree/experience requirement. Existing 180-hour catalog value is supported by the provider's statement that the program includes over 180 hours. Price, rating, and review count intentionally remain unknown/null because they are volatile."
+    "notes": "Sources: official Google Data Analytics Professional Certificate page on Coursera and official Coursera Plus plan page, reviewed 2026-08-18. Verified the professional-certificate and Google credential context; 6 months at 10 hours/week workload wording; no degree or prior experience requirement; data cleaning, analysis, visualization, and communication topics; presentations, spreadsheets, SQL, Tableau, and Python; practice-based assessments, hands-on labs and projects, and a shareable case study; and subscription cost context. Pricing paths: $49 USD/month for the certificate in the United States and Canada after an initial 7-day trial, with lower pricing possible elsewhere; and the normal $59 USD/month Coursera Plus rate for catalog access including this certificate. The temporary Coursera Plus 40%-off first-three-month promotion was excluded as the canonical commitment. The program page also contains inconsistent tool labels: its current program curriculum and FAQ identify Python and say R is not covered, while a separate tools panel lists Ggplot2 and Rmarkdown; the migrated tools use the directly applicable current curriculum and FAQ statements and preserve this conflict here. The provider's under-$300 completion estimate was excluded because it depends on completion pace. durationHours changed from 180 to null because the provider states over 180 hours rather than an exact total and also publishes a cadence. Rating and review count remain unknown/null because they are volatile."
   },
   {
     "courseId": "deep-learning-specialization-deeplearningai",
@@ -201,12 +208,12 @@
     "sourceUrl": "https://www.coursera.org/learn/aws-cloud-technical-essentials",
     "sourceType": "official_provider_page",
     "verificationStatus": "partially_verified",
-    "lastVerifiedAt": "2026-06-06",
+    "lastVerifiedAt": "2026-08-18",
     "verifiedFields": {
       "title": true,
       "platform": true,
       "sourceUrl": true,
-      "price": false,
+      "price": true,
       "rating": false,
       "reviewCount": false,
       "duration": true,
@@ -214,9 +221,16 @@
       "language": true,
       "level": true,
       "syllabus": true,
-      "prerequisites": true
+      "prerequisites": true,
+      "offeringType": true,
+      "workload": true,
+      "toolsTechnologies": true,
+      "practicalWork": true,
+      "credential": true,
+      "costModel": true,
+      "pricingOptions": true
     },
-    "notes": "Source: official Coursera provider page. Verified title, platform/source URL, beginner level, English language, shareable certificate, 2 weeks at 10 hours/week workload signal, learning topics, and stated prerequisites. Price, rating, and review count intentionally remain unknown/null because they are volatile."
+    "notes": "Sources: official AWS Cloud Technical Essentials page on Coursera and official Coursera Plus plan page, reviewed 2026-08-18. Verified the single-course and shareable-course-certificate context; 2 weeks at 10 hours/week workload wording; no prior cloud or AWS knowledge requirement together with the provider's technical-background guidance and preparatory-course recommendation for learners new to cloud or coming from business; AWS compute, storage, database, networking, security, monitoring, and optimization topics; named AWS services; four hands-on labs, a step-by-step application build, and a self-graded capstone; and paid certificate context. Pricing path: the normal $59 USD/month Coursera Plus rate for catalog access, with the course page explicitly linking its inclusion to Coursera Plus. The temporary Coursera Plus 40%-off first-three-month promotion was excluded as the canonical commitment, and exact direct certificate pricing was not public. durationHours changed from 20 to null because multiplying the provider's cadence would create a synthetic exact total. Rating and review count remain unknown/null because they are volatile."
   },
   {
     "courseId": "google-cloud-fundamentals-core-infrastructure-google",
@@ -245,12 +259,12 @@
     "sourceUrl": "https://www.coursera.org/learn/introduction-to-cloud",
     "sourceType": "official_provider_page",
     "verificationStatus": "partially_verified",
-    "lastVerifiedAt": "2026-08-17",
+    "lastVerifiedAt": "2026-08-18",
     "verifiedFields": {
       "title": true,
       "platform": true,
       "sourceUrl": true,
-      "price": false,
+      "price": true,
       "rating": false,
       "reviewCount": false,
       "duration": true,
@@ -258,9 +272,16 @@
       "language": true,
       "level": true,
       "syllabus": true,
-      "prerequisites": false
+      "prerequisites": true,
+      "offeringType": true,
+      "workload": true,
+      "toolsTechnologies": true,
+      "practicalWork": true,
+      "credential": true,
+      "costModel": true,
+      "pricingOptions": true
     },
-    "notes": "Source: official Coursera provider page at the existing canonical URL. Verified the Introduction to Cloud Computing title, Coursera platform/source URL, IBM attribution, beginner level, English language, shareable certificate, 1 week at 10 hours/week workload signal, and learning topics covering cloud characteristics, service and deployment models, infrastructure, and emerging cloud trends. durationHours remains null. Prerequisites remain unverified because the page exposes only a generic recommended-experience label without supporting the catalog's specific statements. Price, rating, and review count intentionally remain unknown/null because they are volatile."
+    "notes": "Sources: official Introduction to Cloud Computing page on Coursera and official Coursera Plus plan page, reviewed 2026-08-18. Verified the single-course and shareable-course-certificate context; 1 week at 10 hours/week workload wording; the provider's beginner-friendly starting point for school, business, or career-change learners without inventing specific technical prerequisites; cloud characteristics, service and deployment models, infrastructure, storage, security, monitoring, and emerging cloud practices; Docker; labs and quizzes; a final hands-on serverless deployment project; and paid certificate context. Pricing path: the normal $59 USD/month Coursera Plus rate for catalog access, with the course page explicitly linking its inclusion to Coursera Plus. The temporary Coursera Plus 40%-off first-three-month promotion was excluded as the canonical commitment, and exact direct certificate pricing was not public. durationHours remains null. Rating and review count remain unknown/null because they are volatile."
   },
   {
     "courseId": "google-project-management-google",
@@ -355,12 +376,12 @@
     "sourceUrl": "https://www.coursera.org/professional-certificates/google-advanced-data-analytics",
     "sourceType": "official_provider_page",
     "verificationStatus": "partially_verified",
-    "lastVerifiedAt": "2026-08-17",
+    "lastVerifiedAt": "2026-08-18",
     "verifiedFields": {
       "title": true,
       "platform": true,
       "sourceUrl": true,
-      "price": false,
+      "price": true,
       "rating": false,
       "reviewCount": false,
       "duration": true,
@@ -368,9 +389,16 @@
       "language": true,
       "level": true,
       "syllabus": true,
-      "prerequisites": true
+      "prerequisites": true,
+      "offeringType": true,
+      "workload": true,
+      "toolsTechnologies": true,
+      "practicalWork": true,
+      "credential": true,
+      "costModel": true,
+      "pricingOptions": true
     },
-    "notes": "Source: official Coursera provider page at the existing canonical URL. Verified the Google Advanced Data Analytics Professional Certificate title, Coursera platform/source URL, Google attribution, advanced level, English language, shareable certificate, 6 months at 10 hours/week workload signal, learning topics covering exploratory analysis, statistics, Python, regression, and machine learning, and stated foundational analytics background. The normalized level was corrected from intermediate to advanced and prerequisites were aligned to the current page. durationHours remains null because the page's over-200-hours statement is not an exact total. Price, rating, and review count intentionally remain unknown/null because they are volatile."
+    "notes": "Sources: official Google Advanced Data Analytics Professional Certificate page on Coursera and official Coursera Plus plan page, reviewed 2026-08-18. Verified the professional-certificate and Google credential context; 6 months at 10 hours/week workload wording; the required foundational data analytics background; exploratory analysis, statistics, experimental design, regression, predictive modeling, machine learning, and stakeholder communication topics; Jupyter Notebook, Kaggle, Python, and Tableau; practice-based assessments, hands-on labs and projects, and a shareable capstone; and subscription cost context. Pricing paths: $49 USD/month for the certificate in the United States and Canada after an initial 7-day trial, with lower pricing possible elsewhere; and the normal $59 USD/month Coursera Plus rate for catalog access including this certificate. The temporary Coursera Plus 40%-off first-three-month promotion was excluded as the canonical commitment. The provider's under-$300 completion estimate was excluded because it depends on completion pace. durationHours remains null because the page's over-200-hours statement is not an exact total and the provider also publishes a cadence. Rating and review count remain unknown/null because they are volatile."
   },
   {
     "courseId": "data-analytics-essentials-cisco",

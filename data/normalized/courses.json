@@ -35,11 +35,11 @@
     "url": "https://www.coursera.org/professional-certificates/google-data-analytics",
     "skillSlug": "data-analysis",
     "level": "beginner",
-    "durationHours": 180,
+    "durationHours": null,
     "language": "en",
     "priceModel": "subscription",
-    "priceAmount": null,
-    "currency": null,
+    "priceAmount": 49,
+    "currency": "USD",
     "priceInterval": "month",
     "rating": null,
     "reviewCount": null,
@@ -55,6 +55,71 @@
     "prerequisitesBullets": [
       "No degree or prior data analytics experience required",
       "Beginner-level orientation"
+    ],
+    "offeringType": "professional_certificate",
+    "workload": {
+      "durationQuantity": 6,
+      "durationUnit": "month",
+      "hoursPerWeek": 10,
+      "text": "6 months at 10 hours a week"
+    },
+    "toolsTechnologies": [
+      "Presentations",
+      "Spreadsheets",
+      "SQL",
+      "Tableau",
+      "Python"
+    ],
+    "practicalWorkBullets": [
+      "Hundreds of practice-based assessments and hands-on labs simulating data analytics scenarios",
+      "Hands-on projects plus a case study that can be shared with potential employers"
+    ],
+    "credential": {
+      "type": "professional_certificate",
+      "text": "Google Data Analytics Professional Certificate"
+    },
+    "costModel": {
+      "type": "subscription",
+      "text": "Certificate access is billed monthly after an initial 7-day free trial, so the final cost depends on time enrolled"
+    },
+    "pricingOptions": [
+      {
+        "id": "google-certificate-us-canada-monthly",
+        "model": "subscription",
+        "amount": 49,
+        "currency": "USD",
+        "normalizedUsdAmount": 49,
+        "cadence": "month",
+        "scope": "Google Data Analytics Professional Certificate access in the United States and Canada",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.coursera.org/professional-certificates/google-data-analytics",
+        "evidenceUrls": [
+          "https://www.coursera.org/professional-certificates/google-data-analytics"
+        ],
+        "observedAt": "2026-08-18",
+        "referenceMarket": "United States and Canada",
+        "accessContext": "public_provider_page",
+        "conditions": "Charged after an initial 7-day free trial; pricing may be lower in other countries; taxes and checkout eligibility may vary"
+      },
+      {
+        "id": "coursera-plus-monthly",
+        "model": "platform_subscription",
+        "amount": 59,
+        "currency": "USD",
+        "normalizedUsdAmount": 59,
+        "cadence": "month",
+        "scope": "Coursera Plus catalog access, including the Google Data Analytics Professional Certificate",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.coursera.org/courseraplus",
+        "evidenceUrls": [
+          "https://www.coursera.org/professional-certificates/google-data-analytics",
+          "https://www.coursera.org/courseraplus"
+        ],
+        "observedAt": "2026-08-18",
+        "referenceMarket": null,
+        "accessContext": "public_provider_page",
+        "conditions": "Normal monthly rate; the public plan page currently advertises a temporary 40% discount for the first 3 months through September 23, 2026; taxes and eligibility may vary"
+      }
     ],
     "source": "coursera-curated"
   },
@@ -389,11 +454,11 @@
     "url": "https://www.coursera.org/learn/aws-cloud-technical-essentials",
     "skillSlug": "cloud-computing",
     "level": "beginner",
-    "durationHours": 20,
+    "durationHours": null,
     "language": "en",
     "priceModel": "subscription",
-    "priceAmount": null,
-    "currency": null,
+    "priceAmount": 59,
+    "currency": "USD",
     "priceInterval": "month",
     "rating": null,
     "reviewCount": null,
@@ -408,7 +473,58 @@
     ],
     "prerequisitesBullets": [
       "No prior cloud computing or AWS product knowledge required",
-      "Designed for learners beginning a cloud-learning journey"
+      "Designed for learners with a technical background; AWS recommends Cloud Practitioner Essentials first for learners new to cloud or coming from a business background"
+    ],
+    "offeringType": "course",
+    "workload": {
+      "durationQuantity": 2,
+      "durationUnit": "week",
+      "hoursPerWeek": 10,
+      "text": "2 weeks at 10 hours a week"
+    },
+    "toolsTechnologies": [
+      "Amazon EC2",
+      "AWS Lambda",
+      "Amazon ECS",
+      "AWS Identity and Access Management (IAM)",
+      "Amazon VPC",
+      "Amazon S3",
+      "Amazon RDS",
+      "Amazon DynamoDB",
+      "Amazon CloudWatch"
+    ],
+    "practicalWorkBullets": [
+      "Four hands-on labs covering IAM, VPC networking, web-application configuration, and high availability",
+      "Step-by-step application build plus a self-graded capstone project"
+    ],
+    "credential": {
+      "type": "course_certificate",
+      "text": "Shareable course certificate for the AWS-authored course"
+    },
+    "costModel": {
+      "type": "paid_certificate",
+      "text": "The certificate experience requires purchase; eligible learners may see a free trial or a full-course, no-certificate option"
+    },
+    "pricingOptions": [
+      {
+        "id": "coursera-plus-monthly",
+        "model": "platform_subscription",
+        "amount": 59,
+        "currency": "USD",
+        "normalizedUsdAmount": 59,
+        "cadence": "month",
+        "scope": "Coursera Plus catalog access, including AWS Cloud Technical Essentials",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.coursera.org/courseraplus",
+        "evidenceUrls": [
+          "https://www.coursera.org/learn/aws-cloud-technical-essentials",
+          "https://www.coursera.org/courseraplus"
+        ],
+        "observedAt": "2026-08-18",
+        "referenceMarket": null,
+        "accessContext": "public_provider_page",
+        "conditions": "Normal monthly rate; the public plan page currently advertises a temporary 40% discount for the first 3 months through September 23, 2026; direct certificate pricing is not stated publicly; taxes and eligibility may vary"
+      }
     ],
     "source": "coursera-curated"
   },
@@ -452,8 +568,8 @@
     "durationHours": null,
     "language": "en",
     "priceModel": "subscription",
-    "priceAmount": null,
-    "currency": null,
+    "priceAmount": 59,
+    "currency": "USD",
     "priceInterval": "month",
     "rating": null,
     "reviewCount": null,
@@ -461,13 +577,56 @@
     "lastUpdatedAt": null,
     "shortDescription": "Beginner course on cloud service models, deployment models, and cloud adoption basics.",
     "syllabusBullets": [
-      "Cloud concepts and value proposition",
-      "IaaS, PaaS, and SaaS models",
-      "Public, private, and hybrid cloud basics"
+      "Cloud characteristics, history, business cases, and cloud-enabled emerging technologies",
+      "IaaS, PaaS, and SaaS service models plus public, private, and hybrid deployment models",
+      "Cloud infrastructure, virtualization, containers, networking, and storage",
+      "Hybrid and multi-cloud, microservices, serverless, DevOps, cloud-native development, security, and monitoring"
     ],
     "prerequisitesBullets": [
-      "No prior cloud experience required",
-      "Basic computing knowledge"
+      "Beginner-friendly introduction for learners seeking general cloud knowledge for school, business, or a career change"
+    ],
+    "offeringType": "course",
+    "workload": {
+      "durationQuantity": 1,
+      "durationUnit": "week",
+      "hoursPerWeek": 10,
+      "text": "1 week at 10 hours a week"
+    },
+    "toolsTechnologies": [
+      "Docker"
+    ],
+    "practicalWorkBullets": [
+      "Labs and quizzes throughout the course to reinforce cloud-computing concepts",
+      "Final hands-on project deploying an application to cloud with a serverless architecture"
+    ],
+    "credential": {
+      "type": "course_certificate",
+      "text": "Shareable course certificate for the IBM-authored course"
+    },
+    "costModel": {
+      "type": "paid_certificate",
+      "text": "The certificate experience requires purchase; eligible learners may see a free trial or a full-course, no-certificate option"
+    },
+    "pricingOptions": [
+      {
+        "id": "coursera-plus-monthly",
+        "model": "platform_subscription",
+        "amount": 59,
+        "currency": "USD",
+        "normalizedUsdAmount": 59,
+        "cadence": "month",
+        "scope": "Coursera Plus catalog access, including Introduction to Cloud Computing",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.coursera.org/courseraplus",
+        "evidenceUrls": [
+          "https://www.coursera.org/learn/introduction-to-cloud",
+          "https://www.coursera.org/courseraplus"
+        ],
+        "observedAt": "2026-08-18",
+        "referenceMarket": null,
+        "accessContext": "public_provider_page",
+        "conditions": "Normal monthly rate; the public plan page currently advertises a temporary 40% discount for the first 3 months through September 23, 2026; direct certificate pricing is not stated publicly; taxes and eligibility may vary"
+      }
     ],
     "source": "coursera-curated"
   },
@@ -598,8 +757,8 @@
     "durationHours": null,
     "language": "en",
     "priceModel": "subscription",
-    "priceAmount": null,
-    "currency": null,
+    "priceAmount": 49,
+    "currency": "USD",
     "priceInterval": "month",
     "rating": null,
     "reviewCount": null,
@@ -607,13 +766,78 @@
     "lastUpdatedAt": null,
     "shortDescription": "Professional certificate covering advanced analytics topics with Python, statistics, and machine learning foundations.",
     "syllabusBullets": [
-      "Exploratory data analysis and statistics",
-      "Python for analysis workflows",
-      "Applied machine learning foundations"
+      "Exploratory data analysis, probability, statistics, and experimental design",
+      "Python-based analysis and data visualization",
+      "Regression, predictive modeling, and machine learning",
+      "Communicating advanced analytical insights to stakeholders"
     ],
     "prerequisitesBullets": [
       "Foundational data analytics skills or equivalent experience",
       "Understanding of spreadsheets, databases, SQL, programming concepts, data visualization, and dashboards"
+    ],
+    "offeringType": "professional_certificate",
+    "workload": {
+      "durationQuantity": 6,
+      "durationUnit": "month",
+      "hoursPerWeek": 10,
+      "text": "6 months at 10 hours a week"
+    },
+    "toolsTechnologies": [
+      "Jupyter Notebook",
+      "Kaggle",
+      "Python",
+      "Tableau"
+    ],
+    "practicalWorkBullets": [
+      "Hundreds of practice-based assessments and hands-on labs simulating advanced data analytics scenarios",
+      "Hands-on projects plus a capstone project that can be shared with potential employers"
+    ],
+    "credential": {
+      "type": "professional_certificate",
+      "text": "Google Advanced Data Analytics Professional Certificate"
+    },
+    "costModel": {
+      "type": "subscription",
+      "text": "Certificate access is billed monthly after an initial 7-day free trial, so the final cost depends on time enrolled"
+    },
+    "pricingOptions": [
+      {
+        "id": "google-certificate-us-canada-monthly",
+        "model": "subscription",
+        "amount": 49,
+        "currency": "USD",
+        "normalizedUsdAmount": 49,
+        "cadence": "month",
+        "scope": "Google Advanced Data Analytics Professional Certificate access in the United States and Canada",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.coursera.org/professional-certificates/google-advanced-data-analytics",
+        "evidenceUrls": [
+          "https://www.coursera.org/professional-certificates/google-advanced-data-analytics"
+        ],
+        "observedAt": "2026-08-18",
+        "referenceMarket": "United States and Canada",
+        "accessContext": "public_provider_page",
+        "conditions": "Charged after an initial 7-day free trial; pricing may be lower in other countries; taxes and checkout eligibility may vary"
+      },
+      {
+        "id": "coursera-plus-monthly",
+        "model": "platform_subscription",
+        "amount": 59,
+        "currency": "USD",
+        "normalizedUsdAmount": 59,
+        "cadence": "month",
+        "scope": "Coursera Plus catalog access, including the Google Advanced Data Analytics Professional Certificate",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.coursera.org/courseraplus",
+        "evidenceUrls": [
+          "https://www.coursera.org/professional-certificates/google-advanced-data-analytics",
+          "https://www.coursera.org/courseraplus"
+        ],
+        "observedAt": "2026-08-18",
+        "referenceMarket": null,
+        "accessContext": "public_provider_page",
+        "conditions": "Normal monthly rate; the public plan page currently advertises a temporary 40% discount for the first 3 months through September 23, 2026; taxes and eligibility may vary"
+      }
     ],
     "source": "coursera-curated"
   },

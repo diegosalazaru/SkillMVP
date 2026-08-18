@@ -1,0 +1,30 @@
+{
+  "approvedCourseIds": [
+    "ai-for-everyone-deeplearningai",
+    "deep-learning-specialization-deeplearningai",
+    "google-cybersecurity-google",
+    "ibm-cybersecurity-analyst-ibm",
+    "google-data-analytics-google",
+    "google-advanced-data-analytics-google",
+    "aws-cloud-technical-essentials-aws",
+    "introduction-to-cloud-computing-ibm"
+  ],
+  "readinessPairs": [
+    [
+      "ai-for-everyone-deeplearningai",
+      "deep-learning-specialization-deeplearningai"
+    ],
+    [
+      "google-cybersecurity-google",
+      "ibm-cybersecurity-analyst-ibm"
+    ],
+    [
+      "google-data-analytics-google",
+      "google-advanced-data-analytics-google"
+    ],
+    [
+      "aws-cloud-technical-essentials-aws",
+      "introduction-to-cloud-computing-ibm"
+    ]
+  ]
+}

@@ -45,11 +45,6 @@ const getVerifiedFieldCoverage = (metadata) => {
   );
 };
 
-const pilotComparisons = [
-  ["ai-for-everyone-deeplearningai", "deep-learning-specialization-deeplearningai"],
-  ["google-cybersecurity-google", "ibm-cybersecurity-analyst-ibm"]
-];
-
 const decisionDimensions = [
   ["offering / credential type", (course, verified) =>
     verified.offeringType === true &&
@@ -90,10 +85,12 @@ const metadataPath = resolve(
   "normalized",
   "course-source-metadata.json"
 );
+const manifestPath = resolve(process.cwd(), "data", "decision-grade-manifest.json");
 
 try {
   const courses = readJsonFile(coursesPath);
   const metadata = existsSync(metadataPath) ? readJsonFile(metadataPath) : [];
+  const decisionGradeManifest = readJsonFile(manifestPath);
 
   const coursesById = new Map(courses.map((course) => [course.id, course]));
   const metadataByCourseId = new Map();
@@ -171,8 +168,9 @@ try {
   console.log(`- source URL mismatches: ${sourceUrlMismatches.length}`);
   console.log(`- duplicate metadata courseIds: ${duplicateMetadataIds.size}`);
 
-  console.log("\nDecision Data Contract v2 pilot gate");
-  pilotComparisons.forEach(([leftId, rightId]) => {
+  console.log("\nDecision Data Contract v2 approved readiness gates");
+  console.log(`- approved courses: ${decisionGradeManifest.approvedCourseIds.length}`);
+  decisionGradeManifest.readinessPairs.forEach(([leftId, rightId]) => {
     const left = coursesById.get(leftId);
     const right = coursesById.get(rightId);
     const leftVerified = metadataByCourseId.get(leftId)?.verifiedFields ?? {};

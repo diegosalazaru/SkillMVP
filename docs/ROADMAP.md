@@ -24,7 +24,7 @@ Future work in this area should be limited to concrete usability defects or regr
 
 ## Phase 1 — Real Data
 
-**Status: Phase 1A source trust complete; Phase 1B.4 comparison-hierarchy pilot implemented and awaiting product review.**
+**Status: Phase 1A source trust complete; Phase 1B.5 decision-grade rollout Batch 1 implemented and awaiting product review.**
 
 Goal: make the catalog both trustworthy and useful enough to support real user decisions.
 
@@ -50,8 +50,9 @@ Completed:
 - **Phase 1B.2 — Decision Data Contract v2 pilot** in issue #94: the structured contract and four-course migration are implemented, both required comparisons pass the internal 5/7 gate, and unsupported dimensions remain explicitly insufficient.
 - **Phase 1B.3 — Pricing as Core Decision Data** in issue #97: structured multi-path pricing is implemented for the same four-course pilot, pricing is a hard gate in addition to the unchanged 5/7 gate, and the comparison surfaces exact USD commitments with provenance and regional context.
 - **Phase 1B.4 — Compare Decision Hierarchy** in issue #99: the compare flow now moves from a deterministic decision summary into a source-backed course snapshot, detailed pricing evidence, criteria, curriculum detail, and final provider verification for the same four-course pilot.
+- **Phase 1B.5 — Decision-Grade Rollout Batch 1** in issue #101: exactly four additional courses across Data Analysis and Cloud Computing now use the approved contract. Both new pairs pass pricing plus 7/7 source-backed dimensions, and an explicit eight-course/four-pair manifest keeps unrelated catalog records outside the migration.
 
-Do not migrate the remaining catalog until the pilot proves that the new contract materially improves decision quality without inventing information.
+Do not migrate the remaining catalog automatically. Any later rollout requires another explicit, auditable batch decision.
 
 ## Phase 2 — Monetization
 
@@ -71,7 +72,7 @@ Do not implement speculative affiliate parameters, fake discounts, paid ranking,
 
 ## Phase 3 — Discovery and SEO
 
-**Status: active; indexable-surface foundation complete, content expansion paused pending product review of the Phase 1B.4 pilot.**
+**Status: active; indexable-surface foundation complete, content expansion paused pending product review of the Phase 1B.5 rollout batch.**
 
 Goal: grow qualified organic traffic by making useful decision surfaces discoverable and by adding genuinely differentiated content only when the catalog supports it.
 
@@ -79,7 +80,7 @@ Completed:
 
 - **Indexable Surface Foundation (Batch A)** in PR #92: sitemap now promotes the homepage, canonical skill pages, and canonical course-detail pages; `/compare` and generated template SEO routes are no longer promoted in the sitemap; generated routes remain accessible with `noindex, follow`; prominent homepage SEO links target canonical skill pages.
 
-Next SEO work must wait for product review after the Phase 1B.4 pilot. Do not create new SEO page types, keyword-scaled content, or indexable template volume merely because the technical foundation exists.
+Next SEO work must wait for product review after the Phase 1B.5 rollout batch. Do not create new SEO page types, keyword-scaled content, or indexable template volume merely because the technical foundation exists.
 
 ## Phase 4 — Recommendation
 
@@ -112,8 +113,8 @@ Do not build Phase 5 architecture to solve hypothetical scale.
 ## Immediate Sequence
 
 1. Maintain conservative Phase 1A source trust without reopening verification work for its own sake.
-2. Review the completed Phase 1B.4 four-course comparison-hierarchy pilot against the explicit decision-readiness and product acceptance criteria.
-3. Do not begin catalog-wide migration without a new product decision.
-4. Keep Phase 3 content/traffic expansion paused until the comparison-hierarchy pilot shows that core comparison pages provide meaningful decision value.
+2. Review the completed Phase 1B.5 Data Analysis and Cloud Computing batch against the explicit decision-readiness and product acceptance criteria.
+3. Do not begin catalog-wide migration or add courses to the decision-grade manifest without a new product decision.
+4. Keep Phase 3 content/traffic expansion paused until the decision-grade rollout shows that core comparison pages provide meaningful decision value.
 5. If the pilot succeeds, migrate the remaining catalog only in small auditable batches and then return to selective people-first SEO work.
 6. Activate Phase 2 monetization only when a real program and appropriate disclosures are ready; it is not a prerequisite for Phase 3.
