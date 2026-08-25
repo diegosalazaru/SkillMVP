@@ -10,18 +10,7 @@ const metadataPath = resolve(
   "normalized",
   "course-source-metadata.json"
 );
-
-const PILOT_COURSE_IDS = [
-  "ai-for-everyone-deeplearningai",
-  "deep-learning-specialization-deeplearningai",
-  "google-cybersecurity-google",
-  "ibm-cybersecurity-analyst-ibm"
-] as const;
-
-const PILOT_COMPARISONS = [
-  ["ai-for-everyone-deeplearningai", "deep-learning-specialization-deeplearningai"],
-  ["google-cybersecurity-google", "ibm-cybersecurity-analyst-ibm"]
-] as const;
+const manifestPath = resolve(process.cwd(), "data", "decision-grade-manifest.json");
 
 const decisionDataFields = [
   "offeringType",
@@ -65,22 +54,72 @@ type SourceMetadata = {
   verifiedFields?: Record<string, boolean>;
 };
 
+type DecisionGradeManifest = {
+  approvedCourseIds: string[];
+  readinessPairs: Array<[string, string]>;
+};
+
 const rawCourses = parsedData as Array<Record<string, unknown>>;
 const migratedCourseIds = rawCourses
   .filter((course) => decisionDataFields.some((field) => Object.hasOwn(course, field)))
   .map((course) => course.id)
   .sort();
-const expectedPilotIds = [...PILOT_COURSE_IDS].sort();
 
-if (JSON.stringify(migratedCourseIds) !== JSON.stringify(expectedPilotIds)) {
+if (!existsSync(manifestPath)) {
+  console.error("[validate:data] data/decision-grade-manifest.json is required.");
+  process.exit(1);
+}
+
+const rawManifest = JSON.parse(readFileSync(manifestPath, "utf-8")) as Partial<DecisionGradeManifest>;
+
+if (
+  !Array.isArray(rawManifest.approvedCourseIds) ||
+  !rawManifest.approvedCourseIds.every((courseId) => typeof courseId === "string") ||
+  !Array.isArray(rawManifest.readinessPairs) ||
+  !rawManifest.readinessPairs.every(
+    (pair) =>
+      Array.isArray(pair) &&
+      pair.length === 2 &&
+      pair.every((courseId) => typeof courseId === "string") &&
+      pair[0] !== pair[1]
+  )
+) {
+  console.error("[validate:data] Invalid decision-grade manifest structure.");
+  process.exit(1);
+}
+
+const manifest = rawManifest as DecisionGradeManifest;
+const approvedIdSet = new Set(manifest.approvedCourseIds);
+
+if (approvedIdSet.size !== manifest.approvedCourseIds.length) {
+  console.error("[validate:data] Duplicate approved course ID in decision-grade manifest.");
+  process.exit(1);
+}
+
+const pairedIdSet = new Set(manifest.readinessPairs.flat());
+const unapprovedPairIds = [...pairedIdSet].filter((courseId) => !approvedIdSet.has(courseId));
+const unpairedApprovedIds = manifest.approvedCourseIds.filter(
+  (courseId) => !pairedIdSet.has(courseId)
+);
+
+if (unapprovedPairIds.length > 0 || unpairedApprovedIds.length > 0) {
   console.error(
-    `[validate:data] Decision Data Contract v2 must be limited to the four pilot courses. Found: ${migratedCourseIds.join(", ")}`
+    `[validate:data] Decision-grade manifest pair coverage is invalid. Unapproved pair IDs: ${unapprovedPairIds.join(", ") || "none"}; approved IDs without a readiness pair: ${unpairedApprovedIds.join(", ") || "none"}.`
+  );
+  process.exit(1);
+}
+
+const expectedApprovedIds = [...manifest.approvedCourseIds].sort();
+
+if (JSON.stringify(migratedCourseIds) !== JSON.stringify(expectedApprovedIds)) {
+  console.error(
+    `[validate:data] Decision Data Contract v2 fields must match the explicit approved course set. Approved: ${expectedApprovedIds.join(", ")}. Found: ${migratedCourseIds.join(", ")}.`
   );
   process.exit(1);
 }
 
 if (!existsSync(metadataPath)) {
-  console.error("[validate:data] course-source-metadata.json is required for the pilot gate.");
+  console.error("[validate:data] course-source-metadata.json is required for the decision-grade gate.");
   process.exit(1);
 }
 
@@ -93,7 +132,7 @@ const hasActionablePricing = (courseId: string) => {
   const verified = metadataByCourseId.get(courseId)?.verifiedFields ?? {};
 
   if (!course) {
-    throw new Error(`Missing pilot course: ${courseId}`);
+    throw new Error(`Missing approved decision-grade course: ${courseId}`);
   }
 
   if (verified.price !== true || verified.pricingOptions !== true) {
@@ -131,7 +170,7 @@ const getReadiness = (courseId: string) => {
   const verified = metadataByCourseId.get(courseId)?.verifiedFields ?? {};
 
   if (!course) {
-    throw new Error(`Missing pilot course: ${courseId}`);
+    throw new Error(`Missing approved decision-grade course: ${courseId}`);
   }
 
   return {
@@ -155,7 +194,7 @@ const getReadiness = (courseId: string) => {
   };
 };
 
-for (const [leftId, rightId] of PILOT_COMPARISONS) {
+for (const [leftId, rightId] of manifest.readinessPairs) {
   const leftReadiness = getReadiness(leftId);
   const rightReadiness = getReadiness(rightId);
   const sourceBackedForBoth = Object.keys(leftReadiness).filter(
@@ -167,20 +206,20 @@ for (const [leftId, rightId] of PILOT_COMPARISONS) {
 
   if (!pricingReady) {
     console.error(
-      `[validate:data] Pilot pricing hard gate failed for ${leftId} vs ${rightId}.`
+      `[validate:data] Decision-grade pricing hard gate failed for ${leftId} vs ${rightId}.`
     );
     process.exit(1);
   }
 
   if (sourceBackedForBoth.length < 5) {
     console.error(
-      `[validate:data] Pilot decision-readiness gate failed for ${leftId} vs ${rightId}: ${sourceBackedForBoth.length}/7.`
+      `[validate:data] Decision-grade readiness gate failed for ${leftId} vs ${rightId}: ${sourceBackedForBoth.length}/7.`
     );
     process.exit(1);
   }
 
   console.log(
-    `[validate:data] Pilot gate passed for ${leftId} vs ${rightId}: pricing PASS + ${sourceBackedForBoth.length}/7.`
+    `[validate:data] Decision-grade gate passed for ${leftId} vs ${rightId}: pricing PASS + ${sourceBackedForBoth.length}/7.`
   );
 }
 
