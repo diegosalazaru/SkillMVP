@@ -130,9 +130,9 @@
     "pageType": "best-courses",
     "intent": "course-discovery",
     "title": "Compare Cybersecurity Courses",
-    "metaDescription": "Explore 4 Cybersecurity course options for course discovery and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 3 Cybersecurity course options for course discovery and compare format, level, certificate availability, and pricing details.",
     "h1": "Compare Cybersecurity Courses",
-    "intro": "This page lists 4 Cybersecurity course options from the current Skills Compare catalog for course discovery. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 3 Cybersecurity course options from the current Skills Compare catalog for course discovery. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Cybersecurity course?",
@@ -150,7 +150,6 @@
     "courseIds": [
       "ibm-cybersecurity-analyst-ibm",
       "google-cybersecurity-google",
-      "introduction-information-security-pluralsight",
       "introduction-cyber-security-nyux-edx"
     ]
   },
@@ -284,9 +283,9 @@
     "pageType": "certification",
     "intent": "credential-path",
     "title": "Certification Cybersecurity Courses",
-    "metaDescription": "Explore 4 Cybersecurity course options for credential path and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 3 Cybersecurity course options for credential path and compare format, level, certificate availability, and pricing details.",
     "h1": "Cybersecurity Certification Courses",
-    "intro": "This page lists 4 Cybersecurity course options from the current Skills Compare catalog for credential path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 3 Cybersecurity course options from the current Skills Compare catalog for credential path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Cybersecurity course?",
@@ -304,7 +303,6 @@
     "courseIds": [
       "ibm-cybersecurity-analyst-ibm",
       "google-cybersecurity-google",
-      "introduction-information-security-pluralsight",
       "introduction-cyber-security-nyux-edx"
     ]
   },
@@ -315,9 +313,9 @@
     "pageType": "for-beginners",
     "intent": "beginner-path",
     "title": "Beginner Cybersecurity Courses",
-    "metaDescription": "Explore 4 Cybersecurity course options for beginner path and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 3 Cybersecurity course options for beginner path and compare format, level, certificate availability, and pricing details.",
     "h1": "Cybersecurity Courses for Beginners",
-    "intro": "This page lists 4 Cybersecurity course options from the current Skills Compare catalog for beginner path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 3 Cybersecurity course options from the current Skills Compare catalog for beginner path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Cybersecurity course?",
@@ -335,7 +333,6 @@
     "courseIds": [
       "ibm-cybersecurity-analyst-ibm",
       "google-cybersecurity-google",
-      "introduction-information-security-pluralsight",
       "introduction-cyber-security-nyux-edx"
     ]
   },
@@ -470,9 +467,9 @@
     "pageType": "learn",
     "intent": "learning-plan",
     "title": "Learn Cybersecurity Courses",
-    "metaDescription": "Explore 4 Cybersecurity course options for learning plan and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 3 Cybersecurity course options for learning plan and compare format, level, certificate availability, and pricing details.",
     "h1": "Learn Cybersecurity",
-    "intro": "This page lists 4 Cybersecurity course options from the current Skills Compare catalog for learning plan. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 3 Cybersecurity course options from the current Skills Compare catalog for learning plan. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Cybersecurity course?",
@@ -490,7 +487,6 @@
     "courseIds": [
       "ibm-cybersecurity-analyst-ibm",
       "google-cybersecurity-google",
-      "introduction-information-security-pluralsight",
       "introduction-cyber-security-nyux-edx"
     ]
   },

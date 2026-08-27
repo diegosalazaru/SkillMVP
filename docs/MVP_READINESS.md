@@ -4,11 +4,11 @@
 
 - Skills Compare is an English-first product for finding skills, reviewing relevant online courses, comparing two options, and opening the original provider page.
 - Phase 0 is complete for the current MVP scope.
-- Phase 1A source trust is complete for the original 19-course catalog; Phase 1B.8 adds two current official-source Pluralsight records and expands the approved decision-grade set to exactly 13 courses and eight pairs for independent product review.
+- Phase 1A source trust is complete for the original 19-course catalog; Phase 1B.8 adds one current official-source Pluralsight Cloud record and expands the approved decision-grade set to exactly 12 courses and seven pairs. The evaluated Cybersecurity candidate is intentionally omitted because official Pluralsight pages conflict on whether it is retired.
 - Phase 2 monetization is gated until a real auditable affiliate/referral program exists and does not block Phase 3.
 - Phase 3 Discovery and SEO has its indexable-surface foundation plus selective decision guides on the five canonical skills with approved readiness pairs; scaled/generated expansion remains gated.
-- The normalized catalog contains 21 curated courses.
-- 19 courses are `partially_verified`; 2 remain `pending` because the exact recorded offering could not be confirmed from a current official source.
+- The normalized catalog contains 20 curated courses.
+- 18 courses are `partially_verified`; 2 remain `pending` because the exact recorded offering could not be confirmed from a current official source.
 - Source URL mismatches are 0 after Phase 1 Source Verification — Coverage Batch B.
 - Generated SEO pages, sitemap support, and internal SEO links are present as an initial foundation, but the current generated SEO surface is not treated as automatically index-worthy.
 - Provider CTA copy and external-link disclosure copy are centralized.
@@ -17,17 +17,17 @@
 - A data quality report is available with `corepack pnpm report:data-quality` and includes verification-status counts, verified-field coverage, fully pending courses, partially verified courses, and unknown field counts.
 - Mobile Selection and Discovery UX is merged: compare selection persists for up to 24 hours, returning selections are surfaced, and the compare bar is available globally outside the compare page.
 - Decision-focused visual polish is merged across the core Search -> Compare -> Decide journey.
-- Decision Data Contract v2 preserves provider-backed offering, workload, tool, practical-work, credential, and cost-model signals for the 13 explicitly approved courses.
-- Structured pricing preserves source-backed payable paths, USD amounts, cadence, scope, provenance, freshness, and regional/access context for the same 13-course set.
+- Decision Data Contract v2 preserves provider-backed offering, workload, tool, practical-work, credential, and cost-model signals for the 12 explicitly approved courses.
+- Structured pricing preserves source-backed payable paths, USD amounts, cadence, scope, provenance, freshness, and regional/access context for the same 12-course set.
 - Compare presents decision differences and a source-backed at-a-glance snapshot before detailed pricing, criteria, curriculum, and final provider verification.
-- Canonical AI, Cybersecurity, Data Analysis, Cloud Computing, and Project Management pages now surface all eight manifest-approved pairs in deterministic order, with compact source-backed tradeoffs and explicit uncertainty before the detailed Compare flow.
+- Canonical AI, Cybersecurity, Data Analysis, Cloud Computing, and Project Management pages now surface all seven manifest-approved pairs in deterministic order, with compact source-backed tradeoffs and explicit uncertainty before the detailed Compare flow.
 
 ## Trust and Data Quality Reality
 
 - Phase 1 manual verification reviewed the full 19-course curated catalog at least at the record level.
 - Verification remains conservative and can be partial when a current official page does not support a field.
 - Stable fields such as title, platform/source URL, level, primary taught language, certificate visibility, workload/duration signals, learning topics, and prerequisites are marked verified only when clearly supported.
-- Prices remain unverified or unknown for the 8 non-migrated courses; the 13 approved decision-grade courses have actionable source-backed USD pricing paths. Ratings, review counts, and some durations remain unknown by design.
+- Prices remain unverified or unknown for the 8 non-migrated courses; the 12 approved decision-grade courses have actionable source-backed USD pricing paths. Ratings, review counts, some durations, and the surviving Pluralsight course's primary taught language remain unknown by design.
 - Monthly or weekly workload estimates are not converted into invented exact `durationHours`; those values remain null unless the official source provides a sufficiently exact total.
 - The normalized `language` field represents the primary taught language when clearly supported. Additional dubbing, subtitle, translation, or language availability remains provenance context unless a future explicit schema initiative expands the model.
 - `introduction-cyber-security-nyux-edx` remains pending because the recorded edX page is unavailable and no current official page clearly represents the exact same NYUx offering.
@@ -69,8 +69,8 @@
 - Google Project Management Professional Certificate vs Project Management Principles and Practices Specialization passes 6/7 plus the pricing hard gate, with tools/technologies explicitly insufficient for the pair.
 - Google Project Management Professional Certificate vs AdelaideX: Introduction to Project Management passes 6/7 plus the pricing hard gate, with edX tools/technologies explicitly insufficient for the pair.
 - AWS Cloud Technical Essentials vs AWS Foundations: Getting Started with the AWS Cloud Essentials passes 5/7 plus the pricing hard gate, with Pluralsight prerequisites and practical work explicitly insufficient.
-- Google Cybersecurity Professional Certificate vs Introduction to Information Security passes 5/7 plus the pricing hard gate, with Pluralsight tools/technologies and practical work explicitly insufficient.
-- The schema migration is limited to the 13 records in `data/decision-grade-manifest.json`. Independent product review must decide whether another small, explicit batch is justified.
+- Introduction to Information Security is blocked and intentionally omitted because its official course page appears active while the current official author page labels it `RETIRED`; no substitute Cybersecurity course was added.
+- The schema migration is limited to the 12 records in `data/decision-grade-manifest.json`. Independent product review must decide whether another small, explicit batch is justified.
 - Exact actionable pricing is required for every approved decision-grade pair. Provider checkout remains the final source for transaction-specific taxes, eligibility, regional variation, and availability.
 
 ## Validation Workflow

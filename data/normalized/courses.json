@@ -418,134 +418,6 @@
     "source": "coursera-curated"
   },
   {
-    "id": "introduction-information-security-pluralsight",
-    "platform": "pluralsight",
-    "title": "Introduction to Information Security",
-    "url": "https://www.pluralsight.com/courses/information-security-introduction",
-    "skillSlug": "cybersecurity",
-    "level": "beginner",
-    "durationHours": 2.8833333333333333,
-    "language": "en",
-    "priceModel": "subscription",
-    "priceAmount": 35,
-    "currency": "USD",
-    "priceInterval": "month",
-    "rating": null,
-    "reviewCount": null,
-    "certificate": true,
-    "lastUpdatedAt": null,
-    "shortDescription": "Short Pluralsight introduction to organizational information-security programs, controls, risk, auditing, incidents, and operations.",
-    "syllabusBullets": [
-      "Security principles, governance, risk management, and compliance",
-      "Asset protection, security controls, architecture, and security operations centers",
-      "Auditing, monitoring, and testing security controls",
-      "Incident management, continuity planning, disaster preparation, and day-to-day security operations"
-    ],
-    "prerequisitesBullets": [
-      "Designed for learners new to cybersecurity or interested in getting started"
-    ],
-    "offeringType": "course",
-    "workload": {
-      "durationQuantity": 2.8833333333333333,
-      "durationUnit": "hour",
-      "hoursPerWeek": null,
-      "text": "2 hours 53 minutes"
-    },
-    "toolsTechnologies": [],
-    "practicalWorkBullets": [],
-    "credential": {
-      "type": "course_certificate",
-      "text": "Pluralsight certificate of completion for a completed video course"
-    },
-    "costModel": {
-      "type": "subscription",
-      "text": "The Security+ or Complete individual subscription includes the Security library; a free trial may provide temporary course access"
-    },
-    "pricingOptions": [
-      {
-        "id": "pluralsight-security-plus-monthly",
-        "model": "platform_subscription",
-        "amount": 35,
-        "currency": "USD",
-        "normalizedUsdAmount": 35,
-        "cadence": "month",
-        "scope": "Pluralsight Security+ individual plan access, including the Security library and this course",
-        "normalizationBasis": "provider_published_usd",
-        "actionUrl": "https://www.pluralsight.com/commerce/browse",
-        "evidenceUrls": [
-          "https://www.pluralsight.com/courses/information-security-introduction",
-          "https://www.pluralsight.com/commerce/browse",
-          "https://www.pluralsight.com/individuals/pricing"
-        ],
-        "observedAt": "2026-08-28",
-        "referenceMarket": "United States",
-        "accessContext": "public_provider_checkout",
-        "conditions": "Public transactional checkout showed the non-promotional USD rate; amounts and currency localize by market; taxes, trial eligibility, and renewal terms may vary"
-      },
-      {
-        "id": "pluralsight-security-plus-annual",
-        "model": "platform_subscription",
-        "amount": 294,
-        "currency": "USD",
-        "normalizedUsdAmount": 294,
-        "cadence": "year",
-        "scope": "Pluralsight Security+ annual individual plan access, including the Security library and this course",
-        "normalizationBasis": "provider_published_usd",
-        "actionUrl": "https://www.pluralsight.com/commerce/browse",
-        "evidenceUrls": [
-          "https://www.pluralsight.com/courses/information-security-introduction",
-          "https://www.pluralsight.com/commerce/browse",
-          "https://www.pluralsight.com/individuals/pricing"
-        ],
-        "observedAt": "2026-08-28",
-        "referenceMarket": "United States",
-        "accessContext": "public_provider_checkout",
-        "conditions": "Public transactional checkout showed the non-promotional USD rate; amounts and currency localize by market; taxes, trial eligibility, and renewal terms may vary"
-      },
-      {
-        "id": "pluralsight-complete-monthly",
-        "model": "platform_subscription",
-        "amount": 55,
-        "currency": "USD",
-        "normalizedUsdAmount": 55,
-        "cadence": "month",
-        "scope": "Pluralsight Complete individual plan access, including every specialty plan and this Security course",
-        "normalizationBasis": "provider_published_usd",
-        "actionUrl": "https://www.pluralsight.com/commerce/browse",
-        "evidenceUrls": [
-          "https://www.pluralsight.com/courses/information-security-introduction",
-          "https://www.pluralsight.com/commerce/browse",
-          "https://www.pluralsight.com/individuals/pricing"
-        ],
-        "observedAt": "2026-08-28",
-        "referenceMarket": "United States",
-        "accessContext": "public_provider_checkout",
-        "conditions": "Complete entitlement is stated on the official plan page; checkout showed the non-promotional USD rate; amounts and currency localize by market; taxes and renewal terms may vary"
-      },
-      {
-        "id": "pluralsight-complete-annual",
-        "model": "platform_subscription",
-        "amount": 468,
-        "currency": "USD",
-        "normalizedUsdAmount": 468,
-        "cadence": "year",
-        "scope": "Pluralsight Complete annual individual plan access, including every specialty plan and this Security course",
-        "normalizationBasis": "provider_published_usd",
-        "actionUrl": "https://www.pluralsight.com/commerce/browse",
-        "evidenceUrls": [
-          "https://www.pluralsight.com/courses/information-security-introduction",
-          "https://www.pluralsight.com/commerce/browse",
-          "https://www.pluralsight.com/individuals/pricing"
-        ],
-        "observedAt": "2026-08-28",
-        "referenceMarket": "United States",
-        "accessContext": "public_provider_checkout",
-        "conditions": "Complete entitlement is stated on the official plan page; checkout showed the non-promotional USD rate; amounts and currency localize by market; taxes and renewal terms may vary"
-      }
-    ],
-    "source": "other"
-  },
-  {
     "id": "introduction-cyber-security-nyux-edx",
     "platform": "edx",
     "title": "Introduction to Cyber Security",
@@ -663,7 +535,7 @@
     "skillSlug": "cloud-computing",
     "level": "beginner",
     "durationHours": 1.1,
-    "language": "en",
+    "language": "unknown",
     "priceModel": "subscription",
     "priceAmount": 35,
     "currency": "USD",

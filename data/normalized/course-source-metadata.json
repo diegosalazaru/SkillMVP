@@ -182,35 +182,6 @@
     "notes": "Sources: official Google Cybersecurity Professional Certificate page on Coursera and official Coursera Plus plan page, reviewed 2026-08-18. Verified the professional-certificate and Google credential context; 6 months at 7 hours/week workload wording; no prior experience requirement; learning topics; Linux, Python, Bash, SQL, SIEM, and intrusion-detection tools; and hands-on labs, practice-based assessments, and portfolio activities. Pricing paths: $49 USD/month for the certificate in the United States and Canada after an initial 7-day trial, with lower pricing possible elsewhere; and $59 USD/month for Coursera Plus catalog access, with the program page explicitly marking this certificate as included. The provider's under-$300 completion estimate was excluded because it depends on completion pace, and the temporary $239/year Coursera Plus promotion was excluded. durationHours remains null because the schedule is not converted into an exact total. Rating and review count remain unknown/null because they are volatile."
   },
   {
-    "courseId": "introduction-information-security-pluralsight",
-    "sourceUrl": "https://www.pluralsight.com/courses/information-security-introduction",
-    "sourceType": "official_provider_page",
-    "verificationStatus": "partially_verified",
-    "lastVerifiedAt": "2026-08-28",
-    "verifiedFields": {
-      "title": true,
-      "platform": true,
-      "sourceUrl": true,
-      "price": true,
-      "rating": false,
-      "reviewCount": false,
-      "duration": true,
-      "certificate": true,
-      "language": true,
-      "level": true,
-      "syllabus": true,
-      "prerequisites": true,
-      "offeringType": true,
-      "workload": true,
-      "toolsTechnologies": false,
-      "practicalWork": false,
-      "credential": true,
-      "costModel": true,
-      "pricingOptions": true
-    },
-    "notes": "Official sources reviewed 2026-08-28: the Pluralsight course page, public transactional checkout, individual-plan page, and Pluralsight certificate-of-completion help article. Verified a beginner Pluralsight video course created by Keith Watson; 2 hours 53 minutes; Security-library inclusion; beginner/new-to-cybersecurity starting-point guidance; information-security principles, governance, risk, compliance, asset protection, controls, auditing, monitoring, testing, incident/disaster preparation, and operations topics; and a course-completion certificate after 100% completion. No named tools or course-specific practical work are claimed. Pricing hard gate PASS: the current public USD checkout showed Security+ at $35/month or $294/year; Complete at $55/month or $468/year is retained only because the official plan page says Complete includes every specialty plan. The separate individual-pricing surface showed materially different figures, so the transactional checkout amounts are canonical and the conflict is preserved; localized checkout observed from Spain showed EUR amounts. Prices are modeled as platform subscriptions, not a course purchase or inferred completion total. Rating/review signals remain null, and promotional/strikethrough pricing is excluded."
-  },
-  {
     "courseId": "introduction-cyber-security-nyux-edx",
     "sourceUrl": "https://www.edx.org/learn/cybersecurity/new-york-university-introduction-to-cyber-security",
     "sourceType": "official_provider_page",
@@ -276,7 +247,7 @@
       "reviewCount": false,
       "duration": true,
       "certificate": true,
-      "language": true,
+      "language": false,
       "level": true,
       "syllabus": true,
       "prerequisites": false,
@@ -288,7 +259,7 @@
       "costModel": true,
       "pricingOptions": true
     },
-    "notes": "Official sources reviewed 2026-08-28: the Pluralsight course page, public transactional checkout, individual-plan page, and Pluralsight certificate-of-completion help article. Verified an AWS-authored beginner video course delivered on Pluralsight; 1 hour 6 minutes; Cloud-library inclusion; AWS Cloud architecture, terminology, Compute, Storage, Database, Networking, and Security categories; AWS Cloud as the only explicitly named technology; and a course-completion certificate after 100% completion. The page does not state prerequisites, named AWS services, labs, projects, or other course-specific practical work, so those remain empty/unverified. Pricing hard gate PASS: the current public USD checkout showed Cloud+ at $35/month or $294/year; Complete at $55/month or $468/year is retained only because the official plan page says Complete includes every specialty plan. The separate individual-pricing surface showed materially different figures, so the transactional checkout amounts are canonical and the conflict is preserved; localized checkout observed from Spain showed EUR amounts. Prices are modeled as platform subscriptions, not a course purchase or inferred completion total. Rating/review signals remain null, and promotional/strikethrough pricing is excluded."
+    "notes": "Official sources reviewed 2026-08-28: the Pluralsight course page, public transactional checkout, individual-plan page, and Pluralsight certificate-of-completion help article. Verified an AWS-authored beginner video course delivered on Pluralsight; 1 hour 6 minutes; Cloud-library inclusion; AWS Cloud architecture, terminology, Compute, Storage, Database, Networking, and Security categories; AWS Cloud as the only explicitly named technology; and a course-completion certificate after 100% completion. The page does not explicitly state the primary taught language, prerequisites, named AWS services, labs, projects, or other course-specific practical work, so those remain unknown or empty and unverified. Pricing hard gate PASS: the current public USD checkout showed Cloud+ at $35/month or $294/year; Complete at $55/month or $468/year is retained only because the official plan page says Complete includes every specialty plan. The separate individual-pricing surface showed materially different figures, so the transactional checkout amounts are canonical and the conflict is preserved; localized checkout observed from Spain showed EUR amounts. Prices are modeled as platform subscriptions, not a course purchase or inferred completion total. Rating/review signals remain null, and promotional/strikethrough pricing is excluded."
   },
   {
     "courseId": "google-cloud-fundamentals-core-infrastructure-google",

@@ -4,7 +4,6 @@
     "deep-learning-specialization-deeplearningai",
     "google-cybersecurity-google",
     "ibm-cybersecurity-analyst-ibm",
-    "introduction-information-security-pluralsight",
     "google-data-analytics-google",
     "google-advanced-data-analytics-google",
     "aws-cloud-technical-essentials-aws",
@@ -22,10 +21,6 @@
     [
       "google-cybersecurity-google",
       "ibm-cybersecurity-analyst-ibm"
-    ],
-    [
-      "google-cybersecurity-google",
-      "introduction-information-security-pluralsight"
     ],
     [
       "google-data-analytics-google",
