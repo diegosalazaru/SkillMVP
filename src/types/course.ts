@@ -1,7 +1,7 @@
 export type Course = {
   id: string;
   title: string;
-  platform: "Coursera" | "Udemy" | "Microsoft Learn" | "edX";
+  platform: "Coursera" | "Udemy" | "Microsoft Learn" | "edX" | "Pluralsight";
   skillTags: string[];
   level: "Beginner" | "Intermediate" | "Advanced" | "Mixed" | "Unknown";
   priceModel: "free" | "paid_once" | "subscription" | "unknown";

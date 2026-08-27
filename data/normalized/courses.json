@@ -528,6 +528,134 @@
     "source": "coursera-curated"
   },
   {
+    "id": "aws-foundations-cloud-essentials-pluralsight",
+    "platform": "pluralsight",
+    "title": "AWS Foundations: Getting Started with the AWS Cloud Essentials",
+    "url": "https://www.pluralsight.com/courses/aws-foundations-getting-started-aws-cloud-essentials",
+    "skillSlug": "cloud-computing",
+    "level": "beginner",
+    "durationHours": 1.1,
+    "language": "unknown",
+    "priceModel": "subscription",
+    "priceAmount": 35,
+    "currency": "USD",
+    "priceInterval": "month",
+    "rating": null,
+    "reviewCount": null,
+    "certificate": true,
+    "lastUpdatedAt": null,
+    "shortDescription": "AWS-authored Pluralsight course introducing AWS Cloud architecture, terminology, and core service categories.",
+    "syllabusBullets": [
+      "AWS Cloud architecture and foundational terminology",
+      "AWS Compute and Storage service categories",
+      "AWS Database and Networking service categories",
+      "AWS Security service categories"
+    ],
+    "prerequisitesBullets": [],
+    "offeringType": "course",
+    "workload": {
+      "durationQuantity": 1.1,
+      "durationUnit": "hour",
+      "hoursPerWeek": null,
+      "text": "1 hour 6 minutes"
+    },
+    "toolsTechnologies": [
+      "AWS Cloud"
+    ],
+    "practicalWorkBullets": [],
+    "credential": {
+      "type": "course_certificate",
+      "text": "Pluralsight certificate of completion for a completed video course"
+    },
+    "costModel": {
+      "type": "subscription",
+      "text": "The Cloud+ or Complete individual subscription includes the Cloud library; a free trial may provide temporary course access"
+    },
+    "pricingOptions": [
+      {
+        "id": "pluralsight-cloud-plus-monthly",
+        "model": "platform_subscription",
+        "amount": 35,
+        "currency": "USD",
+        "normalizedUsdAmount": 35,
+        "cadence": "month",
+        "scope": "Pluralsight Cloud+ individual plan access, including the Cloud library and this course",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.pluralsight.com/commerce/browse",
+        "evidenceUrls": [
+          "https://www.pluralsight.com/courses/aws-foundations-getting-started-aws-cloud-essentials",
+          "https://www.pluralsight.com/commerce/browse",
+          "https://www.pluralsight.com/individuals/pricing"
+        ],
+        "observedAt": "2026-08-28",
+        "referenceMarket": "United States",
+        "accessContext": "public_provider_checkout",
+        "conditions": "Public transactional checkout showed the non-promotional USD rate; amounts and currency localize by market; taxes, trial eligibility, and renewal terms may vary"
+      },
+      {
+        "id": "pluralsight-cloud-plus-annual",
+        "model": "platform_subscription",
+        "amount": 294,
+        "currency": "USD",
+        "normalizedUsdAmount": 294,
+        "cadence": "year",
+        "scope": "Pluralsight Cloud+ annual individual plan access, including the Cloud library and this course",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.pluralsight.com/commerce/browse",
+        "evidenceUrls": [
+          "https://www.pluralsight.com/courses/aws-foundations-getting-started-aws-cloud-essentials",
+          "https://www.pluralsight.com/commerce/browse",
+          "https://www.pluralsight.com/individuals/pricing"
+        ],
+        "observedAt": "2026-08-28",
+        "referenceMarket": "United States",
+        "accessContext": "public_provider_checkout",
+        "conditions": "Public transactional checkout showed the non-promotional USD rate; amounts and currency localize by market; taxes, trial eligibility, and renewal terms may vary"
+      },
+      {
+        "id": "pluralsight-complete-monthly",
+        "model": "platform_subscription",
+        "amount": 55,
+        "currency": "USD",
+        "normalizedUsdAmount": 55,
+        "cadence": "month",
+        "scope": "Pluralsight Complete individual plan access, including every specialty plan and this Cloud course",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.pluralsight.com/commerce/browse",
+        "evidenceUrls": [
+          "https://www.pluralsight.com/courses/aws-foundations-getting-started-aws-cloud-essentials",
+          "https://www.pluralsight.com/commerce/browse",
+          "https://www.pluralsight.com/individuals/pricing"
+        ],
+        "observedAt": "2026-08-28",
+        "referenceMarket": "United States",
+        "accessContext": "public_provider_checkout",
+        "conditions": "Complete entitlement is stated on the official plan page; checkout showed the non-promotional USD rate; amounts and currency localize by market; taxes and renewal terms may vary"
+      },
+      {
+        "id": "pluralsight-complete-annual",
+        "model": "platform_subscription",
+        "amount": 468,
+        "currency": "USD",
+        "normalizedUsdAmount": 468,
+        "cadence": "year",
+        "scope": "Pluralsight Complete annual individual plan access, including every specialty plan and this Cloud course",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.pluralsight.com/commerce/browse",
+        "evidenceUrls": [
+          "https://www.pluralsight.com/courses/aws-foundations-getting-started-aws-cloud-essentials",
+          "https://www.pluralsight.com/commerce/browse",
+          "https://www.pluralsight.com/individuals/pricing"
+        ],
+        "observedAt": "2026-08-28",
+        "referenceMarket": "United States",
+        "accessContext": "public_provider_checkout",
+        "conditions": "Complete entitlement is stated on the official plan page; checkout showed the non-promotional USD rate; amounts and currency localize by market; taxes and renewal terms may vary"
+      }
+    ],
+    "source": "other"
+  },
+  {
     "id": "google-cloud-fundamentals-core-infrastructure-google",
     "platform": "coursera",
     "title": "Google Cloud Fundamentals: Core Infrastructure",

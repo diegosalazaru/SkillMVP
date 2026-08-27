@@ -8,6 +8,7 @@
     "google-advanced-data-analytics-google",
     "aws-cloud-technical-essentials-aws",
     "introduction-to-cloud-computing-ibm",
+    "aws-foundations-cloud-essentials-pluralsight",
     "google-project-management-google",
     "introduction-project-management-edx-adelaidex",
     "project-management-principles-practices-umci"
@@ -28,6 +29,10 @@
     [
       "aws-cloud-technical-essentials-aws",
       "introduction-to-cloud-computing-ibm"
+    ],
+    [
+      "aws-cloud-technical-essentials-aws",
+      "aws-foundations-cloud-essentials-pluralsight"
     ],
     [
       "google-project-management-google",

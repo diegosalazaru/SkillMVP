@@ -1,6 +1,6 @@
 # Current State
 
-Last updated after implementing Phase 3B selective decision-led SEO reactivation for independent product review.
+Last updated after implementing the bounded Phase 1B.8 Pluralsight provider batch for independent product review.
 
 ## Product State
 
@@ -12,16 +12,27 @@ Recent product review exposed an important distinction: source-trusted catalog d
 
 ## Latest Completed Initiatives
 
+### Phase 1B.8 — Pluralsight Provider Batch — Issue #116
+
+Key outcomes:
+
+- Exactly one current Pluralsight course is added: AWS Foundations: Getting Started with the AWS Cloud Essentials. It passes the actionable-pricing hard gate and 5/7 decision dimensions; primary taught language, prerequisites, and course-specific practical work remain unverified.
+- Introduction to Information Security is blocked and intentionally omitted because its official course page appears active while the current official author page labels it `RETIRED`; no substitute Cybersecurity course was added.
+- Current USD checkout commitments are modeled as platform subscriptions: Cloud+ at `$35/month` or `$294/year`, and Complete at `$55/month` or `$468/year`. The conflicting individual-pricing surface and market localization remain explicit provenance conditions.
+- The normalized catalog now contains 20 courses; 12 are decision-grade across seven approved pairs with exact manifest/migration alignment.
+- Pluralsight required only one shared platform mapping. Course cards, details, Compare, centralized outbound behavior, and canonical skill guides remain provider-neutral; Cloud Computing automatically surfaces two pairs while Cybersecurity retains its incumbent pair.
+- Official-source, gate, provider-neutrality, SEO/indexing, and desktop/mobile acceptance evidence is recorded in `docs/decision-grade-phase-1b8-pluralsight-provider.md`.
+
 ### Phase 3B — Selective Decision-led SEO Reactivation — Issue #111
 
 Key outcomes:
 
 - The five canonical skills with accepted decision-grade pairs (`ai`, `cybersecurity`, `data-analysis`, `cloud-computing`, and `project-management`) now expose crawlable, people-first decision guides without creating new routes or scaled SEO volume.
-- One deterministic manifest-driven model preserves readiness-pair order, maps verified catalog facts through the existing decision-support layer, and supplies reusable pair cards. Project Management therefore surfaces both approved pairs automatically, including the Coursera-versus-edX option.
+- One deterministic manifest-driven model preserves readiness-pair order, maps verified catalog facts through the existing decision-support layer, and supplies reusable pair cards. Project Management and Cloud Computing therefore surface their additional approved pairs automatically.
 - Each pair links to the exact stable Compare URL and both canonical course-detail pages. The skill acquisition surface does not add outbound provider behavior, affiliate links, rankings, or provider-specific branches.
-- Target metadata now reflects stable course-comparison intent without volatile prices. The sitemap remains limited to the homepage, eight canonical skills, and 19 course-detail pages; all 20 generated SEO templates remain `noindex, follow` and outside the sitemap.
+- Target metadata reflects stable course-comparison intent without volatile prices. The sitemap remains limited to the homepage, eight canonical skills, and the current 20 course-detail pages; all 20 generated SEO templates remain `noindex, follow` and outside the sitemap.
 - A focused regression check covers target-skill/pair mapping, canonical metadata, generated-route robots directives, sitemap boundaries, and non-target exclusion.
-- Issue #112 supersedes the earlier default-next-provider note: after review, Pluralsight Cloud/Cybersecurity is the default next batch only if current official pricing and entitlement evidence clears the hard gate; LinkedIn Learning remains the fallback. Commission does not influence visible presentation.
+- Issue #116 completed issue #112's bounded Pluralsight Cloud/Cybersecurity evaluation: Cloud cleared the existing hard gate and Cybersecurity was blocked by conflicting official availability evidence. No further provider batch is authorized, and commission does not influence visible presentation.
 
 ### Phase 1B.7 — Multi-provider Acceptance + Cross-platform Project Management — Issue #108
 
@@ -111,8 +122,8 @@ Earlier completed initiatives, including Phase 1 Source Verification Batches A/B
 ## Phase Status
 
 - **Phase 0 — MVP:** complete for the current MVP scope.
-- **Phase 1A — Source Trust:** complete for the current 19-course curated MVP catalog; ongoing maintenance only.
-- **Phase 1B — Decision-Grade Data:** Phase 1B.1 through Phase 1B.7 are implemented; 11 courses across six approved pairs are decision-grade, and independent product review must approve any later batch.
+- **Phase 1A — Source Trust:** complete for the original 19-course curated MVP catalog; the one Phase 1B.8 addition has a current official-source record.
+- **Phase 1B — Decision-Grade Data:** Phase 1B.1 through Phase 1B.8 are implemented; 12 courses across seven approved pairs are decision-grade, and independent product review must approve any later batch.
 - **Phase 2 — Monetization:** gated / not started. It activates only when a real auditable affiliate/referral program exists and does not block Phase 3.
 - **Phase 3 — Discovery and SEO:** active. The indexable-surface foundation and selective Phase 3B decision guides on five canonical skills are implemented; generated SEO templates remain gated pending stronger product/search evidence.
 - **Phase 4 — Recommendation:** later, gated behind explicit criteria and trustworthy signals.
@@ -120,12 +131,12 @@ Earlier completed initiatives, including Phase 1 Source Verification Batches A/B
 
 ## Catalog and Trust State
 
-- The normalized catalog contains 19 curated courses.
-- 17 courses are currently `partially_verified`.
+- The normalized catalog contains 20 curated courses.
+- 18 courses are currently `partially_verified`.
 - 2 courses remain `pending` with explicit source blockers rather than unreviewed status.
 - Source URL mismatches: 0 after the completed verification batches.
-- Pricing remains unknown or unverified for the 8 non-migrated courses; the 11 approved decision-grade records now have actionable source-backed USD pricing paths. Most ratings and review counts remain unknown by design.
-- The 11 approved decision-grade records preserve provider-described workload schedules such as months plus hours per week while exact `durationHours` remains null unless the source explicitly states a total.
+- Pricing remains unknown or unverified for the 8 non-migrated courses; the 12 approved decision-grade records now have actionable source-backed USD pricing paths. Most ratings and review counts remain unknown by design.
+- The 12 approved decision-grade records preserve provider-described workloads, including exact video-course durations and longer schedules, without inferring completion totals.
 - The current normalized `language` field represents the primary taught language when clearly supported by an official source. Additional dubbing/subtitle/language availability remains provenance context unless a later explicit schema initiative changes that model.
 - `report:data-quality` remains part of normal validation.
 - Official provider pages remain the final source for volatile enrollment terms, but Skills Compare should perform the basic comparison work rather than merely redirecting users to two provider pages.
@@ -183,7 +194,7 @@ Phase 1B.7 completed the required cumulative review. All five incumbent comparis
 
 ## Parallel Ongoing Work
 
-Phase 1A source quality remains an ongoing maintenance concern, but verification should be driven by concrete decision-value needs rather than by a goal of maximizing verified-field counts. Phase 3B is bounded to existing canonical skill hubs; additional indexable volume still requires product and search evidence. The next provider-batch default is Pluralsight Cloud/Cybersecurity only if the existing evidence hard gate is satisfied, with LinkedIn Learning as fallback. Monetization remains gated behind a real program and disclosure design, and recommendation remains gated behind trustworthy signals and explicit criteria.
+Phase 1A source quality remains an ongoing maintenance concern, but verification should be driven by concrete decision-value needs rather than by a goal of maximizing verified-field counts. Phase 3B is bounded to existing canonical skill hubs; additional indexable volume still requires product and search evidence. Phase 1B.8 completes the currently authorized provider batch, so any later provider or course requires a new explicit product decision. Monetization remains gated behind a real program and disclosure design, and recommendation remains gated behind trustworthy signals and explicit criteria.
 
 ## Operational Note
 

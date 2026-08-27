@@ -26,7 +26,7 @@ const expectedPairCounts = new Map([
   ["ai", 1],
   ["cybersecurity", 1],
   ["data-analysis", 1],
-  ["cloud-computing", 1],
+  ["cloud-computing", 2],
   ["project-management", 2]
 ]);
 
