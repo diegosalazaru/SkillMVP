@@ -4,9 +4,9 @@
 
 - Skills Compare is an English-first product for finding skills, reviewing relevant online courses, comparing two options, and opening the original provider page.
 - Phase 0 is complete for the current MVP scope.
-- Phase 1A source trust is complete for the current 19-course catalog; Phase 1B.5 Batch 1 expands the approved decision-grade set from four to exactly eight courses and awaits product review before any later batch.
+- Phase 1A source trust is complete for the current 19-course catalog; Phase 1B.6 Batch 2 expands the approved decision-grade set from eight to exactly ten courses and awaits product review before any later batch.
 - Phase 2 monetization is gated until a real auditable affiliate/referral program exists and does not block Phase 3.
-- Phase 3 Discovery and SEO has its indexable-surface foundation in place; content expansion remains paused pending review of the Phase 1B.5 rollout batch.
+- Phase 3 Discovery and SEO has its indexable-surface foundation in place; content expansion remains paused pending review of the Phase 1B.6 rollout batch.
 - The normalized catalog contains 19 curated courses.
 - 17 courses are `partially_verified`; 2 remain `pending` because the exact recorded offering could not be confirmed from a current official source.
 - Source URL mismatches are 0 after Phase 1 Source Verification — Coverage Batch B.
@@ -17,8 +17,8 @@
 - A data quality report is available with `corepack pnpm report:data-quality` and includes verification-status counts, verified-field coverage, fully pending courses, partially verified courses, and unknown field counts.
 - Mobile Selection and Discovery UX is merged: compare selection persists for up to 24 hours, returning selections are surfaced, and the compare bar is available globally outside the compare page.
 - Decision-focused visual polish is merged across the core Search -> Compare -> Decide journey.
-- Decision Data Contract v2 preserves provider-backed offering, workload, tool, practical-work, credential, and cost-model signals for the eight explicitly approved courses.
-- Structured pricing preserves source-backed payable paths, USD amounts, cadence, scope, provenance, freshness, and regional/access context for the same eight-course set.
+- Decision Data Contract v2 preserves provider-backed offering, workload, tool, practical-work, credential, and cost-model signals for the ten explicitly approved courses.
+- Structured pricing preserves source-backed payable paths, USD amounts, cadence, scope, provenance, freshness, and regional/access context for the same ten-course set.
 - Compare presents decision differences and a source-backed at-a-glance snapshot before detailed pricing, criteria, curriculum, and final provider verification.
 
 ## Trust and Data Quality Reality
@@ -26,7 +26,7 @@
 - Phase 1 manual verification reviewed the full 19-course curated catalog at least at the record level.
 - Verification remains conservative and can be partial when a current official page does not support a field.
 - Stable fields such as title, platform/source URL, level, primary taught language, certificate visibility, workload/duration signals, learning topics, and prerequisites are marked verified only when clearly supported.
-- Prices remain unverified or unknown for the 11 non-migrated courses; the eight approved decision-grade courses have actionable source-backed USD pricing paths. Ratings, review counts, and some durations remain unknown by design.
+- Prices remain unverified or unknown for the 9 non-migrated courses; the ten approved decision-grade courses have actionable source-backed USD pricing paths. Ratings, review counts, and some durations remain unknown by design.
 - Monthly or weekly workload estimates are not converted into invented exact `durationHours`; those values remain null unless the official source provides a sufficiently exact total.
 - The normalized `language` field represents the primary taught language when clearly supported. Additional dubbing, subtitle, translation, or language availability remains provenance context unless a future explicit schema initiative expands the model.
 - `introduction-cyber-security-nyux-edx` remains pending because the recorded edX page is unavailable and no current official page clearly represents the exact same NYUx offering.
@@ -65,7 +65,8 @@
 - Both pairs also pass the separate pricing hard gate; every pilot course has at least one source-backed payable path displayed in USD.
 - Google Data Analytics vs Google Advanced Data Analytics passes 7/7 plus the pricing hard gate.
 - AWS Cloud Technical Essentials vs Introduction to Cloud Computing passes 7/7 plus the pricing hard gate.
-- The schema migration is limited to the eight records in `data/decision-grade-manifest.json`. Product review must decide whether another small, explicit batch is justified.
+- Google Project Management Professional Certificate vs Project Management Principles and Practices Specialization passes 6/7 plus the pricing hard gate, with tools/technologies explicitly insufficient for the pair.
+- The schema migration is limited to the ten records in `data/decision-grade-manifest.json`. Product review must decide whether another small, explicit batch is justified.
 - Exact actionable pricing is required for every approved decision-grade pair. Provider checkout remains the final source for transaction-specific taxes, eligibility, regional variation, and availability.
 
 ## Validation Workflow
@@ -81,4 +82,4 @@ Use the documented repository-local TypeScript fallback only when the normal pnp
 
 ## Active Near-Term Gate
 
-Product review must evaluate the Phase 1B.5 rollout batch before approving any migration of the remaining 11 catalog records or resuming Phase 3 content expansion. Phase 2 monetization remains gated until a real program exists.
+Product review must evaluate the Phase 1B.6 rollout batch before approving any migration of the remaining 9 catalog records or resuming Phase 3 content expansion. Phase 2 monetization remains gated until a real program exists.
