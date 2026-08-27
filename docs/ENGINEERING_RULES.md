@@ -20,6 +20,21 @@ GitHub CLI (`gh`) is optional and is not part of the mandatory publishing prefli
 
 Do not reuse unrelated-history commits, synthetic-root history, stale workspaces, or unpublished local-only work.
 
+## Approval Friction
+
+Routine repository work should proceed without interrupting the user when the environment allows. This includes repository reads and edits, standard Git operations, Node/pnpm/TypeScript/Next validation and builds, localhost and browser checks, branch and PR updates, and narrow temporary sandbox escalation for a normal local command.
+
+Explicit approval is required only for genuinely high-risk, security-sensitive, destructive, or out-of-scope actions. Examples include system or security policy changes, broad or permanent permissions, software or dependency installation, credential or secret access, destructive Git or history operations, filesystem changes outside the canonical repository, infrastructure/deployment/CI expansion not required by the task, and material scope expansion.
+
+## PR Lifecycle and Merge Authorization
+
+- Coding agents must leave task PRs as draft by default.
+- `Do not merge` is an absolute instruction.
+- Do not mark a draft PR ready for review unless the task explicitly authorizes that transition.
+- Do not merge, squash-merge, rebase-merge, enable auto-merge, or invoke an equivalent merge action unless the product owner explicitly instructs the agent to merge that specific PR after review.
+- Green CI, Vercel, or local validation is necessary but never implicit authorization to mark a PR ready or merge it.
+- Finishing implementation means pushing the branch, opening or updating the draft PR, reporting validation results and blockers, and then stopping.
+
 ## Scope Discipline
 
 - One approved initiative per PR.
@@ -101,7 +116,7 @@ General validation rules:
 
 ## PR Completion Checklist
 
-Before declaring a PR ready:
+Before finishing implementation on a draft PR:
 
 - Branch is based on current `main` history.
 - Scope matches the approved initiative.
@@ -111,4 +126,4 @@ Before declaring a PR ready:
 - Documentation is updated if a durable decision or roadmap state changed.
 - GitHub checks are green or any missing check is explicitly explained.
 
-Do not merge if there is a known material product, data-truth, build, or history problem.
+Stop after the branch and draft PR are updated and the validation results and blockers are reported. Do not mark the PR ready or merge it without the explicit authorization described above.

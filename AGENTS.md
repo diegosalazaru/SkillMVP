@@ -56,6 +56,15 @@ If fetch, checkout, authentication, permissions, proxy, history, or the initial 
 
 GitHub CLI (`gh`) is optional. It is not a publishing-preflight requirement and must not be installed merely to execute an approved task. Standard `git` authentication and the configured `origin` remote are sufficient for fetch, branch creation, and push. If the branch can be pushed but a local agent cannot open a PR because `gh` is unavailable, continue the implementation, push the completed branch, report that PR creation was unavailable locally, and leave PR creation to the connected GitHub workflow or product owner.
 
+## PR Lifecycle and Merge Authorization
+
+- Coding agents must leave task PRs as draft by default.
+- `Do not merge` is an absolute instruction.
+- Do not mark a draft PR ready for review unless the task explicitly authorizes that transition.
+- Do not merge, squash-merge, rebase-merge, enable auto-merge, or invoke an equivalent merge action unless the product owner explicitly instructs the agent to merge that specific PR after review.
+- Green CI, Vercel, or local validation is necessary but never implicit authorization to mark a PR ready or merge it.
+- Finishing implementation means pushing the branch, opening or updating the draft PR, reporting validation results and blockers, and then stopping.
+
 ## Validation Before PR Completion
 
 Run the validations defined in `docs/ENGINEERING_RULES.md`. At minimum for normal product changes:
