@@ -74,15 +74,16 @@ Do not implement speculative affiliate parameters, fake discounts, paid ranking,
 
 ## Phase 3 — Discovery and SEO
 
-**Status: active; indexable-surface foundation complete, content expansion paused pending independent product review of Phase 1B.7.**
+**Status: active; indexable-surface foundation complete and selective decision-led canonical skill expansion implemented for independent product review.**
 
 Goal: grow qualified organic traffic by making useful decision surfaces discoverable and by adding genuinely differentiated content only when the catalog supports it.
 
 Completed:
 
 - **Indexable Surface Foundation (Batch A)** in PR #92: sitemap now promotes the homepage, canonical skill pages, and canonical course-detail pages; `/compare` and generated template SEO routes are no longer promoted in the sitemap; generated routes remain accessible with `noindex, follow`; prominent homepage SEO links target canonical skill pages.
+- **Phase 3B — Selective decision-led SEO reactivation** in issue #111: the five canonical skills with manifest-approved comparisons now expose reusable, source-backed decision guides and exact Compare entry points. Metadata reflects stable comparison intent, while generated SEO templates remain gated and the sitemap surface is unchanged.
 
-Phase 1B.7 product acceptance indicates that selective people-first SEO work may be ready for consideration, but next SEO work must still wait for the independent product-review decision. Do not create new SEO page types, keyword-scaled content, or indexable template volume merely because the technical foundation exists.
+Phase 3B deliberately limits acquisition work to durable canonical skill hubs backed by accepted comparison data. Do not create new SEO page types, keyword-scaled content, or indexable template volume merely because the technical foundation exists.
 
 ## Phase 4 — Recommendation
 
@@ -115,8 +116,8 @@ Do not build Phase 5 architecture to solve hypothetical scale.
 ## Immediate Sequence
 
 1. Maintain conservative Phase 1A source trust without reopening verification work for its own sake.
-2. Independently review the completed Phase 1B.7 cumulative acceptance evidence and cross-platform AdelaideX migration.
+2. Independently review the selective Phase 3B canonical-skill implementation and its acquisition-to-Compare flow.
 3. Do not begin catalog-wide migration or add courses to the decision-grade manifest without a new product decision.
-4. Keep Phase 3 content/traffic expansion paused until independent product review accepts the Phase 1B.7 evidence.
-5. If review accepts the initiative, resume only selective people-first SEO work and keep any later catalog migration small and auditable.
-6. Activate Phase 2 monetization only when a real program and appropriate disclosures are ready; it is not a prerequisite for Phase 3.
+4. After Phase 3B review, use issue #112's operating-leverage overlay for the next provider batch: Pluralsight Cloud/Cybersecurity is the default only if current official pricing and entitlement evidence clears the existing hard gate; LinkedIn Learning is the provider-neutral fallback if it does not.
+5. Keep generated SEO templates `noindex, follow` and avoid new pair routes or scaled SEO volume until product and search evidence justify them.
+6. Activate Phase 2 monetization only when a real program and appropriate disclosures are ready; commission must never affect visible ordering or factual presentation.

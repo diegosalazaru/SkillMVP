@@ -1,6 +1,6 @@
 # Current State
 
-Last updated after implementing Phase 1B.7 multi-provider acceptance and the bounded AdelaideX migration for independent product review.
+Last updated after implementing Phase 3B selective decision-led SEO reactivation for independent product review.
 
 ## Product State
 
@@ -11,6 +11,17 @@ The current UI is English-first. The product supports skill discovery, curated c
 Recent product review exposed an important distinction: source-trusted catalog data is not automatically decision-useful data. The product must not only avoid inventing facts; it must preserve enough structured provider-backed information to help a user actually choose between courses.
 
 ## Latest Completed Initiatives
+
+### Phase 3B — Selective Decision-led SEO Reactivation — Issue #111
+
+Key outcomes:
+
+- The five canonical skills with accepted decision-grade pairs (`ai`, `cybersecurity`, `data-analysis`, `cloud-computing`, and `project-management`) now expose crawlable, people-first decision guides without creating new routes or scaled SEO volume.
+- One deterministic manifest-driven model preserves readiness-pair order, maps verified catalog facts through the existing decision-support layer, and supplies reusable pair cards. Project Management therefore surfaces both approved pairs automatically, including the Coursera-versus-edX option.
+- Each pair links to the exact stable Compare URL and both canonical course-detail pages. The skill acquisition surface does not add outbound provider behavior, affiliate links, rankings, or provider-specific branches.
+- Target metadata now reflects stable course-comparison intent without volatile prices. The sitemap remains limited to the homepage, eight canonical skills, and 19 course-detail pages; all 20 generated SEO templates remain `noindex, follow` and outside the sitemap.
+- A focused regression check covers target-skill/pair mapping, canonical metadata, generated-route robots directives, sitemap boundaries, and non-target exclusion.
+- Issue #112 supersedes the earlier default-next-provider note: after review, Pluralsight Cloud/Cybersecurity is the default next batch only if current official pricing and entitlement evidence clears the hard gate; LinkedIn Learning remains the fallback. Commission does not influence visible presentation.
 
 ### Phase 1B.7 — Multi-provider Acceptance + Cross-platform Project Management — Issue #108
 
@@ -103,7 +114,7 @@ Earlier completed initiatives, including Phase 1 Source Verification Batches A/B
 - **Phase 1A — Source Trust:** complete for the current 19-course curated MVP catalog; ongoing maintenance only.
 - **Phase 1B — Decision-Grade Data:** Phase 1B.1 through Phase 1B.7 are implemented; 11 courses across six approved pairs are decision-grade, and independent product review must approve any later batch.
 - **Phase 2 — Monetization:** gated / not started. It activates only when a real auditable affiliate/referral program exists and does not block Phase 3.
-- **Phase 3 — Discovery and SEO:** active, with the indexable-surface foundation complete. Phase 1B.7 acceptance supports consideration of selective people-first expansion, but content/traffic work remains paused until independent product review.
+- **Phase 3 — Discovery and SEO:** active. The indexable-surface foundation and selective Phase 3B decision guides on five canonical skills are implemented; generated SEO templates remain gated pending stronger product/search evidence.
 - **Phase 4 — Recommendation:** later, gated behind explicit criteria and trustworthy signals.
 - **Phase 5 — Robust Product:** only if traction justifies the additional architecture.
 
@@ -168,11 +179,11 @@ Phase 1B.7 completed the required cumulative review. All five incumbent comparis
 - All five incumbent pairs pass cumulative desktop/mobile product acceptance.
 - Google Project Management vs AdelaideX: **6/7 pass** plus pricing **pass**; tools/technologies is explicitly insufficient.
 - The approved decision-grade set is 11 courses across six pairs, including the first Coursera-versus-edX pair.
-- Independent product review may consider resuming selective Phase 3 SEO work, but SEO remains paused until that decision is made.
+- Phase 3B uses this accepted decision-grade evidence only on the five corresponding canonical skill pages; it does not authorize additional catalog migration or scaled SEO routes.
 
 ## Parallel Ongoing Work
 
-Phase 1A source quality remains an ongoing maintenance concern, but verification should be driven by concrete decision-value needs rather than by a goal of maximizing verified-field counts. Phase 3 technical SEO foundation is in place, but additional indexable content waits for decision-quality review. Monetization remains gated behind a real program and disclosure design, and recommendation remains gated behind trustworthy signals and explicit criteria.
+Phase 1A source quality remains an ongoing maintenance concern, but verification should be driven by concrete decision-value needs rather than by a goal of maximizing verified-field counts. Phase 3B is bounded to existing canonical skill hubs; additional indexable volume still requires product and search evidence. The next provider-batch default is Pluralsight Cloud/Cybersecurity only if the existing evidence hard gate is satisfied, with LinkedIn Learning as fallback. Monetization remains gated behind a real program and disclosure design, and recommendation remains gated behind trustworthy signals and explicit criteria.
 
 ## Operational Note
 

@@ -3,10 +3,12 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { CourseCard } from "@/components/CourseCard";
+import { SkillDecisionGuide } from "@/components/SkillDecisionGuide";
 import { Filters } from "@/components/Filters";
 import { AdPlaceholder } from "@/components/AdPlaceholder";
 import { courses } from "@/lib/catalog-adapter";
 import { getSkillAlternatives, getSkillIntro } from "@/lib/skill-catalog";
+import type { DecisionReadyPair } from "@/lib/decision-ready-comparisons";
 import { slugify, titleFromSlug } from "@/utils/slugify";
 import { useCompareSelection } from "@/contexts/CompareSelectionContext";
 import type { Course } from "@/types/course";
@@ -40,9 +42,15 @@ type FiltersState = {
 
 type SkillClientProps = {
   skillSlug: string;
+  decisionReadyPairs: DecisionReadyPair[];
+  decisionIntro?: string;
 };
 
-export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProps) {
+export default function SkillClient({
+  skillSlug: rawSkillSlug,
+  decisionReadyPairs,
+  decisionIntro
+}: SkillClientProps) {
   const skillSlug = rawSkillSlug ? normalizeSkillSlug(rawSkillSlug) : undefined;
   const { selectedIds, clear } = useCompareSelection();
 
@@ -123,11 +131,13 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
       course.skillTags.every((tag) => slugify(tag) !== skillSlug)
     );
   const skillIntro = skillExists
-    ? getSkillIntro({
-        slug: skillSlug ?? "",
-        title: skillTitle,
-        courseCount: skillCourses.length
-      })
+    ? decisionReadyPairs.length > 0 && decisionIntro
+      ? decisionIntro
+      : getSkillIntro({
+          slug: skillSlug ?? "",
+          title: skillTitle,
+          courseCount: skillCourses.length
+        })
     : null;
   const availablePlatforms = Array.from(
     new Set(skillCourses.map((course) => course.platform))
@@ -178,9 +188,9 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
         <p className="text-xs font-bold uppercase tracking-[0.22em] text-blue-700">
           Skill
         </p>
-        <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-4xl lg:text-5xl">
+        <h1 className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-4xl lg:text-5xl">
           {skillExists ? skillTitle : "Skill not found"}
-        </h2>
+        </h1>
         <p className="mt-4 max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg">
           {skillIntro ??
             "We do not have validated courses for this skill yet. Review available alternatives in the catalog."}
@@ -201,6 +211,13 @@ export default function SkillClient({ skillSlug: rawSkillSlug }: SkillClientProp
             Clear selection
           </button>
         </div>
+      ) : null}
+
+      {skillExists ? (
+        <SkillDecisionGuide
+          pairs={decisionReadyPairs}
+          skillTitle={skillTitle}
+        />
       ) : null}
 
       <Filters

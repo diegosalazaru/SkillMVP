@@ -6,7 +6,7 @@
 - Phase 0 is complete for the current MVP scope.
 - Phase 1A source trust is complete for the current 19-course catalog; Phase 1B.7 expands the approved decision-grade set to exactly 11 courses and six pairs, including the first Coursera-versus-edX pair, and awaits independent product review before any later batch.
 - Phase 2 monetization is gated until a real auditable affiliate/referral program exists and does not block Phase 3.
-- Phase 3 Discovery and SEO has its indexable-surface foundation in place; content expansion remains paused pending independent review of Phase 1B.7.
+- Phase 3 Discovery and SEO has its indexable-surface foundation plus selective decision guides on the five canonical skills with approved readiness pairs; scaled/generated expansion remains gated.
 - The normalized catalog contains 19 curated courses.
 - 17 courses are `partially_verified`; 2 remain `pending` because the exact recorded offering could not be confirmed from a current official source.
 - Source URL mismatches are 0 after Phase 1 Source Verification — Coverage Batch B.
@@ -20,6 +20,7 @@
 - Decision Data Contract v2 preserves provider-backed offering, workload, tool, practical-work, credential, and cost-model signals for the 11 explicitly approved courses.
 - Structured pricing preserves source-backed payable paths, USD amounts, cadence, scope, provenance, freshness, and regional/access context for the same 11-course set.
 - Compare presents decision differences and a source-backed at-a-glance snapshot before detailed pricing, criteria, curriculum, and final provider verification.
+- Canonical AI, Cybersecurity, Data Analysis, Cloud Computing, and Project Management pages now surface all six manifest-approved pairs in deterministic order, with compact source-backed tradeoffs and explicit uncertainty before the detailed Compare flow.
 
 ## Trust and Data Quality Reality
 
@@ -83,4 +84,4 @@ Use the documented repository-local TypeScript fallback only when the normal pnp
 
 ## Active Near-Term Gate
 
-Independent product review must evaluate the Phase 1B.7 evidence before approving any migration of the remaining 8 catalog records or resuming Phase 3 content expansion. Phase 2 monetization remains gated until a real program exists.
+Independent product review must evaluate the selective Phase 3B implementation before any broader acquisition surface is considered. Any later catalog batch remains explicit and auditable. Under issue #112's sequencing overlay, Pluralsight Cloud/Cybersecurity is the default next provider target only if current official pricing and entitlement evidence satisfies the existing hard gate; LinkedIn Learning remains the fallback. Phase 2 monetization remains gated until a real program exists.
