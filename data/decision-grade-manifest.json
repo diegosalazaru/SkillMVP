@@ -9,6 +9,7 @@
     "aws-cloud-technical-essentials-aws",
     "introduction-to-cloud-computing-ibm",
     "google-project-management-google",
+    "introduction-project-management-edx-adelaidex",
     "project-management-principles-practices-umci"
   ],
   "readinessPairs": [
@@ -31,6 +32,10 @@
     [
       "google-project-management-google",
       "project-management-principles-practices-umci"
+    ],
+    [
+      "google-project-management-google",
+      "introduction-project-management-edx-adelaidex"
     ]
   ]
 }

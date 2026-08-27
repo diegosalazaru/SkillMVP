@@ -736,9 +736,9 @@
     "level": "beginner",
     "durationHours": null,
     "language": "en",
-    "priceModel": "unknown",
-    "priceAmount": null,
-    "currency": null,
+    "priceModel": "paid_once",
+    "priceAmount": 149,
+    "currency": "USD",
     "priceInterval": null,
     "rating": null,
     "reviewCount": null,
@@ -746,12 +746,53 @@
     "lastUpdatedAt": null,
     "shortDescription": "Adelaide University introductory course covering project planning, scope, scheduling, costing, risk, communication, and delivery.",
     "syllabusBullets": [
-      "Project planning fundamentals",
-      "Scope, schedule, and resource basics",
-      "Project communication and tracking"
+      "Project characteristics, initiation, and project suitability",
+      "Planning, scoping, scheduling, and costing a project",
+      "Project impacts, risk identification, and risk response",
+      "Project stakeholders, teams, communication, and leadership",
+      "Success criteria, progress measurement, stakeholder feedback, and lessons learned"
     ],
     "prerequisitesBullets": [
       "No prior experience required"
+    ],
+    "offeringType": "course",
+    "workload": {
+      "durationQuantity": 6,
+      "durationUnit": "week",
+      "hoursPerWeek": null,
+      "text": "6 weeks at 2-3 hours per week"
+    },
+    "toolsTechnologies": [],
+    "practicalWorkBullets": [
+      "Apply project characteristics to your own project during the opening course module"
+    ],
+    "credential": {
+      "type": "course_certificate",
+      "text": "AdelaideX school-verified course certificate"
+    },
+    "costModel": {
+      "type": "paid_certificate",
+      "text": "The course can be audited with time-limited access; the paid Premium track adds unlimited access, graded assessments, and a certificate"
+    },
+    "pricingOptions": [
+      {
+        "id": "edx-premium-certificate-track",
+        "model": "one_time",
+        "amount": 149,
+        "currency": "USD",
+        "normalizedUsdAmount": 149,
+        "cadence": "one_time",
+        "scope": "Premium certificate track for Introduction to Project Management, including unlimited access, graded assessments, and a certificate",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.edx.org/learn/project-management/university-of-adelaide-introduction-to-project-management",
+        "evidenceUrls": [
+          "https://www.edx.org/learn/project-management/university-of-adelaide-introduction-to-project-management"
+        ],
+        "observedAt": "2026-08-27",
+        "referenceMarket": null,
+        "accessContext": "public_provider_page",
+        "conditions": "Public edX course page displayed $149 USD for the Premium certificate track; the separate audit path has time-limited access; the temporary ACTION2026 promotion was excluded; taxes, eligibility, and course-run availability may vary"
+      }
     ],
     "source": "manual"
   },

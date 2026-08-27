@@ -30,7 +30,7 @@ const statusClasses = {
 };
 
 const decisionChecklist = [
-  "I confirmed the final checkout amount and renewal terms.",
+  "I confirmed the final checkout amount and any subscription or renewal terms that apply.",
   "I checked certificate terms.",
   "I confirmed duration fits my weekly schedule.",
   "I reviewed prerequisites and learning topics.",
