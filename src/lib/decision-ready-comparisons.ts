@@ -138,4 +138,4 @@ export const getDecisionReadySkillIntro = ({
 }) =>
   `Compare ${courseCount} ${skillTitle} courses, then open ${pairCount} comparison-ready ${
     pairCount === 1 ? "pair" : "pairs"
-  } to inspect source-backed pricing, workload, credentials, starting points, and known data gaps.`;
+  } to inspect source-backed pricing, decision differences, and known data gaps.`;

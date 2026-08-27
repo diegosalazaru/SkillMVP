@@ -78,7 +78,7 @@ for (const skillSlug of targetSkillSlugs) {
   assert.notEqual(metadata.robots, "noindex", `${skillSlug} must remain indexable.`);
   assert.match(
     String(metadata.description),
-    /source-backed pricing, workload, credentials/i,
+    /source-backed pricing, decision differences, and known data gaps/i,
     `${skillSlug} metadata should express stable comparison intent.`
   );
   assert.doesNotMatch(
