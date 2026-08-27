@@ -99,9 +99,9 @@
     "pageType": "best-courses",
     "intent": "course-discovery",
     "title": "Compare Cloud Computing Courses",
-    "metaDescription": "Explore 3 Cloud Computing course options for course discovery and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 4 Cloud Computing course options for course discovery and compare format, level, certificate availability, and pricing details.",
     "h1": "Compare Cloud Computing Courses",
-    "intro": "This page lists 3 Cloud Computing course options from the current Skills Compare catalog for course discovery. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 4 Cloud Computing course options from the current Skills Compare catalog for course discovery. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Cloud Computing course?",
@@ -118,6 +118,7 @@
     ],
     "courseIds": [
       "aws-cloud-technical-essentials-aws",
+      "aws-foundations-cloud-essentials-pluralsight",
       "google-cloud-fundamentals-core-infrastructure-google",
       "introduction-to-cloud-computing-ibm"
     ]
@@ -129,9 +130,9 @@
     "pageType": "best-courses",
     "intent": "course-discovery",
     "title": "Compare Cybersecurity Courses",
-    "metaDescription": "Explore 3 Cybersecurity course options for course discovery and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 4 Cybersecurity course options for course discovery and compare format, level, certificate availability, and pricing details.",
     "h1": "Compare Cybersecurity Courses",
-    "intro": "This page lists 3 Cybersecurity course options from the current Skills Compare catalog for course discovery. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 4 Cybersecurity course options from the current Skills Compare catalog for course discovery. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Cybersecurity course?",
@@ -149,6 +150,7 @@
     "courseIds": [
       "ibm-cybersecurity-analyst-ibm",
       "google-cybersecurity-google",
+      "introduction-information-security-pluralsight",
       "introduction-cyber-security-nyux-edx"
     ]
   },
@@ -220,9 +222,9 @@
     "pageType": "certification",
     "intent": "credential-path",
     "title": "Certification Cloud Computing Courses",
-    "metaDescription": "Explore 3 Cloud Computing course options for credential path and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 4 Cloud Computing course options for credential path and compare format, level, certificate availability, and pricing details.",
     "h1": "Cloud Computing Certification Courses",
-    "intro": "This page lists 3 Cloud Computing course options from the current Skills Compare catalog for credential path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 4 Cloud Computing course options from the current Skills Compare catalog for credential path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Cloud Computing course?",
@@ -239,6 +241,7 @@
     ],
     "courseIds": [
       "aws-cloud-technical-essentials-aws",
+      "aws-foundations-cloud-essentials-pluralsight",
       "google-cloud-fundamentals-core-infrastructure-google",
       "introduction-to-cloud-computing-ibm"
     ]
@@ -250,9 +253,9 @@
     "pageType": "for-beginners",
     "intent": "beginner-path",
     "title": "Beginner Cloud Computing Courses",
-    "metaDescription": "Explore 3 Cloud Computing course options for beginner path and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 4 Cloud Computing course options for beginner path and compare format, level, certificate availability, and pricing details.",
     "h1": "Cloud Computing Courses for Beginners",
-    "intro": "This page lists 3 Cloud Computing course options from the current Skills Compare catalog for beginner path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 4 Cloud Computing course options from the current Skills Compare catalog for beginner path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Cloud Computing course?",
@@ -269,6 +272,7 @@
     ],
     "courseIds": [
       "aws-cloud-technical-essentials-aws",
+      "aws-foundations-cloud-essentials-pluralsight",
       "google-cloud-fundamentals-core-infrastructure-google",
       "introduction-to-cloud-computing-ibm"
     ]
@@ -280,9 +284,9 @@
     "pageType": "certification",
     "intent": "credential-path",
     "title": "Certification Cybersecurity Courses",
-    "metaDescription": "Explore 3 Cybersecurity course options for credential path and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 4 Cybersecurity course options for credential path and compare format, level, certificate availability, and pricing details.",
     "h1": "Cybersecurity Certification Courses",
-    "intro": "This page lists 3 Cybersecurity course options from the current Skills Compare catalog for credential path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 4 Cybersecurity course options from the current Skills Compare catalog for credential path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Cybersecurity course?",
@@ -300,6 +304,7 @@
     "courseIds": [
       "ibm-cybersecurity-analyst-ibm",
       "google-cybersecurity-google",
+      "introduction-information-security-pluralsight",
       "introduction-cyber-security-nyux-edx"
     ]
   },
@@ -310,9 +315,9 @@
     "pageType": "for-beginners",
     "intent": "beginner-path",
     "title": "Beginner Cybersecurity Courses",
-    "metaDescription": "Explore 3 Cybersecurity course options for beginner path and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 4 Cybersecurity course options for beginner path and compare format, level, certificate availability, and pricing details.",
     "h1": "Cybersecurity Courses for Beginners",
-    "intro": "This page lists 3 Cybersecurity course options from the current Skills Compare catalog for beginner path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 4 Cybersecurity course options from the current Skills Compare catalog for beginner path. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Cybersecurity course?",
@@ -330,6 +335,7 @@
     "courseIds": [
       "ibm-cybersecurity-analyst-ibm",
       "google-cybersecurity-google",
+      "introduction-information-security-pluralsight",
       "introduction-cyber-security-nyux-edx"
     ]
   },
@@ -433,9 +439,9 @@
     "pageType": "learn",
     "intent": "learning-plan",
     "title": "Learn Cloud Computing Courses",
-    "metaDescription": "Explore 3 Cloud Computing course options for learning plan and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 4 Cloud Computing course options for learning plan and compare format, level, certificate availability, and pricing details.",
     "h1": "Learn Cloud Computing",
-    "intro": "This page lists 3 Cloud Computing course options from the current Skills Compare catalog for learning plan. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 4 Cloud Computing course options from the current Skills Compare catalog for learning plan. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Cloud Computing course?",
@@ -452,6 +458,7 @@
     ],
     "courseIds": [
       "aws-cloud-technical-essentials-aws",
+      "aws-foundations-cloud-essentials-pluralsight",
       "google-cloud-fundamentals-core-infrastructure-google",
       "introduction-to-cloud-computing-ibm"
     ]
@@ -463,9 +470,9 @@
     "pageType": "learn",
     "intent": "learning-plan",
     "title": "Learn Cybersecurity Courses",
-    "metaDescription": "Explore 3 Cybersecurity course options for learning plan and compare format, level, certificate availability, and pricing details.",
+    "metaDescription": "Explore 4 Cybersecurity course options for learning plan and compare format, level, certificate availability, and pricing details.",
     "h1": "Learn Cybersecurity",
-    "intro": "This page lists 3 Cybersecurity course options from the current Skills Compare catalog for learning plan. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
+    "intro": "This page lists 4 Cybersecurity course options from the current Skills Compare catalog for learning plan. Use the course details to review level, duration, certificate availability, and pricing model before enrolling.",
     "faq": [
       {
         "question": "How should I choose a Cybersecurity course?",
@@ -483,6 +490,7 @@
     "courseIds": [
       "ibm-cybersecurity-analyst-ibm",
       "google-cybersecurity-google",
+      "introduction-information-security-pluralsight",
       "introduction-cyber-security-nyux-edx"
     ]
   },

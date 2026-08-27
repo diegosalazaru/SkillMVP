@@ -24,7 +24,7 @@ Future work in this area should be limited to concrete usability defects or regr
 
 ## Phase 1 — Real Data
 
-**Status: Phase 1A source trust complete; Phase 1B.7 multi-provider acceptance and the bounded AdelaideX migration are implemented and awaiting independent product review.**
+**Status: Phase 1A source trust complete; Phase 1B.8 adds the bounded Pluralsight Cloud and Cybersecurity provider batch for independent product review.**
 
 Goal: make the catalog both trustworthy and useful enough to support real user decisions.
 
@@ -53,6 +53,7 @@ Completed:
 - **Phase 1B.5 — Decision-Grade Rollout Batch 1** in issue #101: exactly four additional courses across Data Analysis and Cloud Computing now use the approved contract. Both new pairs pass pricing plus 7/7 source-backed dimensions, and an explicit eight-course/four-pair manifest keeps unrelated catalog records outside the migration.
 - **Phase 1B.6 — Decision-Grade Rollout Batch 2** in issue #106: the Google Project Management Professional Certificate and UCI Project Management Principles and Practices Specialization now use the approved contract. The pair passes pricing plus 6/7 source-backed dimensions, with UCI tools/technologies explicitly insufficient, and the manifest now contains exactly ten courses across five pairs.
 - **Phase 1B.7 — Multi-provider Acceptance + Cross-platform Project Management** in issue #108: all five incumbent pairs pass cumulative desktop/mobile product acceptance, the current public AdelaideX course page establishes a non-promotional `$149 USD` one-time Premium certificate path, and Google Project Management vs AdelaideX passes pricing plus 6/7 dimensions with edX tools/technologies explicitly insufficient. The manifest now contains exactly 11 courses across six approved pairs.
+- **Phase 1B.8 — Pluralsight Provider Batch** in issue #116: two current Pluralsight video courses independently clear the unchanged pricing and 5/7 gates. The catalog now contains 21 courses; the approved set contains 13 courses across eight pairs. Cloud and Cybersecurity canonical guides surface the new pairs automatically without provider-specific page code.
 
 Do not migrate the remaining catalog automatically. Any later rollout requires another explicit, auditable batch decision.
 
@@ -116,8 +117,7 @@ Do not build Phase 5 architecture to solve hypothetical scale.
 ## Immediate Sequence
 
 1. Maintain conservative Phase 1A source trust without reopening verification work for its own sake.
-2. Independently review the selective Phase 3B canonical-skill implementation and its acquisition-to-Compare flow.
-3. Do not begin catalog-wide migration or add courses to the decision-grade manifest without a new product decision.
-4. After Phase 3B review, use issue #112's operating-leverage overlay for the next provider batch: Pluralsight Cloud/Cybersecurity is the default only if current official pricing and entitlement evidence clears the existing hard gate; LinkedIn Learning is the provider-neutral fallback if it does not.
-5. Keep generated SEO templates `noindex, follow` and avoid new pair routes or scaled SEO volume until product and search evidence justify them.
-6. Activate Phase 2 monetization only when a real program and appropriate disclosures are ready; commission must never affect visible ordering or factual presentation.
+2. Independently review the bounded Phase 1B.8 Pluralsight evidence, provider-neutral presentation, and acquisition-to-Compare regressions.
+3. Do not begin catalog-wide migration or add another provider/course to the decision-grade manifest without a new product decision.
+4. Keep generated SEO templates `noindex, follow` and avoid new pair routes or scaled SEO volume until product and search evidence justify them.
+5. Activate Phase 2 monetization only when a real program and appropriate disclosures are ready; commission must never affect visible ordering or factual presentation.

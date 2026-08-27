@@ -16,6 +16,9 @@ const mapPlatform = (platform: string): Course["platform"] | null => {
   if (normalized === "edx") {
     return "edX";
   }
+  if (normalized === "pluralsight") {
+    return "Pluralsight";
+  }
   if (
     normalized === "microsoft learn" ||
     normalized === "microsoft-learn" ||
