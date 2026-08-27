@@ -56,6 +56,29 @@ If fetch, checkout, authentication, permissions, proxy, history, or the initial 
 
 GitHub CLI (`gh`) is optional. It is not a publishing-preflight requirement and must not be installed merely to execute an approved task. Standard `git` authentication and the configured `origin` remote are sufficient for fetch, branch creation, and push. If the branch can be pushed but a local agent cannot open a PR because `gh` is unavailable, continue the implementation, push the completed branch, report that PR creation was unavailable locally, and leave PR creation to the connected GitHub workflow or product owner.
 
+## PR Lifecycle and Merge Authority
+
+### Coding-agent execution
+
+- Coding agents must leave task PRs as draft by default.
+- `Do not merge` is absolute for the coding agent executing the task.
+- Coding agents must not mark a draft PR ready, merge, squash-merge, rebase-merge, enable auto-merge, or invoke an equivalent merge action unless their task explicitly delegates that specific action.
+- Green CI, Vercel, or local validation is necessary evidence, never implicit merge authority for the coding agent.
+- Finishing implementation means pushing the branch, opening or updating the draft PR, reporting validation results and blockers, and then stopping.
+
+### Independent ChatGPT review
+
+After independent product/code review, ChatGPT may autonomously mark a specific draft PR ready and merge it when all of the following are true:
+
+- Scope matches the approved initiative.
+- No material product, data-truth, security, build, history, or UX blocker remains.
+- Required repository validation and checks are green, or any non-applicable check is explicitly understood.
+- The merge is a normal, non-destructive repository operation.
+
+ChatGPT does not need a separate product-owner message such as `Merge PR #X` for a routine reviewed merge. A coding-agent task instruction `Do not merge` applies to the coding agent executing that task; it does not prevent an independent ChatGPT reviewer from later marking the PR ready and merging it after acceptance.
+
+ChatGPT must ask the product owner before merging when review exposes a material product tradeoff, meaningful scope expansion, unresolved decision-changing uncertainty, security or credential risk, a destructive or history-rewriting action, an infrastructure or system-policy change, or a realistic risk of data or work loss.
+
 ## Validation Before PR Completion
 
 Run the validations defined in `docs/ENGINEERING_RULES.md`. At minimum for normal product changes:

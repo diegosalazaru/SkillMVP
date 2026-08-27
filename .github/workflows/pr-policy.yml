@@ -30,33 +30,21 @@ jobs:
 
             const paths = files.map(f => f.filename);
 
-            const touchesUI = paths.some(p =>
+            const needsProductReview = paths.some(p =>
               p.startsWith('app/') ||
               p.startsWith('src/') ||
-              p.startsWith('components/')
+              p.startsWith('components/') ||
+              p.startsWith('data/') ||
+              p.startsWith('scripts/')
             );
 
-            const touchesWorkflow = paths.some(p =>
-              p.startsWith('.github/workflows/')
-            );
-
-            let labels = [];
-
-            if (!touchesUI && touchesWorkflow) {
-              labels.push('safe-automerge');
-            } else if (!touchesUI) {
-              labels.push('safe-automerge');
-            } else {
-              labels.push('needs-product-review');
-            }
-
-            for (const label of labels) {
+            if (needsProductReview) {
               try {
                 await github.rest.issues.addLabels({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: pr.number,
-                  labels: [label]
+                  labels: ['needs-product-review']
                 });
               } catch (e) {
                 // ignore if label does not exist

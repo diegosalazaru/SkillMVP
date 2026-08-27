@@ -14,7 +14,7 @@
 - [ ] not applicable
 
 ## Risk level
-- [ ] safe (auto-merge candidate)
+- [ ] routine / low-risk
 - [ ] product-review required
 - [ ] high-risk
 

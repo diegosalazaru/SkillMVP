@@ -20,6 +20,35 @@ GitHub CLI (`gh`) is optional and is not part of the mandatory publishing prefli
 
 Do not reuse unrelated-history commits, synthetic-root history, stale workspaces, or unpublished local-only work.
 
+## Approval Friction
+
+Routine repository work should proceed without interrupting the user when the environment allows. This includes repository reads and edits, standard Git operations, Node/pnpm/TypeScript/Next validation and builds, localhost and browser checks, branch and PR updates, and narrow temporary sandbox escalation for a normal local command.
+
+Explicit user approval is reserved for genuinely high-risk, security-sensitive, destructive, materially out-of-scope, or material product-decision actions. Examples include system or security policy changes, broad or permanent permissions, software or dependency installation, credential or secret access, destructive Git or history operations, filesystem changes outside the canonical repository, infrastructure/deployment/CI expansion not already approved, material scope expansion, unresolved decision-changing uncertainty, and realistic risk of data or work loss.
+
+## PR Lifecycle and Merge Authority
+
+### Coding-agent execution
+
+- Coding agents must leave task PRs as draft by default.
+- `Do not merge` is absolute for the coding agent executing the task.
+- Coding agents must not mark a draft PR ready, merge, squash-merge, rebase-merge, enable auto-merge, or invoke an equivalent merge action unless their task explicitly delegates that specific action.
+- Green CI, Vercel, or local validation is necessary evidence, never implicit merge authority for the coding agent.
+- Finishing implementation means pushing the branch, opening or updating the draft PR, reporting validation results and blockers, and then stopping.
+
+### Independent ChatGPT review
+
+After independent product/code review, ChatGPT may autonomously mark a specific draft PR ready and merge it when all of the following are true:
+
+- Scope matches the approved initiative.
+- No material product, data-truth, security, build, history, or UX blocker remains.
+- Required repository validation and checks are green, or any non-applicable check is explicitly understood.
+- The merge is a normal, non-destructive repository operation.
+
+ChatGPT does not need a separate product-owner message such as `Merge PR #X` for a routine reviewed merge. A coding-agent task instruction `Do not merge` applies to the coding agent executing that task; it does not prevent an independent ChatGPT reviewer from later marking the PR ready and merging it after acceptance.
+
+ChatGPT must ask the product owner before merging when review exposes a material product tradeoff, meaningful scope expansion, unresolved decision-changing uncertainty, security or credential risk, a destructive or history-rewriting action, an infrastructure or system-policy change, or a realistic risk of data or work loss.
+
 ## Scope Discipline
 
 - One approved initiative per PR.
@@ -101,7 +130,7 @@ General validation rules:
 
 ## PR Completion Checklist
 
-Before declaring a PR ready:
+Before finishing implementation on a draft PR:
 
 - Branch is based on current `main` history.
 - Scope matches the approved initiative.
@@ -111,4 +140,4 @@ Before declaring a PR ready:
 - Documentation is updated if a durable decision or roadmap state changed.
 - GitHub checks are green or any missing check is explicitly explained.
 
-Do not merge if there is a known material product, data-truth, build, or history problem.
+Coding agents stop after the branch and draft PR are updated and the validation results and blockers are reported. Any later ready-for-review transition or merge follows the independent ChatGPT review rules above.
