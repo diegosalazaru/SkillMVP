@@ -1,6 +1,6 @@
 # Current State
 
-Last updated after implementing Phase 1B.5 decision-grade rollout Batch 1 for product review.
+Last updated after implementing Phase 1B.6 decision-grade rollout Batch 2 for product review.
 
 ## Product State
 
@@ -11,6 +11,16 @@ The current UI is English-first. The product supports skill discovery, curated c
 Recent product review exposed an important distinction: source-trusted catalog data is not automatically decision-useful data. The product must not only avoid inventing facts; it must preserve enough structured provider-backed information to help a user actually choose between courses.
 
 ## Latest Completed Initiatives
+
+### Phase 1B.6 — Decision-Grade Rollout Batch 2 — Issue #106
+
+Key outcomes:
+
+- Exactly two additional courses are migrated: Google Project Management Professional Certificate and Project Management Principles and Practices Specialization.
+- The Project Management pair passes the actionable-pricing hard gate and 6/7 source-backed decision dimensions; tools/technologies remains explicitly insufficient because the UCI listing names no software or technology.
+- Google has a direct `$49 USD/month` U.S./Canada certificate path plus a verified Coursera Plus alternative; UCI has a verified `$59 USD/month` Coursera Plus path.
+- The manifest now limits the approved decision-grade set to ten courses and five approved pairs while preserving exact manifest/migration alignment.
+- Provider workload conflicts, pricing exclusions, and the pair result are recorded in `docs/decision-grade-phase-1b6-batch-2.md`.
 
 ### Phase 1B.5 — Decision-Grade Rollout Batch 1 — Issue #101
 
@@ -80,9 +90,9 @@ Earlier completed initiatives, including Phase 1 Source Verification Batches A/B
 
 - **Phase 0 — MVP:** complete for the current MVP scope.
 - **Phase 1A — Source Trust:** complete for the current 19-course curated MVP catalog; ongoing maintenance only.
-- **Phase 1B — Decision-Grade Data:** Phase 1B.1 through Phase 1B.5 Batch 1 are implemented; eight courses across four approved pairs are decision-grade, and product review must approve any later batch.
+- **Phase 1B — Decision-Grade Data:** Phase 1B.1 through Phase 1B.6 Batch 2 are implemented; ten courses across five approved pairs are decision-grade, and product review must approve any later batch.
 - **Phase 2 — Monetization:** gated / not started. It activates only when a real auditable affiliate/referral program exists and does not block Phase 3.
-- **Phase 3 — Discovery and SEO:** active, with the indexable-surface foundation complete. Further content/traffic expansion is paused until product review of the Phase 1B.4 pilot confirms that core comparisons provide meaningful decision value.
+- **Phase 3 — Discovery and SEO:** active, with the indexable-surface foundation complete. Further content/traffic expansion is paused until product review of the Phase 1B.6 rollout confirms that core comparisons provide meaningful decision value.
 - **Phase 4 — Recommendation:** later, gated behind explicit criteria and trustworthy signals.
 - **Phase 5 — Robust Product:** only if traction justifies the additional architecture.
 
@@ -92,8 +102,8 @@ Earlier completed initiatives, including Phase 1 Source Verification Batches A/B
 - 17 courses are currently `partially_verified`.
 - 2 courses remain `pending` with explicit source blockers rather than unreviewed status.
 - Source URL mismatches: 0 after the completed verification batches.
-- Pricing remains unknown or unverified for the 11 non-migrated courses; the eight approved decision-grade records now have actionable source-backed USD pricing paths. Most ratings and review counts remain unknown by design.
-- The eight approved decision-grade records preserve provider-described workload schedules such as months plus hours per week while exact `durationHours` remains null unless the source explicitly states a total.
+- Pricing remains unknown or unverified for the 9 non-migrated courses; the ten approved decision-grade records now have actionable source-backed USD pricing paths. Most ratings and review counts remain unknown by design.
+- The ten approved decision-grade records preserve provider-described workload schedules such as months plus hours per week while exact `durationHours` remains null unless the source explicitly states a total.
 - The current normalized `language` field represents the primary taught language when clearly supported by an official source. Additional dubbing/subtitle/language availability remains provenance context unless a later explicit schema initiative changes that model.
 - `report:data-quality` remains part of normal validation.
 - Official provider pages remain the final source for volatile enrollment terms, but Skills Compare should perform the basic comparison work rather than merely redirecting users to two provider pages.
@@ -132,11 +142,17 @@ The gate is internal product-quality validation, not a visible ranking or course
 - AWS Cloud Technical Essentials vs Introduction to Cloud Computing: **7/7 pass** plus pricing **pass**.
 - The original two pilot pairs retain their prior pricing and 5/7 results.
 
-## After Phase 1B.5
+## Phase 1B.6 Batch 2 Result
 
-Return to product review. Do not automatically migrate the remaining 11 courses and do not resume SEO content expansion automatically.
+- Google Project Management Professional Certificate vs Project Management Principles and Practices Specialization: **6/7 pass** plus pricing **pass**.
+- Tools/technologies is explicitly insufficient for the pair because the UCI listing names no software or technology.
+- The original four approved pairs retain their prior pricing and readiness results.
 
-Judge whether all four approved comparisons, including the new Data Analysis and Cloud Computing pairs, let a user understand both the learning tradeoffs and current economic commitments without opening both provider pages. If the batch succeeds, decide the next smallest auditable migration sequence; if it fails, revise the decision data or pricing evidence before expanding the manifest.
+## After Phase 1B.6
+
+Return to product review. Do not automatically migrate the remaining 9 courses and do not resume SEO content expansion automatically.
+
+Judge whether all five approved comparisons, including the new Project Management pair, let a user understand both the learning tradeoffs and current economic commitments without opening both provider pages. If the batch succeeds, decide the next smallest auditable migration sequence; if it fails, revise the decision data or pricing evidence before expanding the manifest.
 
 ## Parallel Ongoing Work
 

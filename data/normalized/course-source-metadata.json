@@ -288,12 +288,12 @@
     "sourceUrl": "https://www.coursera.org/professional-certificates/google-project-management",
     "sourceType": "official_provider_page",
     "verificationStatus": "partially_verified",
-    "lastVerifiedAt": "2026-06-06",
+    "lastVerifiedAt": "2026-08-27",
     "verifiedFields": {
       "title": true,
       "platform": true,
       "sourceUrl": true,
-      "price": false,
+      "price": true,
       "rating": false,
       "reviewCount": false,
       "duration": true,
@@ -301,9 +301,16 @@
       "language": true,
       "level": true,
       "syllabus": true,
-      "prerequisites": true
+      "prerequisites": true,
+      "offeringType": true,
+      "workload": true,
+      "toolsTechnologies": true,
+      "practicalWork": true,
+      "credential": true,
+      "costModel": true,
+      "pricingOptions": true
     },
-    "notes": "Source: official Coursera provider page. Verified title, platform/source URL, beginner level, English language, shareable certificate, 6 months at 10 hours/week workload signal, learning topics, and no degree/prior experience requirement. durationHours remains null because converting a monthly schedule to exact hours would be an estimate. Price, rating, and review count intentionally remain unknown/null because they are volatile."
+    "notes": "Sources: official Google Project Management Professional Certificate page on Coursera and official Coursera Plus plan page, reviewed 2026-08-27. Verified the professional-certificate and Google credential context; the page-summary workload of 6 months at 10 hours/week; no degree or prior experience requirement; entry-level project management practices, documentation, planning, budgeting, stakeholder communication, Agile, and Scrum topics; Google Sheets, Microsoft Excel, Google Docs, Microsoft Word, Google Slides, Microsoft PowerPoint, Asana, and Google Gemini tools; hundreds of practice-based assessments and hands-on activities; capstone deliverables; and subscription cost context. Pricing paths: $49 USD/month for the certificate in the United States and Canada after an initial 7-day trial, with lower pricing possible elsewhere; and the regular $59 USD/month Coursera Plus rate for catalog access including this certificate. The temporary $35 USD/month Coursera Plus promotion for eligible new subscribers through September 23, 2026 was excluded as the canonical commitment. The provider's under-$300 completion estimate was excluded because it depends on completion pace. The page summary says 6 months at 10 hours/week, while the pricing FAQ says less than 6 months at under 10 hours/week; both statements are preserved here, and the summary cadence is used without inferring a total. The page separately states over 140 hours of instruction, so durationHours remains null rather than converting that lower-bound statement into an exact total. Rating and review count remain unknown/null because they are volatile."
   },
   {
     "courseId": "introduction-project-management-edx-adelaidex",
@@ -332,12 +339,12 @@
     "sourceUrl": "https://www.coursera.org/specializations/project-management",
     "sourceType": "official_provider_page",
     "verificationStatus": "partially_verified",
-    "lastVerifiedAt": "2026-08-17",
+    "lastVerifiedAt": "2026-08-27",
     "verifiedFields": {
       "title": true,
       "platform": true,
       "sourceUrl": true,
-      "price": false,
+      "price": true,
       "rating": false,
       "reviewCount": false,
       "duration": true,
@@ -345,9 +352,16 @@
       "language": true,
       "level": true,
       "syllabus": true,
-      "prerequisites": true
+      "prerequisites": true,
+      "offeringType": true,
+      "workload": true,
+      "toolsTechnologies": false,
+      "practicalWork": true,
+      "credential": true,
+      "costModel": true,
+      "pricingOptions": true
     },
-    "notes": "Source: official Coursera provider page at the existing canonical URL. Verified title, platform/source URL, beginner level, English as the primary taught language, shareable certificate, 4 weeks at 10 hours/week workload signal, learning topics covering project scope, planning, scheduling, budgeting, and risk, and no prior experience requirement. The normalized prerequisites were corrected and durationHours remains null. The page also lists additional language availability; this does not change the verified English primary taught language. Price, rating, and review count intentionally remain unknown/null because they are volatile."
+    "notes": "Sources: official Project Management Principles and Practices Specialization page on Coursera and official Coursera Plus plan page, reviewed 2026-08-27. Verified the four-course Specialization and University of California, Irvine shareable-certificate context; the page-summary workload of 4 weeks at 10 hours/week; beginner level with no prior experience required; scope, work breakdown structure, planning, scheduling, budgeting, resource allocation, risk, change, communication, and procurement topics; projects and assignments producing project-management artifacts; and subscription cost context. No named software or technology is supported by the official listing, so toolsTechnologies remains empty and unverified rather than treating activities, methods, or deliverables as tools. Pricing path: the regular $59 USD/month Coursera Plus rate for catalog access, with the Specialization page's inclusion link resolving to Coursera Plus. The temporary $35 USD/month promotion for eligible new subscribers through September 23, 2026 was excluded as the canonical commitment, the provider-wide $49-$79 monthly range was excluded because it is not specific to this Specialization, and exact direct Specialization pricing was not public. The page summary says 4 weeks at 10 hours/week, while its four listed course estimates total 19 hours; both statements are preserved here, and durationHours remains null instead of selecting or synthesizing an exact total. The page also lists additional language availability; this does not change the verified English primary taught language. Rating and review count remain unknown/null because they are volatile."
   },
   {
     "courseId": "ibm-data-analyst-ibm",

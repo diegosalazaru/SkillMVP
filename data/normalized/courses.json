@@ -639,8 +639,8 @@
     "durationHours": null,
     "language": "en",
     "priceModel": "subscription",
-    "priceAmount": null,
-    "currency": null,
+    "priceAmount": 49,
+    "currency": "USD",
     "priceInterval": "month",
     "rating": null,
     "reviewCount": null,
@@ -656,6 +656,74 @@
     "prerequisitesBullets": [
       "No degree or prior project management experience required",
       "Beginner-level orientation"
+    ],
+    "offeringType": "professional_certificate",
+    "workload": {
+      "durationQuantity": 6,
+      "durationUnit": "month",
+      "hoursPerWeek": 10,
+      "text": "6 months at 10 hours a week"
+    },
+    "toolsTechnologies": [
+      "Google Sheets",
+      "Microsoft Excel",
+      "Google Docs",
+      "Microsoft Word",
+      "Google Slides",
+      "Microsoft PowerPoint",
+      "Asana",
+      "Google Gemini"
+    ],
+    "practicalWorkBullets": [
+      "Hundreds of practice-based assessments and hands-on activities simulating traditional and Agile project management scenarios",
+      "Capstone work creating a project charter, evaluating quality standards, and developing stakeholder reports"
+    ],
+    "credential": {
+      "type": "professional_certificate",
+      "text": "Google Project Management Professional Certificate"
+    },
+    "costModel": {
+      "type": "subscription",
+      "text": "Certificate access is billed monthly after an initial 7-day free trial, so the final cost depends on time enrolled"
+    },
+    "pricingOptions": [
+      {
+        "id": "google-certificate-us-canada-monthly",
+        "model": "subscription",
+        "amount": 49,
+        "currency": "USD",
+        "normalizedUsdAmount": 49,
+        "cadence": "month",
+        "scope": "Google Project Management Professional Certificate access in the United States and Canada",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.coursera.org/professional-certificates/google-project-management",
+        "evidenceUrls": [
+          "https://www.coursera.org/professional-certificates/google-project-management"
+        ],
+        "observedAt": "2026-08-27",
+        "referenceMarket": "United States and Canada",
+        "accessContext": "public_provider_page",
+        "conditions": "Charged after an initial 7-day free trial; pricing may be lower in other countries; taxes and checkout eligibility may vary"
+      },
+      {
+        "id": "coursera-plus-monthly",
+        "model": "platform_subscription",
+        "amount": 59,
+        "currency": "USD",
+        "normalizedUsdAmount": 59,
+        "cadence": "month",
+        "scope": "Coursera Plus catalog access, including the Google Project Management Professional Certificate",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.coursera.org/courseraplus",
+        "evidenceUrls": [
+          "https://www.coursera.org/professional-certificates/google-project-management",
+          "https://www.coursera.org/courseraplus"
+        ],
+        "observedAt": "2026-08-27",
+        "referenceMarket": "United States",
+        "accessContext": "public_provider_page",
+        "conditions": "Regular monthly rate; the public plan page currently advertises $35 USD/month for the first 3 months for eligible new subscribers through September 23, 2026, then automatic renewal at $59 USD/month; outside the United States local currency and pricing apply; taxes and eligibility may vary"
+      }
     ],
     "source": "coursera-curated"
   },
@@ -697,8 +765,8 @@
     "durationHours": null,
     "language": "en",
     "priceModel": "subscription",
-    "priceAmount": null,
-    "currency": null,
+    "priceAmount": 59,
+    "currency": "USD",
     "priceInterval": "month",
     "rating": null,
     "reviewCount": null,
@@ -713,6 +781,47 @@
     "prerequisitesBullets": [
       "No prior experience required",
       "Beginner-level orientation"
+    ],
+    "offeringType": "specialization",
+    "workload": {
+      "durationQuantity": 4,
+      "durationUnit": "week",
+      "hoursPerWeek": 10,
+      "text": "4 weeks at 10 hours a week"
+    },
+    "toolsTechnologies": [],
+    "practicalWorkBullets": [
+      "Projects and assignments defining scope, building a work breakdown structure, and creating a project plan and budget",
+      "Applied work allocating resources, managing development, identifying risks, and addressing procurement"
+    ],
+    "credential": {
+      "type": "specialization_certificate",
+      "text": "Shareable Project Management Principles and Practices Specialization certificate from the University of California, Irvine"
+    },
+    "costModel": {
+      "type": "subscription",
+      "text": "The Specialization is available through subscription access; an exact direct rate is not public, while the included Coursera Plus path is billed monthly"
+    },
+    "pricingOptions": [
+      {
+        "id": "coursera-plus-monthly",
+        "model": "platform_subscription",
+        "amount": 59,
+        "currency": "USD",
+        "normalizedUsdAmount": 59,
+        "cadence": "month",
+        "scope": "Coursera Plus catalog access, including the Project Management Principles and Practices Specialization",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://www.coursera.org/courseraplus",
+        "evidenceUrls": [
+          "https://www.coursera.org/specializations/project-management",
+          "https://www.coursera.org/courseraplus"
+        ],
+        "observedAt": "2026-08-27",
+        "referenceMarket": "United States",
+        "accessContext": "public_provider_page",
+        "conditions": "Regular monthly rate; the public plan page currently advertises $35 USD/month for the first 3 months for eligible new subscribers through September 23, 2026, then automatic renewal at $59 USD/month; outside the United States local currency and pricing apply; exact direct Specialization pricing is not stated publicly; taxes and eligibility may vary"
+      }
     ],
     "source": "coursera-curated"
   },
