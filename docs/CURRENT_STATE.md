@@ -1,6 +1,6 @@
 # Current State
 
-Last updated after implementing Phase 1B.6 decision-grade rollout Batch 2 for product review.
+Last updated after implementing Phase 1B.7 multi-provider acceptance and the bounded AdelaideX migration for independent product review.
 
 ## Product State
 
@@ -11,6 +11,17 @@ The current UI is English-first. The product supports skill discovery, curated c
 Recent product review exposed an important distinction: source-trusted catalog data is not automatically decision-useful data. The product must not only avoid inventing facts; it must preserve enough structured provider-backed information to help a user actually choose between courses.
 
 ## Latest Completed Initiatives
+
+### Phase 1B.7 — Multi-provider Acceptance + Cross-platform Project Management — Issue #108
+
+Key outcomes:
+
+- All five incumbent readiness pairs pass cumulative desktop/mobile product acceptance in the actual comparison UI; the durable review explicitly distinguishes data-gate success from decision usefulness.
+- The current public edX page establishes a `$149 USD` one-time Premium certificate path for AdelaideX: Introduction to Project Management; the temporary promotion is excluded.
+- Google Project Management vs AdelaideX passes pricing plus 6/7 source-backed dimensions. Tools/technologies remains explicitly insufficient because edX names no software or technology.
+- The decision-grade manifest now contains exactly 11 courses and six approved pairs with exact migration alignment and clean regression across every prior pair.
+- Provider-neutral pricing, credential, CTA, workload, provenance, summary, card, and detail presentation work across Coursera and edX. The final checklist now makes subscription/renewal verification conditional when applicable.
+- The product appears ready for independent review to consider resuming selective Phase 3 SEO work; SEO remains paused and no new SEO surface was added.
 
 ### Phase 1B.6 — Decision-Grade Rollout Batch 2 — Issue #106
 
@@ -90,9 +101,9 @@ Earlier completed initiatives, including Phase 1 Source Verification Batches A/B
 
 - **Phase 0 — MVP:** complete for the current MVP scope.
 - **Phase 1A — Source Trust:** complete for the current 19-course curated MVP catalog; ongoing maintenance only.
-- **Phase 1B — Decision-Grade Data:** Phase 1B.1 through Phase 1B.6 Batch 2 are implemented; ten courses across five approved pairs are decision-grade, and product review must approve any later batch.
+- **Phase 1B — Decision-Grade Data:** Phase 1B.1 through Phase 1B.7 are implemented; 11 courses across six approved pairs are decision-grade, and independent product review must approve any later batch.
 - **Phase 2 — Monetization:** gated / not started. It activates only when a real auditable affiliate/referral program exists and does not block Phase 3.
-- **Phase 3 — Discovery and SEO:** active, with the indexable-surface foundation complete. Further content/traffic expansion is paused until product review of the Phase 1B.6 rollout confirms that core comparisons provide meaningful decision value.
+- **Phase 3 — Discovery and SEO:** active, with the indexable-surface foundation complete. Phase 1B.7 acceptance supports consideration of selective people-first expansion, but content/traffic work remains paused until independent product review.
 - **Phase 4 — Recommendation:** later, gated behind explicit criteria and trustworthy signals.
 - **Phase 5 — Robust Product:** only if traction justifies the additional architecture.
 
@@ -102,8 +113,8 @@ Earlier completed initiatives, including Phase 1 Source Verification Batches A/B
 - 17 courses are currently `partially_verified`.
 - 2 courses remain `pending` with explicit source blockers rather than unreviewed status.
 - Source URL mismatches: 0 after the completed verification batches.
-- Pricing remains unknown or unverified for the 9 non-migrated courses; the ten approved decision-grade records now have actionable source-backed USD pricing paths. Most ratings and review counts remain unknown by design.
-- The ten approved decision-grade records preserve provider-described workload schedules such as months plus hours per week while exact `durationHours` remains null unless the source explicitly states a total.
+- Pricing remains unknown or unverified for the 8 non-migrated courses; the 11 approved decision-grade records now have actionable source-backed USD pricing paths. Most ratings and review counts remain unknown by design.
+- The 11 approved decision-grade records preserve provider-described workload schedules such as months plus hours per week while exact `durationHours` remains null unless the source explicitly states a total.
 - The current normalized `language` field represents the primary taught language when clearly supported by an official source. Additional dubbing/subtitle/language availability remains provenance context unless a later explicit schema initiative changes that model.
 - `report:data-quality` remains part of normal validation.
 - Official provider pages remain the final source for volatile enrollment terms, but Skills Compare should perform the basic comparison work rather than merely redirecting users to two provider pages.
@@ -148,11 +159,16 @@ The gate is internal product-quality validation, not a visible ranking or course
 - Tools/technologies is explicitly insufficient for the pair because the UCI listing names no software or technology.
 - The original four approved pairs retain their prior pricing and readiness results.
 
-## After Phase 1B.6
+## Phase 1B.6 Acceptance Resolution
 
-Return to product review. Do not automatically migrate the remaining 9 courses and do not resume SEO content expansion automatically.
+Phase 1B.7 completed the required cumulative review. All five incumbent comparisons let a user understand the material learning tradeoffs, current economic commitments, and remaining uncertainty without first opening both provider pages. This acceptance does not authorize automatic migration of the remaining 8 courses or automatically resume SEO expansion.
 
-Judge whether all five approved comparisons, including the new Project Management pair, let a user understand both the learning tradeoffs and current economic commitments without opening both provider pages. If the batch succeeds, decide the next smallest auditable migration sequence; if it fails, revise the decision data or pricing evidence before expanding the manifest.
+## Phase 1B.7 Result
+
+- All five incumbent pairs pass cumulative desktop/mobile product acceptance.
+- Google Project Management vs AdelaideX: **6/7 pass** plus pricing **pass**; tools/technologies is explicitly insufficient.
+- The approved decision-grade set is 11 courses across six pairs, including the first Coursera-versus-edX pair.
+- Independent product review may consider resuming selective Phase 3 SEO work, but SEO remains paused until that decision is made.
 
 ## Parallel Ongoing Work
 

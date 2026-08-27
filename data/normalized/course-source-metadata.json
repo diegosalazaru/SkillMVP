@@ -317,12 +317,12 @@
     "sourceUrl": "https://www.edx.org/learn/project-management/university-of-adelaide-introduction-to-project-management",
     "sourceType": "official_provider_page",
     "verificationStatus": "partially_verified",
-    "lastVerifiedAt": "2026-08-17",
+    "lastVerifiedAt": "2026-08-27",
     "verifiedFields": {
       "title": true,
       "platform": true,
       "sourceUrl": true,
-      "price": false,
+      "price": true,
       "rating": false,
       "reviewCount": false,
       "duration": true,
@@ -330,9 +330,16 @@
       "language": true,
       "level": true,
       "syllabus": true,
-      "prerequisites": true
+      "prerequisites": true,
+      "offeringType": true,
+      "workload": true,
+      "toolsTechnologies": false,
+      "practicalWork": true,
+      "credential": true,
+      "costModel": true,
+      "pricingOptions": true
     },
-    "notes": "Source: current official edX provider page for the same AdelaideX offering. The recorded URL moved to the current canonical URL, and the normalized URL, title, description, certificate availability, and prerequisites were corrected. Verified the AdelaideX: Introduction to Project Management title, edX platform/source URL, Adelaide University attribution, introductory level, English language, paid-track certificate availability, 6 weeks at 2-3 hours/week workload signal, learning topics covering planning, scope, scheduling, costing, risk, communication, and delivery, and no prior experience requirement. durationHours remains null because the weekly range is not an exact total. Price, rating, and review count intentionally remain unknown/null because they are volatile."
+    "notes": "Source: current public official edX course page for the same AdelaideX offering, reviewed 2026-08-27. Re-verified the AdelaideX: Introduction to Project Management title, edX platform/source URL, Adelaide University attribution, single-course and school-verified-certificate context, introductory level, English primary taught language, 6 weeks at 2-3 hours/week workload, no prerequisites, learning topics covering initiation, planning, scope, scheduling, costing, risk, communication, teams, progress measurement, and delivery, and a course-module activity applying project characteristics to the learner's own project. Pricing path: $149 USD one-time for the Premium certificate track, including unlimited access, graded assessments, and a certificate; a separate audit path has time-limited access. The temporary ACTION2026 promotion was excluded as the canonical commitment. The current official page names project-management concepts and activities but no software or technology, so toolsTechnologies remains empty and unverified. durationHours remains null because the weekly range is not an exact total. Rating and review count remain unknown/null because they are volatile."
   },
   {
     "courseId": "project-management-principles-practices-umci",
