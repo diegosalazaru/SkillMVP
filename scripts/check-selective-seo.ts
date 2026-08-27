@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 
 import decisionGradeManifest from "../data/decision-grade-manifest.json";
+import robots from "../app/robots";
 import sitemap from "../app/sitemap";
 import { generateMetadata } from "../app/skills/[skillSlug]/page";
 import { SITE_URL } from "../src/config/siteConfig";
@@ -28,6 +29,24 @@ const expectedPairCounts = new Map([
   ["cloud-computing", 1],
   ["project-management", 2]
 ]);
+
+assert.equal(
+  SITE_URL,
+  "https://skillcompare.com",
+  "SEO checks must use the production canonical host https://skillcompare.com."
+);
+
+assert.deepEqual(
+  robots(),
+  {
+    rules: {
+      userAgent: "*",
+      allow: "/"
+    },
+    sitemap: `${SITE_URL}/sitemap.xml`
+  },
+  "robots.txt must allow crawling and advertise the production sitemap."
+);
 
 assert.deepEqual(
   getDecisionReadySkillSlugs(),
