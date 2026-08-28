@@ -34,9 +34,9 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
   if (!course) {
     return (
       <section className="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center">
-        <h2 className="text-2xl font-semibold text-slate-900">
+        <h1 className="text-2xl font-semibold text-slate-900">
           Course not found
-        </h2>
+        </h1>
         <p className="text-slate-600">
           Check the course ID or return to home.
         </p>
@@ -96,7 +96,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
         </p>
         <div className="mt-3 grid gap-6 lg:grid-cols-[1fr_0.42fr] lg:items-start lg:gap-10">
           <div>
-            <h2 className="break-words text-3xl font-semibold leading-tight tracking-[-0.03em] text-slate-950 sm:text-4xl lg:text-5xl">{course.title}</h2>
+            <h1 className="break-words text-3xl font-semibold leading-tight tracking-[-0.03em] text-slate-950 sm:text-4xl lg:text-5xl">{course.title}</h1>
             <p className="mt-4 max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg">
               {course.shortDescription ?? "Description unavailable."}
             </p>
@@ -169,9 +169,9 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
             Decision summary
           </p>
-          <h3 className="mt-2 text-lg font-semibold text-slate-900">
+          <h2 className="mt-2 text-lg font-semibold text-slate-900">
             What this course can help you evaluate
-          </h3>
+          </h2>
           <ul className="mt-4 space-y-2 text-sm leading-relaxed text-slate-600">
             {getCourseDecisionSummary(course).known.map((item) => (
               <li key={item} className="rounded-lg bg-slate-50 px-3 py-2">
@@ -194,9 +194,9 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
       </div>
 
       <div className="rounded-2xl border border-amber-200 bg-amber-50/60 p-4 sm:p-6">
-        <h3 className="text-lg font-semibold text-slate-900">
+        <h2 className="text-lg font-semibold text-slate-900">
           Verify before enrolling
-        </h3>
+        </h2>
         <p className="mt-2 text-sm leading-relaxed text-amber-900">
           {PROVIDER_DETAILS_NOTICE}
         </p>
@@ -210,9 +210,9 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
       </div>
 
       <div className="rounded-2xl border border-blue-200/80 bg-white p-5 shadow-[0_18px_45px_-36px_rgba(37,99,235,0.35)] sm:p-6">
-        <h3 className="text-lg font-semibold text-slate-900">
+        <h2 className="text-lg font-semibold text-slate-900">
           Compare for better context
-        </h3>
+        </h2>
         <p className="mt-2 text-sm leading-relaxed text-slate-600">
           {selectedIds.length < 2
             ? "Add this course, then choose one more option for side-by-side context."
@@ -271,7 +271,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
         <div className="grid gap-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 md:grid-cols-2">
           {hasLearningBullets ? (
             <div>
-              <h3 className="text-lg font-semibold text-slate-900">What you will learn</h3>
+              <h2 className="text-lg font-semibold text-slate-900">What you will learn</h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
                 {course.syllabusBullets.map((item) => (
                   <li key={item}>{item}</li>
@@ -281,7 +281,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
           ) : null}
           {hasPrerequisites ? (
             <div>
-              <h3 className="text-lg font-semibold text-slate-900">Prerequisites</h3>
+              <h2 className="text-lg font-semibold text-slate-900">Prerequisites</h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
                 {course.prerequisitesBullets.map((item) => (
                   <li key={item}>{item}</li>
@@ -293,7 +293,7 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
       ) : null}
 
       <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
-        <h3 className="text-lg font-semibold text-slate-900">Key facts</h3>
+        <h2 className="text-lg font-semibold text-slate-900">Key facts</h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {keyFacts.map((fact) => (
             <div key={fact.label} className="rounded-lg bg-slate-50 px-4 py-3">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { courses } from "@/lib/catalog-adapter";
 import { buildPageMetadata } from "@/lib/metadata";
 import CourseDetailClient from "./CourseDetailClient";
@@ -15,12 +16,7 @@ export async function generateMetadata({
   const course = courses.find((item) => item.id === params.courseId);
 
   if (!course) {
-    return buildPageMetadata({
-      title: "Course not found | Skills Compare",
-      description:
-        "Check the Skills Compare catalog to find available online courses.",
-      path: `/courses/${params.courseId}`
-    });
+    notFound();
   }
 
   return buildPageMetadata({
@@ -33,5 +29,9 @@ export async function generateMetadata({
 }
 
 export default function CourseDetailPage({ params }: CoursePageProps) {
+  if (!courses.some((course) => course.id === params.courseId)) {
+    notFound();
+  }
+
   return <CourseDetailClient courseId={params.courseId} />;
 }

@@ -1,9 +1,17 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 import decisionGradeManifest from "../data/decision-grade-manifest.json";
+import BlogPostPage from "../app/blog/[slug]/page";
+import { metadata as compareMetadata } from "../app/compare/page";
+import CourseDetailPage from "../app/courses/[courseId]/page";
 import robots from "../app/robots";
 import sitemap from "../app/sitemap";
-import { generateMetadata } from "../app/skills/[skillSlug]/page";
+import SkillPage, {
+  generateMetadata as generateSkillMetadata
+} from "../app/skills/[skillSlug]/page";
+import { AdPlaceholder } from "../src/components/AdPlaceholder";
 import { SITE_URL } from "../src/config/siteConfig";
 import { courses } from "../src/lib/catalog-adapter";
 import {
@@ -48,6 +56,70 @@ assert.deepEqual(
   "robots.txt must allow crawling and advertise the production sitemap."
 );
 
+const compareRobots = compareMetadata.robots;
+assert.equal(
+  typeof compareRobots === "object" ? compareRobots?.index : undefined,
+  false,
+  "Compare must emit noindex."
+);
+assert.equal(
+  typeof compareRobots === "object" ? compareRobots?.follow : undefined,
+  true,
+  "Compare must allow link following."
+);
+assert.equal(
+  compareMetadata.alternates?.canonical,
+  `${SITE_URL}/compare`,
+  "Compare must preserve its route canonical for query-based comparisons."
+);
+
+const isNextNotFound = (error: unknown) =>
+  error instanceof Error &&
+  (error as Error & { digest?: string }).digest === "NEXT_NOT_FOUND";
+
+assert.throws(
+  () => BlogPostPage({ params: { slug: "missing-blog-post" } }),
+  isNextNotFound,
+  "Invalid blog slugs must use the Next.js not-found path."
+);
+assert.throws(
+  () => CourseDetailPage({ params: { courseId: "missing-course" } }),
+  isNextNotFound,
+  "Invalid course IDs must use the Next.js not-found path."
+);
+assert.throws(
+  () => SkillPage({ params: { skillSlug: "missing-skill" } }),
+  isNextNotFound,
+  "Invalid skill slugs must use the Next.js not-found path."
+);
+
+assert.equal(
+  AdPlaceholder({}),
+  null,
+  "Inactive monetization placeholders must not render visible output."
+);
+
+const headingSources = {
+  layout: readFileSync(resolve("app/layout.tsx"), "utf8"),
+  home: readFileSync(resolve("app/HomeClient.tsx"), "utf8"),
+  compare: readFileSync(resolve("app/compare/CompareClient.tsx"), "utf8"),
+  blog: readFileSync(resolve("app/blog/page.tsx"), "utf8"),
+  blogPost: readFileSync(resolve("app/blog/[slug]/page.tsx"), "utf8"),
+  course: readFileSync(resolve("app/courses/[courseId]/CourseDetailClient.tsx"), "utf8"),
+  skill: readFileSync(resolve("app/skills/[skillSlug]/SkillClient.tsx"), "utf8")
+};
+
+assert.doesNotMatch(
+  headingSources.layout,
+  /<h1\b/,
+  "Global site chrome must not own page-level H1 semantics."
+);
+for (const [surface, source] of Object.entries(headingSources).filter(
+  ([surface]) => surface !== "layout"
+)) {
+  assert.match(source, /<h1\b/, `${surface} must provide a meaningful H1.`);
+}
+
 assert.deepEqual(
   getDecisionReadySkillSlugs(),
   targetSkillSlugs,
@@ -86,7 +158,7 @@ assert.deepEqual(
 );
 
 for (const skillSlug of targetSkillSlugs) {
-  const metadata = generateMetadata({ params: { skillSlug } });
+  const metadata = generateSkillMetadata({ params: { skillSlug } });
   const canonical = metadata.alternates?.canonical;
 
   assert.equal(
@@ -108,7 +180,7 @@ for (const skillSlug of targetSkillSlugs) {
 }
 
 assert.match(
-  String(generateMetadata({ params: { skillSlug: "ai" } }).title),
+  String(generateSkillMetadata({ params: { skillSlug: "ai" } }).title),
   /^AI course comparison guide/,
   "AI should retain its standard acronym casing in metadata and page copy."
 );

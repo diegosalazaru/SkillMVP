@@ -48,9 +48,9 @@ export default function HomeClient() {
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-blue-700 sm:text-sm">
               Start with a skill
             </p>
-            <h2 className="max-w-4xl text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-slate-950 sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-4xl text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-slate-950 sm:text-5xl lg:text-6xl">
               Compare courses before you commit.
-            </h2>
+            </h1>
             <p className="max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
               Search a skill, review course facts, and compare two options side by side.
             </p>
@@ -101,9 +101,9 @@ export default function HomeClient() {
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
               Available skills
             </p>
-            <h3 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">
               Explore the current catalog
-            </h3>
+            </h2>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-slate-500">
             Choose a skill to see factual course options and build a two-course comparison.
