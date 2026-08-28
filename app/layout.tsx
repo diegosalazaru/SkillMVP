@@ -35,7 +35,7 @@ export default function RootLayout({
                 <p className="truncate text-xs font-semibold uppercase tracking-[0.24em] text-slate-500 sm:text-sm">
                   Skills Compare
                 </p>
-                <h1 className="truncate text-base font-semibold tracking-tight sm:text-xl">Find the right course</h1>
+                <p className="truncate text-base font-semibold tracking-tight sm:text-xl">Find the right course</p>
               </Link>
               <nav className="flex shrink-0 items-center gap-1 rounded-full border border-slate-200/80 bg-white/80 p-1 text-xs font-semibold text-slate-600 shadow-sm backdrop-blur sm:gap-2 sm:text-sm">
                 <Link href="/compare" className="rounded-full px-3 py-2 transition hover:bg-slate-100 hover:text-slate-950 sm:px-4">Compare</Link>

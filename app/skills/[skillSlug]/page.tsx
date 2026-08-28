@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getCoursesForSkill, getSkillSummary } from "@/lib/skill-catalog";
 import {
   getDecisionReadyPairsForSkill,
@@ -17,12 +18,7 @@ export const generateMetadata = ({ params }: SkillPageProps): Metadata => {
   const skill = getSkillSummary(params.skillSlug);
 
   if (!skill) {
-    return buildPageMetadata({
-      title: "Skill not found | Skills Compare",
-      description:
-        "Review real alternatives in the Skills Compare catalog to compare online courses.",
-      path: `/skills/${params.skillSlug}`
-    });
+    notFound();
   }
 
   const courseCount = getCoursesForSkill(skill.slug).length;
@@ -49,6 +45,10 @@ export const generateMetadata = ({ params }: SkillPageProps): Metadata => {
 
 export default function SkillPage({ params }: SkillPageProps) {
   const skill = getSkillSummary(params.skillSlug);
+  if (!skill) {
+    notFound();
+  }
+
   const decisionReadyPairs = getDecisionReadyPairsForSkill(params.skillSlug);
   const decisionIntro =
     skill && decisionReadyPairs.length > 0

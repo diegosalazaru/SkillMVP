@@ -49,7 +49,7 @@ const PricingCommitmentCard = ({ course }: { course: Course }) => {
 
   return (
     <article className="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-      <h4 className="break-words text-lg font-semibold text-slate-950">{course.title}</h4>
+      <h3 className="break-words text-lg font-semibold text-slate-950">{course.title}</h3>
       {pricingOptions.length > 0 ? (
         <div className="mt-4 space-y-4">
           {pricingOptions.map((option, index) => (
@@ -142,9 +142,9 @@ const CourseSnapshotCard = ({ course }: { course: Course }) => {
   return (
     <article className="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_18px_45px_-36px_rgba(15,23,42,0.45)] sm:p-6">
       <div className="flex min-w-0 flex-col gap-3 border-b border-slate-100 pb-5">
-        <h4 className="break-words text-xl font-semibold tracking-tight text-slate-950">
+        <h3 className="break-words text-xl font-semibold tracking-tight text-slate-950">
           {course.title}
-        </h4>
+        </h3>
         <div className="flex flex-wrap gap-2 text-xs font-semibold">
           <span className="rounded-full bg-blue-50 px-3 py-1.5 text-blue-700">
             {snapshot.offeringType}
@@ -300,9 +300,9 @@ export default function CompareClient() {
   if (!hasTwoCourses) {
     return (
       <section className="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center">
-        <h2 className="text-2xl font-semibold text-slate-900">
+        <h1 className="text-2xl font-semibold text-slate-900">
           Select exactly 2 courses to compare
-        </h2>
+        </h1>
         <p className="text-slate-600">
           We need two valid selected courses to show a side-by-side comparison.
         </p>
@@ -332,9 +332,9 @@ export default function CompareClient() {
         <p className="text-xs font-bold uppercase tracking-[0.22em] text-blue-700">
           Course comparison
         </p>
-        <h2 className="max-w-5xl break-words text-3xl font-semibold leading-tight tracking-[-0.03em] text-slate-950 sm:text-4xl lg:text-5xl">
+        <h1 className="max-w-5xl break-words text-3xl font-semibold leading-tight tracking-[-0.03em] text-slate-950 sm:text-4xl lg:text-5xl">
           {leftCourse.title} vs {rightCourse.title}
-        </h2>
+        </h1>
         <p className="max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg">
           Compare current payment commitments, practical differences, and uncertainty before using provider checkout for final confirmation.
         </p>
@@ -346,9 +346,9 @@ export default function CompareClient() {
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-300">
               Decision summary
             </p>
-            <h3 className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
               What changes your decision?
-            </h3>
+            </h2>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-slate-300">
             This summary is deterministic. It highlights factual fit signals and uncertainty; it does not rank courses.
@@ -367,7 +367,7 @@ export default function CompareClient() {
             </ul>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/[0.05] p-4 sm:p-5">
-            <h4 className="font-semibold text-white">What remains uncertain</h4>
+            <h3 className="font-semibold text-white">What remains uncertain</h3>
             <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-300 marker:text-amber-300">
               {decisionSummary.uncertainty.map((item) => (
                 <li key={item}>{item}</li>
@@ -375,7 +375,7 @@ export default function CompareClient() {
             </ul>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/[0.05] p-4 sm:p-5">
-            <h4 className="font-semibold text-white">Shared context</h4>
+            <h3 className="font-semibold text-white">Shared context</h3>
             <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-400 marker:text-slate-500">
               {decisionSummary.similarities.map((item) => (
                 <li key={item}>{item}</li>
@@ -390,12 +390,12 @@ export default function CompareClient() {
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-700">
             At a glance
           </p>
-          <h3
+          <h2
             id="course-snapshot-heading"
             className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl"
           >
             Course snapshot
-          </h3>
+          </h2>
           <p className="mt-2 text-sm leading-relaxed text-slate-600">
             Start with the verified facts most likely to shape the choice, then inspect the evidence and detailed criteria below.
           </p>
@@ -411,9 +411,9 @@ export default function CompareClient() {
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-700">
             Pricing commitments
           </p>
-          <h3 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">
             Current verified pricing
-          </h3>
+          </h2>
           <p className="mt-2 text-sm leading-relaxed text-slate-600">
             All comparable commitments are shown in USD. Course or program paths appear before broader platform-subscription alternatives when both are verified; trials may change the amount due at checkout today.
           </p>
@@ -426,7 +426,7 @@ export default function CompareClient() {
 
       <section className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[0_18px_45px_-36px_rgba(15,23,42,0.45)]">
         <div className="border-b border-slate-200 bg-slate-50/80 px-5 py-5 sm:px-6">
-          <h3 className="text-xl font-semibold tracking-tight text-slate-950">Criteria that matter</h3>
+          <h2 className="text-xl font-semibold tracking-tight text-slate-950">Criteria that matter</h2>
           <p className="mt-1 text-sm text-slate-600">
             Each row includes a status and interpretation so you do not have to infer the tradeoff from raw facts alone.
           </p>
@@ -459,12 +459,12 @@ export default function CompareClient() {
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-700">
             Detailed course content
           </p>
-          <h3
+          <h2
             id="course-content-heading"
             className="mt-2 text-2xl font-semibold tracking-tight text-slate-950"
           >
             Inspect what each course covers
-          </h3>
+          </h2>
           <p className="mt-2 text-sm leading-relaxed text-slate-600">
             Review curriculum, starting-point detail, named tools, and practical work after the decision-level comparison.
           </p>
@@ -480,16 +480,16 @@ export default function CompareClient() {
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-700">
             Final verification
           </p>
-          <h3 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">
             Verify current terms, then act
-          </h3>
+          </h2>
           <p className="mt-2 text-sm leading-relaxed text-slate-600">
             Provider pages are the final source for checkout totals, taxes, eligibility, regional terms, and availability.
           </p>
         </div>
 
         <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 sm:p-5">
-          <h4 className="text-lg font-semibold text-amber-950">Data to verify before enrolling</h4>
+          <h3 className="text-lg font-semibold text-amber-950">Data to verify before enrolling</h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-amber-900">
             {pendingRisks.map((risk) => (
               <li key={risk}>{risk}</li>
@@ -498,7 +498,7 @@ export default function CompareClient() {
         </div>
 
         <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5">
-          <h4 className="text-lg font-semibold text-slate-900">Before you choose</h4>
+          <h3 className="text-lg font-semibold text-slate-900">Before you choose</h3>
           <div className="mt-4 grid gap-3 md:grid-cols-2">
             {decisionChecklist.map((item) => (
               <div key={item} className="flex gap-3 rounded-xl border border-slate-100 bg-white p-3.5 text-sm text-slate-700">
