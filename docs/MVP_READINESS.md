@@ -18,7 +18,7 @@
 - Mobile Selection and Discovery UX is merged: compare selection persists for up to 24 hours, returning selections are surfaced, and the compare bar is available globally outside the compare page.
 - Decision-focused visual polish is merged across the core Search -> Compare -> Decide journey.
 - Decision Data Contract v2 preserves provider-backed offering, workload, tool, practical-work, credential, and cost-model signals for the 12 explicitly approved courses.
-- Structured pricing preserves source-backed payable paths, USD amounts, cadence, scope, provenance, freshness, and regional/access context for the same 12-course set.
+- Structured pricing preserves source-backed exact, provider-qualified starting-at, and genuinely free paths with USD amounts, cadence, scope, provenance, freshness, and regional/access context. The current 12-course decision-grade set retains its existing exact paths.
 - Compare presents decision differences and a source-backed at-a-glance snapshot before detailed pricing, criteria, curriculum, and final provider verification.
 - Canonical AI, Cybersecurity, Data Analysis, Cloud Computing, and Project Management pages now surface all seven manifest-approved pairs in deterministic order, with compact source-backed tradeoffs and explicit uncertainty before the detailed Compare flow.
 
@@ -71,7 +71,7 @@
 - AWS Cloud Technical Essentials vs AWS Foundations: Getting Started with the AWS Cloud Essentials passes 5/7 plus the pricing hard gate, with Pluralsight prerequisites and practical work explicitly insufficient.
 - Introduction to Information Security is blocked and intentionally omitted because its official course page appears active while the current official author page labels it `RETIRED`; no substitute Cybersecurity course was added.
 - The schema migration is limited to the 12 records in `data/decision-grade-manifest.json`. Independent product review must decide whether another small, explicit batch is justified.
-- Exact actionable pricing is required for every approved decision-grade pair. Provider checkout remains the final source for transaction-specific taxes, eligibility, regional variation, and availability.
+- An official actionable exact, provider-qualified starting-at, or genuinely free pricing path is required for every approved decision-grade pair. Qualified starting amounts do not establish exact-price Same/Different results. Provider checkout remains the final source for transaction-specific taxes, eligibility, regional variation, and availability.
 
 ## Validation Workflow
 

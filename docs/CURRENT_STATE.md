@@ -1,6 +1,6 @@
 # Current State
 
-Last updated after implementing the bounded Phase 1B.8 Pluralsight provider batch for independent product review.
+Last updated after implementing the bounded issue #121 pricing-contract evolution for independent product review.
 
 ## Product State
 
@@ -11,6 +11,15 @@ The current UI is English-first. The product supports skill discovery, curated c
 Recent product review exposed an important distinction: source-trusted catalog data is not automatically decision-useful data. The product must not only avoid inventing facts; it must preserve enough structured provider-backed information to help a user actually choose between courses.
 
 ## Latest Completed Initiatives
+
+### Pricing Evidence Semantics — Issue #121
+
+Key outcomes:
+
+- Existing decision-grade exact prices retain their display and comparison semantics without catalog data churn.
+- Provider-published `starting at` amounts are actionable only when current, official, source-backed, scoped, and qualified wherever displayed; they do not establish exact-price Same/Different results.
+- Genuinely free access is represented by a distinct `free` pricing option and can clear the hard gate at $0. Zero paid/subscription combinations and contradictory qualified-free combinations fail schema validation.
+- The catalog remains at 20 courses and the approved set remains 12 courses across seven pairs. No LinkedIn, Microsoft, or other provider records were ingested.
 
 ### Phase 1B.8 — Pluralsight Provider Batch — Issue #116
 
@@ -135,7 +144,7 @@ Earlier completed initiatives, including Phase 1 Source Verification Batches A/B
 - 18 courses are currently `partially_verified`.
 - 2 courses remain `pending` with explicit source blockers rather than unreviewed status.
 - Source URL mismatches: 0 after the completed verification batches.
-- Pricing remains unknown or unverified for the 8 non-migrated courses; the 12 approved decision-grade records now have actionable source-backed USD pricing paths. Most ratings and review counts remain unknown by design.
+- Pricing remains unknown or unverified for the 8 non-migrated courses; the 12 approved decision-grade records retain their current exact actionable source-backed USD pricing paths. The contract can also represent official qualified starting prices and genuinely free access in a future explicitly approved batch. Most ratings and review counts remain unknown by design.
 - The 12 approved decision-grade records preserve provider-described workloads, including exact video-course durations and longer schedules, without inferring completion totals.
 - The current normalized `language` field represents the primary taught language when clearly supported by an official source. Additional dubbing/subtitle/language availability remains provenance context unless a later explicit schema initiative changes that model.
 - `report:data-quality` remains part of normal validation.

@@ -9,6 +9,7 @@
     "lint": "next lint",
     "validate:data": "tsx scripts/validate-data.ts",
     "report:data-quality": "node scripts/report-data-quality.js",
+    "check:pricing-contract": "tsx scripts/check-pricing-contract.ts",
     "check:selective-seo": "tsx scripts/check-selective-seo.ts",
     "ingest:edx": "tsx scripts/ingest-edx.ts",
     "ingest:coursera": "tsx scripts/ingest-coursera.ts",

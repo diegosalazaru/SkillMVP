@@ -68,15 +68,29 @@ const decisionDimensions = [
     verified.costModel === true && course.costModel != null]
 ];
 
+const isActionablePricingOption = (option) => {
+  const isFree =
+    option.model === "free" &&
+    option.amount === 0 &&
+    option.normalizedUsdAmount === 0;
+  const isPaid =
+    option.model !== "free" &&
+    option.model !== "free_audit" &&
+    option.amount > 0 &&
+    option.normalizedUsdAmount > 0;
+
+  return (
+    (isFree || isPaid) &&
+    Boolean(option.actionUrl) &&
+    option.evidenceUrls?.length > 0 &&
+    Boolean(option.observedAt)
+  );
+};
+
 const hasActionablePricing = (course, verified) =>
   verified.price === true &&
   verified.pricingOptions === true &&
-  course.pricingOptions?.some(
-    (option) =>
-      option.amount > 0 &&
-      option.normalizedUsdAmount > 0 &&
-      option.evidenceUrls?.length > 0
-  );
+  course.pricingOptions?.some(isActionablePricingOption);
 
 const coursesPath = resolve(process.cwd(), "data", "normalized", "courses.json");
 const metadataPath = resolve(
@@ -192,7 +206,11 @@ try {
     console.log(`  - insufficient: ${insufficient.length > 0 ? insufficient.join(", ") : "none"}`);
     [left, right].forEach((course) => {
       (course.pricingOptions ?? []).forEach((option) => {
-        console.log(`  - ${course.id}/${option.id}: ${option.amount} ${option.currency} -> ${option.normalizedUsdAmount} USD; ${option.model}; ${option.cadence}; ${option.scope}; observed ${option.observedAt}; market ${option.referenceMarket ?? "not restricted"}; access ${option.accessContext}; evidence ${option.evidenceUrls.join(", ")}`);
+        const sourceAmount =
+          option.model === "free"
+            ? "Free (0 USD)"
+            : `${option.qualifier === "starting_at" ? "Starting at " : ""}${option.amount} ${option.currency}`;
+        console.log(`  - ${course.id}/${option.id}: ${sourceAmount} -> ${option.normalizedUsdAmount} USD; ${option.model}; ${option.cadence}; ${option.scope}; observed ${option.observedAt}; market ${option.referenceMarket ?? "not restricted"}; access ${option.accessContext}; evidence ${option.evidenceUrls.join(", ")}`);
       });
     });
   });

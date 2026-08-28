@@ -24,7 +24,7 @@ Future work in this area should be limited to concrete usability defects or regr
 
 ## Phase 1 — Real Data
 
-**Status: Phase 1A source trust complete; Phase 1B.8 adds the bounded Pluralsight Cloud course while retaining the Cybersecurity availability blocker found in independent review.**
+**Status: Phase 1A source trust complete; Phase 1B.8 adds the bounded Pluralsight Cloud course, and issue #121 evolves the provider-neutral pricing contract without adding providers or courses.**
 
 Goal: make the catalog both trustworthy and useful enough to support real user decisions.
 
@@ -54,6 +54,7 @@ Completed:
 - **Phase 1B.6 — Decision-Grade Rollout Batch 2** in issue #106: the Google Project Management Professional Certificate and UCI Project Management Principles and Practices Specialization now use the approved contract. The pair passes pricing plus 6/7 source-backed dimensions, with UCI tools/technologies explicitly insufficient, and the manifest now contains exactly ten courses across five pairs.
 - **Phase 1B.7 — Multi-provider Acceptance + Cross-platform Project Management** in issue #108: all five incumbent pairs pass cumulative desktop/mobile product acceptance, the current public AdelaideX course page establishes a non-promotional `$149 USD` one-time Premium certificate path, and Google Project Management vs AdelaideX passes pricing plus 6/7 dimensions with edX tools/technologies explicitly insufficient. The manifest now contains exactly 11 courses across six approved pairs.
 - **Phase 1B.8 — Pluralsight Provider Batch** in issue #116: one current Pluralsight Cloud video course clears the unchanged pricing and 5/7 gates. The Cybersecurity candidate is blocked and intentionally omitted because official Pluralsight pages conflict on whether it is retired; no substitute was added. The catalog now contains 20 courses; the approved set contains 12 courses across seven pairs. The Cloud canonical guide surfaces the new pair automatically without provider-specific page code.
+- **Pricing evidence semantics** in issue #121: exact pricing remains backward compatible, official provider-published `starting at` paths can clear the pricing gate without becoming exact commitments, and genuinely free access has a distinct zero-price semantic. Qualified amounts remain ineligible for exact-price Same/Different claims, and no provider/course ingestion is included.
 
 Do not migrate the remaining catalog automatically. Any later rollout requires another explicit, auditable batch decision.
 

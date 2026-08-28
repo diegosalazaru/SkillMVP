@@ -24,10 +24,17 @@ const CostModelSchema = z.object({
 
 const PricingOptionSchema = z.object({
   id: z.string().min(1),
-  model: z.enum(["one_time", "subscription", "platform_subscription", "free_audit"]),
+  model: z.enum([
+    "one_time",
+    "subscription",
+    "platform_subscription",
+    "free_audit",
+    "free"
+  ]),
   amount: z.number().nonnegative(),
   currency: z.string().length(3),
   normalizedUsdAmount: z.number().nonnegative(),
+  qualifier: z.enum(["exact", "starting_at"]).default("exact"),
   cadence: z.enum(["one_time", "month", "year", "other"]),
   scope: z.string().min(1),
   normalizationBasis: z.enum(["provider_published_usd", "currency_converted"]),
@@ -41,6 +48,47 @@ const PricingOptionSchema = z.object({
     "account_visible_enrollment"
   ]),
   conditions: z.string().min(1).nullable()
+}).superRefine((option, context) => {
+  const isFree = option.model === "free";
+  const isFreeAudit = option.model === "free_audit";
+
+  if (isFree || isFreeAudit) {
+    if (option.amount !== 0 || option.normalizedUsdAmount !== 0) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `${option.model} pricing must use zero source and normalized amounts`,
+        path: ["amount"]
+      });
+    }
+
+    if (option.qualifier !== "exact") {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `${option.model} pricing cannot use a starting-at qualifier`,
+        path: ["qualifier"]
+      });
+    }
+  } else if (option.amount <= 0 || option.normalizedUsdAmount <= 0) {
+    context.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Paid pricing must use positive source and normalized amounts",
+      path: ["amount"]
+    });
+  }
+
+  if (
+    isFree &&
+    (option.currency !== "USD" ||
+      option.cadence !== "other" ||
+      option.normalizationBasis !== "provider_published_usd")
+  ) {
+    context.addIssue({
+      code: z.ZodIssueCode.custom,
+      message:
+        "Genuinely free pricing must use USD, other cadence, and provider-published basis",
+      path: ["model"]
+    });
+  }
 });
 
 export const CourseSchema = z.object({

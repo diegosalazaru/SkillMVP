@@ -9,8 +9,8 @@ import {
   getActionablePricingOptions,
   getCourseDecisionSummary,
   getCourseFitBullets,
-  isDurationPending,
-  isExactPricePending
+  hasStartingAtPricing,
+  isDurationPending
 } from "@/lib/decision-support";
 import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
 import {
@@ -69,9 +69,11 @@ export default function CourseDetailClient({ courseId }: CourseDetailClientProps
     course.rating == null
       ? "Rating and review count are unavailable, so Skills Compare cannot use social proof as a decision signal."
       : "Rating is available, but review totals can change.",
-    isExactPricePending(course)
+    primaryPricingOption == null
       ? "Exact price is pending, so total cost must be confirmed on the provider page."
-      : "Catalog price is available, but final provider terms should still be confirmed.",
+      : hasStartingAtPricing(course)
+        ? "A provider-published starting price is available, but the final market and checkout amount must still be confirmed."
+        : "Catalog price is available, but final provider terms should still be confirmed.",
     isDurationPending(course)
       ? "Duration is pending, so workload risk is higher until you verify the provider page."
       : "Duration is listed, but current workload should still be checked before committing.",
