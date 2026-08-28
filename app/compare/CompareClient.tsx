@@ -7,12 +7,12 @@ import { AdPlaceholder } from "@/components/AdPlaceholder";
 import {
   buildComparisonRows,
   formatPricingOption,
+  formatSourcePricingAmount,
   getActionablePricingOptions,
   getCourseSnapshot,
   getDecisionSummary,
   getPendingDataRisks,
-  isDurationPending,
-  isExactPricePending
+  isDurationPending
 } from "@/lib/decision-support";
 import { courses } from "@/lib/catalog-adapter";
 import { trackOutboundCourseClick } from "@/lib/outbound-tracking";
@@ -41,7 +41,8 @@ const pricingModelLabels = {
   one_time: "One-time",
   subscription: "Program subscription",
   platform_subscription: "Platform subscription",
-  free_audit: "Free / audit"
+  free_audit: "Free / audit",
+  free: "Free"
 };
 
 const PricingCommitmentCard = ({ course }: { course: Course }) => {
@@ -71,9 +72,7 @@ const PricingCommitmentCard = ({ course }: { course: Course }) => {
               <dl className="mt-3 grid gap-2 text-xs leading-relaxed text-slate-600 sm:grid-cols-2">
                 <div>
                   <dt className="font-semibold text-slate-800">Source amount</dt>
-                  <dd>
-                    {option.amount} {option.currency}
-                  </dd>
+                  <dd>{formatSourcePricingAmount(option)}</dd>
                 </div>
                 <div>
                   <dt className="font-semibold text-slate-800">USD basis</dt>
@@ -415,7 +414,7 @@ export default function CompareClient() {
             Current verified pricing
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-slate-600">
-            All comparable commitments are shown in USD. Course or program paths appear before broader platform-subscription alternatives when both are verified; trials may change the amount due at checkout today.
+            Published economic paths are shown in USD with any starting-price qualifier preserved. Qualified amounts are not treated as exact checkout commitments; trials and market terms may also change the amount due today.
           </p>
         </div>
         <div className="mt-5 grid gap-4 lg:grid-cols-2">

@@ -46,11 +46,13 @@ Do not manufacture a winner when the available evidence does not justify one.
 
 ## Pricing as Decision Data
 
-- For the Phase 1B.3 pilot, a comparison is not decision-ready unless both courses have at least one actionable, source-backed payable pricing path displayed in USD.
-- Preserve amount, cadence, payment model, scope, source, observation date, and regional or access context. Do not collapse genuinely distinct paths into one scalar claim.
+- A comparison is not decision-ready unless both courses have at least one current, official, actionable pricing path: an exact source-backed price, a provider-published `starting at` price with its qualifier preserved, or genuinely free access represented explicitly as free/$0.
+- Preserve amount, exact-versus-starting-at semantics, cadence, payment model, scope, source, observation date, and regional or access context. Do not collapse genuinely distinct paths into one scalar claim.
 - Course- or program-specific paths appear before verified platform-subscription alternatives.
 - Currency-converted amounts must preserve the original amount and render with approximation semantics.
-- Promotional prices, inferred completion totals, and generic provider-wide starting prices are not canonical course prices.
+- A provider-published starting price establishes an actionable economic path, not an exact checkout commitment. When either side is qualified, exact-price Same/Different status remains insufficient; independently verified cost-model comparisons can remain factual.
+- Genuinely free access is a distinct pricing semantic. Zero paid, subscription, or platform-subscription amounts are invalid and do not pass the pricing gate.
+- Promotional prices, inferred completion totals, generic provider ranges without actionable course access context, and Skills Compare-generated estimates are not canonical course prices.
 - Pricing remains a hard gate in addition to, not instead of, the existing 5/7 Phase 1B.2 decision-dimension gate.
 
 ## Language

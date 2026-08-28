@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { CourseSchema } from "../src/lib/schema/course";
+import { isActionablePricingOption } from "../src/lib/pricing-contract";
 
 const coursesPath = resolve(process.cwd(), "data", "normalized", "courses.json");
 const metadataPath = resolve(
@@ -157,11 +158,7 @@ const hasActionablePricing = (courseId: string) => {
   }
 
   return course.pricingOptions.some(
-    (option) =>
-      option.amount > 0 &&
-      option.normalizedUsdAmount > 0 &&
-      Boolean(option.actionUrl) &&
-      option.evidenceUrls.length > 0
+    (option) => isActionablePricingOption(option)
   );
 };
 

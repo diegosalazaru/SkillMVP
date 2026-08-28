@@ -41,10 +41,16 @@ export type Course = {
   } | null;
   pricingOptions?: Array<{
     id: string;
-    model: "one_time" | "subscription" | "platform_subscription" | "free_audit";
+    model:
+      | "one_time"
+      | "subscription"
+      | "platform_subscription"
+      | "free_audit"
+      | "free";
     amount: number;
     currency: string;
     normalizedUsdAmount: number;
+    qualifier: "exact" | "starting_at";
     cadence: "one_time" | "month" | "year" | "other";
     scope: string;
     normalizationBasis: "provider_published_usd" | "currency_converted";

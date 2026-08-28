@@ -2,6 +2,7 @@ import normalizedCatalog from "../../data/normalized/courses.json";
 import sourceMetadata from "../../data/normalized/course-source-metadata.json";
 import { courses as fallbackCourses } from "@/data/courses";
 import { CourseSchema, type Course as NormalizedCourse } from "@/lib/schema/course";
+import { formatPricingOption } from "@/lib/decision-support";
 import type { Course } from "@/types/course";
 
 const mapPlatform = (platform: string): Course["platform"] | null => {
@@ -70,33 +71,20 @@ const formatDurationText = (
   return `${durationHours} hours`;
 };
 
-const formatPriceText = (course: NormalizedCourse): string => {
+export const formatPriceText = (course: NormalizedCourse): string => {
   const primaryPricingOption = course.pricingOptions[0];
 
   if (primaryPricingOption) {
-    const approximation =
-      primaryPricingOption.normalizationBasis === "currency_converted" ? "≈ " : "";
-    const amount = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: Number.isInteger(primaryPricingOption.normalizedUsdAmount)
-        ? 0
-        : 2
-    }).format(primaryPricingOption.normalizedUsdAmount);
-    const cadence = {
-      one_time: " total",
-      month: "/month",
-      year: "/year",
-      other: ""
-    }[primaryPricingOption.cadence];
     const model = {
       one_time: "One-time",
       subscription: "Program subscription",
       platform_subscription: "Platform subscription",
-      free_audit: "Free / audit"
+      free_audit: null,
+      free: null
     }[primaryPricingOption.model];
+    const formattedOption = formatPricingOption(primaryPricingOption);
 
-    return `${model}: ${approximation}${amount}${cadence} — ${primaryPricingOption.scope}`;
+    return model ? `${model}: ${formattedOption}` : formattedOption;
   }
 
   if (course.priceModel === "free") {
