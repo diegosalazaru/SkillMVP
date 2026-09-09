@@ -33,8 +33,8 @@ const targetSkillSlugs = [
 const expectedPairCounts = new Map([
   ["ai", 1],
   ["cybersecurity", 1],
-  ["data-analysis", 1],
-  ["cloud-computing", 2],
+  ["data-analysis", 3],
+  ["cloud-computing", 3],
   ["project-management", 2]
 ]);
 

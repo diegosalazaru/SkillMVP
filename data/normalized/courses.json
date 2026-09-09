@@ -1242,5 +1242,240 @@
       "High school mathematics or mathematics for machine learning"
     ],
     "source": "coursera-curated"
+  },
+  {
+    "id": "become-data-analyst-linkedin-learning",
+    "platform": "linkedin-learning",
+    "title": "Become a Data Analyst",
+    "url": "https://www.linkedin.com/learning/paths/become-a-data-analyst",
+    "skillSlug": "data-analysis",
+    "level": "unknown",
+    "durationHours": 41,
+    "language": "unknown",
+    "priceModel": "subscription",
+    "priceAmount": 39.99,
+    "currency": "USD",
+    "priceInterval": "month",
+    "rating": null,
+    "reviewCount": null,
+    "certificate": null,
+    "lastUpdatedAt": null,
+    "shortDescription": "LinkedIn Learning path covering data-analysis foundations, communication skills, and a range of analytics and visualization tools.",
+    "syllabusBullets": [
+      "Technical skills for data analyst career paths",
+      "Data-analysis foundations, SQL queries, and data cleaning",
+      "Data visualization and reporting",
+      "Communication, teamwork, and problem-solving skills"
+    ],
+    "prerequisitesBullets": [],
+    "offeringType": "other",
+    "workload": {
+      "durationQuantity": 41,
+      "durationUnit": "hour",
+      "hoursPerWeek": null,
+      "text": "41 hours of content across 12 courses"
+    },
+    "toolsTechnologies": [
+      "Microsoft Excel",
+      "SQL",
+      "Power BI",
+      "Tableau",
+      "R",
+      "Python"
+    ],
+    "practicalWorkBullets": [],
+    "credential": {
+      "type": "other",
+      "text": "LinkedIn Learning badge of completion; most eligible paths can also issue a non-accredited Certificate of Completion with active access"
+    },
+    "costModel": {
+      "type": "subscription",
+      "text": "Premium Career includes LinkedIn Learning access; published prices are starting estimates for the broader subscription, not a course purchase"
+    },
+    "pricingOptions": [
+      {
+        "id": "linkedin-premium-career-monthly",
+        "model": "platform_subscription",
+        "amount": 39.99,
+        "currency": "USD",
+        "normalizedUsdAmount": 39.99,
+        "qualifier": "starting_at",
+        "cadence": "month",
+        "scope": "Premium Career access, including more than 25,000 LinkedIn Learning courses and this learning path",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://premium.linkedin.com/careers/career",
+        "evidenceUrls": [
+          "https://www.linkedin.com/learning/paths/become-a-data-analyst",
+          "https://premium.linkedin.com/careers/career"
+        ],
+        "observedAt": "2026-09-09",
+        "referenceMarket": null,
+        "accessContext": "public_provider_page",
+        "conditions": "LinkedIn labels the amount an estimate; taxes and promotions may be excluded, prices may vary by device, and the trial or pricing action shows the actual amount"
+      },
+      {
+        "id": "linkedin-premium-career-annual",
+        "model": "platform_subscription",
+        "amount": 239.88,
+        "currency": "USD",
+        "normalizedUsdAmount": 239.88,
+        "qualifier": "starting_at",
+        "cadence": "year",
+        "scope": "Annual Premium Career access, including more than 25,000 LinkedIn Learning courses and this learning path",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://premium.linkedin.com/careers/career",
+        "evidenceUrls": [
+          "https://www.linkedin.com/learning/paths/become-a-data-analyst",
+          "https://premium.linkedin.com/careers/career"
+        ],
+        "observedAt": "2026-09-09",
+        "referenceMarket": null,
+        "accessContext": "public_provider_page",
+        "conditions": "LinkedIn labels the amount an estimate; taxes and promotions may be excluded, prices may vary by device, and the trial or pricing action shows the actual amount"
+      }
+    ],
+    "source": "other"
+  },
+  {
+    "id": "azure-architecture-services-microsoft-learn",
+    "platform": "microsoft-learn",
+    "title": "Introduction to Cloud Infrastructure: Describe Azure architecture and services",
+    "url": "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-azure-architecture-services/",
+    "skillSlug": "cloud-computing",
+    "level": "beginner",
+    "durationHours": 2.8,
+    "language": "unknown",
+    "priceModel": "free",
+    "priceAmount": 0,
+    "currency": "USD",
+    "priceInterval": null,
+    "rating": null,
+    "reviewCount": null,
+    "certificate": null,
+    "lastUpdatedAt": null,
+    "shortDescription": "Free Microsoft Learn path introducing Azure architecture, compute, networking, storage, identity, access, and security.",
+    "syllabusBullets": [
+      "Core architectural components of Azure",
+      "Azure compute and networking services",
+      "Azure storage services",
+      "Azure identity, access, and security"
+    ],
+    "prerequisitesBullets": [
+      "Basic familiarity with IT terms and concepts"
+    ],
+    "offeringType": "other",
+    "workload": {
+      "durationQuantity": 2.8,
+      "durationUnit": "hour",
+      "hoursPerWeek": null,
+      "text": "2 hours 48 minutes across 5 modules"
+    },
+    "toolsTechnologies": [
+      "Microsoft Azure"
+    ],
+    "practicalWorkBullets": [],
+    "credential": {
+      "type": "other",
+      "text": "Microsoft Learn learning-path completion achievement or trophy; separate from Microsoft certification and its exam"
+    },
+    "costModel": {
+      "type": "free",
+      "text": "Microsoft Learn training is free; Azure resource use and certification exams are separate products"
+    },
+    "pricingOptions": [
+      {
+        "id": "microsoft-learn-free-training",
+        "model": "free",
+        "amount": 0,
+        "currency": "USD",
+        "normalizedUsdAmount": 0,
+        "qualifier": "exact",
+        "cadence": "other",
+        "scope": "Microsoft Learn training access for this learning path",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-azure-architecture-services/",
+        "evidenceUrls": [
+          "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-azure-architecture-services/",
+          "https://learn.microsoft.com/en-us/training/support/faq"
+        ],
+        "observedAt": "2026-09-09",
+        "referenceMarket": null,
+        "accessContext": "public_provider_page",
+        "conditions": "No profile is required to consume the training; optional Azure resources, certification exams, and instructor-led offerings are separate and are not included in this training price"
+      }
+    ],
+    "source": "other"
+  },
+  {
+    "id": "data-analytics-microsoft-learn",
+    "platform": "microsoft-learn",
+    "title": "Get started with Microsoft data analytics",
+    "url": "https://learn.microsoft.com/en-us/training/paths/data-analytics-microsoft/",
+    "skillSlug": "data-analysis",
+    "level": "intermediate",
+    "durationHours": 1.4667,
+    "language": "unknown",
+    "priceModel": "free",
+    "priceAmount": 0,
+    "currency": "USD",
+    "priceInterval": null,
+    "rating": null,
+    "reviewCount": null,
+    "certificate": null,
+    "lastUpdatedAt": null,
+    "shortDescription": "Short free Microsoft Learn path introducing the data-analyst role and analytics with Power BI, Microsoft Fabric, and Copilot in Power BI.",
+    "syllabusBullets": [
+      "The analytics process, data roles, and tasks that produce trusted insights",
+      "Building interactive reports with Power BI",
+      "End-to-end analytics with Microsoft Fabric",
+      "Preparing data, semantic models, reports, and natural-language analysis with Copilot in Power BI"
+    ],
+    "prerequisitesBullets": [
+      "No prerequisites"
+    ],
+    "offeringType": "other",
+    "workload": {
+      "durationQuantity": 1.4667,
+      "durationUnit": "hour",
+      "hoursPerWeek": null,
+      "text": "1 hour 28 minutes across 4 modules"
+    },
+    "toolsTechnologies": [
+      "Power BI",
+      "Microsoft Fabric",
+      "Copilot in Power BI"
+    ],
+    "practicalWorkBullets": [],
+    "credential": {
+      "type": "other",
+      "text": "Microsoft Learn learning-path completion achievement or trophy; separate from Microsoft certification and its exam"
+    },
+    "costModel": {
+      "type": "free",
+      "text": "Microsoft Learn training is free; the related Microsoft certification and exam are separate products"
+    },
+    "pricingOptions": [
+      {
+        "id": "microsoft-learn-free-training",
+        "model": "free",
+        "amount": 0,
+        "currency": "USD",
+        "normalizedUsdAmount": 0,
+        "qualifier": "exact",
+        "cadence": "other",
+        "scope": "Microsoft Learn training access for this learning path",
+        "normalizationBasis": "provider_published_usd",
+        "actionUrl": "https://learn.microsoft.com/en-us/training/paths/data-analytics-microsoft/",
+        "evidenceUrls": [
+          "https://learn.microsoft.com/en-us/training/paths/data-analytics-microsoft/",
+          "https://learn.microsoft.com/en-us/training/support/faq"
+        ],
+        "observedAt": "2026-09-09",
+        "referenceMarket": null,
+        "accessContext": "public_provider_page",
+        "conditions": "No profile is required to consume the training; the related Microsoft certification, certification exam, and instructor-led offerings are separate and are not included in this training price"
+      }
+    ],
+    "source": "other"
   }
 ]

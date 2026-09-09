@@ -6,9 +6,12 @@
     "ibm-cybersecurity-analyst-ibm",
     "google-data-analytics-google",
     "google-advanced-data-analytics-google",
+    "become-data-analyst-linkedin-learning",
+    "data-analytics-microsoft-learn",
     "aws-cloud-technical-essentials-aws",
     "introduction-to-cloud-computing-ibm",
     "aws-foundations-cloud-essentials-pluralsight",
+    "azure-architecture-services-microsoft-learn",
     "google-project-management-google",
     "introduction-project-management-edx-adelaidex",
     "project-management-principles-practices-umci"
@@ -27,12 +30,24 @@
       "google-advanced-data-analytics-google"
     ],
     [
+      "google-data-analytics-google",
+      "become-data-analyst-linkedin-learning"
+    ],
+    [
+      "google-data-analytics-google",
+      "data-analytics-microsoft-learn"
+    ],
+    [
       "aws-cloud-technical-essentials-aws",
       "introduction-to-cloud-computing-ibm"
     ],
     [
       "aws-cloud-technical-essentials-aws",
       "aws-foundations-cloud-essentials-pluralsight"
+    ],
+    [
+      "aws-cloud-technical-essentials-aws",
+      "azure-architecture-services-microsoft-learn"
     ],
     [
       "google-project-management-google",

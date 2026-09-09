@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AdPlaceholder } from "@/components/AdPlaceholder";
 import {
   buildComparisonRows,
@@ -277,6 +277,11 @@ export default function CompareClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const idsParam = searchParams.get("ids") ?? "";
+  const [lastSkill, setLastSkill] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLastSkill(window.localStorage.getItem(LAST_SKILL_KEY));
+  }, []);
 
   const ids = useMemo(
     () => idsParam.split(",").filter(Boolean).slice(0, 2),
@@ -288,11 +293,7 @@ export default function CompareClient() {
 
   const hasTwoCourses = ids.length === 2 && leftCourse && rightCourse;
 
-  const getLastSkill = () =>
-    typeof window === "undefined" ? null : window.localStorage.getItem(LAST_SKILL_KEY);
-
   const handleChangeCourses = () => {
-    const lastSkill = getLastSkill();
     router.push(lastSkill ? `/skills/${lastSkill}` : "/");
   };
 
@@ -307,7 +308,7 @@ export default function CompareClient() {
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           <Link href="/" className="rounded-lg border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300">Browse available skills</Link>
-          {getLastSkill() ? (
+          {lastSkill ? (
             <button
               type="button"
               onClick={handleChangeCourses}

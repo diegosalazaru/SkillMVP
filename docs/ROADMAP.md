@@ -24,7 +24,7 @@ Future work in this area should be limited to concrete usability defects or regr
 
 ## Phase 1 — Real Data
 
-**Status: Phase 1A source trust complete; Phase 1B.8 adds the bounded Pluralsight Cloud course, and issue #121 evolves the provider-neutral pricing contract without adding providers or courses.**
+**Status: Phase 1A source trust complete; issue #122 applies the post-#121 pricing contract to a bounded LinkedIn Learning + Microsoft Learn provider batch with truthful partial success.**
 
 Goal: make the catalog both trustworthy and useful enough to support real user decisions.
 
@@ -55,6 +55,7 @@ Completed:
 - **Phase 1B.7 — Multi-provider Acceptance + Cross-platform Project Management** in issue #108: all five incumbent pairs pass cumulative desktop/mobile product acceptance, the current public AdelaideX course page establishes a non-promotional `$149 USD` one-time Premium certificate path, and Google Project Management vs AdelaideX passes pricing plus 6/7 dimensions with edX tools/technologies explicitly insufficient. The manifest now contains exactly 11 courses across six approved pairs.
 - **Phase 1B.8 — Pluralsight Provider Batch** in issue #116: one current Pluralsight Cloud video course clears the unchanged pricing and 5/7 gates. The Cybersecurity candidate is blocked and intentionally omitted because official Pluralsight pages conflict on whether it is retired; no substitute was added. The catalog now contains 20 courses; the approved set contains 12 courses across seven pairs. The Cloud canonical guide surfaces the new pair automatically without provider-specific page code.
 - **Pricing evidence semantics** in issue #121: exact pricing remains backward compatible, official provider-published `starting at` paths can clear the pricing gate without becoming exact commitments, and genuinely free access has a distinct zero-price semantic. Qualified amounts remain ineligible for exact-price Same/Different claims, and no provider/course ingestion is included.
+- **Phase 1B.9 — LinkedIn Learning + Microsoft Learn Provider Batch** in issue #122: LinkedIn Become a Data Analyst and two Microsoft Learn paths clear the actionable-pricing and 5/7 gates through shared provider-neutral structures. LinkedIn Getting Started as a Project Manager is blocked at 4/7 and intentionally omitted; no substitute is added. The catalog contains 23 courses and the approved set contains 15 courses across ten pairs. LinkedIn pricing remains qualified `starting_at`; Microsoft Learn training is genuine free access distinct from certification exams and Azure resource costs.
 
 Do not migrate the remaining catalog automatically. Any later rollout requires another explicit, auditable batch decision.
 
@@ -118,7 +119,7 @@ Do not build Phase 5 architecture to solve hypothetical scale.
 ## Immediate Sequence
 
 1. Maintain conservative Phase 1A source trust without reopening verification work for its own sake.
-2. Independently review the bounded Phase 1B.8 Pluralsight evidence, provider-neutral presentation, and acquisition-to-Compare regressions.
-3. Do not begin catalog-wide migration or add another provider/course to the decision-grade manifest without a new product decision.
+2. Independently review the bounded Phase 1B.9 LinkedIn Learning + Microsoft Learn evidence, provider-neutral pricing/credential presentation, and acquisition-to-Compare regressions.
+3. Treat Phase 1B.9 as evidence for, not implementation of, a separately authorized Stage B/C ingestion pilot under issue #117. Do not begin catalog-wide migration or add another provider/course without a new product decision.
 4. Keep generated SEO templates `noindex, follow` and avoid new pair routes or scaled SEO volume until product and search evidence justify them.
 5. Activate Phase 2 monetization only when a real program and appropriate disclosures are ready; commission must never affect visible ordering or factual presentation.

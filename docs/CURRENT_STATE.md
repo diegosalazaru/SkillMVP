@@ -1,6 +1,6 @@
 # Current State
 
-Last updated after implementing the bounded issue #121 pricing-contract evolution for independent product review.
+Last updated after implementing the bounded issue #122 LinkedIn Learning + Microsoft Learn provider batch for independent product review.
 
 ## Product State
 
@@ -11,6 +11,18 @@ The current UI is English-first. The product supports skill discovery, curated c
 Recent product review exposed an important distinction: source-trusted catalog data is not automatically decision-useful data. The product must not only avoid inventing facts; it must preserve enough structured provider-backed information to help a user actually choose between courses.
 
 ## Latest Completed Initiatives
+
+### LinkedIn Learning + Microsoft Learn Provider Batch — Issue #122
+
+Key outcomes:
+
+- Exactly four candidates are evaluated independently. LinkedIn Become a Data Analyst and both Microsoft Learn paths pass; LinkedIn Getting Started as a Project Manager is blocked at 4/7 and omitted without a substitute.
+- LinkedIn Premium Career's official `$39.99/month` and `$239.88/year` starting estimates are stored only as `starting_at` platform-subscription paths with estimate/tax/promotion/device conditions preserved. They remain ineligible for exact-price Same/Different claims.
+- Microsoft Learn paths use genuine free training access, not `free_audit`; optional Azure resources, certification exams, and instructor-led offerings remain separate products.
+- Learning-path completion badges/achievements are described separately from accredited or exam-based certifications. Primary taught language and unsupported practical-work claims remain unknown.
+- The normalized catalog contains 23 courses; 15 are decision-grade across ten approved pairs. Data Analysis and Cloud Computing canonical guides gain the accepted pairs automatically through the existing manifest-driven UI.
+- The batch uses one shared LinkedIn platform mapping and existing `offeringType: other` semantics. No provider-specific page/UI branch or schema expansion is required.
+- Official evidence, independent gates, indexing boundaries, and acceptance evidence are recorded in `docs/decision-grade-phase-1b9-linkedin-microsoft-provider.md`.
 
 ### Pricing Evidence Semantics — Issue #121
 
@@ -132,7 +144,7 @@ Earlier completed initiatives, including Phase 1 Source Verification Batches A/B
 
 - **Phase 0 — MVP:** complete for the current MVP scope.
 - **Phase 1A — Source Trust:** complete for the original 19-course curated MVP catalog; the one Phase 1B.8 addition has a current official-source record.
-- **Phase 1B — Decision-Grade Data:** Phase 1B.1 through Phase 1B.8 are implemented; 12 courses across seven approved pairs are decision-grade, and independent product review must approve any later batch.
+- **Phase 1B — Decision-Grade Data:** Phase 1B.1 through Phase 1B.9 are implemented; 15 courses across ten approved pairs are decision-grade, and independent product review must approve any later batch.
 - **Phase 2 — Monetization:** gated / not started. It activates only when a real auditable affiliate/referral program exists and does not block Phase 3.
 - **Phase 3 — Discovery and SEO:** active. The indexable-surface foundation and selective Phase 3B decision guides on five canonical skills are implemented; generated SEO templates remain gated pending stronger product/search evidence.
 - **Phase 4 — Recommendation:** later, gated behind explicit criteria and trustworthy signals.
@@ -140,12 +152,12 @@ Earlier completed initiatives, including Phase 1 Source Verification Batches A/B
 
 ## Catalog and Trust State
 
-- The normalized catalog contains 20 curated courses.
-- 18 courses are currently `partially_verified`.
+- The normalized catalog contains 23 curated courses.
+- 21 courses are currently `partially_verified`.
 - 2 courses remain `pending` with explicit source blockers rather than unreviewed status.
 - Source URL mismatches: 0 after the completed verification batches.
-- Pricing remains unknown or unverified for the 8 non-migrated courses; the 12 approved decision-grade records retain their current exact actionable source-backed USD pricing paths. The contract can also represent official qualified starting prices and genuinely free access in a future explicitly approved batch. Most ratings and review counts remain unknown by design.
-- The 12 approved decision-grade records preserve provider-described workloads, including exact video-course durations and longer schedules, without inferring completion totals.
+- Pricing remains unknown or unverified for the 8 non-migrated courses; the 15 approved decision-grade records have actionable source-backed exact, qualified starting-at, or genuinely free USD pricing paths. Most ratings and review counts remain unknown by design.
+- The 15 approved decision-grade records preserve provider-described workloads, including exact video-course/path durations and longer schedules, without inferring completion totals.
 - The current normalized `language` field represents the primary taught language when clearly supported by an official source. Additional dubbing/subtitle/language availability remains provenance context unless a later explicit schema initiative changes that model.
 - `report:data-quality` remains part of normal validation.
 - Official provider pages remain the final source for volatile enrollment terms, but Skills Compare should perform the basic comparison work rather than merely redirecting users to two provider pages.
@@ -203,7 +215,7 @@ Phase 1B.7 completed the required cumulative review. All five incumbent comparis
 
 ## Parallel Ongoing Work
 
-Phase 1A source quality remains an ongoing maintenance concern, but verification should be driven by concrete decision-value needs rather than by a goal of maximizing verified-field counts. Phase 3B is bounded to existing canonical skill hubs; additional indexable volume still requires product and search evidence. Phase 1B.8 completes the currently authorized provider batch, so any later provider or course requires a new explicit product decision. Monetization remains gated behind a real program and disclosure design, and recommendation remains gated behind trustworthy signals and explicit criteria.
+Phase 1A source quality remains an ongoing maintenance concern, but verification should be driven by concrete decision-value needs rather than by a goal of maximizing verified-field counts. Phase 3B is bounded to existing canonical skill hubs; additional indexable volume still requires product and search evidence. Phase 1B.9 completes the currently authorized provider batch, so any later provider or course requires a new explicit product decision. Its provider-neutral success is evidence for a separately authorized Stage B/C ingestion pilot under issue #117, not permission to implement bulk ingestion here. Monetization remains gated behind a real program and disclosure design, and recommendation remains gated behind trustworthy signals and explicit criteria.
 
 ## Operational Note
 
