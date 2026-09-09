@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import {
+  copyFileSync,
   mkdtempSync,
   readFileSync,
-  rmSync,
-  writeFileSync
+  rmSync
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -58,6 +58,7 @@ const buildCandidate = (
     sourceUrl?: string;
     availability?: "current" | "unavailable" | "conflicting" | "unknown";
     omitPricingEvidenceField?: boolean;
+    publicationStatus?: "published" | "source_blocked" | null;
   } = {}
 ) => {
   const proposedCourseId = options.proposedCourseId ?? `fixture-${candidateId}`;
@@ -128,6 +129,9 @@ const buildCandidate = (
       sourceUrl,
       sourceType: "official_provider_page",
       verificationStatus: "partially_verified",
+      ...(options.publicationStatus === null
+        ? {}
+        : { publicationStatus: options.publicationStatus ?? "published" }),
       lastVerifiedAt: OBSERVED_AT,
       verifiedFields: {
         title: true,
@@ -172,6 +176,10 @@ const catalogPath = join(taskTemp, "courses.json");
 const metadataPath = join(taskTemp, "course-source-metadata.json");
 const receiptPath = join(taskTemp, "promotion-receipt.json");
 const manifestPath = resolve("data/decision-grade-manifest.json");
+const productionCatalogPath = resolve("data/normalized/courses.json");
+const productionMetadataPath = resolve(
+  "data/normalized/course-source-metadata.json"
+);
 const manifestBefore = readFileSync(manifestPath, "utf8");
 
 try {
@@ -209,6 +217,42 @@ try {
   assert.equal(byId.get("availability-conflict")?.disposition, "quarantined");
   assert.equal(byId.get("zero-paid")?.disposition, "quarantined");
 
+  const missingPublication = validateCandidateBatch(
+    ingestCandidateInput({
+      batchId: "missing-publication-decision-fixture",
+      receivedAt: input.receivedAt,
+      candidates: [
+        buildCandidate("missing-publication", "exact", {
+          publicationStatus: null
+        })
+      ]
+    }),
+    { asOf: AS_OF }
+  ).batch.candidates[0];
+  assert.equal(missingPublication.disposition, "quarantined");
+  assert.ok(
+    missingPublication.exceptionCodes.includes("missing_required_evidence"),
+    "A new candidate without an explicit publication decision must be quarantined."
+  );
+
+  const sourceBlockedPublication = validateCandidateBatch(
+    ingestCandidateInput({
+      batchId: "source-blocked-publication-fixture",
+      receivedAt: input.receivedAt,
+      candidates: [
+        buildCandidate("source-blocked-publication", "exact", {
+          publicationStatus: "source_blocked"
+        })
+      ]
+    }),
+    { asOf: AS_OF }
+  ).batch.candidates[0];
+  assert.equal(sourceBlockedPublication.disposition, "quarantined");
+  assert.ok(
+    sourceBlockedPublication.exceptionCodes.includes("unsupported_offering"),
+    "A source-blocked candidate must not become review-ready."
+  );
+
   const reviewed = markCandidatesReviewed(validated.batch, {
     candidateIds: ["valid-exact", "valid-free"],
     reviewedAt: AS_OF,
@@ -237,8 +281,28 @@ try {
     "A semantic candidate change must invalidate its prior human review."
   );
 
-  writeFileSync(catalogPath, "[]\n", "utf8");
-  writeFileSync(metadataPath, "[]\n", "utf8");
+  copyFileSync(productionCatalogPath, catalogPath);
+  copyFileSync(productionMetadataPath, metadataPath);
+  const initialCatalogCount = JSON.parse(
+    readFileSync(catalogPath, "utf8")
+  ).length;
+  const initialMetadata = JSON.parse(readFileSync(metadataPath, "utf8")) as Array<{
+    courseId: string;
+    lastVerifiedAt: string | null;
+  }>;
+  assert.equal(initialCatalogCount, 23);
+  assert.equal(initialMetadata.length, 23);
+  assert.deepEqual(
+    initialMetadata
+      .filter((record) => record.lastVerifiedAt === null)
+      .map((record) => record.courseId)
+      .sort(),
+    [
+      "data-analytics-essentials-cisco",
+      "introduction-cyber-security-nyux-edx"
+    ],
+    "The regression fixture must include the real nullable historical metadata."
+  );
   assert.throws(
     () =>
       promoteCandidates({
@@ -271,8 +335,37 @@ try {
   });
   assert.equal(firstPromotion.promoted, 2);
   assert.equal(firstPromotion.acceptedSemanticChanges, 2);
-  assert.equal(JSON.parse(readFileSync(catalogPath, "utf8")).length, 2);
-  assert.equal(JSON.parse(readFileSync(metadataPath, "utf8")).length, 2);
+  assert.equal(
+    JSON.parse(readFileSync(catalogPath, "utf8")).length,
+    initialCatalogCount + 2
+  );
+  const promotedMetadata = JSON.parse(
+    readFileSync(metadataPath, "utf8")
+  ) as Array<{
+    courseId: string;
+    lastVerifiedAt: string | null;
+    publicationStatus?: string;
+  }>;
+  assert.equal(promotedMetadata.length, initialMetadata.length + 2);
+  for (const promotedId of ["fixture-valid-exact", "fixture-valid-free"]) {
+    assert.equal(
+      promotedMetadata.find((record) => record.courseId === promotedId)
+        ?.publicationStatus,
+      "published",
+      "Newly promoted metadata must persist an explicit published decision."
+    );
+  }
+  assert.deepEqual(
+    promotedMetadata
+      .filter((record) => record.lastVerifiedAt === null)
+      .map((record) => record.courseId)
+      .sort(),
+    [
+      "data-analytics-essentials-cisco",
+      "introduction-cyber-security-nyux-edx"
+    ],
+    "Promotion must preserve nullable historical source-blocked metadata."
+  );
   assert.equal(
     byId.get("valid-starting-at")?.disposition,
     "review_ready",
@@ -372,7 +465,7 @@ try {
   }
 
   console.log(
-    "[check:ingestion-foundation] PASS — 10 candidates staged; exact, starting-at, and free paths reviewed; 7 bad/conflicting records quarantined; subset promotion atomic and idempotent; legacy direct publishers disabled."
+    "[check:ingestion-foundation] PASS — real 23-record accepted metadata parsed with 2 historical null dates; 10 candidates staged; missing/source-blocked publication decisions quarantined; subset promotion explicit, atomic, and idempotent; legacy direct publishers disabled."
   );
 } finally {
   rmSync(taskTemp, { recursive: true, force: true });

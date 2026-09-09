@@ -27,7 +27,7 @@ Each staged record carries:
 - field-level evidence for title, platform, source identity, availability, and pricing;
 - exact, provider-qualified `starting_at`, or genuine `free` pricing evidence using the current pricing contract;
 - current-offering evidence;
-- source metadata proposed for publication;
+- source metadata proposed for publication, including an explicit `publicationStatus: "published"` decision;
 - deterministic exception codes, optional human context, a `candidate`, `review_ready`, or `quarantined` disposition, and a separate nullable human-review record.
 
 Pricing evidence stays in the envelope and is preserved in promoted source metadata. New source-ready candidates must not include the decision-grade-only course fields; this prevents a valid `Course` parse from silently entering the approved decision-grade set.
@@ -50,6 +50,8 @@ Validation supports these codes:
 
 Commercial evidence older than 180 days relative to `--as-of` is quarantined. Invalid zero paid/subscription prices are rejected by the shared pricing schema. Genuine free access must use the distinct `free` semantic; `starting_at` evidence remains qualified and cannot populate an exact scalar course price.
 
+New candidates without an explicit publication decision are quarantined; `source_blocked` candidates remain unsupported and cannot become review-ready. The accepted-metadata reader continues to tolerate the two audited historical `lastVerifiedAt: null` blockers, while candidate input still requires a current non-null verification date.
+
 ## Commands
 
 ```bash
@@ -67,4 +69,4 @@ Promotion requires the persisted candidate to have already been validated as `re
 
 ## Bounded pilot evidence
 
-`corepack pnpm check:ingestion-foundation` materializes a provider-neutral 10-record fixture in a temporary test area. It covers exact paid, qualified starting-at, and genuine-free candidates; missing source; availability conflict; invalid zero paid pricing; duplicate identity; unsupported offering; missing evidence; partial promotion; idempotent import/promotion; source collision; and unchanged accepted files after invalid promotion. The fixture is synthetic and never enters production catalog data.
+`corepack pnpm check:ingestion-foundation` materializes a provider-neutral 10-record fixture in a temporary test area. It covers exact paid, qualified starting-at, and genuine-free candidates; missing source; availability conflict; invalid zero paid pricing; duplicate identity; unsupported offering; missing evidence; explicit publication decisions; partial promotion; idempotent import/promotion; source collision; and unchanged accepted files after invalid promotion. Promotion runs against temporary copies of the real 23-record catalog and source metadata, including both historical null verification dates. The fixture is synthetic and never enters production catalog data.

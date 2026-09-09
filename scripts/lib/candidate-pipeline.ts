@@ -413,8 +413,12 @@ export const validateCandidateBatch = (
       add(exceptions, "missing_required_evidence");
     }
 
-    if (candidate.sourceMetadata.publicationStatus === "source_blocked") {
+    if (candidate.sourceMetadata.publicationStatus == null) {
+      add(exceptions, "missing_required_evidence");
+    } else if (candidate.sourceMetadata.publicationStatus === "source_blocked") {
       add(exceptions, "unsupported_offering");
+    } else if (candidate.sourceMetadata.publicationStatus !== "published") {
+      add(exceptions, "normalization_conflict");
     }
 
     const exceptionCodes = orderedExceptions(exceptions);
@@ -538,6 +542,7 @@ const buildAcceptedMetadata = (
     ...candidate.sourceMetadata,
     courseId: candidate.proposedCourseId,
     sourceUrl: candidate.canonicalSourceUrl,
+    publicationStatus: "published",
     ingestionCandidateId: candidate.candidateId,
     pricingEvidence: PricingOptionSchema.array().parse(candidate.pricingEvidence),
     fieldEvidence: candidate.fieldEvidence,

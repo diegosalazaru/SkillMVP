@@ -101,7 +101,7 @@ export const AcceptedSourceMetadataSchema = z
     sourceType: z.string().min(1),
     verificationStatus: z.enum(["pending", "partially_verified", "verified"]),
     publicationStatus: z.enum(["published", "source_blocked"]).optional(),
-    lastVerifiedAt: z.string().date(),
+    lastVerifiedAt: z.string().date().nullable(),
     verifiedFields: z.record(z.boolean()),
     notes: z.string().min(1),
     ingestionCandidateId: z.string().min(1).optional(),
