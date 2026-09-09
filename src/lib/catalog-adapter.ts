@@ -21,6 +21,13 @@ const mapPlatform = (platform: string): Course["platform"] | null => {
     return "Pluralsight";
   }
   if (
+    normalized === "linkedin learning" ||
+    normalized === "linkedin-learning" ||
+    normalized === "linkedin_learning"
+  ) {
+    return "LinkedIn Learning";
+  }
+  if (
     normalized === "microsoft learn" ||
     normalized === "microsoft-learn" ||
     normalized === "microsoft_learn"
