@@ -24,7 +24,7 @@ Future work in this area should be limited to concrete usability defects or regr
 
 ## Phase 1 — Real Data
 
-**Status: Phase 1A source trust complete; issue #125 separates audit retention from public availability after issue #122's bounded provider batch.**
+**Status: Phase 1A source trust complete; Phase 1C.1 candidate staging and explicit promotion foundation is implemented for independent review.**
 
 Goal: make the catalog both trustworthy and useful enough to support real user decisions.
 
@@ -59,6 +59,12 @@ Completed:
 - **Source-blocked publication boundary** in issue #125: the 23-record normalized catalog remains intact for audit, while the 21-course public catalog excludes two unavailable legacy offerings through provider-neutral source metadata. Their direct routes return 404, the derived sitemap contains 30 URLs, readiness pairs remain unchanged, and the 20 generated templates remain `noindex, follow` without blocked IDs.
 
 Do not migrate the remaining catalog automatically. Any later rollout requires another explicit, auditable batch decision.
+
+### Phase 1C — Safe ingestion operations
+
+- **Phase 1C.1 — Candidate staging and explicit promotion foundation** in issue #124: bounded 10–50-record JSON inputs now move through provider-neutral staging, deterministic review-ready/quarantine validation, factual reporting, and explicit named-ID promotion. Promotion updates accepted catalog/source metadata together, is collision-safe and idempotent, and never changes the decision-grade manifest. Legacy direct publishers are disabled. The production catalog is unchanged by the foundation pilot.
+
+This foundation authorizes safer batch mechanics, not automatic discovery, publication, catalog expansion, or decision-grade approval. Every production batch remains separately approved and human reviewed.
 
 ## Phase 2 — Monetization
 
@@ -119,8 +125,8 @@ Do not build Phase 5 architecture to solve hypothetical scale.
 
 ## Immediate Sequence
 
-1. Independently review issue #125's audit-versus-publication boundary, deliberate 404s, derived sitemap, and unchanged readiness pairs.
+1. Independently review issue #124's staging, deterministic quarantine, collision-safe atomic promotion, idempotency, and unchanged production catalog/decision-grade manifest.
 2. Maintain conservative Phase 1A source trust without reopening verification work for its own sake.
-3. Treat Phase 1B.9 as evidence for, not implementation of, a separately authorized Stage B/C ingestion pilot under issue #117. Do not begin catalog-wide migration or add another provider/course without a new product decision.
+3. Use Phase 1C.1 only for separately authorized bounded production batches. Do not begin catalog-wide migration, automatic publication, or add another provider/course without a new product decision.
 4. Keep generated SEO templates `noindex, follow` and avoid new pair routes or scaled SEO volume until product and search evidence justify them.
 5. Activate Phase 2 monetization only when a real program and appropriate disclosures are ready; commission must never affect visible ordering or factual presentation.

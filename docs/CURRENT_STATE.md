@@ -1,6 +1,6 @@
 # Current State
 
-Last updated after implementing issue #125's source-blocked publication boundary for independent product review.
+Last updated after implementing issue #124's candidate-ingestion foundation for independent product review.
 
 ## Product State
 
@@ -11,6 +11,17 @@ The current UI is English-first. The product supports skill discovery, curated c
 Recent product review exposed an important distinction: source-trusted catalog data is not automatically decision-useful data. The product must not only avoid inventing facts; it must preserve enough structured provider-backed information to help a user actually choose between courses.
 
 ## Latest Completed Initiatives
+
+### Candidate Staging and Explicit Promotion — Issue #124
+
+Key outcomes:
+
+- Bounded 10–50-record provider-neutral JSON inputs can be staged without touching accepted catalog or source metadata.
+- Deterministic validation separates `review_ready` from `quarantined` candidates using the required machine-readable exception taxonomy and current exact, `starting_at`, and genuine-free pricing semantics.
+- Promotion requires explicit reviewed candidate IDs, rejects identity/source collisions before writes, replaces catalog/source metadata together with rollback, preserves deterministic ordering, and creates zero accepted-file churn when repeated with equivalent data.
+- Pricing and field provenance are retained in source metadata while decision-grade approval remains separate; promotion never mutates the decision-grade manifest.
+- Legacy edX, Coursera, and self-input/output catalog publishing commands are disabled. A focused 10-record temporary pilot covers all required success, quarantine, subset, collision, idempotency, and no-write failure scenarios.
+- The production catalog remains 23 audited records, 21 publicly available courses, and 15 decision-grade courses across ten pairs. See `docs/candidate-ingestion-foundation.md` for the operational contract.
 
 ### Source-blocked Catalog Publication — Issue #125
 

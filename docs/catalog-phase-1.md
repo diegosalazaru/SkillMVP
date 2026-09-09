@@ -72,16 +72,21 @@ Optional data can be present when verified:
 - No ranking or recommendation claims unless explicit criteria are defined and displayed
 
 ## Update workflow
-1. Add or update source data in repository-managed source files.
-2. Normalize via existing scripts.
-3. Regenerate derived artifacts (catalog/SEO pages) from real catalog data.
-4. Run validation and build checks.
-5. Submit small, reviewable PR with provenance notes.
+1. Put a bounded 1–50-record curated provider-neutral input through `ingest:candidates`; ingestion writes staging only.
+2. Run deterministic candidate validation and report review-ready/quarantined exceptions.
+3. Complete and record human review for material uncertainty on explicitly named `review_ready` IDs.
+4. Promote only explicitly named, human-reviewed candidate IDs; accepted catalog/source metadata update together and the decision-grade manifest remains separate.
+5. Regenerate derived SEO artifacts only when accepted catalog inputs actually change.
+6. Run validation and build checks.
+7. Submit a small, reviewable PR with provenance notes.
+
+The legacy `ingest:edx`, `ingest:coursera`, and `build:catalog` commands are disabled because they lacked the current evidence/quarantine contract or could write accepted data directly.
 
 ## Validation workflow
 Run:
 - `pnpm validate:data`
 - `pnpm report:data-quality`
+- `pnpm check:ingestion-foundation`
 - `pnpm generate:seo` (when SEO templates/catalog changes)
 - `pnpm build`
 

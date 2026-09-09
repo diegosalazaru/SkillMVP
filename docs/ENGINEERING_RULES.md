@@ -65,6 +65,7 @@ For normal product/code PRs, run:
 ```bash
 corepack pnpm validate:data
 corepack pnpm report:data-quality
+corepack pnpm check:ingestion-foundation
 corepack pnpm exec tsc --noEmit
 corepack pnpm build
 ```
