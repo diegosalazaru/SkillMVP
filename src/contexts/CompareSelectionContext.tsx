@@ -8,6 +8,7 @@ import {
   useMemo,
   useState
 } from "react";
+import { isPublishedCourseId } from "@/lib/catalog-adapter";
 
 const STORAGE_KEY = "skills-compare-selection";
 const STORAGE_VERSION = 1;
@@ -39,7 +40,7 @@ const sanitizeIds = (value: unknown) => {
     sanitized.push(trimmed);
   });
 
-  return sanitized.slice(0, MAX_COMPARE);
+  return sanitized.filter(isPublishedCourseId).slice(0, MAX_COMPARE);
 };
 
 const readSelection = (): StoredSelection | null => {
@@ -130,6 +131,10 @@ export const CompareSelectionProvider = ({ children }: { children: React.ReactNo
   }, [hydrated, selectedIds, selectionUpdatedAt]);
 
   const toggle = useCallback((id: string) => {
+    if (!isPublishedCourseId(id)) {
+      return;
+    }
+
     setSelectedIds((current) => {
       if (current.includes(id)) {
         setNotice(null);
