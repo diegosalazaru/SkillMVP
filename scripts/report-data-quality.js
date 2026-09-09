@@ -127,6 +127,16 @@ try {
     const course = coursesById.get(record.courseId);
     return course ? course.url !== record.sourceUrl : false;
   });
+  const getPublicationStatus = (record) =>
+    record.publicationStatus ?? "published";
+  const allowedPublicationStatuses = new Set(["published", "source_blocked"]);
+  const invalidPublicationStatuses = metadata.filter(
+    (record) => !allowedPublicationStatuses.has(getPublicationStatus(record))
+  );
+  const sourceBlockedCourses = metadata
+    .filter((record) => getPublicationStatus(record) === "source_blocked")
+    .map((record) => record.courseId)
+    .sort();
 
   console.log("Data quality report");
   console.log("===================");
@@ -137,6 +147,10 @@ try {
   printCountList(
     "Verification status counts",
     countBy(metadata, (record) => record.verificationStatus)
+  );
+  printCountList(
+    "Publication status counts",
+    countBy(metadata, getPublicationStatus)
   );
 
   const fullyPendingCourses = metadata
@@ -163,6 +177,13 @@ try {
   console.log("\nPartially verified courses");
   if (partiallyVerifiedCourses.length > 0) {
     partiallyVerifiedCourses.forEach((courseId) => console.log(`- ${courseId}`));
+  } else {
+    console.log("- none");
+  }
+
+  console.log("\nSource-blocked courses");
+  if (sourceBlockedCourses.length > 0) {
+    sourceBlockedCourses.forEach((courseId) => console.log(`- ${courseId}`));
   } else {
     console.log("- none");
   }
@@ -225,6 +246,9 @@ try {
     ),
     ...Array.from(duplicateMetadataIds).map(
       (courseId) => `Duplicate metadata: ${courseId}`
+    ),
+    ...invalidPublicationStatuses.map(
+      (record) => `Invalid publicationStatus: ${record.courseId}`
     )
   ];
 

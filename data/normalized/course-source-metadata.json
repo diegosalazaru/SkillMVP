@@ -185,6 +185,7 @@
     "courseId": "introduction-cyber-security-nyux-edx",
     "sourceUrl": "https://www.edx.org/learn/cybersecurity/new-york-university-introduction-to-cyber-security",
     "sourceType": "official_provider_page",
+    "publicationStatus": "source_blocked",
     "verificationStatus": "pending",
     "lastVerifiedAt": null,
     "verifiedFields": {
@@ -201,7 +202,7 @@
       "syllabus": false,
       "prerequisites": false
     },
-    "notes": "Manual review attempted on 2026-08-17. The recorded official edX URL did not expose an available course page, and no current official edX page clearly representing this exact NYUx offering was found. The record remains pending with all fields unverified; no catalog facts were changed. Price, rating, and review count remain unknown/null."
+    "notes": "Manual review repeated on 2026-09-09. The recorded official edX URL does not expose an available course page, and current official edX search does not establish an active page or exact replacement for this NYUx offering. The raw record remains pending with all fields unverified for audit/history, and publicationStatus source_blocked keeps it out of public runtime and indexing surfaces. Price, rating, and review count remain unknown/null."
   },
   {
     "courseId": "aws-cloud-technical-essentials-aws",
@@ -454,6 +455,7 @@
     "courseId": "data-analytics-essentials-cisco",
     "sourceUrl": "https://www.coursera.org/learn/data-analytics-essentials",
     "sourceType": "official_provider_page",
+    "publicationStatus": "source_blocked",
     "verificationStatus": "pending",
     "lastVerifiedAt": null,
     "verifiedFields": {
@@ -470,7 +472,7 @@
       "syllabus": false,
       "prerequisites": false
     },
-    "notes": "Manual review attempted on 2026-08-17. The recorded official Coursera URL did not expose an available course page. Cisco's current official Networking Academy page has the same course title but presents a Cisco-hosted instructor-led offering, which is insufficient to verify that the recorded Coursera offering and canonical destination remain the same listing. The record remains pending with all fields unverified; no catalog facts were changed. Price, rating, and review count remain unknown/null."
+    "notes": "Manual review repeated on 2026-09-09. The recorded Coursera URL returns 404. Cisco currently publishes a separate first-party Data Analytics Essentials course through Networking Academy, but that source does not establish identity continuity with the historical Coursera record. The raw record remains pending with all fields unverified for audit/history, and publicationStatus source_blocked keeps it out of public runtime and indexing surfaces. No migration or replacement was inferred. Price, rating, and review count remain unknown/null."
   },
   {
     "courseId": "ai-for-everyone-deeplearningai",

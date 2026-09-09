@@ -7,14 +7,15 @@
 - Phase 1A source trust is complete for the original 19-course catalog; Phase 1B.8 adds one current Pluralsight Cloud record, and Phase 1B.9 adds one LinkedIn Learning path plus two Microsoft Learn paths. The approved decision-grade set is exactly 15 courses and ten pairs. LinkedIn Getting Started as a Project Manager is blocked at 4/7 and omitted without a substitute.
 - Phase 2 monetization is gated until a real auditable affiliate/referral program exists and does not block Phase 3.
 - Phase 3 Discovery and SEO has its indexable-surface foundation plus selective decision guides on the five canonical skills with approved readiness pairs; scaled/generated expansion remains gated.
-- The normalized catalog contains 23 curated courses.
-- 21 courses are `partially_verified`; 2 remain `pending` because the exact recorded offering could not be confirmed from a current official source.
+- The normalized catalog contains 23 curated audit records; 21 are published to runtime surfaces.
+- 21 courses are `partially_verified`; 2 remain `pending` and explicitly `source_blocked` because the exact recorded offering could not be confirmed from a current official source.
+- Source-blocked records remain available to validation and reporting but are absent from discovery, selection, Compare, the sitemap, and generated SEO inputs. Their former detail routes deliberately return 404 and expose no provider CTA.
 - Source URL mismatches are 0 after Phase 1 Source Verification — Coverage Batch B.
 - Generated SEO pages, sitemap support, and internal SEO links are present as an initial foundation, but the current generated SEO surface is not treated as automatically index-worthy.
 - Provider CTA copy and external-link disclosure copy are centralized.
 - Provider URLs are direct official provider URLs only.
 - Outbound tracking is local-only and does not send data to an external analytics vendor.
-- A data quality report is available with `corepack pnpm report:data-quality` and includes verification-status counts, verified-field coverage, fully pending courses, partially verified courses, and unknown field counts.
+- A data quality report is available with `corepack pnpm report:data-quality` and includes verification-status and publication-status counts, the source-blocked IDs, verified-field coverage, pending/partial courses, and unknown field counts.
 - Mobile Selection and Discovery UX is merged: compare selection persists for up to 24 hours, returning selections are surfaced, and the compare bar is available globally outside the compare page.
 - Decision-focused visual polish is merged across the core Search -> Compare -> Decide journey.
 - Decision Data Contract v2 preserves provider-backed offering, workload, tool, practical-work, credential, and cost-model signals for the 15 explicitly approved courses.
@@ -30,8 +31,8 @@
 - Prices remain unverified or unknown for the 8 non-migrated courses; the 15 approved decision-grade courses have actionable source-backed exact, qualified starting-at, or genuinely free USD pricing paths. Ratings, review counts, some durations, and the new providers' primary taught language remain unknown by design.
 - Monthly or weekly workload estimates are not converted into invented exact `durationHours`; those values remain null unless the official source provides a sufficiently exact total.
 - The normalized `language` field represents the primary taught language when clearly supported. Additional dubbing, subtitle, translation, or language availability remains provenance context unless a future explicit schema initiative expands the model.
-- `introduction-cyber-security-nyux-edx` remains pending because the recorded edX page is unavailable and no current official page clearly represents the exact same NYUx offering.
-- `data-analytics-essentials-cisco` remains pending because the recorded Coursera listing is unavailable and Cisco's current instructor-led offering does not establish that it is the same listing.
+- `introduction-cyber-security-nyux-edx` remains pending and `source_blocked` because the recorded edX page is unavailable and no current official page clearly represents the exact same NYUx offering.
+- `data-analytics-essentials-cisco` remains pending and `source_blocked` because the recorded Coursera listing returns 404 and Cisco's current first-party offering does not establish identity continuity with that historical listing.
 - Unknown data must remain null, unknown, pending, or explicitly unverified.
 - Both approved pilot comparisons pass the pricing hard gate and the unchanged internal 5/7 decision-readiness gate while retaining explicit insufficiencies; these gates are not visible rankings or course scores.
 - Users can compare the current verified pricing commitments inside Skills Compare and should use provider checkout to confirm final taxes, regional terms, eligibility, and availability.
@@ -48,6 +49,7 @@
 - Canonical and Open Graph metadata foundations are present for core pages.
 - Data validation runs with `corepack pnpm validate:data`.
 - Production build runs with `corepack pnpm build`.
+- The public sitemap contains 30 derived URLs: one homepage, eight canonical skills, and 21 published course details. The 20 generated templates remain `noindex, follow` and outside the sitemap.
 
 ## What Is Not Implemented
 
@@ -83,6 +85,9 @@ Run these before opening or updating a normal product PR:
 
 - `corepack pnpm validate:data`
 - `corepack pnpm report:data-quality`
+- `corepack pnpm check:publication-boundary`
+- `corepack pnpm check:pricing-contract`
+- `corepack pnpm check:selective-seo`
 - `corepack pnpm exec tsc --noEmit`
 - `corepack pnpm build`
 

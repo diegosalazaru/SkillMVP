@@ -56,6 +56,7 @@ const mapLevel = (level: NormalizedCourse["level"]): Course["level"] => {
 
 type SourceMetadata = {
   courseId: string;
+  publicationStatus?: "published" | "source_blocked";
   verifiedFields: NonNullable<Course["verifiedFields"]>;
 };
 
@@ -152,9 +153,18 @@ const parsedCatalog = CourseSchema.array().safeParse(normalizedCatalog);
 
 const normalizedCourses = parsedCatalog.success
   ? parsedCatalog.data
+      .filter(
+        (course) =>
+          sourceMetadataByCourseId.get(course.id)?.publicationStatus !== "source_blocked"
+      )
       .map(mapCourse)
       .filter((course): course is Course => course !== null)
   : [];
 
 export const courses: Course[] =
   normalizedCourses.length > 0 ? normalizedCourses : fallbackCourses;
+
+const publishedCourseIdSet = new Set(courses.map((course) => course.id));
+
+export const isPublishedCourseId = (courseId: string) =>
+  publishedCourseIdSet.has(courseId);

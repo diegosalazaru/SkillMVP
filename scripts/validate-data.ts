@@ -52,6 +52,7 @@ if (!result.success) {
 
 type SourceMetadata = {
   courseId: string;
+  publicationStatus?: unknown;
   verifiedFields?: Record<string, boolean>;
 };
 
@@ -127,6 +128,36 @@ if (!existsSync(metadataPath)) {
 const metadata = JSON.parse(readFileSync(metadataPath, "utf-8")) as SourceMetadata[];
 const metadataByCourseId = new Map(metadata.map((item) => [item.courseId, item]));
 const coursesById = new Map(result.data.map((course) => [course.id, course]));
+const allowedPublicationStatuses = new Set(["published", "source_blocked"]);
+const invalidPublicationStatuses = metadata.filter(
+  (item) =>
+    item.publicationStatus != null &&
+    !allowedPublicationStatuses.has(item.publicationStatus as string)
+);
+
+if (invalidPublicationStatuses.length > 0) {
+  console.error(
+    `[validate:data] Invalid publicationStatus for: ${invalidPublicationStatuses
+      .map((item) => item.courseId)
+      .join(", ")}.`
+  );
+  process.exit(1);
+}
+
+const sourceBlockedIds = metadata
+  .filter((item) => item.publicationStatus === "source_blocked")
+  .map((item) => item.courseId)
+  .sort();
+const sourceBlockedApprovedIds = sourceBlockedIds.filter((courseId) =>
+  approvedIdSet.has(courseId)
+);
+
+if (sourceBlockedApprovedIds.length > 0) {
+  console.error(
+    `[validate:data] Source-blocked courses cannot be approved or enter readiness pairs: ${sourceBlockedApprovedIds.join(", ")}.`
+  );
+  process.exit(1);
+}
 
 const hasActionablePricing = (courseId: string) => {
   const course = coursesById.get(courseId);
@@ -221,5 +252,5 @@ for (const [leftId, rightId] of manifest.readinessPairs) {
 }
 
 console.log(
-  `[validate:data] ${result.data.length} courses validated successfully.`
+  `[validate:data] ${result.data.length} courses validated successfully; ${result.data.length - sourceBlockedIds.length} published and ${sourceBlockedIds.length} source-blocked.`
 );

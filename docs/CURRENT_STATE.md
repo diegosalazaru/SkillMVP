@@ -1,6 +1,6 @@
 # Current State
 
-Last updated after implementing the bounded issue #122 LinkedIn Learning + Microsoft Learn provider batch for independent product review.
+Last updated after implementing issue #125's source-blocked publication boundary for independent product review.
 
 ## Product State
 
@@ -11,6 +11,17 @@ The current UI is English-first. The product supports skill discovery, curated c
 Recent product review exposed an important distinction: source-trusted catalog data is not automatically decision-useful data. The product must not only avoid inventing facts; it must preserve enough structured provider-backed information to help a user actually choose between courses.
 
 ## Latest Completed Initiatives
+
+### Source-blocked Catalog Publication — Issue #125
+
+Key outcomes:
+
+- The normalized catalog remains a 23-record audit set, while the public runtime catalog now contains 21 published courses. `publicationStatus` is a provider-neutral source-metadata decision that defaults to `published`; it does not change verification status.
+- `introduction-cyber-security-nyux-edx` and `data-analytics-essentials-cisco` remain raw `pending` records with their provenance intact, but are explicitly `source_blocked` after a 2026-09-09 official-source recheck.
+- The runtime adapter excludes source-blocked records before discovery data reaches skill pages, search, selection, Compare, course routes, sitemap generation, or generated SEO inputs. Both former detail URLs now use the deliberate 404 path and expose no provider CTA.
+- The sitemap is derived from the post-publication catalog: one homepage, eight canonical skill pages, and 21 published course pages, for 30 URLs total. The existing 20 generated templates remain accessible as `noindex, follow` and exclude source-blocked IDs.
+- Validation and reporting still inspect all 23 normalized records. A focused publication-boundary regression protects the two known blockers, audit retention, runtime count, 404 behavior, sitemap exclusion, readiness-pair integrity, provider neutrality, and generated SEO boundaries.
+- Current-source evidence, implementation boundaries, and acceptance evidence are recorded in `docs/source-blocked-publication.md`.
 
 ### LinkedIn Learning + Microsoft Learn Provider Batch — Issue #122
 
@@ -152,9 +163,9 @@ Earlier completed initiatives, including Phase 1 Source Verification Batches A/B
 
 ## Catalog and Trust State
 
-- The normalized catalog contains 23 curated courses.
+- The normalized catalog contains 23 curated audit records; 21 are published to runtime surfaces.
 - 21 courses are currently `partially_verified`.
-- 2 courses remain `pending` with explicit source blockers rather than unreviewed status.
+- 2 courses remain `pending` and explicitly `source_blocked` rather than being surfaced as available offerings.
 - Source URL mismatches: 0 after the completed verification batches.
 - Pricing remains unknown or unverified for the 8 non-migrated courses; the 15 approved decision-grade records have actionable source-backed exact, qualified starting-at, or genuinely free USD pricing paths. Most ratings and review counts remain unknown by design.
 - The 15 approved decision-grade records preserve provider-described workloads, including exact video-course/path durations and longer schedules, without inferring completion totals.
