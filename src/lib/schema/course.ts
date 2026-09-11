@@ -22,7 +22,7 @@ const CostModelSchema = z.object({
   text: z.string().min(1)
 });
 
-const PricingOptionSchema = z.object({
+export const PricingOptionSchema = z.object({
   id: z.string().min(1),
   model: z.enum([
     "one_time",

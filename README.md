@@ -30,12 +30,14 @@ Run this before merging UI, routing, metadata, or data changes.
 ## Data Commands
 
 ```bash
-corepack pnpm ingest:edx
-corepack pnpm ingest:coursera
-corepack pnpm build:catalog
+corepack pnpm ingest:candidates -- --input path/to/batch.json --output data/staging/candidates.json
+corepack pnpm validate:candidates -- --staging data/staging/candidates.json --as-of YYYY-MM-DD
+corepack pnpm report:candidates -- --staging data/staging/candidates.json
+corepack pnpm review:candidates -- --staging data/staging/candidates.json --ids candidate-a,candidate-b --note "Reviewed official evidence" --as-of YYYY-MM-DD
+corepack pnpm promote:candidates -- --staging data/staging/candidates.json --ids candidate-a,candidate-b --as-of YYYY-MM-DD
 ```
 
-Use ingestion commands only for explicit data work. Data validation must pass before merging catalog changes.
+Candidate ingestion writes to staging only. Promotion requires explicit reviewed IDs and never changes decision-grade approval. The legacy `ingest:edx`, `ingest:coursera`, and `build:catalog` publishers are disabled. See [docs/candidate-ingestion-foundation.md](docs/candidate-ingestion-foundation.md) for the contract and runbook.
 
 ## Current Product Limitations
 

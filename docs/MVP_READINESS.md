@@ -16,6 +16,7 @@
 - Provider URLs are direct official provider URLs only.
 - Outbound tracking is local-only and does not send data to an external analytics vendor.
 - A data quality report is available with `corepack pnpm report:data-quality` and includes verification-status and publication-status counts, the source-blocked IDs, verified-field coverage, pending/partial courses, and unknown field counts.
+- A provider-neutral file workflow now stages bounded 10–50-course batches, deterministically quarantines material exceptions, reports factual counts, and promotes only explicit reviewed IDs without touching decision-grade approval.
 - Mobile Selection and Discovery UX is merged: compare selection persists for up to 24 hours, returning selections are surfaced, and the compare bar is available globally outside the compare page.
 - Decision-focused visual polish is merged across the core Search -> Compare -> Decide journey.
 - Decision Data Contract v2 preserves provider-backed offering, workload, tool, practical-work, credential, and cost-model signals for the 15 explicitly approved courses.
@@ -86,6 +87,7 @@ Run these before opening or updating a normal product PR:
 - `corepack pnpm validate:data`
 - `corepack pnpm report:data-quality`
 - `corepack pnpm check:publication-boundary`
+- `corepack pnpm check:ingestion-foundation`
 - `corepack pnpm check:pricing-contract`
 - `corepack pnpm check:selective-seo`
 - `corepack pnpm exec tsc --noEmit`
@@ -95,4 +97,4 @@ Use the documented repository-local TypeScript fallback only when the normal pnp
 
 ## Active Near-Term Gate
 
-Independent product review must evaluate the Phase 1B.9 LinkedIn Learning + Microsoft Learn evidence and presentation before any later catalog batch or ingestion pilot is considered. Any later work remains explicit and auditable. Phase 2 monetization remains gated until a real program exists.
+The Phase 1C.1 ingestion foundation is implemented for independent review. It enables bounded staging/quarantine/promotion mechanics but does not authorize automatic publication, a new provider batch, or decision-grade approval. Any production batch remains explicit and auditable. Phase 2 monetization remains gated until a real program exists.
