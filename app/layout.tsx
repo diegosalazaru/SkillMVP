@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { Providers } from "./providers";
-import { AnalyticsLoader } from "@/components/seo/AnalyticsLoader";
 import { SITE_NAME } from "@/config/siteConfig";
 import { siteBaseUrl } from "@/lib/metadata";
 import { CompareBar } from "@/components/CompareBar";
@@ -49,7 +49,7 @@ export default function RootLayout({
           </div>
           <CompareBar />
         </Providers>
-        <AnalyticsLoader />
+        <Analytics />
       </body>
     </html>
   );

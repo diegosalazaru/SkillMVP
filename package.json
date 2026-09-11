@@ -13,6 +13,7 @@
     "check:publication-boundary": "tsx scripts/check-publication-boundary.ts",
     "check:ingestion-foundation": "tsx scripts/check-ingestion-foundation.ts",
     "check:selective-seo": "tsx scripts/check-selective-seo.ts",
+    "check:analytics-baseline": "tsx scripts/check-analytics-baseline.ts",
     "ingest:candidates": "tsx scripts/ingest-candidates.ts",
     "validate:candidates": "tsx scripts/validate-candidates.ts",
     "review:candidates": "tsx scripts/review-candidates.ts",
@@ -24,6 +25,7 @@
     "generate:seo": "tsx scripts/generate-seo-pages.ts"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "next": "14.2.5",
     "react": "18.3.1",
     "react-dom": "18.3.1",

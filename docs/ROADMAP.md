@@ -92,6 +92,7 @@ Completed:
 
 - **Indexable Surface Foundation (Batch A)** in PR #92: sitemap now promotes the homepage, canonical skill pages, and canonical course-detail pages; `/compare` and generated template SEO routes are no longer promoted in the sitemap; generated routes remain accessible with `noindex, follow`; prominent homepage SEO links target canonical skill pages.
 - **Phase 3B — Selective decision-led SEO reactivation** in issue #111: the five canonical skills with manifest-approved comparisons now expose reusable, source-backed decision guides and exact Compare entry points. Metadata reflects stable comparison intent, while generated SEO templates remain gated and the sitemap surface is unchanged.
+- **Phase 3C — Privacy-friendly Vercel pageview analytics baseline** in issue #129: automatic Vercel Web Analytics pageviews are integrated once at the root on the existing Hobby plan. The dormant Plausible path is removed, and custom events, conversion tracking, cookies, paid analytics, and plan changes remain out of scope.
 
 Phase 3B deliberately limits acquisition work to durable canonical skill hubs backed by accepted comparison data. Do not create new SEO page types, keyword-scaled content, or indexable template volume merely because the technical foundation exists.
 

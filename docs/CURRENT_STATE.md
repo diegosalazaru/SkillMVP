@@ -1,6 +1,6 @@
 # Current State
 
-Last updated after implementing issue #124's candidate-ingestion foundation for independent product review.
+Last updated after implementing issue #129's Vercel Web Analytics baseline for independent product review.
 
 ## Product State
 
@@ -11,6 +11,16 @@ The current UI is English-first. The product supports skill discovery, curated c
 Recent product review exposed an important distinction: source-trusted catalog data is not automatically decision-useful data. The product must not only avoid inventing facts; it must preserve enough structured provider-backed information to help a user actually choose between courses.
 
 ## Latest Completed Initiatives
+
+### Phase 3C — Privacy-friendly Vercel Pageview Analytics — Issue #129
+
+Key outcomes:
+
+- The official `@vercel/analytics` integration is mounted exactly once in the root layout for automatic pageview measurement.
+- The dormant Plausible loader and its unused `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` configuration are removed, leaving one analytics provider path.
+- Measurement remains limited to anonymized visitor, pageview, referrer, and bounce reporting. No custom events, conversions, affiliate attribution, cookies, consent infrastructure, or paid plan capability is introduced.
+- The Hobby baseline is documented as 50,000 included monthly events with one month of retention; collection pauses rather than generating usage charges when the limit is exceeded.
+- A focused regression check protects the single-provider and pageview-only boundaries. See `docs/vercel-web-analytics-phase-3c.md` for the technical and operating contract.
 
 ### Candidate Staging and Explicit Promotion — Issue #124
 
@@ -168,7 +178,7 @@ Earlier completed initiatives, including Phase 1 Source Verification Batches A/B
 - **Phase 1A — Source Trust:** complete for the original 19-course curated MVP catalog; the one Phase 1B.8 addition has a current official-source record.
 - **Phase 1B — Decision-Grade Data:** Phase 1B.1 through Phase 1B.9 are implemented; 15 courses across ten approved pairs are decision-grade, and independent product review must approve any later batch.
 - **Phase 2 — Monetization:** gated / not started. It activates only when a real auditable affiliate/referral program exists and does not block Phase 3.
-- **Phase 3 — Discovery and SEO:** active. The indexable-surface foundation and selective Phase 3B decision guides on five canonical skills are implemented; generated SEO templates remain gated pending stronger product/search evidence.
+- **Phase 3 — Discovery and SEO:** active. The indexable-surface foundation, selective Phase 3B decision guides on five canonical skills, and the Phase 3C Vercel pageview baseline are implemented; generated SEO templates and persistent custom events remain gated pending stronger product/search evidence.
 - **Phase 4 — Recommendation:** later, gated behind explicit criteria and trustworthy signals.
 - **Phase 5 — Robust Product:** only if traction justifies the additional architecture.
 
