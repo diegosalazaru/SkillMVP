@@ -31,3 +31,27 @@ jobs:
 
       - name: Validate data
         run: pnpm validate:data
+
+      - name: Report data quality
+        run: pnpm report:data-quality
+
+      - name: Check pricing contract
+        run: pnpm check:pricing-contract
+
+      - name: Check publication boundary
+        run: pnpm check:publication-boundary
+
+      - name: Check selective SEO
+        run: pnpm check:selective-seo
+
+      - name: Check ingestion foundation
+        run: pnpm check:ingestion-foundation
+
+      - name: Check Analytics baseline
+        run: pnpm check:analytics-baseline
+
+      - name: Type-check
+        run: pnpm exec tsc --noEmit
+
+      - name: Build
+        run: pnpm build
