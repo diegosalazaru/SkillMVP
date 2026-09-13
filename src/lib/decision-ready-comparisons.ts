@@ -10,22 +10,15 @@ import type { Course } from "@/types/course";
 
 type ManifestPair = [string, string];
 
-type DecisionGuideCourse = Pick<Course, "id" | "title" | "platform"> & {
-  detailHref: string;
-};
-
-export type DecisionGuideRow = Pick<
-  ComparisonRow,
-  "label" | "left" | "right" | "interpretation"
->;
+type DecisionGuideCourse = Pick<Course, "id" | "title" | "platform">;
 
 export type DecisionReadyPair = {
   key: string;
   compareHref: string;
   left: DecisionGuideCourse;
   right: DecisionGuideCourse;
-  differences: DecisionGuideRow[];
-  uncertainties: DecisionGuideRow[];
+  differencePreview: string | null;
+  uncertaintyLabels: string[];
 };
 
 const manifestPairs = decisionGradeManifest.readinessPairs as ManifestPair[];
@@ -53,8 +46,7 @@ const byDecisionPriority = (left: ComparisonRow, right: ComparisonRow) =>
 const toGuideCourse = (course: Course): DecisionGuideCourse => ({
   id: course.id,
   title: course.title,
-  platform: course.platform,
-  detailHref: `/courses/${course.id}`
+  platform: course.platform
 });
 
 const hasSkill = (course: Course, skillSlug: string) =>
@@ -69,19 +61,20 @@ const buildDecisionReadyPair = (
   }
 
   const rows = buildComparisonRows(left, right);
+  const differences = rows
+    .filter((row) => row.status === "Different")
+    .sort(byDecisionPriority);
 
   return {
     key: `${left.id}--${right.id}`,
     compareHref: `/compare?ids=${left.id},${right.id}`,
     left: toGuideCourse(left),
     right: toGuideCourse(right),
-    differences: rows
-      .filter((row) => row.status === "Different")
-      .sort(byDecisionPriority)
-      .slice(0, 4),
-    uncertainties: rows
+    differencePreview: differences[0]?.label ?? null,
+    uncertaintyLabels: rows
       .filter((row) => row.status === "Insufficient data")
       .sort(byDecisionPriority)
+      .map((row) => row.label)
   };
 };
 

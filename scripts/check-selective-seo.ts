@@ -108,6 +108,15 @@ const headingSources = {
   course: readFileSync(resolve("app/courses/[courseId]/CourseDetailClient.tsx"), "utf8"),
   skill: readFileSync(resolve("app/skills/[skillSlug]/SkillClient.tsx"), "utf8")
 };
+const pairCardSource = readFileSync(
+  resolve("src/components/DecisionReadyPairCard.tsx"),
+  "utf8"
+);
+const guideSource = readFileSync(
+  resolve("src/components/SkillDecisionGuide.tsx"),
+  "utf8"
+);
+const filtersSource = readFileSync(resolve("src/components/Filters.tsx"), "utf8");
 
 assert.doesNotMatch(
   headingSources.layout,
@@ -140,11 +149,13 @@ const surfacedPairs = targetSkillSlugs.flatMap((skillSlug) => {
       `/compare?ids=${pair.left.id},${pair.right.id}`,
       "Compare links must preserve exact manifest pair order and IDs."
     );
-    assert.ok(pair.differences.length > 0, "Each guide needs factual differences.");
     assert.ok(
-      pair.left.detailHref.startsWith("/courses/") &&
-        pair.right.detailHref.startsWith("/courses/"),
-      "Each pair must link naturally to both canonical course details."
+      pair.differencePreview,
+      "Each compact guide needs one factual difference preview."
+    );
+    assert.ok(
+      Array.isArray(pair.uncertaintyLabels),
+      "Each compact guide must preserve explicit uncertainty labels."
     );
   });
 
@@ -189,6 +200,42 @@ assert.equal(
   getDecisionReadyPairsForSkill("frontend").length,
   0,
   "Non-target skills must not receive unsupported decision-ready claims."
+);
+
+assert.ok(
+  headingSources.skill.indexOf("<SkillDecisionGuide") <
+    headingSources.skill.indexOf("\n      <Filters"),
+  "Comparison-ready entry points must remain before course discovery filters."
+);
+assert.match(
+  filtersSource,
+  /id="course-discovery-filters"/,
+  "Course discovery filters need a stable displacement-measurement anchor."
+);
+assert.match(
+  guideSource,
+  /xl:grid-cols-3/,
+  "The largest three-pair guides must use a compact desktop grid."
+);
+assert.equal(
+  pairCardSource.match(/<Link\b/g)?.length,
+  1,
+  "Each decision-ready pair card must expose one internal CTA only."
+);
+assert.doesNotMatch(
+  pairCardSource,
+  /Material differences to inspect|What remains uncertain|View .* course details|<dl\b|<details\b|<h4\b/,
+  "The expanded pre-list Compare hierarchy must not return to pair cards."
+);
+assert.match(
+  pairCardSource,
+  /min-h-11/,
+  "The primary Compare CTA must retain a minimum 44 CSS px target."
+);
+assert.match(
+  pairCardSource,
+  /aria-label={`Open comparison:/,
+  "Repeated visible CTA labels must retain pair-specific accessible names."
 );
 
 const sitemapEntries = sitemap();

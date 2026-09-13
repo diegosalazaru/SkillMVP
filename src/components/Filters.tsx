@@ -36,7 +36,7 @@ export const Filters = ({ value, onChange, options }: FiltersProps) => {
   const languageOptions = options?.languages ?? languages;
 
   return (
-    <div className="grid min-w-0 gap-5 rounded-2xl border border-slate-200/80 bg-slate-100/70 p-4 sm:grid-cols-2 sm:p-5 lg:grid-cols-4">
+    <div id="course-discovery-filters" className="grid min-w-0 gap-5 rounded-2xl border border-slate-200/80 bg-slate-100/70 p-4 sm:grid-cols-2 sm:p-5 lg:grid-cols-4">
       <label className="flex flex-col gap-2 text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
         Platform
         <select
