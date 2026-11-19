@@ -38,7 +38,7 @@ The implementation now provides an offline, isolated source-cycle harness:
 5. The shared deterministic validator and versioned digest-bound policy decide publish versus quarantine.
 6. Stable source tuples are unique in staging and accepted metadata. Course facts updated by the source are distinguished from observation/decision refreshes.
 7. Every execution has a UUID-bearing `runId` and actual timestamps. Candidates, per-record decisions, receipts, and reports are immutable under `runs/<runId>/`; the latest 25 runs are retained. `latest.json` is only a pointer.
-8. The workspace and every destination are canonicalized before any write. Outputs outside the isolated workspace, protected production files, destination collisions, and symlink/junction aliases are rejected. The same boundary is enforced inside atomic publication writes, and protected hashes are checked after all permitted writes.
+8. The workspace and every destination are canonicalized before any write. Outputs outside the isolated workspace, protected production files, destination collisions, and symlink/junction aliases are rejected. Atomic temporary and backup companions pass through the same boundary, pre-existing links are rejected, and temporary files are created exclusively. Export paths may not traverse links or share file identity with immutable runs, accepted copies, state, locks, snapshots, or production files. Protected hashes are checked after all permitted writes.
 
 The current CLI defaults to no source mode. Offline evaluation requires `--input-snapshot`. Live access requires both `--live` and an external authorization gate:
 
@@ -71,6 +71,8 @@ The reports do not contain the 50 full per-record decisions and should not be tr
 
 - protected report-output rejection before any write, including byte-identical disposable production fixtures;
 - output collision and canonical symlink/junction rejection;
+- rejection of pre-existing temporary/backup links with exclusive temporary creation and byte-identical protected targets;
+- rejection of linked export roots and hard-linked historical audits while every prior audit remains byte-identical;
 - per-record quarantine for absent IDs, malformed `topics`, malformed/missing `runs`, and mixed valid/invalid responses;
 - staging and accepted source-tuple uniqueness;
 - immutable evidence for two changed runs on the same day and a later refresh;

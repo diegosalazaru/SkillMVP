@@ -71,7 +71,7 @@ corepack pnpm exec tsc --noEmit
 corepack pnpm build
 ```
 
-`check:authorized-ingestion` is an offline CI gate. It must not make live provider requests; live connector access requires separately documented source permission and remains disabled by default while any such permission is unresolved.
+`check:authorized-ingestion` is an offline CI gate. It must not make live provider requests; live connector access requires separately documented source permission and remains disabled by default while any such permission is unresolved. The gate must retain regressions for exclusive atomic temporaries, pre-existing temporary/backup links, export aliases to operational or historical files, and byte-identical protected production and prior-audit evidence after rejection.
 
 ### Windows TypeScript launcher fallback
 

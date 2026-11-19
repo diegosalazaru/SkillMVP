@@ -3,6 +3,7 @@ import {
   closeSync,
   copyFileSync,
   existsSync,
+  lstatSync,
   mkdirSync,
   openSync,
   readFileSync,
@@ -10,7 +11,7 @@ import {
   rmSync,
   statSync
 } from "node:fs";
-import { dirname, relative, resolve } from "node:path";
+import { dirname, isAbsolute, relative, resolve } from "node:path";
 
 import { AcceptedSourceMetadataSchema } from "../src/lib/schema/candidate";
 import { currentDate, getArgument } from "./lib/cli-args";
@@ -72,6 +73,105 @@ const assertProductionUnchanged = (
     throw new Error("Production invariant failed: protected data changed.");
   }
   return after;
+};
+
+const lstatIfPresent = (path: string) => {
+  try {
+    return lstatSync(path);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return null;
+    throw error;
+  }
+};
+
+const isWithinPath = (root: string, target: string) => {
+  const relation = relative(root, target);
+  return (
+    relation === "" || (!relation.startsWith("..") && !isAbsolute(relation))
+  );
+};
+
+const samePath = (left: string, right: string) =>
+  process.platform === "win32"
+    ? left.toLowerCase() === right.toLowerCase()
+    : left === right;
+
+const assertLinkFreeExistingPath = (root: string, target: string) => {
+  const resolvedRoot = resolve(root);
+  const resolvedTarget = resolve(target);
+  if (!isWithinPath(resolvedRoot, resolvedTarget)) {
+    throw new Error(
+      `Export must remain inside its isolated export root: ${target}`
+    );
+  }
+  const relation = relative(resolvedRoot, resolvedTarget);
+  const segments = relation === "" ? [] : relation.split(/[\\/]+/);
+  let cursor = resolvedRoot;
+  for (const segment of ["", ...segments]) {
+    if (segment) cursor = resolve(cursor, segment);
+    if (lstatIfPresent(cursor)?.isSymbolicLink()) {
+      throw new Error(`Export path contains a pre-existing link: ${cursor}`);
+    }
+  }
+};
+
+const collectOperationalFiles = (path: string): string[] => {
+  const stats = lstatIfPresent(path);
+  if (!stats || stats.isSymbolicLink()) return [];
+  if (!stats.isDirectory()) return [path];
+  return readdirSync(path, { withFileTypes: true }).flatMap((entry) =>
+    collectOperationalFiles(resolve(path, entry.name))
+  );
+};
+
+const fileIdentity = (path: string) => {
+  const stats = lstatIfPresent(path);
+  return stats && !stats.isDirectory() && !stats.isSymbolicLink()
+    ? `${stats.dev}:${stats.ino}`
+    : null;
+};
+
+const assertExportIsIndependent = ({
+  exportPath,
+  workspace,
+  operationalRoots,
+  operationalFiles
+}: {
+  exportPath: string;
+  workspace: string;
+  operationalRoots: string[];
+  operationalFiles: string[];
+}) => {
+  const exportRoot = resolve(workspace, "exports");
+  assertLinkFreeExistingPath(exportRoot, exportPath);
+  const canonicalExport = canonicalPathForWrite(exportPath);
+  for (const root of operationalRoots) {
+    if (isWithinPath(canonicalPathForWrite(root), canonicalExport)) {
+      throw new Error(
+        `Export cannot target an operational or historical run path: ${exportPath}`
+      );
+    }
+  }
+  for (const file of operationalFiles) {
+    if (samePath(canonicalPathForWrite(file), canonicalExport)) {
+      throw new Error(
+        `Export cannot target an operational or historical file: ${exportPath}`
+      );
+    }
+  }
+
+  const exportIdentity = fileIdentity(exportPath);
+  if (!exportIdentity) return;
+  const forbiddenIdentities = new Set(
+    [...operationalRoots.flatMap(collectOperationalFiles), ...operationalFiles]
+      .map(fileIdentity)
+      .filter((identity): identity is string => identity !== null)
+  );
+  if (forbiddenIdentities.has(exportIdentity)) {
+    throw new Error(
+      `Export cannot share file identity with operational or historical evidence: ${exportPath}`
+    );
+  }
 };
 
 const acquireLock = (
@@ -193,7 +293,8 @@ const run = async () => {
 
   const executedAt = new Date().toISOString();
   const runId = `${executedAt.replace(/[:.]/g, "-")}-${randomUUID()}`;
-  const runDirectory = resolve(workspace, "runs", runId);
+  const runsDirectory = resolve(workspace, "runs");
+  const runDirectory = resolve(runsDirectory, runId);
   const stagingPath = resolve(runDirectory, "candidates.json");
   const receiptPath = resolve(runDirectory, "promotion-receipt.json");
   const auditPath = resolve(runDirectory, "audit.json");
@@ -225,9 +326,26 @@ const run = async () => {
     ...(snapshotPath ? [snapshotPath] : [])
   ]);
   if (evidenceOutput) {
+    assertExportIsIndependent({
+      exportPath: evidenceOutput,
+      workspace,
+      operationalRoots: [runsDirectory, acceptedDirectory],
+      operationalFiles: [
+        statePath,
+        latestPath,
+        lockPath,
+        ...protectedProductionPaths,
+        ...(snapshotPath ? [snapshotPath] : [])
+      ]
+    });
     createWriteBoundary({
       allowedRoot: resolve(workspace, "exports"),
-      protectedPaths: protectedProductionPaths
+      protectedPaths: [
+        ...protectedProductionPaths,
+        statePath,
+        latestPath,
+        lockPath
+      ]
     }).assertWritable(evidenceOutput);
   }
 
@@ -290,7 +408,7 @@ const run = async () => {
         boundary
       );
       if (evidenceOutput) writeJsonAtomic(evidenceOutput, pausedReport, boundary);
-      pruneRunHistory(resolve(workspace, "runs"), boundary);
+      pruneRunHistory(runsDirectory, boundary);
       assertProductionUnchanged(productionBefore);
       return pausedReport;
     }
@@ -459,7 +577,7 @@ const run = async () => {
       },
       boundary
     );
-    pruneRunHistory(resolve(workspace, "runs"), boundary);
+    pruneRunHistory(runsDirectory, boundary);
     assertProductionUnchanged(productionBefore);
     return report;
   } finally {

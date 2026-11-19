@@ -3,18 +3,24 @@ import { spawnSync } from "node:child_process";
 import {
   copyFileSync,
   existsSync,
+  linkSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
   readdirSync,
+  rmdirSync,
   rmSync,
-  symlinkSync
+  symlinkSync,
+  unlinkSync,
+  writeFileSync
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import {
   applyMachinePublicationPolicy,
+  atomicCompanionPaths,
+  createWriteBoundary,
   ingestCandidateInput,
   promoteCandidates,
   validateCandidateBatch,
@@ -128,9 +134,48 @@ const assertProtectedBytesEqual = (
   assert.deepEqual(right.manifest, left.manifest);
 };
 
+const removeDirectoryLink = (path: string) => {
+  if (process.platform === "win32") rmdirSync(path);
+  else unlinkSync(path);
+};
+
 const main = async () => {
   const taskTemp = mkdtempSync(join(tmpdir(), "skillmvp-authorized-ingestion-"));
   try {
+    const atomicRoot = join(taskTemp, "atomic-boundary");
+    const protectedDirectory = join(atomicRoot, "protected");
+    const protectedPath = join(protectedDirectory, "evidence.json");
+    const atomicTarget = join(atomicRoot, "output.json");
+    mkdirSync(protectedDirectory, { recursive: true });
+    writeFileSync(protectedPath, "protected evidence\n", "utf8");
+    writeJsonAtomic(atomicTarget, { status: "original" });
+    const protectedBeforeAtomicAttacks = readFileSync(protectedPath);
+    const targetBeforeAtomicAttacks = readFileSync(atomicTarget);
+    const atomicBoundary = createWriteBoundary({ allowedRoot: atomicRoot });
+    const companions = atomicCompanionPaths(atomicTarget);
+    for (const companionPath of [
+      companions.temporaryPath,
+      companions.backupPath
+    ]) {
+      symlinkSync(
+        protectedDirectory,
+        companionPath,
+        process.platform === "win32" ? "junction" : "dir"
+      );
+      assert.throws(
+        () =>
+          writeJsonAtomic(
+            atomicTarget,
+            { status: "attacker-controlled" },
+            atomicBoundary
+          ),
+        /pre-existing link/
+      );
+      assert.deepEqual(readFileSync(protectedPath), protectedBeforeAtomicAttacks);
+      assert.deepEqual(readFileSync(atomicTarget), targetBeforeAtomicAttacks);
+      removeDirectoryLink(companionPath);
+    }
+
     const stagingPath = join(taskTemp, "candidates.json");
     const catalogPath = join(taskTemp, "courses.json");
     const metadataPath = join(taskTemp, "course-source-metadata.json");
@@ -540,10 +585,74 @@ const main = async () => {
       runArtifacts[2].candidates.candidates[0].discoveredAt,
       AS_OF
     );
+    const priorAuditBytes = new Map(
+      runIds.map((runId) => [
+        runId,
+        readFileSync(join(runsDirectory, runId, "audit.json"))
+      ])
+    );
+    const assertPriorAuditsUnchanged = () => {
+      assert.deepEqual(readdirSync(runsDirectory).sort(), runIds);
+      for (const [runId, bytes] of priorAuditBytes) {
+        assert.deepEqual(
+          readFileSync(join(runsDirectory, runId, "audit.json")),
+          bytes
+        );
+      }
+    };
+
+    const exportsPath = join(cliRoot, "data", "staging", "review", "exports");
+    symlinkSync(
+      runsDirectory,
+      exportsPath,
+      process.platform === "win32" ? "junction" : "dir"
+    );
+    const linkedExportAttempt = runCli(cliRoot, [
+      "--input-snapshot",
+      "snapshot.json",
+      "--limit",
+      "20",
+      "--workspace",
+      "data/staging/review",
+      "--evidence-output",
+      `data/staging/review/exports/${runIds[0]}/audit.json`
+    ]);
+    assert.notEqual(linkedExportAttempt.status, 0);
+    assert.match(
+      linkedExportAttempt.stderr,
+      /Export path contains a pre-existing link/
+    );
+    assertProtectedBytesEqual(beforeAttack, protectedBytes(cliRoot));
+    assertPriorAuditsUnchanged();
+    removeDirectoryLink(exportsPath);
+
+    mkdirSync(exportsPath, { recursive: true });
+    const hardLinkedExport = join(exportsPath, "historical-audit.json");
+    linkSync(
+      join(runsDirectory, runIds[0], "audit.json"),
+      hardLinkedExport
+    );
+    const hardLinkedExportAttempt = runCli(cliRoot, [
+      "--input-snapshot",
+      "snapshot.json",
+      "--limit",
+      "20",
+      "--workspace",
+      "data/staging/review",
+      "--evidence-output",
+      "data/staging/review/exports/historical-audit.json"
+    ]);
+    assert.notEqual(hardLinkedExportAttempt.status, 0);
+    assert.match(
+      hardLinkedExportAttempt.stderr,
+      /cannot share file identity with operational or historical evidence/
+    );
+    assertProtectedBytesEqual(beforeAttack, protectedBytes(cliRoot));
+    assertPriorAuditsUnchanged();
     assertProtectedBytesEqual(beforeAttack, protectedBytes(cliRoot));
 
     console.log(
-      "[check:authorized-ingestion] PASS — offline CLI isolation rejects protected, colliding, and canonical alias targets without writes; missing/malformed identities and records quarantine independently; source tuples are unique; immutable same-day run evidence survives updates; refreshes are distinct from changed facts; live access defaults off; retries, anomaly stops, and withdrawal safety remain bounded."
+      "[check:authorized-ingestion] PASS — offline atomic writes reject pre-existing temporary/backup links and create temporaries exclusively; CLI isolation rejects protected, colliding, canonical alias, linked export-root, and hard-linked historical audit targets without byte changes; missing/malformed identities and records quarantine independently; source tuples are unique; immutable same-day run evidence survives updates; refreshes are distinct from changed facts; live access defaults off; retries, anomaly stops, and withdrawal safety remain bounded."
     );
   } finally {
     rmSync(taskTemp, { recursive: true, force: true });

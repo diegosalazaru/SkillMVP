@@ -1,6 +1,10 @@
 import {
+  closeSync,
   existsSync,
+  linkSync,
+  lstatSync,
   mkdirSync,
+  openSync,
   readFileSync,
   realpathSync,
   renameSync,
@@ -264,6 +268,75 @@ export const assertSafeStagingTarget = (path: string) => {
   }
 };
 
+const lstatIfPresent = (path: string) => {
+  try {
+    return lstatSync(path);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return null;
+    throw error;
+  }
+};
+
+const assertNotPreexistingLink = (path: string, role: string) => {
+  const stats = lstatIfPresent(path);
+  if (stats?.isSymbolicLink()) {
+    throw new Error(`Refusing pre-existing link at ${role}: ${path}`);
+  }
+  return stats;
+};
+
+export const atomicCompanionPaths = (path: string) => {
+  const resolvedPath = resolve(path);
+  return {
+    temporaryPath: resolve(
+      dirname(resolvedPath),
+      `.${basename(resolvedPath)}.${process.pid}.tmp`
+    ),
+    backupPath: `${resolvedPath}.${process.pid}.bak`
+  };
+};
+
+const assertAtomicCompanionAvailable = (
+  path: string,
+  role: string,
+  boundary?: WriteBoundary
+) => {
+  boundary?.assertWritable(path);
+  const stats = assertNotPreexistingLink(path, role);
+  if (stats) {
+    throw new Error(`Refusing pre-existing ${role}: ${path}`);
+  }
+};
+
+const createExclusiveFile = (path: string, contents: string) => {
+  let descriptor: number;
+  try {
+    descriptor = openSync(path, "wx", 0o600);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "EEXIST") {
+      throw new Error(`Refusing pre-existing atomic temporary: ${path}`);
+    }
+    throw error;
+  }
+  try {
+    writeFileSync(descriptor, contents, "utf8");
+  } finally {
+    closeSync(descriptor);
+  }
+};
+
+const restoreAtomicBackup = (
+  targetPath: string,
+  backupPath: string,
+  installed: boolean,
+  backedUp: boolean
+) => {
+  if (installed && lstatIfPresent(targetPath)) rmSync(targetPath);
+  if (!backedUp || !lstatIfPresent(backupPath)) return;
+  if (lstatIfPresent(targetPath)) rmSync(backupPath);
+  else renameSync(backupPath, targetPath);
+};
+
 export const writeJsonAtomic = (
   path: string,
   value: unknown,
@@ -272,34 +345,34 @@ export const writeJsonAtomic = (
   boundary?.assertWritable(path);
   const resolvedPath = resolve(path);
   mkdirSync(dirname(resolvedPath), { recursive: true });
-  const temporaryPath = resolve(
-    dirname(resolvedPath),
-    `.${resolvedPath.split(/[\\/]/).pop()}.${process.pid}.tmp`
-  );
-  const backupPath = `${resolvedPath}.${process.pid}.bak`;
+  assertNotPreexistingLink(resolvedPath, "atomic write target");
+  const { temporaryPath, backupPath } = atomicCompanionPaths(resolvedPath);
+  assertAtomicCompanionAvailable(temporaryPath, "atomic temporary", boundary);
+  assertAtomicCompanionAvailable(backupPath, "atomic backup", boundary);
   let backedUp = false;
   let installed = false;
-  writeFileSync(temporaryPath, stableJson(value), "utf8");
+  let temporaryCreated = false;
   try {
+    createExclusiveFile(temporaryPath, stableJson(value));
+    temporaryCreated = true;
     if (existsSync(resolvedPath)) {
-      renameSync(resolvedPath, backupPath);
+      linkSync(resolvedPath, backupPath);
       backedUp = true;
+      rmSync(resolvedPath);
     }
     renameSync(temporaryPath, resolvedPath);
+    temporaryCreated = false;
     installed = true;
     if (backedUp) {
       rmSync(backupPath);
       backedUp = false;
     }
   } catch (error) {
-    if (installed && existsSync(resolvedPath)) rmSync(resolvedPath);
-    if (backedUp && existsSync(backupPath)) {
-      renameSync(backupPath, resolvedPath);
-      backedUp = false;
-    }
+    restoreAtomicBackup(resolvedPath, backupPath, installed, backedUp);
+    backedUp = false;
     throw error;
   } finally {
-    if (existsSync(temporaryPath)) rmSync(temporaryPath);
+    if (temporaryCreated && lstatIfPresent(temporaryPath)) rmSync(temporaryPath);
   }
 };
 
@@ -741,46 +814,53 @@ const replaceAcceptedFiles = (
   boundary?.assertWritable(metadataPath);
   const resolvedCatalog = resolve(catalogPath);
   const resolvedMetadata = resolve(metadataPath);
-  const catalogTemp = `${resolvedCatalog}.${process.pid}.tmp`;
-  const metadataTemp = `${resolvedMetadata}.${process.pid}.tmp`;
-  const catalogBackup = `${resolvedCatalog}.${process.pid}.bak`;
-  const metadataBackup = `${resolvedMetadata}.${process.pid}.bak`;
+  assertNotPreexistingLink(resolvedCatalog, "accepted catalog target");
+  assertNotPreexistingLink(resolvedMetadata, "accepted metadata target");
+  const {
+    temporaryPath: catalogTemp,
+    backupPath: catalogBackup
+  } = atomicCompanionPaths(resolvedCatalog);
+  const {
+    temporaryPath: metadataTemp,
+    backupPath: metadataBackup
+  } = atomicCompanionPaths(resolvedMetadata);
+  for (const [path, role] of [
+    [catalogTemp, "accepted catalog temporary"],
+    [metadataTemp, "accepted metadata temporary"],
+    [catalogBackup, "accepted catalog backup"],
+    [metadataBackup, "accepted metadata backup"]
+  ] as const) {
+    assertAtomicCompanionAvailable(path, role, boundary);
+  }
   let catalogBackedUp = false;
   let metadataBackedUp = false;
   let catalogInstalled = false;
   let metadataInstalled = false;
-
-  writeFileSync(catalogTemp, stableJson(catalog), "utf8");
-  writeFileSync(metadataTemp, stableJson(metadata), "utf8");
+  let catalogTempCreated = false;
+  let metadataTempCreated = false;
 
   try {
+    createExclusiveFile(catalogTemp, stableJson(catalog));
+    catalogTempCreated = true;
+    createExclusiveFile(metadataTemp, stableJson(metadata));
+    metadataTempCreated = true;
     CourseSchema.array().parse(parseJsonFile(catalogTemp));
     AcceptedSourceMetadataSchema.array().parse(parseJsonFile(metadataTemp));
 
-    renameSync(resolvedCatalog, catalogBackup);
+    linkSync(resolvedCatalog, catalogBackup);
     catalogBackedUp = true;
-    try {
-      renameSync(resolvedMetadata, metadataBackup);
-      metadataBackedUp = true;
-      renameSync(catalogTemp, resolvedCatalog);
-      catalogInstalled = true;
-      renameSync(metadataTemp, resolvedMetadata);
-      metadataInstalled = true;
-      CourseSchema.array().parse(parseJsonFile(resolvedCatalog));
-      AcceptedSourceMetadataSchema.array().parse(parseJsonFile(resolvedMetadata));
-    } catch (error) {
-      if (catalogInstalled && existsSync(resolvedCatalog)) rmSync(resolvedCatalog);
-      if (metadataInstalled && existsSync(resolvedMetadata)) rmSync(resolvedMetadata);
-      if (catalogBackedUp && existsSync(catalogBackup)) {
-        renameSync(catalogBackup, resolvedCatalog);
-        catalogBackedUp = false;
-      }
-      if (metadataBackedUp && existsSync(metadataBackup)) {
-        renameSync(metadataBackup, resolvedMetadata);
-        metadataBackedUp = false;
-      }
-      throw error;
-    }
+    linkSync(resolvedMetadata, metadataBackup);
+    metadataBackedUp = true;
+    rmSync(resolvedCatalog);
+    rmSync(resolvedMetadata);
+    renameSync(catalogTemp, resolvedCatalog);
+    catalogTempCreated = false;
+    catalogInstalled = true;
+    renameSync(metadataTemp, resolvedMetadata);
+    metadataTempCreated = false;
+    metadataInstalled = true;
+    CourseSchema.array().parse(parseJsonFile(resolvedCatalog));
+    AcceptedSourceMetadataSchema.array().parse(parseJsonFile(resolvedMetadata));
     try {
       rmSync(catalogBackup);
       catalogBackedUp = false;
@@ -793,9 +873,25 @@ const replaceAcceptedFiles = (
     } catch {
       console.warn(`[promote:candidates] Backup retained at ${metadataBackup}.`);
     }
+  } catch (error) {
+    restoreAtomicBackup(
+      resolvedCatalog,
+      catalogBackup,
+      catalogInstalled,
+      catalogBackedUp
+    );
+    restoreAtomicBackup(
+      resolvedMetadata,
+      metadataBackup,
+      metadataInstalled,
+      metadataBackedUp
+    );
+    catalogBackedUp = false;
+    metadataBackedUp = false;
+    throw error;
   } finally {
-    if (existsSync(catalogTemp)) rmSync(catalogTemp);
-    if (existsSync(metadataTemp)) rmSync(metadataTemp);
+    if (catalogTempCreated && lstatIfPresent(catalogTemp)) rmSync(catalogTemp);
+    if (metadataTempCreated && lstatIfPresent(metadataTemp)) rmSync(metadataTemp);
   }
 };
 
