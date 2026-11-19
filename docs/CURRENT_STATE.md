@@ -1,6 +1,6 @@
 # Current State
 
-Last updated after implementing issue #129's Vercel Web Analytics baseline for independent product review.
+Last updated after resolving the independent-review defects R1–R6 in issue #135 while keeping its external permission and withdrawal-coverage blockers explicit.
 
 ## Product State
 
@@ -11,6 +11,22 @@ The current UI is English-first. The product supports skill discovery, curated c
 Recent product review exposed an important distinction: source-trusted catalog data is not automatically decision-useful data. The product must not only avoid inventing facts; it must preserve enough structured provider-backed information to help a user actually choose between courses.
 
 ## Latest Completed Initiatives
+
+### Isolated source-cycle mechanics — Issue #135 / PR #137
+
+Corrected implementation, not accepted or activated in production:
+
+- MIT Learn anonymous HTTP reachability was observed historically, but its Terms restrict bulk download/redistribution absent an applicable exception. The exact API/listing-metadata permission has not been established. Live access is disabled by default and MIT Learn is not classified as an authorized source.
+- The Phase 1C.1 path now quarantines absent/malformed provider IDs without inventing them, parses untrusted results independently, requires explicit published-run evidence for current availability, and enforces unique source/provider tuples in staging and accepted reconciliation.
+- Every run now has an actual timestamp and unique immutable `runId`; full candidates, per-record decisions, receipts, and reports are retained for the latest 25 runs. First discovery time is preserved, and evidence refreshes are counted separately from changed course facts.
+- The CLI canonicalizes all destinations before writing, constrains them to one isolated workspace, rejects protected paths, collisions, and symlink/junction aliases, enforces the boundary in atomic publication writes, and verifies production hashes after all writes.
+- The mandatory offline regression executes the CLI against disposable production fixtures, proves byte-identical rejection, covers mixed malformed/valid records and missing IDs, verifies two changed same-day runs remain auditable, and keeps real provider access out of CI.
+- Historical 50-course aggregate reports remain as technical execution summaries only. They do not establish permission or portable per-record audit evidence, and no new MIT request was made for this correction.
+- The bounded `offset=0` connector always has incomplete coverage. It cannot confirm a real withdrawal; a per-ID refresh or authorized complete-snapshot strategy is still required. Adding a schedule would not complete the lifecycle.
+- Production remains exactly 23 audit records / 21 runtime records. Production catalog and source metadata hashes, the decision-grade manifest, and SEO outputs did not change. No schedule, deployment, affiliate behavior, or production connector is active.
+- Listing permission, OCW content/media reuse, and monetization compatibility remain separate unresolved questions. No content or image reuse is claimed.
+
+Evidence: `docs/authorized-source-cycle-issue-135.md`, `docs/issue-135-mit-ocw-pilot-first.json`, `docs/issue-135-mit-ocw-pilot-refresh.json`, and `docs/candidate-ingestion-foundation.md`.
 
 ### Phase 3C — Privacy-friendly Vercel Pageview Analytics — Issue #129
 
@@ -176,7 +192,8 @@ Earlier completed initiatives, including Phase 1 Source Verification Batches A/B
 
 - **Phase 0 — MVP:** complete for the current MVP scope.
 - **Phase 1A — Source Trust:** complete for the original 19-course curated MVP catalog; the one Phase 1B.8 addition has a current official-source record.
-- **Phase 1B — Decision-Grade Data:** Phase 1B.1 through Phase 1B.9 are implemented; 15 courses across ten approved pairs are decision-grade, and independent product review must approve any later batch.
+- **Phase 1B — Decision-Grade Data:** Phase 1B.1 through Phase 1B.9 are implemented; 15 courses across ten approved pairs are decision-grade. Source-ready autonomous publication does not alter this set.
+- **Phase 1C — Safe ingestion operations:** Phase 1C.1 is the shared candidate foundation. Phase 1C.2 now has corrected offline mechanics, but source permission and operational withdrawal coverage remain incomplete; it is not ready for activation.
 - **Phase 2 — Monetization:** gated / not started. It activates only when a real auditable affiliate/referral program exists and does not block Phase 3.
 - **Phase 3 — Discovery and SEO:** active. The indexable-surface foundation, selective Phase 3B decision guides on five canonical skills, and the Phase 3C Vercel pageview baseline are implemented; generated SEO templates and persistent custom events remain gated pending stronger product/search evidence.
 - **Phase 4 — Recommendation:** later, gated behind explicit criteria and trustworthy signals.
@@ -204,7 +221,7 @@ Not implemented:
 - Ranking or recommendation engine.
 - User accounts.
 - Database-backed catalog.
-- Scraping or provider APIs.
+- Production-activated provider connectors or schedules (the MIT Learn/OCW connector exists only for isolated execution).
 - External analytics vendor for outbound tracking.
 
 These are intentional roadmap constraints, not missing requirements to fill opportunistically.
@@ -247,7 +264,7 @@ Phase 1B.7 completed the required cumulative review. All five incumbent comparis
 
 ## Parallel Ongoing Work
 
-Phase 1A source quality remains an ongoing maintenance concern, but verification should be driven by concrete decision-value needs rather than by a goal of maximizing verified-field counts. Phase 3B is bounded to existing canonical skill hubs; additional indexable volume still requires product and search evidence. Phase 1B.9 completes the currently authorized provider batch, so any later provider or course requires a new explicit product decision. Its provider-neutral success is evidence for a separately authorized Stage B/C ingestion pilot under issue #117, not permission to implement bulk ingestion here. Monetization remains gated behind a real program and disclosure design, and recommendation remains gated behind trustworthy signals and explicit criteria.
+Phase 1A source quality remains an ongoing maintenance concern, but verification should be driven by concrete decision value rather than by maximizing verified-field counts. The approved #136 strategy authorizes horizontal catalog and connector development without waiting for traffic, but it does not waive source permission or lifecycle completeness. Phase 3B remains bounded to existing canonical skill hubs; source-ready listings do not create decision-grade pairs or indexable volume. The next ingestion increment is to resolve listing permission or select another authorized source and implement bounded withdrawal coverage—not to schedule the current connector. Monetization remains gated behind a real program, compatible source rights, and disclosure design; recommendation remains gated behind trustworthy signals and explicit criteria.
 
 ## Operational Note
 

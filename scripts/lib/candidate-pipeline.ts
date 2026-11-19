@@ -1,13 +1,18 @@
 import {
+  closeSync,
   existsSync,
+  linkSync,
+  lstatSync,
   mkdirSync,
+  openSync,
   readFileSync,
+  realpathSync,
   renameSync,
   rmSync,
   writeFileSync
 } from "node:fs";
 import { createHash } from "node:crypto";
-import { dirname, resolve } from "node:path";
+import { basename, dirname, isAbsolute, relative, resolve } from "node:path";
 
 import {
   AcceptedSourceMetadata,
@@ -25,7 +30,7 @@ const ACCEPTED_TARGETS = [
   resolve("data/normalized/courses.json"),
   resolve("data/normalized/course-source-metadata.json"),
   resolve("data/decision-grade-manifest.json")
-].map((path) => path.toLowerCase());
+];
 
 const REQUIRED_EVIDENCE_FIELDS = [
   "title",
@@ -47,6 +52,7 @@ const DECISION_GRADE_ONLY_FIELDS = [
 
 const EXCEPTION_ORDER: CandidateExceptionCode[] = [
   "missing_source",
+  "missing_provider_identity",
   "availability_conflict",
   "duplicate_identity",
   "source_identity_conflict",
@@ -77,7 +83,19 @@ export type PromotionReceipt = {
   batchId: string;
   candidateIds: string[];
   promoted: number;
+  inserted: number;
+  updated: number;
+  refreshed: number;
+  unchanged: number;
   acceptedSemanticChanges: number;
+};
+
+export type MachinePublicationPolicy = {
+  actor: string;
+  policyId: string;
+  policyVersion: string;
+  sourceId: string;
+  allowedSourceHosts: readonly string[];
 };
 
 type ValidationOptions = {
@@ -91,6 +109,13 @@ type PromotionOptions = ValidationOptions & {
   catalogPath?: string;
   metadataPath?: string;
   receiptPath?: string;
+  machinePolicy?: MachinePublicationPolicy;
+  writeBoundary?: WriteBoundary;
+};
+
+export type WriteBoundary = {
+  allowedRoot: string;
+  assertWritable: (path: string) => void;
 };
 
 const parseJsonFile = (path: string): unknown =>
@@ -113,11 +138,12 @@ const canonicalize = (value: unknown): unknown => {
 const semanticEqual = (left: unknown, right: unknown) =>
   JSON.stringify(canonicalize(left)) === JSON.stringify(canonicalize(right));
 
-const reviewDigest = (candidate: CandidateEnvelope) => {
+export const candidateContentDigest = (candidate: CandidateEnvelope) => {
   const {
     disposition: _disposition,
     exceptionCodes: _exceptionCodes,
     humanReview: _humanReview,
+    machineDecision: _machineDecision,
     ...reviewedContent
   } = candidate;
   return createHash("sha256")
@@ -176,45 +202,177 @@ const sourceIdsByUrl = (candidates: CandidateEnvelope[]) => {
   return ids;
 };
 
+const pathKey = (path: string) =>
+  process.platform === "win32" ? path.toLowerCase() : path;
+
+export const canonicalPathForWrite = (path: string) => {
+  const unresolved: string[] = [];
+  let cursor = resolve(path);
+  while (!existsSync(cursor)) {
+    const parent = dirname(cursor);
+    if (parent === cursor) break;
+    unresolved.unshift(basename(cursor));
+    cursor = parent;
+  }
+  const realAncestor = existsSync(cursor) ? realpathSync.native(cursor) : cursor;
+  return resolve(realAncestor, ...unresolved);
+};
+
+const isWithin = (root: string, target: string) => {
+  const relation = relative(root, target);
+  return relation === "" || (!relation.startsWith("..") && !isAbsolute(relation));
+};
+
+export const createWriteBoundary = ({
+  allowedRoot,
+  protectedPaths = []
+}: {
+  allowedRoot: string;
+  protectedPaths?: string[];
+}): WriteBoundary => {
+  const canonicalRoot = canonicalPathForWrite(allowedRoot);
+  const protectedKeys = new Set(
+    protectedPaths.map((path) => pathKey(canonicalPathForWrite(path)))
+  );
+  return {
+    allowedRoot: canonicalRoot,
+    assertWritable(path: string) {
+      const canonicalTarget = canonicalPathForWrite(path);
+      if (
+        !isWithin(canonicalRoot, canonicalTarget) ||
+        protectedKeys.has(pathKey(canonicalTarget))
+      ) {
+        throw new Error(`Refusing write outside isolated boundary: ${path}`);
+      }
+    }
+  };
+};
+
+export const assertDistinctWriteTargets = (paths: string[]) => {
+  const keys = paths.map((path) => pathKey(canonicalPathForWrite(path)));
+  if (new Set(keys).size !== keys.length) {
+    throw new Error("Isolated write destinations must be unique after canonicalization.");
+  }
+};
+
 export const assertSafeStagingTarget = (path: string) => {
-  if (ACCEPTED_TARGETS.includes(resolve(path).toLowerCase())) {
+  const targetKey = pathKey(canonicalPathForWrite(path));
+  if (
+    ACCEPTED_TARGETS.some(
+      (acceptedPath) => pathKey(canonicalPathForWrite(acceptedPath)) === targetKey
+    )
+  ) {
     throw new Error(
       `Refusing to write staging data to accepted publication target: ${path}`
     );
   }
 };
 
-export const writeJsonAtomic = (path: string, value: unknown) => {
+const lstatIfPresent = (path: string) => {
+  try {
+    return lstatSync(path);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return null;
+    throw error;
+  }
+};
+
+const assertNotPreexistingLink = (path: string, role: string) => {
+  const stats = lstatIfPresent(path);
+  if (stats?.isSymbolicLink()) {
+    throw new Error(`Refusing pre-existing link at ${role}: ${path}`);
+  }
+  return stats;
+};
+
+export const atomicCompanionPaths = (path: string) => {
+  const resolvedPath = resolve(path);
+  return {
+    temporaryPath: resolve(
+      dirname(resolvedPath),
+      `.${basename(resolvedPath)}.${process.pid}.tmp`
+    ),
+    backupPath: `${resolvedPath}.${process.pid}.bak`
+  };
+};
+
+const assertAtomicCompanionAvailable = (
+  path: string,
+  role: string,
+  boundary?: WriteBoundary
+) => {
+  boundary?.assertWritable(path);
+  const stats = assertNotPreexistingLink(path, role);
+  if (stats) {
+    throw new Error(`Refusing pre-existing ${role}: ${path}`);
+  }
+};
+
+const createExclusiveFile = (path: string, contents: string) => {
+  let descriptor: number;
+  try {
+    descriptor = openSync(path, "wx", 0o600);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "EEXIST") {
+      throw new Error(`Refusing pre-existing atomic temporary: ${path}`);
+    }
+    throw error;
+  }
+  try {
+    writeFileSync(descriptor, contents, "utf8");
+  } finally {
+    closeSync(descriptor);
+  }
+};
+
+const restoreAtomicBackup = (
+  targetPath: string,
+  backupPath: string,
+  installed: boolean,
+  backedUp: boolean
+) => {
+  if (installed && lstatIfPresent(targetPath)) rmSync(targetPath);
+  if (!backedUp || !lstatIfPresent(backupPath)) return;
+  if (lstatIfPresent(targetPath)) rmSync(backupPath);
+  else renameSync(backupPath, targetPath);
+};
+
+export const writeJsonAtomic = (
+  path: string,
+  value: unknown,
+  boundary?: WriteBoundary
+) => {
+  boundary?.assertWritable(path);
   const resolvedPath = resolve(path);
   mkdirSync(dirname(resolvedPath), { recursive: true });
-  const temporaryPath = resolve(
-    dirname(resolvedPath),
-    `.${resolvedPath.split(/[\\/]/).pop()}.${process.pid}.tmp`
-  );
-  const backupPath = `${resolvedPath}.${process.pid}.bak`;
+  assertNotPreexistingLink(resolvedPath, "atomic write target");
+  const { temporaryPath, backupPath } = atomicCompanionPaths(resolvedPath);
+  assertAtomicCompanionAvailable(temporaryPath, "atomic temporary", boundary);
+  assertAtomicCompanionAvailable(backupPath, "atomic backup", boundary);
   let backedUp = false;
   let installed = false;
-  writeFileSync(temporaryPath, stableJson(value), "utf8");
+  let temporaryCreated = false;
   try {
+    createExclusiveFile(temporaryPath, stableJson(value));
+    temporaryCreated = true;
     if (existsSync(resolvedPath)) {
-      renameSync(resolvedPath, backupPath);
+      linkSync(resolvedPath, backupPath);
       backedUp = true;
+      rmSync(resolvedPath);
     }
     renameSync(temporaryPath, resolvedPath);
+    temporaryCreated = false;
     installed = true;
     if (backedUp) {
       rmSync(backupPath);
       backedUp = false;
     }
   } catch (error) {
-    if (installed && existsSync(resolvedPath)) rmSync(resolvedPath);
-    if (backedUp && existsSync(backupPath)) {
-      renameSync(backupPath, resolvedPath);
-      backedUp = false;
-    }
+    restoreAtomicBackup(resolvedPath, backupPath, installed, backedUp);
+    backedUp = false;
     throw error;
   } finally {
-    if (existsSync(temporaryPath)) rmSync(temporaryPath);
+    if (temporaryCreated && lstatIfPresent(temporaryPath)) rmSync(temporaryPath);
   }
 };
 
@@ -229,7 +387,8 @@ export const ingestCandidateInput = (input: unknown): CandidateStagingFile => {
         ...candidate,
         exceptionCodes: [],
         disposition: "candidate" as const,
-        humanReview: null
+        humanReview: null,
+        machineDecision: null
       }))
   };
 };
@@ -246,6 +405,14 @@ export const validateCandidateBatch = (
   );
   const courseIdCounts = countsBy(
     batch.candidates.map((candidate) => candidate.proposedCourseId)
+  );
+  const sourceIdentityCounts = countsBy(
+    batch.candidates
+      .filter((candidate) => candidate.sourceIdentity.providerCourseId != null)
+      .map(
+        (candidate) =>
+          `${candidate.sourceIdentity.sourceId}\u0000${candidate.sourceIdentity.providerCourseId}`
+      )
   );
   const sourceUrlIds = sourceIdsByUrl(batch.candidates);
   let normalized = 0;
@@ -266,9 +433,17 @@ export const validateCandidateBatch = (
 
     if (
       candidateIdCounts.get(candidate.candidateId)! > 1 ||
-      courseIdCounts.get(candidate.proposedCourseId)! > 1
+      courseIdCounts.get(candidate.proposedCourseId)! > 1 ||
+      (candidate.sourceIdentity.providerCourseId != null &&
+        sourceIdentityCounts.get(
+          `${candidate.sourceIdentity.sourceId}\u0000${candidate.sourceIdentity.providerCourseId}`
+        )! > 1)
     ) {
       add(exceptions, "duplicate_identity");
+    }
+
+    if (candidate.sourceIdentity.providerCourseId == null) {
+      add(exceptions, "missing_provider_identity");
     }
 
     if (
@@ -424,8 +599,17 @@ export const validateCandidateBatch = (
     const exceptionCodes = orderedExceptions(exceptions);
     const humanReview =
       exceptionCodes.length === 0 &&
-      candidate.humanReview?.candidateDigest === reviewDigest(candidate)
+      candidate.humanReview?.candidateDigest === candidateContentDigest(candidate)
         ? candidate.humanReview
+        : null;
+    const decisionDigest = candidateContentDigest(candidate);
+    const machineDecision =
+      candidate.machineDecision?.candidateDigest === decisionDigest &&
+      ((exceptionCodes.length === 0 &&
+        candidate.machineDecision.outcome === "publish") ||
+        (exceptionCodes.length > 0 &&
+          candidate.machineDecision.outcome === "quarantine"))
+        ? candidate.machineDecision
         : null;
     return {
       ...candidate,
@@ -434,13 +618,67 @@ export const validateCandidateBatch = (
         exceptionCodes.length === 0
           ? ("review_ready" as const)
           : ("quarantined" as const),
-      humanReview
+      humanReview,
+      machineDecision
     };
   });
 
   return {
     batch: { ...batch, candidates },
     normalized
+  };
+};
+
+export const applyMachinePublicationPolicy = (
+  input: unknown,
+  options: ValidationOptions & {
+    decidedAt: string;
+    policy: MachinePublicationPolicy;
+  }
+): CandidateStagingFile => {
+  if (Number.isNaN(Date.parse(options.decidedAt))) {
+    throw new Error(`Invalid policy decision timestamp: ${options.decidedAt}`);
+  }
+  const validated = validateCandidateBatch(input, options).batch;
+  return {
+    ...validated,
+    candidates: validated.candidates.map((candidate) => {
+      let sourceHost = "";
+      try {
+        sourceHost = new URL(candidate.canonicalSourceUrl).hostname.toLowerCase();
+      } catch {
+        sourceHost = "";
+      }
+      const sourceAllowed =
+        candidate.sourceIdentity.sourceId === options.policy.sourceId &&
+        candidate.sourceIdentity.providerCourseId != null &&
+        options.policy.allowedSourceHosts.includes(sourceHost) &&
+        candidate.sourceMetadata.sourceType === "official_provider_api";
+      const canPublish =
+        sourceAllowed && candidate.disposition === "review_ready";
+      const reasons = canPublish
+        ? [
+            "source_policy_identity_matches",
+            "deterministic_validation_passed",
+            "actionable_pricing_confirmed"
+          ]
+        : [
+            ...(sourceAllowed ? [] : ["source_not_authorized_by_policy"]),
+            ...candidate.exceptionCodes
+          ];
+      return {
+        ...candidate,
+        machineDecision: {
+          actor: options.policy.actor,
+          policyId: options.policy.policyId,
+          policyVersion: options.policy.policyVersion,
+          decidedAt: options.decidedAt,
+          candidateDigest: candidateContentDigest(candidate),
+          outcome: canPublish ? ("publish" as const) : ("quarantine" as const),
+          reasons: reasons.length > 0 ? reasons : ["policy_rejected"]
+        }
+      };
+    })
   };
 };
 
@@ -490,7 +728,7 @@ export const markCandidatesReviewed = (
             humanReview: {
               reviewedAt: options.reviewedAt,
               note: options.note.trim(),
-              candidateDigest: reviewDigest(candidate)
+              candidateDigest: candidateContentDigest(candidate)
             }
           }
         : candidate
@@ -537,8 +775,13 @@ export const buildBatchReport = (
 const buildAcceptedMetadata = (
   batchId: string,
   candidate: CandidateEnvelope
-): AcceptedSourceMetadata =>
-  AcceptedSourceMetadataSchema.parse({
+): AcceptedSourceMetadata => {
+  if (candidate.sourceIdentity.providerCourseId == null) {
+    throw new Error(
+      `Candidate has no provider-native identity: ${candidate.candidateId}`
+    );
+  }
+  return AcceptedSourceMetadataSchema.parse({
     ...candidate.sourceMetadata,
     courseId: candidate.proposedCourseId,
     sourceUrl: candidate.canonicalSourceUrl,
@@ -546,65 +789,78 @@ const buildAcceptedMetadata = (
     ingestionCandidateId: candidate.candidateId,
     pricingEvidence: PricingOptionSchema.array().parse(candidate.pricingEvidence),
     fieldEvidence: candidate.fieldEvidence,
-    humanReview: candidate.humanReview,
+    humanReview: candidate.humanReview ?? undefined,
+    machineDecision: candidate.machineDecision ?? undefined,
     ingestion: {
       batchId,
       platform: candidate.platform,
       provider: candidate.provider,
+      sourceIdentity: candidate.sourceIdentity,
       discoveredAt: candidate.discoveredAt,
       observedAt: candidate.observedAt,
       availability: candidate.availability
     }
   });
+};
 
 const replaceAcceptedFiles = (
   catalogPath: string,
   metadataPath: string,
   catalog: unknown,
-  metadata: unknown
+  metadata: unknown,
+  boundary?: WriteBoundary
 ) => {
+  boundary?.assertWritable(catalogPath);
+  boundary?.assertWritable(metadataPath);
   const resolvedCatalog = resolve(catalogPath);
   const resolvedMetadata = resolve(metadataPath);
-  const catalogTemp = `${resolvedCatalog}.${process.pid}.tmp`;
-  const metadataTemp = `${resolvedMetadata}.${process.pid}.tmp`;
-  const catalogBackup = `${resolvedCatalog}.${process.pid}.bak`;
-  const metadataBackup = `${resolvedMetadata}.${process.pid}.bak`;
+  assertNotPreexistingLink(resolvedCatalog, "accepted catalog target");
+  assertNotPreexistingLink(resolvedMetadata, "accepted metadata target");
+  const {
+    temporaryPath: catalogTemp,
+    backupPath: catalogBackup
+  } = atomicCompanionPaths(resolvedCatalog);
+  const {
+    temporaryPath: metadataTemp,
+    backupPath: metadataBackup
+  } = atomicCompanionPaths(resolvedMetadata);
+  for (const [path, role] of [
+    [catalogTemp, "accepted catalog temporary"],
+    [metadataTemp, "accepted metadata temporary"],
+    [catalogBackup, "accepted catalog backup"],
+    [metadataBackup, "accepted metadata backup"]
+  ] as const) {
+    assertAtomicCompanionAvailable(path, role, boundary);
+  }
   let catalogBackedUp = false;
   let metadataBackedUp = false;
   let catalogInstalled = false;
   let metadataInstalled = false;
-
-  writeFileSync(catalogTemp, stableJson(catalog), "utf8");
-  writeFileSync(metadataTemp, stableJson(metadata), "utf8");
+  let catalogTempCreated = false;
+  let metadataTempCreated = false;
 
   try {
+    createExclusiveFile(catalogTemp, stableJson(catalog));
+    catalogTempCreated = true;
+    createExclusiveFile(metadataTemp, stableJson(metadata));
+    metadataTempCreated = true;
     CourseSchema.array().parse(parseJsonFile(catalogTemp));
     AcceptedSourceMetadataSchema.array().parse(parseJsonFile(metadataTemp));
 
-    renameSync(resolvedCatalog, catalogBackup);
+    linkSync(resolvedCatalog, catalogBackup);
     catalogBackedUp = true;
-    try {
-      renameSync(resolvedMetadata, metadataBackup);
-      metadataBackedUp = true;
-      renameSync(catalogTemp, resolvedCatalog);
-      catalogInstalled = true;
-      renameSync(metadataTemp, resolvedMetadata);
-      metadataInstalled = true;
-      CourseSchema.array().parse(parseJsonFile(resolvedCatalog));
-      AcceptedSourceMetadataSchema.array().parse(parseJsonFile(resolvedMetadata));
-    } catch (error) {
-      if (catalogInstalled && existsSync(resolvedCatalog)) rmSync(resolvedCatalog);
-      if (metadataInstalled && existsSync(resolvedMetadata)) rmSync(resolvedMetadata);
-      if (catalogBackedUp && existsSync(catalogBackup)) {
-        renameSync(catalogBackup, resolvedCatalog);
-        catalogBackedUp = false;
-      }
-      if (metadataBackedUp && existsSync(metadataBackup)) {
-        renameSync(metadataBackup, resolvedMetadata);
-        metadataBackedUp = false;
-      }
-      throw error;
-    }
+    linkSync(resolvedMetadata, metadataBackup);
+    metadataBackedUp = true;
+    rmSync(resolvedCatalog);
+    rmSync(resolvedMetadata);
+    renameSync(catalogTemp, resolvedCatalog);
+    catalogTempCreated = false;
+    catalogInstalled = true;
+    renameSync(metadataTemp, resolvedMetadata);
+    metadataTempCreated = false;
+    metadataInstalled = true;
+    CourseSchema.array().parse(parseJsonFile(resolvedCatalog));
+    AcceptedSourceMetadataSchema.array().parse(parseJsonFile(resolvedMetadata));
     try {
       rmSync(catalogBackup);
       catalogBackedUp = false;
@@ -617,9 +873,25 @@ const replaceAcceptedFiles = (
     } catch {
       console.warn(`[promote:candidates] Backup retained at ${metadataBackup}.`);
     }
+  } catch (error) {
+    restoreAtomicBackup(
+      resolvedCatalog,
+      catalogBackup,
+      catalogInstalled,
+      catalogBackedUp
+    );
+    restoreAtomicBackup(
+      resolvedMetadata,
+      metadataBackup,
+      metadataInstalled,
+      metadataBackedUp
+    );
+    catalogBackedUp = false;
+    metadataBackedUp = false;
+    throw error;
   } finally {
-    if (existsSync(catalogTemp)) rmSync(catalogTemp);
-    if (existsSync(metadataTemp)) rmSync(metadataTemp);
+    if (catalogTempCreated && lstatIfPresent(catalogTemp)) rmSync(catalogTemp);
+    if (metadataTempCreated && lstatIfPresent(metadataTemp)) rmSync(metadataTemp);
   }
 };
 
@@ -630,7 +902,9 @@ export const promoteCandidates = ({
   metadataPath = resolve("data/normalized/course-source-metadata.json"),
   receiptPath,
   asOf,
-  staleAfterDays
+  staleAfterDays,
+  machinePolicy,
+  writeBoundary
 }: PromotionOptions): PromotionReceipt => {
   if (candidateIds.length === 0) {
     throw new Error("Promotion requires at least one explicit candidate ID.");
@@ -638,6 +912,9 @@ export const promoteCandidates = ({
   if (new Set(candidateIds).size !== candidateIds.length) {
     throw new Error("Promotion candidate IDs must be unique.");
   }
+  writeBoundary?.assertWritable(catalogPath);
+  writeBoundary?.assertWritable(metadataPath);
+  if (receiptPath) writeBoundary?.assertWritable(receiptPath);
 
   const persisted = CandidateStagingFileSchema.parse(parseJsonFile(stagingPath));
   const validated = validateCandidateBatch(persisted, { asOf, staleAfterDays }).batch;
@@ -660,10 +937,25 @@ export const promoteCandidates = ({
         validatedCandidate.exceptionCodes
       ) ||
       validatedCandidate.disposition !== "review_ready" ||
-      validatedCandidate.humanReview == null
+      validatedCandidate.humanReview == null &&
+      !(
+        machinePolicy != null &&
+        validatedCandidate.machineDecision?.outcome === "publish" &&
+        validatedCandidate.machineDecision.actor === machinePolicy.actor &&
+        validatedCandidate.machineDecision.policyId === machinePolicy.policyId &&
+        validatedCandidate.machineDecision.policyVersion ===
+          machinePolicy.policyVersion &&
+        validatedCandidate.sourceIdentity.sourceId === machinePolicy.sourceId &&
+        validatedCandidate.sourceIdentity.providerCourseId != null &&
+        machinePolicy.allowedSourceHosts.includes(
+          new URL(validatedCandidate.canonicalSourceUrl).hostname.toLowerCase()
+        ) &&
+        validatedCandidate.machineDecision.candidateDigest ===
+          candidateContentDigest(validatedCandidate)
+      )
     ) {
       throw new Error(
-        `Candidate is unreviewed or quarantined and cannot be promoted: ${candidateId}`
+        `Candidate lacks an eligible human or machine publication decision: ${candidateId}`
       );
     }
     return validatedCandidate;
@@ -680,10 +972,15 @@ export const promoteCandidates = ({
   const metadataByUrl = new Map(
     metadata.map((item) => [normalizeUrl(item.sourceUrl), item.courseId])
   );
+  const acceptedSourceIdentities = metadata
+    .map((item) => item.ingestion?.sourceIdentity)
+    .filter((identity) => identity != null)
+    .map((identity) => `${identity.sourceId}\u0000${identity.providerCourseId}`);
   if (
     catalogById.size !== catalog.length ||
     metadataById.size !== metadata.length ||
-    metadataByUrl.size !== metadata.length
+    metadataByUrl.size !== metadata.length ||
+    new Set(acceptedSourceIdentities).size !== acceptedSourceIdentities.length
   ) {
     throw new Error("Accepted catalog/source metadata contains duplicate identities.");
   }
@@ -703,6 +1000,10 @@ export const promoteCandidates = ({
   }
   const newCourses: Array<Record<string, unknown> & { id: string }> = [];
   const newMetadata: AcceptedSourceMetadata[] = [];
+  let inserted = 0;
+  let updated = 0;
+  let refreshed = 0;
+  let unchanged = 0;
   let acceptedSemanticChanges = 0;
 
   for (const candidate of selected) {
@@ -711,6 +1012,17 @@ export const promoteCandidates = ({
     const sourceMetadata = AcceptedSourceMetadataSchema.parse(
       buildAcceptedMetadata(validated.batchId, candidate)
     );
+    const providerCourseId = candidate.sourceIdentity.providerCourseId;
+    if (providerCourseId == null) {
+      throw new Error(`Candidate has no provider-native identity: ${candidate.candidateId}`);
+    }
+    const sourceIdentityKey = `${candidate.sourceIdentity.sourceId}\u0000${providerCourseId}`;
+    const identityOwner = metadata.find(
+      (item) =>
+        item.ingestion?.sourceIdentity &&
+        `${item.ingestion.sourceIdentity.sourceId}\u0000${item.ingestion.sourceIdentity.providerCourseId}` ===
+          sourceIdentityKey
+    )?.courseId;
     const existingCourse = catalogById.get(course.id);
     const existingMetadata = metadataById.get(course.id);
     const sourceOwner = metadataByUrl.get(normalizeUrl(candidate.canonicalSourceUrl));
@@ -720,16 +1032,37 @@ export const promoteCandidates = ({
         `Source URL collision: ${candidate.canonicalSourceUrl} belongs to ${sourceOwner}.`
       );
     }
+    if (identityOwner && identityOwner !== course.id) {
+      throw new Error(
+        `Provider identity collision: ${candidate.sourceIdentity.sourceId}/${providerCourseId} belongs to ${identityOwner}.`
+      );
+    }
 
     if (existingCourse || existingMetadata) {
+      if (!existingCourse || !existingMetadata) {
+        throw new Error(`Accepted ID collision: ${course.id}`);
+      }
+      const existingIdentity = existingMetadata.ingestion?.sourceIdentity;
       if (
-        !existingCourse ||
-        !existingMetadata ||
-        !semanticEqual(existingCourse, course) ||
-        !semanticEqual(existingMetadata, sourceMetadata)
+        !existingIdentity ||
+        existingIdentity.sourceId !== candidate.sourceIdentity.sourceId ||
+        existingIdentity.providerCourseId !==
+          candidate.sourceIdentity.providerCourseId
       ) {
         throw new Error(`Accepted ID collision: ${course.id}`);
       }
+      if (
+        semanticEqual(existingCourse, course) &&
+        semanticEqual(existingMetadata, sourceMetadata)
+      ) {
+        unchanged += 1;
+        continue;
+      }
+      catalogById.set(course.id, course);
+      metadataById.set(course.id, sourceMetadata);
+      if (semanticEqual(existingCourse, course)) refreshed += 1;
+      else updated += 1;
+      acceptedSemanticChanges += 1;
       continue;
     }
 
@@ -738,6 +1071,7 @@ export const promoteCandidates = ({
     metadataByUrl.set(normalizeUrl(sourceMetadata.sourceUrl), course.id);
     newCourses.push(course);
     newMetadata.push(sourceMetadata);
+    inserted += 1;
     acceptedSemanticChanges += 1;
   }
 
@@ -747,8 +1081,14 @@ export const promoteCandidates = ({
   newMetadata.sort((left, right) =>
     left.courseId.localeCompare(right.courseId)
   );
-  const nextCatalog = [...catalog, ...newCourses];
-  const nextMetadata = [...metadata, ...newMetadata];
+  const nextCatalog = [
+    ...catalog.map((course) => catalogById.get(course.id)!),
+    ...newCourses
+  ];
+  const nextMetadata = [
+    ...metadata.map((item) => metadataById.get(item.courseId)!),
+    ...newMetadata
+  ];
 
   CourseSchema.array().parse(nextCatalog);
   AcceptedSourceMetadataSchema.array().parse(nextMetadata);
@@ -757,7 +1097,8 @@ export const promoteCandidates = ({
       catalogPath,
       metadataPath,
       nextCatalog,
-      nextMetadata
+      nextMetadata,
+      writeBoundary
     );
   }
 
@@ -765,13 +1106,83 @@ export const promoteCandidates = ({
     batchId: validated.batchId,
     candidateIds: [...candidateIds].sort(),
     promoted: selected.length,
+    inserted,
+    updated,
+    refreshed,
+    unchanged,
     acceptedSemanticChanges
   };
   if (receiptPath) {
     assertSafeStagingTarget(receiptPath);
-    writeJsonAtomic(receiptPath, receipt);
+    writeJsonAtomic(receiptPath, receipt, writeBoundary);
   }
   return receipt;
+};
+
+export const withdrawAcceptedBySourceIdentity = ({
+  catalogPath,
+  metadataPath,
+  sourceId,
+  providerCourseIds,
+  withdrawnAt,
+  writeBoundary
+}: {
+  catalogPath: string;
+  metadataPath: string;
+  sourceId: string;
+  providerCourseIds: string[];
+  withdrawnAt: string;
+  writeBoundary?: WriteBoundary;
+}) => {
+  writeBoundary?.assertWritable(catalogPath);
+  writeBoundary?.assertWritable(metadataPath);
+  if (!isDate(withdrawnAt)) {
+    throw new Error(`Invalid withdrawal date: ${withdrawnAt}`);
+  }
+  const requested = new Set(providerCourseIds);
+  if (requested.size !== providerCourseIds.length) {
+    throw new Error("Withdrawal provider identities must be unique.");
+  }
+  const catalog = CourseSchema.array().parse(parseJsonFile(catalogPath));
+  const metadata = AcceptedSourceMetadataSchema.array().parse(
+    parseJsonFile(metadataPath)
+  );
+  const matched = new Set<string>();
+  let changed = 0;
+  const nextMetadata = metadata.map((item) => {
+    const identity = item.ingestion?.sourceIdentity;
+    if (
+      identity?.sourceId !== sourceId ||
+      !requested.has(identity.providerCourseId)
+    ) {
+      return item;
+    }
+    matched.add(identity.providerCourseId);
+    if (item.publicationStatus === "source_blocked") return item;
+    changed += 1;
+    return AcceptedSourceMetadataSchema.parse({
+      ...item,
+      publicationStatus: "source_blocked",
+      lastVerifiedAt: withdrawnAt,
+      notes: `${item.notes} Automated withdrawal confirmed on ${withdrawnAt} after the source policy threshold.`
+    });
+  });
+  const missing = providerCourseIds.filter((id) => !matched.has(id));
+  if (missing.length > 0) {
+    throw new Error(
+      `Withdrawal identities not found for source ${sourceId}: ${missing.join(", ")}`
+    );
+  }
+  if (changed > 0) {
+    replaceAcceptedFiles(
+      catalogPath,
+      metadataPath,
+      catalog,
+      nextMetadata,
+      writeBoundary
+    );
+  }
+  return { requested: providerCourseIds.length, changed };
 };
 
 export const readCandidateFile = (path: string) => parseJsonFile(path);

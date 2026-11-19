@@ -24,7 +24,7 @@ Future work in this area should be limited to concrete usability defects or regr
 
 ## Phase 1 — Real Data
 
-**Status: Phase 1A source trust complete; Phase 1C.1 candidate staging and explicit promotion foundation is implemented for independent review.**
+**Status: Phase 1A source trust complete; Phase 1C.1 foundation is implemented. Phase 1C.2 has a corrected offline implementation but remains incomplete and externally blocked. Production activation remains off.**
 
 Goal: make the catalog both trustworthy and useful enough to support real user decisions.
 
@@ -58,13 +58,25 @@ Completed:
 - **Phase 1B.9 — LinkedIn Learning + Microsoft Learn Provider Batch** in issue #122: LinkedIn Become a Data Analyst and two Microsoft Learn paths clear the actionable-pricing and 5/7 gates through shared provider-neutral structures. LinkedIn Getting Started as a Project Manager is blocked at 4/7 and intentionally omitted; no substitute is added. The catalog contains 23 courses and the approved set contains 15 courses across ten pairs. LinkedIn pricing remains qualified `starting_at`; Microsoft Learn training is genuine free access distinct from certification exams and Azure resource costs.
 - **Source-blocked publication boundary** in issue #125: the 23-record normalized catalog remains intact for audit, while the 21-course public catalog excludes two unavailable legacy offerings through provider-neutral source metadata. Their direct routes return 404, the derived sitemap contains 30 URLs, readiness pairs remain unchanged, and the 20 generated templates remain `noindex, follow` without blocked IDs.
 
-Do not migrate the remaining catalog automatically. Any later rollout requires another explicit, auditable batch decision.
+Do not infer decision-grade eligibility from source-ready publication. The decision-grade manifest remains an explicit, separately reviewed contract.
 
 ### Phase 1C — Safe ingestion operations
 
 - **Phase 1C.1 — Candidate staging and explicit promotion foundation** in issue #124: bounded 10–50-record JSON inputs now move through provider-neutral staging, deterministic review-ready/quarantine validation, factual reporting, and explicit named-ID promotion. Promotion updates accepted catalog/source metadata together, is collision-safe and idempotent, and never changes the decision-grade manifest. Legacy direct publishers are disabled. The production catalog is unchanged by the foundation pilot.
 
-This foundation authorizes safer batch mechanics, not automatic discovery, publication, catalog expansion, or decision-grade approval. Every production batch remains separately approved and human reviewed.
+Phase 1C.1 by itself authorizes safer batch mechanics, not automatic discovery, publication, catalog expansion, or decision-grade approval. Phase 1C.2 adds reviewed machine-policy mechanics in isolation, but no source is classified as approved until its applicable permission is established; production activation remains a separate reviewed change.
+
+- **Phase 1C.2 — isolated autonomous-source mechanics** in issue #135: the existing foundation supports nullable quarantine identities, unique valid source tuples, digest-bound versioned machine decisions, per-record malformed-input quarantine, inserts, fact updates versus evidence refreshes, bounded retries, source anomaly stops, immutable per-run evidence, canonical write isolation, and withdrawal-confirmation state. Historical 50-record MIT Learn/OCW executions proved technical reachability and left production unchanged, but did not establish source-use permission or retain portable per-record evidence. Live access is now disabled by default. The bounded first page cannot confirm withdrawals, so the lifecycle is not complete.
+
+The former permanent per-batch human-review requirement is superseded for stabilized sources governed by the reviewed machine policy. Human review remains available for manual/unapproved sources and exceptions. Production activation still requires independent review.
+
+### Approved Phase 1C sequence
+
+1. Establish and document source permission for the exact listing-metadata use, or select a different authorized provider; do not make further MIT bulk requests meanwhile.
+2. Implement bounded per-ID refresh or authorized complete-snapshot coverage so real withdrawals can be confirmed safely.
+3. Only then review production activation, unattended scheduling, monitoring, and alert delivery.
+4. Add a complementary authorized provider and grow toward 100–300 useful courses while measuring freshness, unresolved quarantine, defects, cost, and human minutes.
+5. Implement automatic comparison eligibility only as a separate bounded initiative; never infer it from listing publication.
 
 ## Phase 2 — Monetization
 
@@ -119,15 +131,16 @@ Potential scope:
 
 - Database-backed catalog.
 - Admin tooling.
-- Data pipelines.
+- Additional pipeline platforms beyond the bounded file-based ingestion needed for approved delivery.
 - More scalable operational infrastructure.
 
 Do not build Phase 5 architecture to solve hypothetical scale.
 
 ## Immediate Sequence
 
-1. Independently review issue #124's staging, deterministic quarantine, collision-safe atomic promotion, idempotency, and unchanged production catalog/decision-grade manifest.
-2. Maintain conservative Phase 1A source trust without reopening verification work for its own sake.
-3. Use Phase 1C.1 only for separately authorized bounded production batches. Do not begin catalog-wide migration, automatic publication, or add another provider/course without a new product decision.
-4. Keep generated SEO templates `noindex, follow` and avoid new pair routes or scaled SEO volume until product and search evidence justify them.
-5. Activate Phase 2 monetization only when a real program and appropriate disclosures are ready; commission must never affect visible ordering or factual presentation.
+1. Resolve issue #135's external listing-permission blocker and independently review the corrected offline safety/audit implementation.
+2. Complete real withdrawal coverage through bounded per-ID refresh or authorized snapshot coverage; scheduling alone is insufficient.
+3. Decide whether to activate unattended operation only after both blockers are closed; content reuse and commercial compatibility remain separate gates.
+4. Add a complementary authorized source and grow useful horizontal coverage without weakening truth or pricing requirements.
+5. Keep decision-grade comparison, generated SEO indexability, and source-ready listing separate.
+6. Activate Phase 2 monetization only when a real program and appropriate disclosures are ready; commission must never affect visible ordering or factual presentation.

@@ -2,6 +2,16 @@
 
 This document records product decisions that execution agents should treat as settled unless a task explicitly reopens them.
 
+## 2026-09-21 — Autonomous Horizontal Catalog Strategy
+
+Issue #136 approves horizontal expansion across business/professional skills, languages, design/creativity, and technology/data together with low-human-effort catalog operation. It supersedes requirements to wait for low traffic, expand mainly within technology, or retain permanent human approval of each valid record or routine batch.
+
+For a reviewed authorized source, machine publication decisions may replace record-by-record human approval only when the implementation is deterministic, versioned, attributable, digest-bound, auditable, re-evaluated after changes, and protected by quarantine, rollback, operating limits, and source-wide anomaly stops. This does not waive source permission, code review, production activation, evidence, data-truth, pricing, comparison, SEO, or monetization controls.
+
+Internal candidates, source-ready listings, decision-grade comparison eligibility, SEO indexability, and monetization eligibility remain separate states. Automatic listing must never mutate the decision-grade manifest or imply comparison readiness.
+
+Technical reachability, public URLs, or anonymous HTTP success do not establish source authorization. Before live automated access, the applicable API, site, and offering terms must support the exact retrieval, retention, and listing use. Listing-metadata permission, course-content/media reuse, and monetization compatibility are separate decisions. When permission is unresolved, live access stays disabled and offline connector validation may continue with already permitted fixtures.
+
 ## Core Journey
 
 The primary journey is **Search -> Compare -> Decide**.
