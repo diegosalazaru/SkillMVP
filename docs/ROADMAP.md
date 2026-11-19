@@ -24,7 +24,7 @@ Future work in this area should be limited to concrete usability defects or regr
 
 ## Phase 1 — Real Data
 
-**Status: Phase 1A source trust complete; Phase 1C.1 foundation and Phase 1C.2 isolated autonomous-source cycle are implemented for independent review. Production activation remains off.**
+**Status: Phase 1A source trust complete; Phase 1C.1 foundation is implemented. Phase 1C.2 has a corrected offline implementation but remains incomplete and externally blocked. Production activation remains off.**
 
 Goal: make the catalog both trustworthy and useful enough to support real user decisions.
 
@@ -64,18 +64,19 @@ Do not infer decision-grade eligibility from source-ready publication. The decis
 
 - **Phase 1C.1 — Candidate staging and explicit promotion foundation** in issue #124: bounded 10–50-record JSON inputs now move through provider-neutral staging, deterministic review-ready/quarantine validation, factual reporting, and explicit named-ID promotion. Promotion updates accepted catalog/source metadata together, is collision-safe and idempotent, and never changes the decision-grade manifest. Legacy direct publishers are disabled. The production catalog is unchanged by the foundation pilot.
 
-Phase 1C.1 by itself authorizes safer batch mechanics, not automatic discovery, publication, catalog expansion, or decision-grade approval. Phase 1C.2 adds reviewed machine-policy capability for an approved source in isolation; production activation remains a separate reviewed change.
+Phase 1C.1 by itself authorizes safer batch mechanics, not automatic discovery, publication, catalog expansion, or decision-grade approval. Phase 1C.2 adds reviewed machine-policy mechanics in isolation, but no source is classified as approved until its applicable permission is established; production activation remains a separate reviewed change.
 
-- **Phase 1C.2 — first autonomous authorized-source cycle** in issue #135: the existing foundation now supports source identities, digest-bound versioned machine decisions, inserts and stable-identity updates, bounded retries, automatic quarantine, source anomaly stops, withdrawal confirmation state, and isolated atomic publication. A real 50-course MIT Learn/OCW pilot completed without human record review and an identical refresh produced 50 unchanged records with no duplicates. Production catalog, production automation, the decision-grade manifest, and SEO outputs remain unchanged. OCW's noncommercial license is an explicit production/monetization gate.
+- **Phase 1C.2 — isolated autonomous-source mechanics** in issue #135: the existing foundation supports nullable quarantine identities, unique valid source tuples, digest-bound versioned machine decisions, per-record malformed-input quarantine, inserts, fact updates versus evidence refreshes, bounded retries, source anomaly stops, immutable per-run evidence, canonical write isolation, and withdrawal-confirmation state. Historical 50-record MIT Learn/OCW executions proved technical reachability and left production unchanged, but did not establish source-use permission or retain portable per-record evidence. Live access is now disabled by default. The bounded first page cannot confirm withdrawals, so the lifecycle is not complete.
 
 The former permanent per-batch human-review requirement is superseded for stabilized sources governed by the reviewed machine policy. Human review remains available for manual/unapproved sources and exceptions. Production activation still requires independent review.
 
 ### Approved Phase 1C sequence
 
-1. Review and activate the first connector and unattended schedule with monitoring; do not activate from this implementation PR.
-2. Add a complementary authorized provider with production-compatible terms and useful coverage gaps.
-3. Grow toward 100–300 useful courses across the four approved families while measuring freshness, unresolved quarantine, defects, cost, and human minutes.
-4. Implement automatic comparison eligibility only as a separate bounded initiative; never infer it from listing publication.
+1. Establish and document source permission for the exact listing-metadata use, or select a different authorized provider; do not make further MIT bulk requests meanwhile.
+2. Implement bounded per-ID refresh or authorized complete-snapshot coverage so real withdrawals can be confirmed safely.
+3. Only then review production activation, unattended scheduling, monitoring, and alert delivery.
+4. Add a complementary authorized provider and grow toward 100–300 useful courses while measuring freshness, unresolved quarantine, defects, cost, and human minutes.
+5. Implement automatic comparison eligibility only as a separate bounded initiative; never infer it from listing publication.
 
 ## Phase 2 — Monetization
 
@@ -137,8 +138,9 @@ Do not build Phase 5 architecture to solve hypothetical scale.
 
 ## Immediate Sequence
 
-1. Independently review issue #135's connector, source terms, policy audit trail, isolated pilot evidence, failure recovery, and unchanged production boundaries.
-2. Decide whether to activate unattended operation only after review; OCW commercial compatibility or explicit permission is required before any monetized use.
-3. Add a complementary authorized source and grow useful horizontal coverage without weakening truth or pricing requirements.
-4. Keep decision-grade comparison, generated SEO indexability, and source-ready listing separate.
-5. Activate Phase 2 monetization only when a real program and appropriate disclosures are ready; commission must never affect visible ordering or factual presentation.
+1. Resolve issue #135's external listing-permission blocker and independently review the corrected offline safety/audit implementation.
+2. Complete real withdrawal coverage through bounded per-ID refresh or authorized snapshot coverage; scheduling alone is insufficient.
+3. Decide whether to activate unattended operation only after both blockers are closed; content reuse and commercial compatibility remain separate gates.
+4. Add a complementary authorized source and grow useful horizontal coverage without weakening truth or pricing requirements.
+5. Keep decision-grade comparison, generated SEO indexability, and source-ready listing separate.
+6. Activate Phase 2 monetization only when a real program and appropriate disclosures are ready; commission must never affect visible ordering or factual presentation.

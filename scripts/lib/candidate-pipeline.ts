@@ -2,12 +2,13 @@ import {
   existsSync,
   mkdirSync,
   readFileSync,
+  realpathSync,
   renameSync,
   rmSync,
   writeFileSync
 } from "node:fs";
 import { createHash } from "node:crypto";
-import { dirname, resolve } from "node:path";
+import { basename, dirname, isAbsolute, relative, resolve } from "node:path";
 
 import {
   AcceptedSourceMetadata,
@@ -25,7 +26,7 @@ const ACCEPTED_TARGETS = [
   resolve("data/normalized/courses.json"),
   resolve("data/normalized/course-source-metadata.json"),
   resolve("data/decision-grade-manifest.json")
-].map((path) => path.toLowerCase());
+];
 
 const REQUIRED_EVIDENCE_FIELDS = [
   "title",
@@ -47,6 +48,7 @@ const DECISION_GRADE_ONLY_FIELDS = [
 
 const EXCEPTION_ORDER: CandidateExceptionCode[] = [
   "missing_source",
+  "missing_provider_identity",
   "availability_conflict",
   "duplicate_identity",
   "source_identity_conflict",
@@ -79,6 +81,7 @@ export type PromotionReceipt = {
   promoted: number;
   inserted: number;
   updated: number;
+  refreshed: number;
   unchanged: number;
   acceptedSemanticChanges: number;
 };
@@ -103,6 +106,12 @@ type PromotionOptions = ValidationOptions & {
   metadataPath?: string;
   receiptPath?: string;
   machinePolicy?: MachinePublicationPolicy;
+  writeBoundary?: WriteBoundary;
+};
+
+export type WriteBoundary = {
+  allowedRoot: string;
+  assertWritable: (path: string) => void;
 };
 
 const parseJsonFile = (path: string): unknown =>
@@ -189,15 +198,78 @@ const sourceIdsByUrl = (candidates: CandidateEnvelope[]) => {
   return ids;
 };
 
+const pathKey = (path: string) =>
+  process.platform === "win32" ? path.toLowerCase() : path;
+
+export const canonicalPathForWrite = (path: string) => {
+  const unresolved: string[] = [];
+  let cursor = resolve(path);
+  while (!existsSync(cursor)) {
+    const parent = dirname(cursor);
+    if (parent === cursor) break;
+    unresolved.unshift(basename(cursor));
+    cursor = parent;
+  }
+  const realAncestor = existsSync(cursor) ? realpathSync.native(cursor) : cursor;
+  return resolve(realAncestor, ...unresolved);
+};
+
+const isWithin = (root: string, target: string) => {
+  const relation = relative(root, target);
+  return relation === "" || (!relation.startsWith("..") && !isAbsolute(relation));
+};
+
+export const createWriteBoundary = ({
+  allowedRoot,
+  protectedPaths = []
+}: {
+  allowedRoot: string;
+  protectedPaths?: string[];
+}): WriteBoundary => {
+  const canonicalRoot = canonicalPathForWrite(allowedRoot);
+  const protectedKeys = new Set(
+    protectedPaths.map((path) => pathKey(canonicalPathForWrite(path)))
+  );
+  return {
+    allowedRoot: canonicalRoot,
+    assertWritable(path: string) {
+      const canonicalTarget = canonicalPathForWrite(path);
+      if (
+        !isWithin(canonicalRoot, canonicalTarget) ||
+        protectedKeys.has(pathKey(canonicalTarget))
+      ) {
+        throw new Error(`Refusing write outside isolated boundary: ${path}`);
+      }
+    }
+  };
+};
+
+export const assertDistinctWriteTargets = (paths: string[]) => {
+  const keys = paths.map((path) => pathKey(canonicalPathForWrite(path)));
+  if (new Set(keys).size !== keys.length) {
+    throw new Error("Isolated write destinations must be unique after canonicalization.");
+  }
+};
+
 export const assertSafeStagingTarget = (path: string) => {
-  if (ACCEPTED_TARGETS.includes(resolve(path).toLowerCase())) {
+  const targetKey = pathKey(canonicalPathForWrite(path));
+  if (
+    ACCEPTED_TARGETS.some(
+      (acceptedPath) => pathKey(canonicalPathForWrite(acceptedPath)) === targetKey
+    )
+  ) {
     throw new Error(
       `Refusing to write staging data to accepted publication target: ${path}`
     );
   }
 };
 
-export const writeJsonAtomic = (path: string, value: unknown) => {
+export const writeJsonAtomic = (
+  path: string,
+  value: unknown,
+  boundary?: WriteBoundary
+) => {
+  boundary?.assertWritable(path);
   const resolvedPath = resolve(path);
   mkdirSync(dirname(resolvedPath), { recursive: true });
   const temporaryPath = resolve(
@@ -261,6 +333,14 @@ export const validateCandidateBatch = (
   const courseIdCounts = countsBy(
     batch.candidates.map((candidate) => candidate.proposedCourseId)
   );
+  const sourceIdentityCounts = countsBy(
+    batch.candidates
+      .filter((candidate) => candidate.sourceIdentity.providerCourseId != null)
+      .map(
+        (candidate) =>
+          `${candidate.sourceIdentity.sourceId}\u0000${candidate.sourceIdentity.providerCourseId}`
+      )
+  );
   const sourceUrlIds = sourceIdsByUrl(batch.candidates);
   let normalized = 0;
 
@@ -280,9 +360,17 @@ export const validateCandidateBatch = (
 
     if (
       candidateIdCounts.get(candidate.candidateId)! > 1 ||
-      courseIdCounts.get(candidate.proposedCourseId)! > 1
+      courseIdCounts.get(candidate.proposedCourseId)! > 1 ||
+      (candidate.sourceIdentity.providerCourseId != null &&
+        sourceIdentityCounts.get(
+          `${candidate.sourceIdentity.sourceId}\u0000${candidate.sourceIdentity.providerCourseId}`
+        )! > 1)
     ) {
       add(exceptions, "duplicate_identity");
+    }
+
+    if (candidate.sourceIdentity.providerCourseId == null) {
+      add(exceptions, "missing_provider_identity");
     }
 
     if (
@@ -490,13 +578,14 @@ export const applyMachinePublicationPolicy = (
       }
       const sourceAllowed =
         candidate.sourceIdentity.sourceId === options.policy.sourceId &&
+        candidate.sourceIdentity.providerCourseId != null &&
         options.policy.allowedSourceHosts.includes(sourceHost) &&
         candidate.sourceMetadata.sourceType === "official_provider_api";
       const canPublish =
         sourceAllowed && candidate.disposition === "review_ready";
       const reasons = canPublish
         ? [
-            "authorized_source_identity",
+            "source_policy_identity_matches",
             "deterministic_validation_passed",
             "actionable_pricing_confirmed"
           ]
@@ -613,8 +702,13 @@ export const buildBatchReport = (
 const buildAcceptedMetadata = (
   batchId: string,
   candidate: CandidateEnvelope
-): AcceptedSourceMetadata =>
-  AcceptedSourceMetadataSchema.parse({
+): AcceptedSourceMetadata => {
+  if (candidate.sourceIdentity.providerCourseId == null) {
+    throw new Error(
+      `Candidate has no provider-native identity: ${candidate.candidateId}`
+    );
+  }
+  return AcceptedSourceMetadataSchema.parse({
     ...candidate.sourceMetadata,
     courseId: candidate.proposedCourseId,
     sourceUrl: candidate.canonicalSourceUrl,
@@ -634,13 +728,17 @@ const buildAcceptedMetadata = (
       availability: candidate.availability
     }
   });
+};
 
 const replaceAcceptedFiles = (
   catalogPath: string,
   metadataPath: string,
   catalog: unknown,
-  metadata: unknown
+  metadata: unknown,
+  boundary?: WriteBoundary
 ) => {
+  boundary?.assertWritable(catalogPath);
+  boundary?.assertWritable(metadataPath);
   const resolvedCatalog = resolve(catalogPath);
   const resolvedMetadata = resolve(metadataPath);
   const catalogTemp = `${resolvedCatalog}.${process.pid}.tmp`;
@@ -709,7 +807,8 @@ export const promoteCandidates = ({
   receiptPath,
   asOf,
   staleAfterDays,
-  machinePolicy
+  machinePolicy,
+  writeBoundary
 }: PromotionOptions): PromotionReceipt => {
   if (candidateIds.length === 0) {
     throw new Error("Promotion requires at least one explicit candidate ID.");
@@ -717,6 +816,9 @@ export const promoteCandidates = ({
   if (new Set(candidateIds).size !== candidateIds.length) {
     throw new Error("Promotion candidate IDs must be unique.");
   }
+  writeBoundary?.assertWritable(catalogPath);
+  writeBoundary?.assertWritable(metadataPath);
+  if (receiptPath) writeBoundary?.assertWritable(receiptPath);
 
   const persisted = CandidateStagingFileSchema.parse(parseJsonFile(stagingPath));
   const validated = validateCandidateBatch(persisted, { asOf, staleAfterDays }).batch;
@@ -748,6 +850,7 @@ export const promoteCandidates = ({
         validatedCandidate.machineDecision.policyVersion ===
           machinePolicy.policyVersion &&
         validatedCandidate.sourceIdentity.sourceId === machinePolicy.sourceId &&
+        validatedCandidate.sourceIdentity.providerCourseId != null &&
         machinePolicy.allowedSourceHosts.includes(
           new URL(validatedCandidate.canonicalSourceUrl).hostname.toLowerCase()
         ) &&
@@ -773,10 +876,15 @@ export const promoteCandidates = ({
   const metadataByUrl = new Map(
     metadata.map((item) => [normalizeUrl(item.sourceUrl), item.courseId])
   );
+  const acceptedSourceIdentities = metadata
+    .map((item) => item.ingestion?.sourceIdentity)
+    .filter((identity) => identity != null)
+    .map((identity) => `${identity.sourceId}\u0000${identity.providerCourseId}`);
   if (
     catalogById.size !== catalog.length ||
     metadataById.size !== metadata.length ||
-    metadataByUrl.size !== metadata.length
+    metadataByUrl.size !== metadata.length ||
+    new Set(acceptedSourceIdentities).size !== acceptedSourceIdentities.length
   ) {
     throw new Error("Accepted catalog/source metadata contains duplicate identities.");
   }
@@ -798,6 +906,7 @@ export const promoteCandidates = ({
   const newMetadata: AcceptedSourceMetadata[] = [];
   let inserted = 0;
   let updated = 0;
+  let refreshed = 0;
   let unchanged = 0;
   let acceptedSemanticChanges = 0;
 
@@ -807,6 +916,17 @@ export const promoteCandidates = ({
     const sourceMetadata = AcceptedSourceMetadataSchema.parse(
       buildAcceptedMetadata(validated.batchId, candidate)
     );
+    const providerCourseId = candidate.sourceIdentity.providerCourseId;
+    if (providerCourseId == null) {
+      throw new Error(`Candidate has no provider-native identity: ${candidate.candidateId}`);
+    }
+    const sourceIdentityKey = `${candidate.sourceIdentity.sourceId}\u0000${providerCourseId}`;
+    const identityOwner = metadata.find(
+      (item) =>
+        item.ingestion?.sourceIdentity &&
+        `${item.ingestion.sourceIdentity.sourceId}\u0000${item.ingestion.sourceIdentity.providerCourseId}` ===
+          sourceIdentityKey
+    )?.courseId;
     const existingCourse = catalogById.get(course.id);
     const existingMetadata = metadataById.get(course.id);
     const sourceOwner = metadataByUrl.get(normalizeUrl(candidate.canonicalSourceUrl));
@@ -814,6 +934,11 @@ export const promoteCandidates = ({
     if (sourceOwner && sourceOwner !== course.id) {
       throw new Error(
         `Source URL collision: ${candidate.canonicalSourceUrl} belongs to ${sourceOwner}.`
+      );
+    }
+    if (identityOwner && identityOwner !== course.id) {
+      throw new Error(
+        `Provider identity collision: ${candidate.sourceIdentity.sourceId}/${providerCourseId} belongs to ${identityOwner}.`
       );
     }
 
@@ -839,7 +964,8 @@ export const promoteCandidates = ({
       }
       catalogById.set(course.id, course);
       metadataById.set(course.id, sourceMetadata);
-      updated += 1;
+      if (semanticEqual(existingCourse, course)) refreshed += 1;
+      else updated += 1;
       acceptedSemanticChanges += 1;
       continue;
     }
@@ -875,7 +1001,8 @@ export const promoteCandidates = ({
       catalogPath,
       metadataPath,
       nextCatalog,
-      nextMetadata
+      nextMetadata,
+      writeBoundary
     );
   }
 
@@ -885,12 +1012,13 @@ export const promoteCandidates = ({
     promoted: selected.length,
     inserted,
     updated,
+    refreshed,
     unchanged,
     acceptedSemanticChanges
   };
   if (receiptPath) {
     assertSafeStagingTarget(receiptPath);
-    writeJsonAtomic(receiptPath, receipt);
+    writeJsonAtomic(receiptPath, receipt, writeBoundary);
   }
   return receipt;
 };
@@ -900,14 +1028,18 @@ export const withdrawAcceptedBySourceIdentity = ({
   metadataPath,
   sourceId,
   providerCourseIds,
-  withdrawnAt
+  withdrawnAt,
+  writeBoundary
 }: {
   catalogPath: string;
   metadataPath: string;
   sourceId: string;
   providerCourseIds: string[];
   withdrawnAt: string;
+  writeBoundary?: WriteBoundary;
 }) => {
+  writeBoundary?.assertWritable(catalogPath);
+  writeBoundary?.assertWritable(metadataPath);
   if (!isDate(withdrawnAt)) {
     throw new Error(`Invalid withdrawal date: ${withdrawnAt}`);
   }
@@ -946,7 +1078,13 @@ export const withdrawAcceptedBySourceIdentity = ({
     );
   }
   if (changed > 0) {
-    replaceAcceptedFiles(catalogPath, metadataPath, catalog, nextMetadata);
+    replaceAcceptedFiles(
+      catalogPath,
+      metadataPath,
+      catalog,
+      nextMetadata,
+      writeBoundary
+    );
   }
   return { requested: providerCourseIds.length, changed };
 };

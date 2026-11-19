@@ -17,7 +17,7 @@
 - Outbound tracking is local-only and does not send data to an external analytics vendor.
 - A data quality report is available with `corepack pnpm report:data-quality` and includes verification-status and publication-status counts, the source-blocked IDs, verified-field coverage, pending/partial courses, and unknown field counts.
 - A provider-neutral workflow stages bounded 1–50-course batches, deterministically quarantines material exceptions, reports factual counts, and promotes explicit IDs with either human review or an eligible versioned source policy without touching decision-grade approval.
-- One MIT Learn/OCW connector has completed a real 50-course cycle in isolated copies with zero human record reviews and an idempotent live refresh. It is implemented but not scheduled or activated in production.
+- Historical MIT Learn/OCW executions processed 50 records in isolated copies, but independent review found that anonymous reachability did not establish source-use permission and that the bounded first page cannot confirm withdrawals. Live access is now disabled by default; corrected offline mechanics are CI-tested, but the connector is not lifecycle-complete or activation-ready.
 - Mobile Selection and Discovery UX is merged: compare selection persists for up to 24 hours, returning selections are surfaced, and the compare bar is available globally outside the compare page.
 - Decision-focused visual polish is merged across the core Search -> Compare -> Decide journey.
 - Decision Data Contract v2 preserves provider-backed offering, workload, tool, practical-work, credential, and cost-model signals for the 15 explicitly approved courses.
@@ -61,7 +61,7 @@
 - No verified rankings or recommendation algorithm exists.
 - No "best course" recommendation engine exists; comparison copy must stay tied to explicit, factual criteria.
 - No outcome, employment, partnership, or provider endorsement claims should be made.
-- No user accounts, cookies, database, scraping, production-activated external connector, or new analytics vendor is implemented. The MIT Learn/OCW API connector is isolated-only pending review.
+- No user accounts, cookies, database, scraping, production-activated external connector, or new analytics vendor is implemented. The MIT Learn/OCW connector is offline-by-default pending external permission and a real withdrawal-coverage strategy.
 
 ## Decision-Grade Data and Pricing Reality
 
@@ -89,6 +89,7 @@ Run these before opening or updating a normal product PR:
 - `corepack pnpm report:data-quality`
 - `corepack pnpm check:publication-boundary`
 - `corepack pnpm check:ingestion-foundation`
+- `corepack pnpm check:authorized-ingestion`
 - `corepack pnpm check:pricing-contract`
 - `corepack pnpm check:selective-seo`
 - `corepack pnpm exec tsc --noEmit`
@@ -98,4 +99,4 @@ Use the documented repository-local TypeScript fallback only when the normal pnp
 
 ## Active Near-Term Gate
 
-Phase 1C.2 is implemented for independent review: one authorized-source cycle runs end to end in isolation, while production catalog, schedule, comparison manifest, and SEO stay unchanged. The next gate is reviewed activation and a complementary source with production-compatible terms. OCW's CC BY-NC-SA license must be resolved before monetized production use. Phase 2 monetization remains gated until a real program exists.
+Phase 1C.2 is not acceptance-complete. Its offline isolation, quarantine, identity, audit-history, update, and withdrawal-helper mechanics are implemented and CI-gated, while production catalog, schedule, comparison manifest, and SEO remain unchanged. The next gates are an established listing-metadata permission basis (or another authorized source) and bounded per-ID or complete-snapshot withdrawal coverage. Only after both are resolved can activation be reviewed. Content reuse and monetization compatibility remain separate later decisions.

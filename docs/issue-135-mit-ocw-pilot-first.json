@@ -1,7 +1,7 @@
 {
   "sourceId": "mit-learn-ocw",
   "sourceName": "MIT Learn / MIT OpenCourseWare",
-  "sourceAccess": "official anonymous read-only API",
+  "sourceAccess": "historical anonymous HTTP response; source-use permission unresolved",
   "requestUrl": "https://api.learn.mit.edu/api/v1/learning_resources/?platform=ocw&resource_type=course&limit=50&offset=0",
   "executedAt": "2026-09-21T16:10:08.052Z",
   "asOf": "2026-09-21",
@@ -47,7 +47,9 @@
     "manifest": "104adf6fc5702765ea4b5a33f1e53a0d4c9dceb217221b77019e6bc6c45efe4f"
   },
   "activation": "isolated_only",
-  "licensingGate": "OCW CC BY-NC-SA 4.0 permits this noncommercial isolated pilot; production monetization requires separate compatibility review or permission.",
+  "permissionStatus": "unresolved_after_independent_review",
+  "evidenceLimitations": "Historical aggregate only: it does not retain portable per-record decisions and does not establish API/listing permission. No new live request was made to reconstruct evidence.",
+  "licensingGate": "MIT Learn listing permission, OCW content reuse, and monetization compatibility are separate unresolved questions.",
   "decisionGradeManifestChanged": false,
   "seoOutputsChanged": false
 }

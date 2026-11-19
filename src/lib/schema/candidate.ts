@@ -4,6 +4,7 @@ import { PricingOptionSchema } from "./course";
 
 export const CandidateExceptionCodeSchema = z.enum([
   "missing_source",
+  "missing_provider_identity",
   "availability_conflict",
   "duplicate_identity",
   "source_identity_conflict",
@@ -27,6 +28,11 @@ export const CandidateDispositionSchema = z.enum([
 ]);
 
 export const CandidateSourceIdentitySchema = z.object({
+  sourceId: z.string().min(1),
+  providerCourseId: z.string().min(1).nullable()
+});
+
+export const AcceptedSourceIdentitySchema = z.object({
   sourceId: z.string().min(1),
   providerCourseId: z.string().min(1)
 });
@@ -137,7 +143,7 @@ export const AcceptedSourceMetadataSchema = z
         batchId: z.string().min(1),
         platform: z.string().min(1),
         provider: z.string().min(1),
-        sourceIdentity: CandidateSourceIdentitySchema.optional(),
+        sourceIdentity: AcceptedSourceIdentitySchema.optional(),
         discoveredAt: z.string().date(),
         observedAt: z.string().date(),
         availability: AvailabilityEvidenceSchema

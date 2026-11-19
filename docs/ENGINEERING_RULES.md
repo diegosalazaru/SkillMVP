@@ -71,6 +71,8 @@ corepack pnpm exec tsc --noEmit
 corepack pnpm build
 ```
 
+`check:authorized-ingestion` is an offline CI gate. It must not make live provider requests; live connector access requires separately documented source permission and remains disabled by default while any such permission is unresolved.
+
 ### Windows TypeScript launcher fallback
 
 On some Windows shells, `corepack pnpm exec tsc --noEmit` can fail before TypeScript runs because the shell cannot resolve the local `tsc` executable, for example with `"tsc" is not recognized as an internal or external command`.

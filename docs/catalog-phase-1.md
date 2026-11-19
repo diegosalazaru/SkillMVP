@@ -80,13 +80,14 @@ Optional data can be present when verified:
 6. Regenerate derived SEO artifacts only when production accepted catalog inputs actually change.
 7. Run validation and build checks and submit a reviewable PR with provenance notes.
 
-The legacy `ingest:edx`, `ingest:coursera`, and `build:catalog` commands remain disabled because they lacked the current evidence/quarantine contract or could write accepted data directly. The issue #135 MIT Learn/OCW connector uses the shared boundary and is isolated-only until separately activated.
+The legacy `ingest:edx`, `ingest:coursera`, and `build:catalog` commands remain disabled because they lacked the current evidence/quarantine contract or could write accepted data directly. The issue #135 MIT Learn/OCW connector uses the shared boundary but is offline-by-default: listing permission and real withdrawal coverage remain blockers, so scheduling or production activation is not the next routine step.
 
 ## Validation workflow
 Run:
 - `pnpm validate:data`
 - `pnpm report:data-quality`
 - `pnpm check:ingestion-foundation`
+- `pnpm check:authorized-ingestion`
 - `pnpm generate:seo` (when SEO templates/catalog changes)
 - `pnpm build`
 

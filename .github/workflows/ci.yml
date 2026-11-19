@@ -47,6 +47,9 @@ jobs:
       - name: Check ingestion foundation
         run: pnpm check:ingestion-foundation
 
+      - name: Check authorized ingestion offline safety
+        run: pnpm check:authorized-ingestion
+
       - name: Check Analytics baseline
         run: pnpm check:analytics-baseline
 

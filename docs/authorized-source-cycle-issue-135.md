@@ -1,80 +1,86 @@
-# Authorized-source cycle — Issue #135
+# Source-cycle implementation — Issue #135
 
-Observed and executed on 2026-09-21. This document records source selection, implemented behavior, isolated pilot evidence, and activation blockers. It is not a production rollout record.
+This document separates historical execution, corrected implementation state, and external blockers after the independent review of PR #137. Nothing here records a production rollout or establishes source permission.
 
-## Source evaluation
+## Source evaluation and permission state
 
-| Source | Verified access | Decision |
+| Source | Access observed | Current status |
 | --- | --- | --- |
-| edX | `https://api.edx.org/catalog/v1/catalogs/` returned HTTP 401; no edX credential variables were present | Blocked pending authorized credentials and reuse terms |
-| Coursera | The official catalog endpoint returned HTTP 200 anonymously, but Coursera's Developer Agreement requires program registration/acceptance and no accepted developer account or credentials were available | Not used; the agent did not accept an agreement or apply to a program |
-| Microsoft Learn | The legacy anonymous catalog API is in deprecation; the current Learn Platform API requires an onboarded Entra identity | Not used; no obsolete endpoint or unapproved onboarding |
-| OpenLearn | OpenLearn explicitly authorizes RSS reuse, but the runtime received a Cloudflare HTTP 403 challenge for the official feed | Blocked; no access-control bypass attempted |
-| MIT Learn / MIT OpenCourseWare | `https://api.learn.mit.edu/api/v1/learning_resources/` returned HTTP 200 without authentication, with 2,586 current OCW courses and stable numeric IDs | Selected for the isolated noncommercial pilot |
+| edX | Catalog endpoint returned HTTP 401 and no approved credentials were available | Externally blocked by credentials and reuse terms |
+| Coursera | An endpoint was reachable, but use requires developer-program authorization that was not available | Externally blocked; no agreement accepted or application submitted |
+| Microsoft Learn | Current catalog integration requires onboarding and an Entra identity | Externally blocked; no obsolete endpoint used |
+| OpenLearn | Its RSS reuse path was documented, but the runtime received HTTP 403 from Cloudflare | Externally blocked; no access control bypass attempted |
+| MIT Learn / MIT OpenCourseWare | Anonymous HTTP access was observed in the historical pilot | Permission unresolved; live access disabled by default |
 
-MIT Learn is the official MIT catalog surface and permits anonymous read-only access to the learning-resource endpoint. MIT OCW materials are offered under CC BY-NC-SA 4.0. The connector retains source attribution and the license URL, copies no images or course-body text, and publishes only factual listing metadata in isolated files. OCW's noncommercial condition is a hard production/monetization gate; activation requires a separate compatibility review or permission.
+The historical HTTP 200 response is evidence of technical reachability only. It is not evidence of permission. MIT Learn's Terms of Service restrict bulk downloading and redistribution unless a specific Offering permits it, and say Offering-specific terms govern when different. OCW separately publishes CC BY-NC-SA terms for OCW materials, including attribution, noncommercial, and ShareAlike conditions, while also noting public-domain and legal exceptions. Those texts do not by themselves establish that the MIT Learn API response, the exact factual listing fields retained here, and Skills Compare's intended use are permitted.
 
-Primary references:
+Relevant official references:
 
-- MIT Learn API request used by the pilot: `https://api.learn.mit.edu/api/v1/learning_resources/?platform=ocw&resource_type=course&limit=50&offset=0`
-- MIT OCW terms: `https://ocw.mit.edu/pages/privacy-and-terms-of-use/`
-- Coursera Developer Agreement: `https://building.coursera.org/developer-program/agreement/`
-- Microsoft Learn Platform API overview: `https://learn.microsoft.com/en-us/training/support/integrations-learn-platform-api-catalog`
-- OpenLearn feed permission: `https://www.open.edu/openlearn/get-started/frequently-asked-questions/can-i-take-feed-openlearn-content`
+- MIT Learn Terms of Service: `https://learn.mit.edu/terms`
+- MIT OCW Privacy and Terms of Use: `https://ocw.mit.edu/pages/privacy-and-terms-of-use/`
 
-## Implemented cycle
+Three permission questions remain deliberately separate:
 
-`run:authorized-ingestion` performs:
+1. permission to retrieve and retain MIT Learn listing metadata through this endpoint;
+2. permission to reuse OCW course content or media, which this connector does not claim or implement;
+3. compatibility with any future commercial or monetized use.
 
-1. one bounded official API discovery request;
-2. provider-neutral candidate normalization with stable source identity;
-3. existing deterministic validation and automatic quarantine;
-4. a versioned, digest-bound machine publication decision;
-5. atomic insert/update reconciliation into isolated accepted-data copies;
-6. source-state and withdrawal-confirmation reconciliation;
-7. per-record decision audit plus run report.
+The agent did not accept terms, contact MIT, request permission, or make another live/bulk request while resolving the review.
 
-Limits are 20–50 records, one catalog request for this pilot, three attempts, ten seconds per attempt, bounded exponential backoff, and a 30-minute stale-lock recovery threshold. A zero or greater-than-50% source count drop pauses the source. Provider failures never count as withdrawal evidence; two healthy complete observations are required. The bounded first-page pilot is explicitly incomplete for withdrawal purposes.
+## Corrected implementation
 
-The automatic actor is `skillmvp:authorized-source-policy`; policy ID is `authorized-source-publication`; version is `1.0.0`. Any semantic candidate change invalidates its prior decision digest and requires re-evaluation. Human-review records are neither created nor simulated.
+The implementation now provides an offline, isolated source-cycle harness:
 
-## Real isolated pilot
+1. A bounded snapshot envelope is parsed once; each result is then parsed independently.
+2. Valid positive provider IDs become source identities. Missing or malformed IDs remain `null`, receive an internal quarantine key only, and can never be published.
+3. Malformed records retain a source-record digest, raw ID when present, normalization issues, and quarantine reasons while valid neighbors continue.
+4. Availability is current only with explicit resource publication and at least one explicit published run. Missing run evidence is unknown.
+5. The shared deterministic validator and versioned digest-bound policy decide publish versus quarantine.
+6. Stable source tuples are unique in staging and accepted metadata. Course facts updated by the source are distinguished from observation/decision refreshes.
+7. Every execution has a UUID-bearing `runId` and actual timestamps. Candidates, per-record decisions, receipts, and reports are immutable under `runs/<runId>/`; the latest 25 runs are retained. `latest.json` is only a pointer.
+8. The workspace and every destination are canonicalized before any write. Outputs outside the isolated workspace, protected production files, destination collisions, and symlink/junction aliases are rejected. The same boundary is enforced inside atomic publication writes, and protected hashes are checked after all permitted writes.
 
-First run:
+The current CLI defaults to no source mode. Offline evaluation requires `--input-snapshot`. Live access requires both `--live` and an external authorization gate:
 
-- source catalog available: 2,586;
-- discovered / normalized / valid: 50 / 50 / 50;
-- quarantined: 0;
-- published to isolated copies: 50 (50 inserted, 0 updated);
-- human reviews: 0;
-- confirmed withdrawals: 0.
+```bash
+corepack pnpm run:authorized-ingestion -- --input-snapshot path/to/permitted-snapshot.json --limit 20 --workspace data/staging/issue-135-mit-ocw
+```
 
-Second live run against the same isolated workspace:
+`SKILLMVP_MIT_LEARN_LIVE_ACCESS_AUTHORIZED=1` must not be set until a supported permission basis is recorded. There is no schedule or production target.
 
-- discovered / normalized / valid: 50 / 50 / 50;
-- inserted / updated / unchanged: 0 / 0 / 50;
-- duplicates: 0;
-- quarantined / withdrawals: 0 / 0.
+## Withdrawal scope is incomplete
 
-Category assignment is deterministic from official topic metadata: business/professional 7, design/creativity 5, languages 2, technology/data 4, science/engineering 17, humanities 9, and society/other 6. This is broader than the prior technology-first order, but MIT OCW is still weighted toward science and engineering.
+The connector remains limited to the bounded `offset=0` page and always marks that observation as incomplete. Omissions therefore never count toward withdrawal. The pure state helper and accepted-metadata withdrawal operation are tested with two healthy complete observations, and outages cannot advance the counter, but the MIT connector cannot currently produce that evidence.
 
-The live reports are `docs/issue-135-mit-ocw-pilot-first.json` and `docs/issue-135-mit-ocw-pilot-refresh.json`. Synthetic fault regression is limited to failure/update cases that could not be induced against the live provider: changed-record reconciliation, invalid-data quarantine, decision invalidation, bounded retry exhaustion, source-wide anomaly pause, outage behavior, and two-observation withdrawal confirmation.
+Issue #135 is therefore not a complete operational discovery-to-withdrawal lifecycle. Before activation, it needs one of the following under established source permission:
 
-Production SHA-256 digests stayed unchanged across both runs:
+- bounded per-ID refresh of every accepted record, including explicit unavailable/not-found evidence; or
+- authorized complete-snapshot coverage with documented pagination and anomaly limits.
 
-- catalog: `69166293b12fd3eadb32c99e2bf89537b6fd933f94f34a863d3debaf79af32a6`;
-- source metadata: `96e040803b9881663dd49e2f400ae60c53625bcdb41dd056983751d80b82797f`;
-- decision-grade manifest: `104adf6fc5702765ea4b5a33f1e53a0d4c9dceb217221b77019e6bc6c45efe4f`.
+Adding a schedule alone does not close this gap.
 
-## Activation and next increment
+## Historical pilot evidence and limits
 
-Not activated: production catalog writes, scheduling, monitoring delivery, decision-grade comparison eligibility, SEO indexability, monetization, assets, and affiliate behavior.
+Two isolated executions occurred on 2026-09-21 before the independent permission review. Their aggregate reports recorded 50 discovered/normalized/valid records, zero quarantine, 50 isolated inserts on the first run, and 50 unchanged records on the second run. Production catalog, source metadata, decision-grade manifest, and SEO files remained unchanged.
 
-Human intervention still required:
+The reports do not contain the 50 full per-record decisions and should not be treated as portable proof of the audit trail or as proof of authorization. They are retained as historical execution summaries with an explicit permission caveat. No new live data was fetched to reconstruct missing evidence.
 
-- independent code/product/source-rights review;
-- decision on OCW noncommercial compatibility or permission before monetized production use;
-- explicit production activation and scheduling configuration;
-- credentials/contracts for edX, Coursera, Microsoft Learn, or another complementary provider if chosen.
+## Offline acceptance evidence
 
-The next bounded increment is reviewed unattended activation with alert delivery plus a complementary authorized provider that improves language, design, and business depth under production-compatible terms. Automatic comparison eligibility remains a separate later implementation.
+`corepack pnpm check:authorized-ingestion` is now a mandatory CI step and runs without provider access. It verifies:
+
+- protected report-output rejection before any write, including byte-identical disposable production fixtures;
+- output collision and canonical symlink/junction rejection;
+- per-record quarantine for absent IDs, malformed `topics`, malformed/missing `runs`, and mixed valid/invalid responses;
+- staging and accepted source-tuple uniqueness;
+- immutable evidence for two changed runs on the same day and a later refresh;
+- preservation of first discovery time and separation of changed facts from refreshed evidence;
+- live access disabled by default;
+- bounded retry behavior, source-wide anomaly pauses, and outage-safe withdrawal state.
+
+## Remaining blockers
+
+- External: establish a supported permission basis for MIT Learn listing-metadata retrieval/retention, or select another authorized source.
+- Functional: implement bounded per-ID or complete-snapshot withdrawal coverage.
+- Operational: independent review, explicit production activation, monitoring, and scheduling remain future work after both blockers above are resolved.
+- Product boundaries: decision-grade comparison, SEO indexability, content/media reuse, and monetization remain separate and inactive.

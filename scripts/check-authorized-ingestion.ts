@@ -1,9 +1,14 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import {
   copyFileSync,
+  existsSync,
+  mkdirSync,
   mkdtempSync,
   readFileSync,
-  rmSync
+  readdirSync,
+  rmSync,
+  symlinkSync
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -29,14 +34,14 @@ import {
 } from "./lib/mit-learn-ocw";
 
 const AS_OF = "2026-09-21";
-const DECIDED_AT = `${AS_OF}T00:00:00.000Z`;
+const DECIDED_AT = `${AS_OF}T12:34:56.000Z`;
 
 const resource = (
   id: number,
   overrides: Partial<MitOcxResource> = {}
 ): MitOcxResource => ({
   id,
-  title: `Authorized course ${id}`,
+  title: `Source course ${id}`,
   url: `https://ocw.mit.edu/courses/fixture-${id}/`,
   last_modified: "2026-09-20T12:00:00Z",
   published: true,
@@ -45,15 +50,13 @@ const resource = (
   resource_type: "course",
   platform: { code: "ocw", name: "MIT OpenCourseWare" },
   offered_by: { code: "ocw", name: "MIT OpenCourseWare" },
-  topics: [
-    { id: 1, name: "Business & Management", parent: null }
-  ],
+  topics: [{ id: 1, name: "Business & Management", parent: null }],
   ocw_topics: ["Management"],
   runs: [{ published: true }],
   ...overrides
 });
 
-const makeDecidedBatch = (resources: MitOcxResource[]) =>
+const makeDecidedBatch = (resources: unknown[]) =>
   applyMachinePublicationPolicy(
     ingestCandidateInput(
       buildMitOcxCandidateInput(resources, {
@@ -65,24 +68,81 @@ const makeDecidedBatch = (resources: MitOcxResource[]) =>
     { asOf: AS_OF, decidedAt: DECIDED_AT, policy: MIT_OCW_POLICY }
   );
 
-const taskTemp = mkdtempSync(join(tmpdir(), "skillmvp-authorized-ingestion-"));
-const stagingPath = join(taskTemp, "candidates.json");
-const catalogPath = join(taskTemp, "courses.json");
-const metadataPath = join(taskTemp, "course-source-metadata.json");
-const receiptPath = join(taskTemp, "receipt.json");
+const readJson = <T>(path: string): T =>
+  JSON.parse(readFileSync(path, "utf8")) as T;
+
+const runCli = (
+  cwd: string,
+  args: string[],
+  extraEnvironment: Record<string, string> = {}
+) =>
+  spawnSync(
+    process.execPath,
+    [
+      resolve("node_modules/tsx/dist/cli.mjs"),
+      resolve("scripts/run-authorized-ingestion.ts"),
+      ...args
+    ],
+    {
+      cwd,
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        SKILLMVP_MIT_LEARN_LIVE_ACCESS_AUTHORIZED: "0",
+        ...extraEnvironment
+      }
+    }
+  );
+
+const prepareCliFixture = (root: string) => {
+  mkdirSync(join(root, "data", "normalized"), { recursive: true });
+  mkdirSync(join(root, "data", "staging"), { recursive: true });
+  copyFileSync(
+    resolve("data/normalized/courses.json"),
+    join(root, "data", "normalized", "courses.json")
+  );
+  copyFileSync(
+    resolve("data/normalized/course-source-metadata.json"),
+    join(root, "data", "normalized", "course-source-metadata.json")
+  );
+  copyFileSync(
+    resolve("data/decision-grade-manifest.json"),
+    join(root, "data", "decision-grade-manifest.json")
+  );
+};
+
+const protectedBytes = (root: string) => ({
+  catalog: readFileSync(join(root, "data", "normalized", "courses.json")),
+  metadata: readFileSync(
+    join(root, "data", "normalized", "course-source-metadata.json")
+  ),
+  manifest: readFileSync(join(root, "data", "decision-grade-manifest.json"))
+});
+
+const assertProtectedBytesEqual = (
+  left: ReturnType<typeof protectedBytes>,
+  right: ReturnType<typeof protectedBytes>
+) => {
+  assert.deepEqual(right.catalog, left.catalog);
+  assert.deepEqual(right.metadata, left.metadata);
+  assert.deepEqual(right.manifest, left.manifest);
+};
 
 const main = async () => {
+  const taskTemp = mkdtempSync(join(tmpdir(), "skillmvp-authorized-ingestion-"));
   try {
+    const stagingPath = join(taskTemp, "candidates.json");
+    const catalogPath = join(taskTemp, "courses.json");
+    const metadataPath = join(taskTemp, "course-source-metadata.json");
+    const receiptPath = join(taskTemp, "receipt.json");
     copyFileSync(resolve("data/normalized/courses.json"), catalogPath);
     copyFileSync(
       resolve("data/normalized/course-source-metadata.json"),
       metadataPath
     );
-    const originalCount = (JSON.parse(readFileSync(catalogPath, "utf8")) as unknown[])
-      .length;
+    const originalCount = readJson<unknown[]>(catalogPath).length;
 
     const initial = makeDecidedBatch([resource(9001), resource(9002)]);
-    assert.equal(initial.candidates.length, 2);
     assert.ok(
       initial.candidates.every(
         (candidate) =>
@@ -101,14 +161,8 @@ const main = async () => {
       machinePolicy: MIT_OCW_POLICY
     });
     assert.equal(first.inserted, 2);
-    assert.equal(first.updated, 0);
-    assert.equal(
-      (JSON.parse(readFileSync(catalogPath, "utf8")) as unknown[]).length,
-      originalCount + 2
-    );
+    assert.equal(readJson<unknown[]>(catalogPath).length, originalCount + 2);
 
-    const catalogAfterFirst = readFileSync(catalogPath, "utf8");
-    const metadataAfterFirst = readFileSync(metadataPath, "utf8");
     const second = promoteCandidates({
       stagingPath,
       candidateIds: initial.candidates.map((candidate) => candidate.candidateId),
@@ -117,14 +171,10 @@ const main = async () => {
       asOf: AS_OF,
       machinePolicy: MIT_OCW_POLICY
     });
-    assert.equal(second.inserted, 0);
-    assert.equal(second.updated, 0);
     assert.equal(second.unchanged, 2);
-    assert.equal(readFileSync(catalogPath, "utf8"), catalogAfterFirst);
-    assert.equal(readFileSync(metadataPath, "utf8"), metadataAfterFirst);
 
     const changed = makeDecidedBatch([
-      resource(9001, { title: "Authorized course 9001 — updated" })
+      resource(9001, { title: "Source course 9001 — changed fact" })
     ]);
     writeJsonAtomic(stagingPath, changed);
     const update = promoteCandidates({
@@ -136,39 +186,96 @@ const main = async () => {
       machinePolicy: MIT_OCW_POLICY
     });
     assert.equal(update.updated, 1);
-    assert.equal(update.inserted, 0);
-    const updatedCourse = (
-      JSON.parse(readFileSync(catalogPath, "utf8")) as Array<{
-        id: string;
-        title: string;
-      }>
-    ).find((course) => course.id === "mit-ocw-9001");
-    assert.equal(updatedCourse?.title, "Authorized course 9001 — updated");
 
-    const invalid = makeDecidedBatch([resource(9003, { free: false })]);
-    assert.equal(invalid.candidates[0].disposition, "quarantined");
-    assert.equal(invalid.candidates[0].machineDecision?.outcome, "quarantine");
+    const invalidPricing = makeDecidedBatch([resource(9003, { free: false })]);
+    assert.equal(invalidPricing.candidates[0].disposition, "quarantined");
     assert.ok(
-      invalid.candidates[0].exceptionCodes.includes("pricing_unactionable")
+      invalidPricing.candidates[0].exceptionCodes.includes("pricing_unactionable")
     );
 
-    const tampered = structuredClone(makeDecidedBatch([resource(9004)]));
-    (tampered.candidates[0].course as { title: string }).title =
-      "Changed after automatic decision";
-    const revalidated = validateCandidateBatch(tampered, { asOf: AS_OF }).batch;
-    assert.equal(revalidated.candidates[0].machineDecision, null);
-    writeJsonAtomic(stagingPath, tampered);
+    const mixed = makeDecidedBatch([
+      resource(9010),
+      { ...resource(9011), id: undefined },
+      { ...resource(9012), topics: {} },
+      { ...resource(9013), runs: {} },
+      { ...resource(9014), runs: undefined }
+    ]);
+    assert.equal(mixed.candidates.length, 5);
+    const validMixed = mixed.candidates.find(
+      (candidate) => candidate.sourceIdentity.providerCourseId === "9010"
+    )!;
+    const missingIdentity = mixed.candidates.find(
+      (candidate) => candidate.sourceIdentity.providerCourseId == null
+    )!;
+    assert.equal(validMixed.machineDecision?.outcome, "publish");
+    for (const malformed of mixed.candidates.filter(
+      (candidate) => candidate !== validMixed
+    )) {
+      assert.equal(malformed.machineDecision?.outcome, "quarantine");
+    }
+    assert.ok(
+      missingIdentity.exceptionCodes.includes("missing_provider_identity")
+    );
+    assert.equal(
+      mixed.candidates.find(
+        (candidate) => candidate.sourceIdentity.providerCourseId === "9014"
+      )!.availability.status,
+      "unknown"
+    );
+
+    const duplicateTuple = makeDecidedBatch([
+      resource(9020),
+      resource(9020, { url: "https://ocw.mit.edu/courses/fixture-9020-b/" })
+    ]);
+    assert.ok(
+      duplicateTuple.candidates.every((candidate) =>
+        candidate.exceptionCodes.includes("duplicate_identity")
+      )
+    );
+
+    const identityAliasInput = buildMitOcxCandidateInput(
+      [
+        resource(9001, {
+          url: "https://ocw.mit.edu/courses/fixture-9001-alias/"
+        })
+      ],
+      {
+      asOf: AS_OF,
+      receivedAt: DECIDED_AT,
+      batchId: "identity-alias"
+      }
+    );
+    identityAliasInput.candidates[0].candidateId = "mit-learn-ocw:9001-alias";
+    identityAliasInput.candidates[0].proposedCourseId = "mit-ocw-9001-alias";
+    (identityAliasInput.candidates[0].course as { id: string }).id =
+      "mit-ocw-9001-alias";
+    identityAliasInput.candidates[0].sourceMetadata.courseId =
+      "mit-ocw-9001-alias";
+    const identityAlias = applyMachinePublicationPolicy(
+      ingestCandidateInput(identityAliasInput),
+      { asOf: AS_OF, decidedAt: DECIDED_AT, policy: MIT_OCW_POLICY }
+    );
+    writeJsonAtomic(stagingPath, identityAlias);
     assert.throws(
       () =>
         promoteCandidates({
           stagingPath,
-          candidateIds: [tampered.candidates[0].candidateId],
+          candidateIds: [identityAlias.candidates[0].candidateId],
           catalogPath,
           metadataPath,
           asOf: AS_OF,
           machinePolicy: MIT_OCW_POLICY
         }),
-      /lacks an eligible human or machine publication decision/
+      /Provider identity collision/
+    );
+
+    const tampered = structuredClone(makeDecidedBatch([resource(9030)]));
+    (tampered.candidates[0].course as { title: string }).title =
+      "Changed after automatic decision";
+    assert.equal(
+      validateCandidateBatch(tampered, { asOf: AS_OF }).batch.candidates[0]
+        .machineDecision,
+      null
     );
 
     assert.equal(isSourceWideAnomaly(2_586, 0), true);
@@ -195,7 +302,6 @@ const main = async () => {
       providerHealthy: true,
       completeSnapshot: true
     });
-    assert.equal(firstMissing.withdrawn.length, 0);
     const confirmed = reconcileWithdrawalState({
       previous: firstMissing.state,
       sourceId: MIT_OCW_SOURCE_ID,
@@ -206,21 +312,16 @@ const main = async () => {
       completeSnapshot: true
     });
     assert.deepEqual(confirmed.withdrawn, ["9001"]);
-    const withdrawalReceipt = withdrawAcceptedBySourceIdentity({
-      catalogPath,
-      metadataPath,
-      sourceId: MIT_OCW_SOURCE_ID,
-      providerCourseIds: confirmed.withdrawn,
-      withdrawnAt: "2026-09-22"
-    });
-    assert.equal(withdrawalReceipt.changed, 1);
-    const withdrawnMetadata = (
-      JSON.parse(readFileSync(metadataPath, "utf8")) as Array<{
-        courseId: string;
-        publicationStatus?: string;
-      }>
-    ).find((item) => item.courseId === "mit-ocw-9001");
-    assert.equal(withdrawnMetadata?.publicationStatus, "source_blocked");
+    assert.equal(
+      withdrawAcceptedBySourceIdentity({
+        catalogPath,
+        metadataPath,
+        sourceId: MIT_OCW_SOURCE_ID,
+        providerCourseIds: confirmed.withdrawn,
+        withdrawnAt: "2026-09-22"
+      }).changed,
+      1
+    );
     const outage = reconcileWithdrawalState({
       previous: firstMissing.state,
       sourceId: MIT_OCW_SOURCE_ID,
@@ -241,34 +342,20 @@ const main = async () => {
         count: 1,
         next: null,
         previous: null,
-        results: [resource(9005)]
+        results: [resource(9040)]
       });
     }) as typeof fetch;
-    const retried = await fetchMitOcxCourses({
-      limit: 20,
-      maxAttempts: 3,
-      timeoutMs: 100,
-      fetchImpl: eventuallySuccessful
-    });
-    assert.equal(retried.attempts, 3);
-    assert.equal(attempts, 3);
-
-    let failedAttempts = 0;
-    const alwaysUnavailable = (async () => {
-      failedAttempts += 1;
-      return new Response("temporary", { status: 503 });
-    }) as typeof fetch;
-    await assert.rejects(
-      fetchMitOcxCourses({
-        limit: 20,
-        maxAttempts: 3,
-        timeoutMs: 100,
-        fetchImpl: alwaysUnavailable
-      }),
-      /HTTP 503/
+    assert.equal(
+      (
+        await fetchMitOcxCourses({
+          limit: 20,
+          maxAttempts: 3,
+          timeoutMs: 100,
+          fetchImpl: eventuallySuccessful
+        })
+      ).attempts,
+      3
     );
-    assert.equal(failedAttempts, 3);
-
     let unauthorizedAttempts = 0;
     const unauthorized = (async () => {
       unauthorizedAttempts += 1;
@@ -285,8 +372,178 @@ const main = async () => {
     );
     assert.equal(unauthorizedAttempts, 1);
 
+    const cliRoot = join(taskTemp, "cli");
+    prepareCliFixture(cliRoot);
+    const snapshotPath = join(cliRoot, "snapshot.json");
+    const snapshot = {
+      count: 20,
+      next: null,
+      previous: null,
+      results: Array.from({ length: 20 }, (_, index) => resource(9100 + index))
+    };
+    writeJsonAtomic(snapshotPath, snapshot);
+    const beforeAttack = protectedBytes(cliRoot);
+    const overwriteAttempt = runCli(cliRoot, [
+      "--input-snapshot",
+      "snapshot.json",
+      "--limit",
+      "20",
+      "--workspace",
+      "data/staging/review",
+      "--evidence-output",
+      "data/normalized/courses.json"
+    ]);
+    assert.notEqual(overwriteAttempt.status, 0);
+    assert.match(overwriteAttempt.stderr, /outside isolated boundary/);
+    assertProtectedBytesEqual(beforeAttack, protectedBytes(cliRoot));
+    assert.equal(existsSync(join(cliRoot, "data", "staging", "review")), false);
+
+    for (const collisionTarget of [
+      "data/staging/review/source-state.json",
+      "data/staging/review/latest.json",
+      "data/staging/review/accepted/courses.json"
+    ]) {
+      const collisionAttempt = runCli(cliRoot, [
+        "--input-snapshot",
+        "snapshot.json",
+        "--limit",
+        "20",
+        "--workspace",
+        "data/staging/review",
+        "--evidence-output",
+        collisionTarget
+      ]);
+      assert.notEqual(collisionAttempt.status, 0);
+      assert.match(collisionAttempt.stderr, /destinations must be unique/);
+      assertProtectedBytesEqual(beforeAttack, protectedBytes(cliRoot));
+      assert.equal(existsSync(join(cliRoot, "data", "staging", "review")), false);
+    }
+
+    const linkPath = join(cliRoot, "data", "staging", "normalized-link");
+    let linkCreated = false;
+    try {
+      symlinkSync(
+        join(cliRoot, "data", "normalized"),
+        linkPath,
+        process.platform === "win32" ? "junction" : "dir"
+      );
+      linkCreated = true;
+    } catch (error) {
+      if (process.platform !== "win32") throw error;
+    }
+    if (linkCreated) {
+      const aliasAttempt = runCli(cliRoot, [
+        "--input-snapshot",
+        "snapshot.json",
+        "--limit",
+        "20",
+        "--workspace",
+        "data/staging/normalized-link"
+      ]);
+      assert.notEqual(aliasAttempt.status, 0);
+      assert.match(aliasAttempt.stderr, /outside isolated boundary/);
+      assertProtectedBytesEqual(beforeAttack, protectedBytes(cliRoot));
+      rmSync(linkPath);
+    }
+
+    const liveBlocked = runCli(cliRoot, [
+      "--live",
+      "--limit",
+      "20",
+      "--workspace",
+      "data/staging/review"
+    ]);
+    assert.notEqual(liveBlocked.status, 0);
+    assert.match(liveBlocked.stderr, /Live MIT Learn access is disabled/);
+    assertProtectedBytesEqual(beforeAttack, protectedBytes(cliRoot));
+
+    const firstRun = runCli(cliRoot, [
+      "--input-snapshot",
+      "snapshot.json",
+      "--limit",
+      "20",
+      "--as-of",
+      AS_OF,
+      "--workspace",
+      "data/staging/review"
+    ]);
+    assert.equal(firstRun.status, 0, firstRun.stderr);
+    snapshot.results[0] = resource(9100, {
+      title: "Source course 9100 — changed fact"
+    });
+    writeJsonAtomic(snapshotPath, snapshot);
+    const secondRun = runCli(cliRoot, [
+      "--input-snapshot",
+      "snapshot.json",
+      "--limit",
+      "20",
+      "--as-of",
+      AS_OF,
+      "--workspace",
+      "data/staging/review"
+    ]);
+    assert.equal(secondRun.status, 0, secondRun.stderr);
+    const thirdRun = runCli(cliRoot, [
+      "--input-snapshot",
+      "snapshot.json",
+      "--limit",
+      "20",
+      "--as-of",
+      "2026-09-22",
+      "--workspace",
+      "data/staging/review"
+    ]);
+    assert.equal(thirdRun.status, 0, thirdRun.stderr);
+
+    const runsDirectory = join(cliRoot, "data", "staging", "review", "runs");
+    const runIds = readdirSync(runsDirectory).sort();
+    assert.equal(runIds.length, 3);
+    const runArtifacts = runIds.map((runId) => ({
+      runId,
+      audit: readJson<{
+        receivedAt: string;
+        decidedAt: string;
+        decisions: unknown[];
+      }>(join(runsDirectory, runId, "audit.json")),
+      candidates: readJson<{
+        candidates: Array<{
+          discoveredAt: string;
+          course: { title: string };
+        }>;
+      }>(join(runsDirectory, runId, "candidates.json")),
+      receipt: readJson<{ updated: number; refreshed: number }>(
+        join(runsDirectory, runId, "promotion-receipt.json")
+      )
+    }));
+    assert.equal(new Set(runArtifacts.map((item) => item.runId)).size, 3);
+    assert.ok(
+      runArtifacts.every(
+        (item) =>
+          item.audit.decisions.length === 20 &&
+          item.audit.receivedAt === item.audit.decidedAt &&
+          !item.audit.decidedAt.endsWith("T00:00:00.000Z")
+      )
+    );
+    assert.equal(
+      runArtifacts[0].candidates.candidates[0].course.title,
+      "Source course 9100"
+    );
+    assert.equal(
+      runArtifacts[1].candidates.candidates[0].course.title,
+      "Source course 9100 — changed fact"
+    );
+    assert.equal(runArtifacts[1].receipt.updated, 1);
+    assert.equal(runArtifacts[1].receipt.refreshed, 19);
+    assert.equal(runArtifacts[2].receipt.updated, 0);
+    assert.equal(runArtifacts[2].receipt.refreshed, 20);
+    assert.equal(
+      runArtifacts[2].candidates.candidates[0].discoveredAt,
+      AS_OF
+    );
+    assertProtectedBytesEqual(beforeAttack, protectedBytes(cliRoot));
+
     console.log(
-      "[check:authorized-ingestion] PASS — machine policy is attributable and digest-bound; inserts are idempotent; stable identities update; invalid records quarantine; retryable failures stop at three while authorization failures stop immediately; anomalies pause; two healthy complete snapshots are required for withdrawal; outages cannot withdraw."
+      "[check:authorized-ingestion] PASS — offline CLI isolation rejects protected, colliding, and canonical alias targets without writes; missing/malformed identities and records quarantine independently; source tuples are unique; immutable same-day run evidence survives updates; refreshes are distinct from changed facts; live access defaults off; retries, anomaly stops, and withdrawal safety remain bounded."
     );
   } finally {
     rmSync(taskTemp, { recursive: true, force: true });

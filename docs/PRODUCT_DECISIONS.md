@@ -10,6 +10,8 @@ For a reviewed authorized source, machine publication decisions may replace reco
 
 Internal candidates, source-ready listings, decision-grade comparison eligibility, SEO indexability, and monetization eligibility remain separate states. Automatic listing must never mutate the decision-grade manifest or imply comparison readiness.
 
+Technical reachability, public URLs, or anonymous HTTP success do not establish source authorization. Before live automated access, the applicable API, site, and offering terms must support the exact retrieval, retention, and listing use. Listing-metadata permission, course-content/media reuse, and monetization compatibility are separate decisions. When permission is unresolved, live access stays disabled and offline connector validation may continue with already permitted fixtures.
+
 ## Core Journey
 
 The primary journey is **Search -> Compare -> Decide**.

@@ -1,6 +1,6 @@
 # Candidate ingestion foundation
 
-Issue #124 adds a provider-neutral, file-based publication boundary for bounded batches of 1–50 course candidates. Issue #135 reuses and extends that boundary with one authorized live-source connector and a reviewed machine-publication policy. It does not add crawling, a database, an admin interface, automatic decision-grade approval, or production activation.
+Issue #124 adds a provider-neutral, file-based publication boundary for bounded batches of 1–50 course candidates. Issue #135 reuses and extends that boundary with an isolated source connector and a reviewed machine-publication policy. MIT Learn source-use permission remains unresolved, so live access is disabled by default and the connector is not classified as authorized. It does not add crawling, a database, an admin interface, automatic decision-grade approval, or production activation.
 
 ## Safety model
 
@@ -39,6 +39,7 @@ Pricing evidence stays in the envelope and is preserved in promoted source metad
 Validation supports these codes:
 
 - `missing_source`
+- `missing_provider_identity`
 - `availability_conflict`
 - `duplicate_identity`
 - `source_identity_conflict`
@@ -71,30 +72,34 @@ Promotion requires the persisted candidate to have already been validated as `re
 
 For the issue #135 autonomous path, promotion instead accepts a valid `publish` machine decision only when the caller explicitly enables it. The decision digest covers the candidate content and is invalidated by a semantic change. Stable provider identity permits deterministic updates to the matching accepted record; an identity mismatch remains a collision. The normal `promote:candidates` CLI does not enable machine decisions, so this implementation does not silently activate automatic production publication.
 
-## Authorized MIT Learn / OCW cycle
+## Isolated MIT Learn / OCW connector
 
 ```bash
-corepack pnpm run:authorized-ingestion -- --limit 50 --as-of YYYY-MM-DD --workspace data/staging/issue-135-mit-ocw
+corepack pnpm run:authorized-ingestion -- --input-snapshot path/to/permitted-snapshot.json --limit 50 --as-of YYYY-MM-DD --workspace data/staging/issue-135-mit-ocw
 ```
 
-The connector calls the official anonymous MIT Learn API with `platform=ocw`, `resource_type=course`, `offset=0`, and a 20–50 record limit. It uses MIT Learn's numeric resource ID as the provider identity, retains the canonical OCW URL, publishes only factual listing metadata, does not reuse images or course-body text, and models OCW access as genuine free self-guided material with no certificate or academic credit.
+The connector can parse a bounded MIT Learn response with `platform=ocw`, `resource_type=course`, `offset=0`, and a 20–50 record limit. It uses a valid positive MIT Learn numeric resource ID as the provider identity; absent or malformed IDs are never fabricated and are quarantined. Each untrusted result is parsed separately, so malformed `topics`, `runs`, URLs, or other fields quarantine that record without aborting valid neighbors. Availability is `current` only when the resource is explicitly published and at least one well-formed run is explicitly published; absent or malformed run evidence is `unknown`.
+
+Live access requires both `--live` and `SKILLMVP_MIT_LEARN_LIVE_ACCESS_AUTHORIZED=1`. That environment gate must not be enabled until the applicable MIT Learn/API/offering permission for the exact listing-metadata use is documented. Anonymous HTTP access is not permission. Offline snapshots may be used only when their provenance and permitted use are already established outside this command.
 
 The run:
 
 - retries only HTTP 429/5xx/network failures, at most three attempts with bounded backoff and a ten-second request timeout;
 - uses an exclusive lock and removes stale locks after 30 minutes;
 - pauses before publication when the source count is zero or falls by more than 50% from a prior healthy baseline;
-- writes candidate, audit, receipt, state, report, and accepted-data copies under the isolated workspace;
-- records every automatic decision under actor `skillmvp:authorized-source-policy`, policy `authorized-source-publication` version `1.0.0`;
+- canonicalizes the workspace and every destination, rejects symlink aliases, collisions, protected production targets, and outputs outside `data/staging/<workspace>`, and rechecks protected hashes after all writes;
+- writes full candidates, per-record decisions, receipts, and reports into immutable unique `runs/<runId>/` directories, retains the latest 25 runs, and keeps only `latest.json` and source state mutable;
+- records every automatic decision under actor `skillmvp:source-ready-policy`, policy `source-ready-listing` version `1.1.0`, using the actual execution timestamp;
+- preserves original discovery time, records each refresh observation separately, and distinguishes changed course facts (`updated`) from evidence-only refreshes (`refreshed`);
 - never writes production normalized files, the decision-grade manifest, or SEO artifacts;
-- records observations separately from withdrawal confirmation. A provider outage is not absence evidence, and withdrawal requires two healthy complete observations. The bounded list pilot is not treated as a complete catalog snapshot, so its omissions cannot withdraw courses.
+- records observations separately from withdrawal confirmation. A provider outage is not absence evidence, and withdrawal requires two healthy complete observations. The current bounded first-page connector never claims complete coverage, so it cannot confirm a real withdrawal; per-ID refresh or authorized complete-snapshot coverage remains unimplemented.
 
-No schedule is installed by this PR. A future reviewed activation can invoke the same entry point from existing infrastructure and must preserve its limits, alert on a paused source, and address OCW's noncommercial license before monetized production use.
+No schedule is installed by this PR. Scheduling alone would not complete the lifecycle: source-use permission and a bounded per-ID or complete-coverage withdrawal strategy are both required first. Listing-metadata permission, reuse of OCW course content, and later monetization compatibility are separate questions.
 
 ## Bounded pilot evidence
 
 `corepack pnpm check:ingestion-foundation` materializes a provider-neutral 10-record fixture in a temporary test area. It covers exact paid, qualified starting-at, and genuine-free candidates; missing source; availability conflict; invalid zero paid pricing; duplicate identity; unsupported offering; missing evidence; explicit publication decisions; partial promotion; idempotent import/promotion; source collision; and unchanged accepted files after invalid promotion. Promotion runs against temporary copies of the real 23-record catalog and source metadata, including both historical null verification dates. The fixture is synthetic and never enters production catalog data.
 
-`corepack pnpm check:authorized-ingestion` adds synthetic fault coverage for digest-bound automatic decisions, stable-identity updates, invalid-data quarantine, retry termination, source-wide anomaly pause, outage-safe withdrawal state, and the two-observation withdrawal threshold.
+`corepack pnpm check:authorized-ingestion` is an explicit offline CI gate. It covers digest-bound decisions; missing/malformed and duplicate provider identity; mixed valid/malformed responses; stable-identity fact updates versus evidence refreshes; immutable same-day audit history; protected-output, destination-collision, and canonical symlink rejection with byte-identical disposable production fixtures; live-default denial; retry termination; source-wide anomaly pause; outage-safe withdrawal state; and the two-observation helper threshold.
 
-The live evidence files record the 2026-09-21 isolated pilot. The first run discovered, normalized, validated, and inserted 50 of 50 real OCW records with zero human reviews; the second live run reported 50 unchanged, zero inserted, zero updated, and zero duplicated. Real-source quarantine and update counts were zero. Category coverage was 7 business/professional, 5 design/creativity, 2 languages, 4 technology/data, 17 science/engineering, 9 humanities, and 6 society/other. Production hashes were unchanged.
+The two 2026-09-21 aggregate files document historical isolated executions and unchanged production hashes, but they predate the permission review and do not contain portable per-record audit evidence. They are not proof that source-use permission was established and are not an acceptance artifact. No further MIT request was made for this correction. Reproducible per-record behavior is now demonstrated offline through immutable run artifacts in the mandatory regression.

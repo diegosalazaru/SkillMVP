@@ -1,3 +1,7 @@
+import { createHash } from "node:crypto";
+
+import { z } from "zod";
+
 import type { CandidateStagingFile } from "../../src/lib/schema/candidate";
 
 export const MIT_OCW_SOURCE_ID = "mit-learn-ocw";
@@ -5,48 +9,62 @@ export const MIT_OCW_LIST_URL =
   "https://api.learn.mit.edu/api/v1/learning_resources/";
 
 export const MIT_OCW_POLICY = {
-  actor: "skillmvp:authorized-source-policy",
-  policyId: "authorized-source-publication",
-  policyVersion: "1.0.0",
+  actor: "skillmvp:source-ready-policy",
+  policyId: "source-ready-listing",
+  policyVersion: "1.1.0",
   sourceId: MIT_OCW_SOURCE_ID,
   allowedSourceHosts: ["ocw.mit.edu"]
 } as const;
 
-type NamedCode = { code?: string; name?: string };
-type Topic = { id?: number; name?: string; parent?: number | null };
+const NamedCodeSchema = z.object({
+  code: z.string().optional(),
+  name: z.string().optional()
+});
+const TopicSchema = z.object({
+  id: z.number().int().optional(),
+  name: z.string().optional(),
+  parent: z.number().int().nullable().optional()
+});
+const RunSchema = z.object({
+  level: z.array(NamedCodeSchema).optional(),
+  published: z.boolean(),
+  url: z.string().optional()
+});
+const MitOcxResourceSchema = z
+  .object({
+    id: z.number().int().positive(),
+    title: z.string().min(1),
+    url: z.string().url(),
+    description: z.string().nullable().optional(),
+    last_modified: z.string().nullable().optional(),
+    published: z.boolean(),
+    free: z.boolean(),
+    license_cc: z.boolean(),
+    resource_type: z.string().optional(),
+    topics: z.array(TopicSchema),
+    ocw_topics: z.array(z.string()).optional(),
+    platform: NamedCodeSchema,
+    offered_by: NamedCodeSchema.optional(),
+    runs: z.array(RunSchema).min(1)
+  })
+  .passthrough();
 
-export type MitOcxResource = {
-  id?: number;
-  title?: string;
-  url?: string;
-  description?: string | null;
-  last_modified?: string | null;
-  published?: boolean;
-  free?: boolean;
-  license_cc?: boolean;
-  resource_type?: string;
-  topics?: Topic[];
-  ocw_topics?: string[];
-  platform?: NamedCode;
-  offered_by?: NamedCode;
-  runs?: Array<{
-    level?: NamedCode[];
-    published?: boolean;
-    url?: string;
-  }>;
-};
+export type MitOcxResource = z.infer<typeof MitOcxResourceSchema>;
 
-type MitOcxListResponse = {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: MitOcxResource[];
-};
+const MitOcxListEnvelopeSchema = z.object({
+  count: z.number().int().nonnegative(),
+  next: z.string().nullable(),
+  previous: z.string().nullable(),
+  results: z.array(z.unknown())
+});
+
+export type MitOcxListResponse = z.infer<typeof MitOcxListEnvelopeSchema>;
 
 export type DiscoveryResult = {
   response: MitOcxListResponse;
   attempts: number;
   requestUrl: string;
+  mode: "live" | "snapshot";
 };
 
 type FetchLike = typeof fetch;
@@ -55,6 +73,14 @@ class NonRetryableDiscoveryError extends Error {}
 
 const wait = (milliseconds: number) =>
   new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+export const parseMitOcxListResponse = (input: unknown, limit: number) => {
+  const parsed = MitOcxListEnvelopeSchema.parse(input);
+  if (parsed.results.length > limit) {
+    throw new Error("MIT Learn response exceeds the configured record bound.");
+  }
+  return parsed;
+};
 
 export const fetchMitOcxCourses = async ({
   limit,
@@ -103,17 +129,23 @@ export const fetchMitOcxCourses = async ({
         }
         lastError = new Error(`Retryable HTTP ${response.status}.`);
       } else {
-        const body = (await response.json()) as MitOcxListResponse;
-        if (
-          !Number.isInteger(body.count) ||
-          !Array.isArray(body.results) ||
-          body.results.length > limit
-        ) {
+        const responseBody = (await response.json()) as unknown;
+        let body: MitOcxListResponse;
+        try {
+          body = parseMitOcxListResponse(responseBody, limit);
+        } catch (error) {
           throw new NonRetryableDiscoveryError(
-            "MIT Learn API returned an invalid bounded catalog response."
+            `MIT Learn API returned an invalid bounded catalog envelope: ${
+              error instanceof Error ? error.message : String(error)
+            }`
           );
         }
-        return { response: body, attempts: attempt, requestUrl: requestUrl.toString() };
+        return {
+          response: body,
+          attempts: attempt,
+          requestUrl: requestUrl.toString(),
+          mode: "live"
+        };
       }
     } catch (error) {
       if (error instanceof NonRetryableDiscoveryError) throw error;
@@ -129,11 +161,22 @@ export const fetchMitOcxCourses = async ({
     : new Error("MIT Learn API discovery failed within retry limits.");
 };
 
-const sourceCategory = (resource: MitOcxResource) => {
+const recordDigest = (value: unknown) =>
+  createHash("sha256")
+    .update(JSON.stringify(value) ?? "undefined")
+    .digest("hex");
+
+const asRecord = (value: unknown): Record<string, unknown> =>
+  value != null && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : {};
+
+const sourceCategory = (resource: MitOcxResource | null) => {
+  if (!resource) return "society-other";
   const terms = [
-    resource.title ?? "",
+    resource.title,
     ...(resource.ocw_topics ?? []),
-    ...(resource.topics ?? []).map((topic) => topic.name ?? "")
+    ...resource.topics.map((topic) => topic.name ?? "")
   ].join(" ");
   if (
     /\b(language|linguistic|chinese|spanish|french|german|japanese|russian|arabic|italian|portuguese)\b/i.test(
@@ -143,7 +186,11 @@ const sourceCategory = (resource: MitOcxResource) => {
     return "languages";
   }
   if (/Art, Design & Architecture/i.test(terms)) return "design-creativity";
-  if (/Business & Management|Innovation & Entrepreneurship|Education & Teaching/i.test(terms)) {
+  if (
+    /Business & Management|Innovation & Entrepreneurship|Education & Teaching/i.test(
+      terms
+    )
+  ) {
     return "business-professional";
   }
   if (/Data Science, Analytics & Computer Technology/i.test(terms)) {
@@ -162,47 +209,77 @@ const asDateTimeOrNull = (value: string | null | undefined) => {
 };
 
 export const buildMitOcxCandidateInput = (
-  resources: MitOcxResource[],
-  { asOf, receivedAt, batchId }: { asOf: string; receivedAt: string; batchId: string }
+  resources: unknown[],
+  {
+    asOf,
+    receivedAt,
+    batchId
+  }: { asOf: string; receivedAt: string; batchId: string }
 ) => ({
   batchId,
   receivedAt,
-  candidates: resources.map((resource) => {
-    const providerCourseId = String(resource.id ?? "missing");
-    const proposedCourseId = `mit-ocw-${providerCourseId}`;
-    const sourceUrl = resource.url ?? "";
+  candidates: resources.map((rawResource, index) => {
+    const raw = asRecord(rawResource);
+    const parsed = MitOcxResourceSchema.safeParse(rawResource);
+    const resource = parsed.success ? parsed.data : null;
+    const rawId = raw.id;
+    const providerCourseId =
+      typeof rawId === "number" && Number.isInteger(rawId) && rawId > 0
+        ? String(rawId)
+        : null;
+    const digest = recordDigest(rawResource);
+    const quarantineKey = `invalid-${index}-${digest.slice(0, 12)}`;
+    const identityKey = providerCourseId ?? quarantineKey;
+    const proposedCourseId = providerCourseId
+      ? `mit-ocw-${providerCourseId}`
+      : `mit-ocw-quarantine-${quarantineKey}`;
+    const sourceUrl = typeof raw.url === "string" ? raw.url : "";
+    const title = typeof raw.title === "string" ? raw.title : "";
     const category = sourceCategory(resource);
-    const sourceIsCurrent =
-      resource.published === true &&
-      resource.runs?.some((run) => run.published === true) !== false;
+    const hasPublishedRun = resource?.runs.some((run) => run.published) === true;
+    const availabilityStatus =
+      resource?.published === true && hasPublishedRun
+        ? ("current" as const)
+        : resource?.published === false ||
+            (resource != null && resource.runs.every((run) => !run.published))
+          ? ("unavailable" as const)
+          : ("unknown" as const);
     const freeLicensedCourse =
-      resource.free === true && resource.license_cc === true;
+      resource?.free === true && resource.license_cc === true;
     const evidenceUrl = sourceUrl || MIT_OCW_LIST_URL;
-    const pricing = freeLicensedCourse
-      ? [
-          {
-            id: `${proposedCourseId}-free-access`,
-            model: "free" as const,
-            amount: 0,
-            currency: "USD",
-            normalizedUsdAmount: 0,
-            qualifier: "exact" as const,
-            cadence: "other" as const,
-            scope: "Self-guided MIT OpenCourseWare materials",
-            normalizationBasis: "provider_published_usd" as const,
-            actionUrl: sourceUrl,
-            evidenceUrls: [sourceUrl],
-            observedAt: asOf,
-            referenceMarket: null,
-            accessContext: "public_provider_page" as const,
-            conditions:
-              "Free self-guided OCW materials; no enrollment, academic credit, or certificate."
-          }
-        ]
-      : [];
+    const pricing =
+      freeLicensedCourse && providerCourseId && sourceUrl
+        ? [
+            {
+              id: `${proposedCourseId}-free-access`,
+              model: "free" as const,
+              amount: 0,
+              currency: "USD",
+              normalizedUsdAmount: 0,
+              qualifier: "exact" as const,
+              cadence: "other" as const,
+              scope: "Self-guided MIT OpenCourseWare materials",
+              normalizationBasis: "provider_published_usd" as const,
+              actionUrl: sourceUrl,
+              evidenceUrls: [sourceUrl],
+              observedAt: asOf,
+              referenceMarket: null,
+              accessContext: "public_provider_page" as const,
+              conditions:
+                "Free self-guided OCW materials; no enrollment, academic credit, or certificate."
+            }
+          ]
+        : [];
+    const normalizationIssues = parsed.success
+      ? []
+      : parsed.error.issues.map((issue) => ({
+          path: issue.path.join("."),
+          code: issue.code,
+          message: issue.message
+        }));
 
     return {
-      candidateId: `${MIT_OCW_SOURCE_ID}:${providerCourseId}`,
+      candidateId: `${MIT_OCW_SOURCE_ID}:${identityKey}`,
       proposedCourseId,
       sourceIdentity: {
         sourceId: MIT_OCW_SOURCE_ID,
@@ -216,20 +293,20 @@ export const buildMitOcxCandidateInput = (
       course: {
         id: proposedCourseId,
         platform: "MIT OpenCourseWare",
-        title: resource.title ?? "",
+        title,
         url: sourceUrl,
         skillSlug: category,
         level: "unknown" as const,
         durationHours: null,
         language: "unknown",
         priceModel: "free" as const,
-        priceAmount: 0,
-        currency: "USD",
+        priceAmount: freeLicensedCourse ? 0 : null,
+        currency: freeLicensedCourse ? "USD" : null,
         priceInterval: null,
         rating: null,
         reviewCount: null,
         certificate: false,
-        lastUpdatedAt: asDateTimeOrNull(resource.last_modified),
+        lastUpdatedAt: asDateTimeOrNull(resource?.last_modified),
         shortDescription: null,
         syllabusBullets: [],
         prerequisitesBullets: [],
@@ -244,7 +321,7 @@ export const buildMitOcxCandidateInput = (
       ].map((field) => ({ field, sourceUrl: evidenceUrl, observedAt: asOf })),
       pricingEvidence: pricing,
       availability: {
-        status: sourceIsCurrent ? ("current" as const) : ("unavailable" as const),
+        status: availabilityStatus,
         evidenceUrls: [evidenceUrl],
         observedAt: asOf
       },
@@ -252,28 +329,41 @@ export const buildMitOcxCandidateInput = (
         courseId: proposedCourseId,
         sourceUrl,
         sourceType: "official_provider_api",
-        verificationStatus: "partially_verified",
+        verificationStatus: parsed.success
+          ? "partially_verified"
+          : "pending",
         publicationStatus: "published",
         lastVerifiedAt: asOf,
         verifiedFields: {
-          title: Boolean(resource.title),
-          platform: resource.platform?.code === "ocw",
+          title: parsed.success,
+          platform: resource?.platform.code === "ocw",
           sourceUrl: sourceUrl.startsWith("https://ocw.mit.edu/"),
-          availability: sourceIsCurrent,
+          availability: availabilityStatus === "current",
           price: freeLicensedCourse,
           pricingOptions: freeLicensedCourse,
-          certificate: true,
+          certificate: parsed.success,
           language: false,
           level: false,
           duration: false
         },
         sourceCategory: category,
-        sourceLastModified: resource.last_modified ?? null,
-        license: "CC BY-NC-SA 4.0",
-        licenseUrl: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+        sourceLastModified: resource?.last_modified ?? null,
+        sourceRecordDigest: digest,
+        rawProviderCourseId:
+          typeof rawId === "string" || typeof rawId === "number"
+            ? rawId
+            : null,
+        normalizationIssues,
+        licenseClaimFromRecord: resource?.license_cc === true,
         notes:
-          "Official MIT Learn API metadata for MIT OpenCourseWare. Factual listing fields only; no image or course-body reuse. OCW attribution and noncommercial activation constraint retained."
-      }
+          "MIT Learn/OCW listing metadata normalized for isolated evaluation. Source-use permission remains externally unresolved; no content or image reuse is asserted."
+      },
+      ...(parsed.success
+        ? {}
+        : {
+            humanNote:
+              "Upstream record failed per-record normalization and is retained only for automatic quarantine."
+          })
     };
   })
 });
