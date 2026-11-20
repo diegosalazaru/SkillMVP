@@ -27,6 +27,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* Impact supplies a value attribute for this public ownership challenge. */}
+        <meta
+          name="impact-site-verification"
+          {...{ value: "5d514288-317f-43f5-baf0-810da6f87425" }}
+        />
+      </head>
       <body className="min-h-screen">
         <Providers>
           <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 sm:px-6 lg:px-8">
